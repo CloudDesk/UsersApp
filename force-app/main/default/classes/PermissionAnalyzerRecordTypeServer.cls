@@ -6,8 +6,8 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
   Public MetadataService.MetadataPort service;
     
   Public Class getRecTypeVisibilityResutlWrapper {
-      @AuraEnabled public List<RecordType> recordTypeList { get; set; }
-      @AuraEnabled public Map<String, Object> recordTypeVisibility { get; set; }
+      @AuraEnabled Public List<RecordType> recordTypeList { get; set; }
+      @AuraEnabled Public Map<String, Object> recordTypeVisibility { get; set; }
       Public getRecTypeVisibilityResutlWrapper(List<RecordType> recordTypeList,Map<string, Object> recordTypeVisibility){
           this.recordTypeList = recordTypeList;
           this.recordTypeVisibility = recordTypeVisibility != null? recordTypeVisibility: new Map<String, Object>();
@@ -15,7 +15,7 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
   }
   //This Method used to Dynamically called the RecordType Visibility for profil and PermissionSet    
   @AuraEnabled(cacheable = true)
-  public static getRecTypeVisibilityResutlWrapper getRecTypeVisibilityForProfileAndPermSet(
+  Public static getRecTypeVisibilityResutlWrapper getRecTypeVisibilityForProfileAndPermSet(
       String objName,
       String permissionSetId,
       String profileOrPermissionSetType,
@@ -43,7 +43,7 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
   }
   //This Method is used to Fetch RecordType Visibility for Profile
   @AuraEnabled
-  public static Map <String,Object> getRecordTypeVisibilityForProfile(List < String > profileNames, String sObjName) {
+  Public static Map <String,Object> getRecordTypeVisibilityForProfile(List < String > profileNames, String sObjName) {
       UserAccessManager instance = new UserAccessManager();
       Map <String,Object> profileRecTypeMap = new Map < String, Object > ();
       try {
@@ -72,7 +72,7 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
   }
   //This Method is used to Fetch RecordType Visibility for PermissionSet
   @AuraEnabled
-  public static Map < String, Object > getRecordTypeVisibilityForPermSet(List < String > permissionsSetNames, String sObjName) {
+  Public static Map < String, Object > getRecordTypeVisibilityForPermSet(List < String > permissionsSetNames, String sObjName) {
       UserAccessManager instance = new UserAccessManager();
       Map < String, Object > permissionSetRecTypeMap = new Map < String, Object > ();
       try {
@@ -100,16 +100,16 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
       return permissionSetRecTypeMap;
   }
   
-  public class RecordTypeUpdateWrapper {
-      @AuraEnabled public String RecordType { get; set; }
-      @AuraEnabled public Boolean Visible { get; set; }
-      @AuraEnabled public String label { get; set; }
-      @AuraEnabled public String developerName { get; set; }
-      @AuraEnabled public Boolean Default_x { get; set; }
+  Public class RecordTypeUpdateWrapper {
+      @AuraEnabled Public String RecordType { get; set; }
+      @AuraEnabled Public Boolean Visible { get; set; }
+      @AuraEnabled Public String label { get; set; }
+      @AuraEnabled Public String developerName { get; set; }
+      @AuraEnabled Public Boolean Default_x { get; set; }
 
-      public RecordTypeUpdateWrapper() {}
+      Public RecordTypeUpdateWrapper() {}
 
-      public RecordTypeUpdateWrapper(String recordType, Boolean visible, String label, String developerName, Boolean default_x) {
+      Public RecordTypeUpdateWrapper(String recordType, Boolean visible, String label, String developerName, Boolean default_x) {
           this.RecordType = recordType;
           this.Visible = visible;
           this.label = label;
@@ -120,11 +120,14 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
     
   //This Method used to initiate Update Process for Profile Or PermissionSet
   @AuraEnabled
-  public static List<RecordTypeUpdateWrapper> updateRecordTypeVisibility(
+  Public Static List<RecordTypeUpdateWrapper> updateRecordTypeVisibility(
       List<RecordTypeUpdateWrapper> recordTypeVisibility,
       List<String> profileOrPermSetNames,
       String profileOrPermissionSetType
   ) {     
+      system.debug('recordTypeVisibility'+recordTypeVisibility);
+      system.debug('profileOrPermSetNames'+profileOrPermSetNames);
+      system.debug('profileOrPermissionSetType'+profileOrPermissionSetType);
       if (profileOrPermSetNames == null || profileOrPermSetNames.isEmpty()) {
           return recordTypeVisibility;
       }
@@ -196,7 +199,7 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
     return handleUpsertResults(results);
   }
   //This Method is used to handle Profile Upsert Result  
-  private static Boolean handleUpsertResults(List < MetadataService.UpsertResult > results) {
+  Private Static Boolean handleUpsertResults(List < MetadataService.UpsertResult > results) {
       List < String > errorMessages = new List < String > ();
       List < String > successMessages = new List < String > ();
 
@@ -229,7 +232,7 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
   }
   //This Method is used to Update Record Type Visibility for PermissionSet
   @AuraEnabled
-  public static List < RecordTypeUpdateWrapper > updateRecordTypeVisibilityForPermSet(List < String > permissionSetNames, List < RecordTypeUpdateWrapper > recordTypeUpdates) {
+  Public Static List < RecordTypeUpdateWrapper > updateRecordTypeVisibilityForPermSet(List < String > permissionSetNames, List < RecordTypeUpdateWrapper > recordTypeUpdates) {
       System.debug('Received recordTypeUpdates: ' + recordTypeUpdates);
       try {
           UserAccessManager instance = new UserAccessManager();
@@ -288,12 +291,12 @@ Public without Sharing Class PermissionAnalyzerRecordTypeServer {
       return recordTypeUpdates;
   }
 
-  private static void handleException(String message, Exception e) {
+  Private Static Void handleException(String message, Exception e) {
     System.debug(message + ': ' + e.getMessage());
     throw new AuraHandledException(message + ': ' + e.getMessage());
 }
 
-  private static void handleSaveResults(MetadataService.SaveResult[] saveResults) {
+  Private Static Void handleSaveResults(MetadataService.SaveResult[] saveResults) {
       List < String > errors = new List < String > ();
       for (MetadataService.SaveResult saveResult: saveResults) {
           if (!saveResult.success) {

@@ -301,14 +301,14 @@ Public without Sharing Class PermissionAnalyzerObjectServer {
       return new PermissionAnalyzerServer.ObjANdFieldPermissionsWrapper(permissionSetMap, fieldPermissionsMap);
   }  
     
-  Public Class FieldPermissionUpdateWrapper {
-    @AuraEnabled Public String Field { get; set; }
-    @AuraEnabled Public Boolean PermissionsRead { get; set; }
-    @AuraEnabled Public Boolean PermissionsEdit { get; set; }
-    @AuraEnabled Public String label { get; set; }
-    @AuraEnabled Public Boolean hasEditAccess { get; set; }
-    @AuraEnabled Public Boolean mutedPermissionsRead { get; set; }
-    @AuraEnabled Public Boolean mutedPermissionsEdit { get; set; }
+   public class FieldPermissionUpdateWrapper {
+      @AuraEnabled public String Field { get; set; }
+      @AuraEnabled public Boolean PermissionsRead { get; set; }
+      @AuraEnabled public Boolean PermissionsEdit { get; set; }
+      @AuraEnabled public String label { get; set; }
+      @AuraEnabled public Boolean hasEditAccess { get; set; }
+      @AuraEnabled public Boolean mutedPermissionsRead { get; set; }
+      @AuraEnabled public Boolean mutedPermissionsEdit { get; set; }
   }
   Public Class UpdatedObjAndFieldResult {
     @AuraEnabled Public Map<String, Object> objectPerms { get; set; }
@@ -365,6 +365,11 @@ Public without Sharing Class PermissionAnalyzerObjectServer {
 //This Method is Used to Update Object ANd Field Permissions For Profile and PermissionSets And PermissionSetGroup
   @AuraEnabled
   Public Static UpdatedObjAndFieldResult updateObjAndFieldInitiation(Map<String, Map<String, Boolean>> objectPermissionsMap, List<FieldPermissionUpdateWrapper> fieldPerms, String permSetId, String objName, String muteOrFilePermissionsType) {
+    system.debug('objectPermissionsMap'+objectPermissionsMap);
+      system.debug('fieldPerms'+fieldPerms);
+      system.debug('permSetId'+permSetId);
+      system.debug('objName'+objName);
+      system.debug('muteOrFilePermissionsType'+muteOrFilePermissionsType);
     Map<String, Object> objPermissionResult = new Map<String, Object>();
     List<FieldPermissionUpdateWrapper> fieldPermissionResult = new List<FieldPermissionUpdateWrapper>();
     try {

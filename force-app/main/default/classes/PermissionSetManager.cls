@@ -1,55 +1,69 @@
 //This class is used for create,edit,delete,update,assign user,unassign user in Permission Set..
-Public Class PermissionSetManager {
+Public without sharing Class PermissionSetManager {
   //Method to Create Permission Set
   @AuraEnabled(cacheable=false)
-  Public Static List<String> createPermissionSet(Map<String, Object> permSetToCreate, List<Id> userIds) {    
-    List<String> resultIds = new List<String>(); // Initialize list to store result IDs
+  Public Static String createPermissionSet(Map<String,Object> permSetToCreate,List<Id> userIds) 
+  {    
     UserAccessManager instance = new UserAccessManager();
+    String persetapi;
+    List<MetadataService.PermissionSet> persetToInsert = new List<MetadataService.PermissionSet>();
     MetadataService.PermissionSet insertPerset = new MetadataService.PermissionSet();
     insertPerset.fullName = ((String) permSetToCreate.get('Name')).replaceAll(' ', '_');
     insertPerset.label = (String) permSetToCreate.get('Label');
     insertPerset.description = (String) permSetToCreate.get('Description');
     insertPerset.license = (String) permSetToCreate.get('License');
     insertPerset.hasActivationRequired = (Boolean) permSetToCreate.get('hasActivationRequired');
+    persetToInsert.add(insertPerset);
 
-    try {
-        MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(new List<MetadataService.PermissionSet> { insertPerset });
-        if (!results[0].success) {
-            String errorMessage = String.join(results[0].errors, ', ');
-            handleException('Error inserting Permission Set: ' + errorMessage, null);
-            return resultIds; 
-        }
-
-        String persetApi = results[0].fullName;
-        System.debug('Permission Set Inserted successfully for: ' + persetApi);
-
-        String persetId = [SELECT Id FROM PermissionSet WHERE Name = :persetApi LIMIT 1].Id;
-        createPermSetAssignmentForCreatedPermSet(userIds, persetId);
-        resultIds.add(persetId);
-
-        return resultIds; 
-    } catch (Exception e) {
-        System.debug('Error Inserting Permission Set: ' + e.getMessage());
-        handleException('Error inserting Permission Set: ', e);
-        return resultIds;
-    }
- }
-   @AuraEnabled
-   Public Static Void createPermSetAssignmentForCreatedPermSet(List<Id> userIds, String perSetId){
-      List < PermissionSetAssignment > permSetAssignments = new List < PermissionSetAssignment > ();
-      for (Id userId: userIds) {
-          permSetAssignments.add(new PermissionSetAssignment(
-              AssigneeId = userId,
-              PermissionSetId = perSetId
-          ));
-      }
-  
+    if (!persetToInsert.isEmpty()) {
       try {
+        MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(persetToInsert);
+        for (MetadataService.UpsertResult upsertResult : results) {
+          persetapi = upsertResult.fullName;
+          if (!upsertResult.success) {
+            for (MetadataService.Error error : upsertResult.errors) {
+              System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+              if (error.fields != null) {
+                for (String field : error.fields) {
+                  System.debug('Error Field: ' + field);
+                }
+              }
+            }
+            throw new AuraHandledException('Error inserting Permission Set: ' + upsertResult.errors[0].message);
+          } else {
+            System.debug('Permission Set Inserted successfully for: ' + upsertResult.fullName);
+          }
+        }
+      } catch (Exception e) {
+        System.debug('Error Inserting Permission Set: ' + e.getMessage());
+        throw new AuraHandledException('Error inserting Permission Set: ' + e.getMessage());
+      }
+    }
+    System.debug('Permission Set API Name:>>> ' + persetapi);
+     
+    List<PermissionSet> persetId = [SELECT Id, Name FROM PermissionSet WHERE Name = :persetapi LIMIT 1];
+      System.debug('persetId>>>'+persetId);
+    createPermSetAssignmentForCreatedPermSet(userIds,persetId[0].Id);
+      return persetId[0].Id;
+  }
+   @AuraEnabled
+   Public Static Void createPermSetAssignmentForCreatedPermSet(List<Id> userids, String perSetId){
+        List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
+        for (Id userId : userIds) {
+          // Create a new PermissionSetAssignment record for each user
+          PermissionSetAssignment permSetAssignment = new PermissionSetAssignment();
+          permSetAssignment.AssigneeId = userId;
+          permSetAssignment.PermissionSetId = perSetId;
+          permSetAssignments.add(permSetAssignment);
+        }
+    
+        try {
           insert permSetAssignments;
           System.debug('Permission set assignments successfully created.');
-      } catch (DmlException e) {
-          handleException('Error occurred while assigning permission set: ', e);
-      }
+        } catch (DmlException e) {
+          System.debug('Error occurred while assigning permission set: ' + e.getMessage());
+          throw new AuraHandledException('Error occurred while assigning permission set: ' + e.getMessage());
+        }
    }
   //Method to get Permission Set
   @AuraEnabled(cacheable=true)
@@ -58,15 +72,9 @@ Public Class PermissionSetManager {
     List < Map < String, String >> result = new List < Map < String, String >> ();
 
     // Query PermissionSets
-    List < PermissionSet > permissionSets = [
-        SELECT
-        Id, Name, Label, Description, IsCustom, NamespacePrefix,
-        CreatedDate, LastModifiedDate,
-        License.Name, License.Id,
-        CreatedBy.Name, CreatedBy.Id,
-        LastModifiedBy.Name, LastModifiedBy.Id
-        FROM PermissionSet
-        WHERE IsOwnedByProfile = false AND Type != 'Group'
+    List < PermissionSet > permissionSets = [SELECT Id, Name, Label, Description, IsCustom, NamespacePrefix, CreatedDate, LastModifiedDate,
+        License.Name, License.Id,CreatedBy.Name, CreatedBy.Id,LastModifiedBy.Name, LastModifiedBy.Id FROM PermissionSet
+        WHERE IsOwnedByProfile = false AND Type != 'Group' Limit 50000
     ];
 
     for (PermissionSet ps: permissionSets) {
@@ -93,60 +101,57 @@ Public Class PermissionSetManager {
    
   //Method to Insert Users to Permission Set
   @AuraEnabled
-  Public Static Void insertUsertoPermissionSet(List < String > userIds, String perSetId) 
+  Public Static Void insertUsertoPermissionSet(List<String> userId,String PerSetId) 
   {
-    List < PermissionSetAssignment > perSetAsi = new List < PermissionSetAssignment > ();
-      for (String userId: userIds) {
-          perSetAsi.add(new PermissionSetAssignment(
-              AssigneeId = userId,
-              PermissionSetId = perSetId
-          ));
-      }
-      try {
-          insert perSetAsi;
-          System.debug('Permission Set assigned successfully to all users');
-      } catch (DmlException e) {
-          handleException('Error assigning Permission Set: ', e);
-      }
+    List<PermissionSetAssignment> perSetAsi = new List<PermissionSetAssignment>();
+    for (String assignId : userId) {
+      PermissionSetAssignment perAsi = new PermissionSetAssignment();
+      perAsi.AssigneeId = assignId;
+      perAsi.PermissionSetId = PerSetId;
+      perSetAsi.add(perAsi);
+    }
+    try {
+      insert perSetAsi;
+      System.debug('Permission Set assigned successfully to all users');
+    } catch (DmlException e) {
+      System.debug('Error assigning Permission Set: ' + e.getMessage());
+      throw new AuraHandledException(e.getMessage());
+    }
   }
     
   //Method to Delete Users from Permission Set  
   @AuraEnabled
-  Public Static Void deleteUserfromPermissionSet(List < String > userIds, String perSetId) 
+  Public Static Void deleteUserfromPermissionSet(List<String> userId,String perSetId) 
   {
-    List < PermissionSetAssignment > persetAssignForDlt = [
-          SELECT Id
-          FROM PermissionSetAssignment
-          WHERE AssigneeId IN: userIds AND PermissionSetId =: perSetId
-      ];
-      try {
-          delete persetAssignForDlt;
-          System.debug('Permission Set Deleted successfully for the users');
-      } catch (DmlException e) {
-          handleException('Error Deleting Permission Set: ', e);
-      }
+    List<PermissionSetAssignment> persetAssignForDlt = [SELECT id FROM PermissionSetAssignment WHERE AssigneeId IN :userId AND PermissionSetId = :perSetId Limit 50000];
+    try {
+      delete persetAssignForDlt;
+      System.debug('Permission Set Deleted successfully for the users');
+    } catch (DmlException e) {
+      System.debug('Error Deleting Permission Set: ' + e.getMessage());
+    }
   }
   
   //Method to Edit Permission Set  
   @AuraEnabled
-  Public Static PermissionSet editPermissionSet(String perSetId, String label, String apiName, String description) 
+  Public Static PermissionSet editPermissionSet(String perSet,String label,String apiName,String description) 
   {
-    PermissionSet perSetVal = [
-          SELECT Id, Name, Label, Description
-          FROM PermissionSet
-          WHERE Id =: perSetId
-      ];
-      if (perSetVal != null) {
-          perSetVal.Label = label;
-          perSetVal.Name = apiName.replaceAll(' ', '_');
-          perSetVal.Description = description;
-          try {
-              update perSetVal;
-          } catch (DmlException e) {
-              handleException('Error updating Permission Set: ', e);
-          }
+    system.debug('Per Set'+perSet);
+    system.debug('Label'+label);
+    system.debug('Api Name'+apiName);
+    system.debug('Description'+description);
+    PermissionSet perSetVal = [SELECT id, Name, Label, Description FROM PermissionSet WHERE id = :perSet];
+    if (perSet != null) {
+      perSetVal.Label = label;
+      perSetVal.Name = apiName.replaceAll(' ', '_');
+      perSetVal.Description = description;
+      try {
+        update perSetVal;
+      } catch (DmlException e) {
+        throw new AuraHandledException(e.getMessage());
       }
-      return perSetVal;
+    }
+    return perSetVal;
   }
     
   //Method to Delete Permission Set    
@@ -184,12 +189,12 @@ Public Class PermissionSetManager {
       Id newPermissionSetId = newPerSet.Id;
 
       //Get Users From Old Permission Set
-      List<PermissionSetAssignment> persetass = [SELECT Id, AssigneeId, PermissionSetId FROM PermissionSetAssignment WHERE PermissionSetId = :sourcePermissionSetId];
+      List<PermissionSetAssignment> persetass = [SELECT Id, AssigneeId, PermissionSetId FROM PermissionSetAssignment WHERE PermissionSetId = :sourcePermissionSetId Limit 50000];
       Set<Id> assigneeIds = new Set<Id>();
       for (PermissionSetAssignment psa : persetass) {
         assigneeIds.add(psa.AssigneeId);
       }
-      List<User> userList = [SELECT id,Name,Username,Profile.Name,IsActive,Profile.UserLicense.Name FROM user WHERE IsActive = TRUE AND Id IN :assigneeIds];
+      List<User> userList = [SELECT id,Name,Username,Profile.Name,IsActive,Profile.UserLicense.Name FROM user WHERE IsActive = TRUE AND Id IN :assigneeIds Limit 50000];
       Set<Id> userids = new Set<Id>();
       for (User psa : userList) {
         userids.add(psa.id);
@@ -238,17 +243,9 @@ Public Class PermissionSetManager {
   @AuraEnabled
   Public Static List<User> getAssignedUserForPermissionSet(String permissionSetId) 
   {
-    return [
-        SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name 
-        FROM User 
-        WHERE Id IN (
-            SELECT AssigneeId 
-            FROM PermissionSetAssignment 
-            WHERE PermissionSet.Id = :permissionSetId 
-            AND AssigneeId != null
-        )
-        ORDER BY Name ASC
-    ];
+    return [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User 
+        WHERE Id IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSet.Id = :permissionSetId AND AssigneeId != null)
+        ORDER BY Name ASC Limit 50000];
   }
     
   //Method to retrieve UnAssigned Users From Permission Set  
@@ -279,38 +276,35 @@ Public Class PermissionSetManager {
   //Method to filter user based on license
   @AuraEnabled(cacheable=true)
   Public Static List<User> getUserForPermissionSet(String licenseName) {
-    if (String.isBlank(licenseName)) {
-          return [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name
-              FROM User
-              WHERE IsActive = TRUE
-          ];
-      }
-
-      Set < Id > userIds = new Set < Id > ();
-
-      // Check for UserLicense
-      UserLicense userLic = [SELECT Id FROM UserLicense WHERE Name =: licenseName LIMIT 1];
-      if (userLic != null) {
-          for (User u: [SELECT Id FROM User WHERE IsActive = TRUE AND Profile.UserLicenseId =: userLic.Id]) {
-              userIds.add(u.Id);
-          }
-      }
-
-      // Check for PermissionSetLicense
-      for (PermissionSetLicenseAssign pla: [SELECT AssigneeId
-              FROM PermissionSetLicenseAssign
-              WHERE PermissionSetLicense.DeveloperName =: licenseName
-          ]) {
-          userIds.add(pla.AssigneeId);
-      }
-      if (!userIds.isEmpty()) {
-          return [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name
-              FROM User
-              WHERE IsActive = TRUE AND Id IN: userIds
-          ];
-      }
-
-      return new List < User > ();
+    List<User> userList = new List<User>();
+    if (String.isNotEmpty(licenseName)) {
+      system.debug('INSIDE IF');
+      system.debug('license name: ' + licenseName);
+	  List<UserLicense> userLic = [Select Id, Name from userLicense where Name =: licenseName LIMIT 1];
+        system.debug('userLic'+ userLic);
+        if(!userLic.isEmpty()){
+            userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND Profile.UserLicenseId = :userLic[0].Id];
+        }else{
+			Set<Id> assigneeId = new Set<Id>();
+            for(PermissionSetLicenseAssign permSetLic : [Select Id,AssigneeId,PermissionSetLicense.DeveloperName from PermissionSetLicenseAssign where PermissionSetLicense.DeveloperName =: licenseName])
+            {
+                if(permSetLic != null){
+                   assigneeId.add(permSetLic.AssigneeId); 
+                }
+            }
+            if(assigneeId.size()>0){
+                userList = [
+                    SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND Id IN :assigneeId];
+            }
+        }
+      
+    } else {
+      system.debug('INSIDE ELSE');
+      system.debug('license name:>>> ' + licenseName);
+      userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE];
+      system.debug('userList'+ userList);
+    }
+    return userList;
   }
     
   	@AuraEnabled(cacheable=true)
@@ -377,21 +371,13 @@ Public Class PermissionSetManager {
     @AuraEnabled
     //This is a method to retrieve profiles list.
     Public Static List<Profile> getProfiles() {
-         return [
-            SELECT Id, Name, UserLicense.Name 
-            FROM Profile 
-            ORDER BY Name ASC
-        ];
+         return [SELECT Id, Name, UserLicense.Name FROM Profile ORDER BY Name ASC Limit 50000];
     }
     
     @AuraEnabled(cacheable=true)
     //This is a method to check duplicate label & api name before creating permission set.
     Public Static Boolean checkDuplicatePermissionSet(String label,String apiName) {
-        return [
-            SELECT COUNT() 
-            FROM PermissionSet 
-            WHERE Label = :label OR Name = :apiName
-        ] > 0;
+        return [SELECT COUNT() FROM PermissionSet WHERE Label = :label OR Name = :apiName] > 0;
     }
     
     @AuraEnabled
@@ -399,7 +385,7 @@ Public Class PermissionSetManager {
     Public Static List<Map<String, Object>> getPermissionSetTabSetting(String permissionSetName) {
         List<Map<String, Object>> tabSettingMapList = new List<Map<String, Object>>();
         Map<String, String> tabVisibilities = getTabForPermissionSet(permissionSetName);
-        List<TabDefinition> tabDefList = [SELECT id, Name, Label FROM TabDefinition ORDER BY Label ASC];
+        List<TabDefinition> tabDefList = [SELECT id, Name, Label FROM TabDefinition ORDER BY Label ASC Limit 50000];
         system.debug('tabDefList' + tabDefList);
         if (!tabDefList.isEmpty()) {
             for (TabDefinition tabDef : tabDefList) {
@@ -442,79 +428,84 @@ Public Class PermissionSetManager {
     @AuraEnabled(cacheable=true)
     //This method is used to get user permissions/system permissions for permission set.
     Public Static PermissionFieldWrap getCombinedPermissionsforProfile(String permissionSetIds) {
+        System.debug('pid==>' + permissionSetIds);
         PermissionFieldWrap permissionWrap = new PermissionFieldWrap();
-
-        // Fetch user permissions
-        List < Map < String, Object >> userPermissionsList = getUserPermissions(permissionSetIds);
-        permissionWrap.userPermissions = userPermissionsList;
-
-        // Fetch system dependencies
-        List < Object > dependSystemPermissions = PermissionSetManager.checkDependencyforSystemPermissions();
-        permissionWrap.systemDependencies = dependSystemPermissions;
-
-        // Extract dependent objects
-        Set < String > dependentObjects = extractDependentObjects(dependSystemPermissions);
-
-        // Fetch object permissions
-        Map < String, Map < String, Object >> objectPermissionsMap = getObjectPermissions(permissionSetIds, dependentObjects);
-        permissionWrap.objectPermissions = objectPermissionsMap;
-
-        return permissionWrap;
-    }
-    
-    private static List < Map < String, Object >> getUserPermissions(String permissionSetIds) {
-        List < Map < String, Object >> userPermissionsList = new List < Map < String, Object >> ();
-        Map < String, Schema.SObjectField > baseFields = Schema.SObjectType.PermissionSet.fields.getMap();
-
-        String query = 'SELECT Id, Name, ' + String.join(new List < String > (baseFields.keySet()), ', ') +
-            ' FROM PermissionSet WHERE Id = :permissionSetIds';
-
-        for (PermissionSet ps: Database.query(query)) {
-            for (String fieldName: baseFields.keySet()) {
+        
+        String baseQueryString = 'SELECT Id, Name';
+        Map<String, Schema.SObjectField> baseFields = Schema.SObjectType.PermissionSet.fields.getMap();
+        
+        for (Schema.SObjectField field : baseFields.values()) {
+            String fieldName = field.getDescribe().getName();
+            if (fieldName.startsWith('Permissions') &&fieldName != 'Permissionsetgroupid') {
+                baseQueryString += ', ' + fieldName;
+            }
+        }
+        baseQueryString += ' FROM PermissionSet WHERE Id = :permissionSetIds';
+        List<PermissionSet> basePermissionSets = (List<PermissionSet>) Database.query(
+            baseQueryString
+        );
+        
+        // Create a List of Maps
+        List<Map<String, Object>> userPermissionsList = new List<Map<String, Object>>();
+        
+        for (PermissionSet basePermissionSet : basePermissionSets) {
+            for (Schema.SObjectField field : baseFields.values()) {
+                String fieldName = field.getDescribe().getName();
                 if (fieldName.startsWith('Permissions') && fieldName != 'Permissionsetgroupid') {
-                    userPermissionsList.add(new Map < String, Object > {
-                        'fieldName' => fieldName,
-                        'fieldLabel' => baseFields.get(fieldName).getDescribe().getLabel(),
-                        'fieldValue' => ps.get(fieldName)
-                    });
+                    Object fieldValue = basePermissionSet.get(fieldName);
+                    String fieldLabel = field.getDescribe().getLabel();
+                    
+                    // Create a map with the field details
+                    Map<String, Object> fieldMap = new Map<String, Object>();
+                    fieldMap.put('fieldName', fieldName);
+                    fieldMap.put('fieldLabel', fieldLabel);
+                    fieldMap.put('fieldValue', fieldValue);
+                    
+                    // Add the fieldMap to the list
+                    userPermissionsList.add(fieldMap);
                 }
             }
         }
-
-        return userPermissionsList;
-    }
-    
-    private static Set < String > extractDependentObjects(List < Object > dependSystemPermissions) {
-        Set < String > dependentObjects = new Set < String > ();
-        for (Object record: dependSystemPermissions) {
-            Map < String, Object > recordMap = (Map < String, Object > ) record;
+        
+        System.debug('User Permissions List: ' + userPermissionsList);
+        permissionWrap.userPermissions = userPermissionsList;
+        List<Object> dependSystemPermissions = PermissionSetManager.checkDependencyforSystemPermissions();
+        permissionWrap.systemDependencies = dependSystemPermissions;
+        System.debug(
+            'List of System Permissions: ' + permissionWrap.systemDependencies
+        );
+        
+        Set<String> dependentObjects = new Set<String>();
+        for (Object record : dependSystemPermissions) {
+            Map<String, Object> recordMap = (Map<String, Object>) record;
             if ((String) recordMap.get('RequiredPermissionType') == 'Object Permission') {
                 String requiredPermission = (String) recordMap.get('RequiredPermission');
-                dependentObjects.add(requiredPermission.split('<')[0]);
+                String requiredPermissionObject = requiredPermission.split('<')[0];
+                dependentObjects.add(requiredPermissionObject);
             }
         }
-        return dependentObjects;
-    }
-    
-    private static Map < String, Map < String, Object >> getObjectPermissions(String permissionSetIds, Set < String > dependentObjects) {
-        Map < String, Map < String, Object >> objectPermissionsMap = new Map < String, Map < String, Object >> ();
-
-        for (ObjectPermissions objPerm: [SELECT SObjectType, PermissionsRead, PermissionsCreate, PermissionsEdit,
-                PermissionsDelete, PermissionsViewAllRecords, PermissionsModifyAllRecords
-                FROM ObjectPermissions
-                WHERE ParentId =: permissionSetIds AND SObjectType IN: dependentObjects
-            ]) {
-            objectPermissionsMap.put(objPerm.SObjectType, new Map < String, Object > {
-                'PermissionsCreate' => objPerm.PermissionsCreate,
-                'PermissionsRead' => objPerm.PermissionsRead,
-                'PermissionsEdit' => objPerm.PermissionsEdit,
-                'PermissionsDelete' => objPerm.PermissionsDelete,
-                'PermissionsViewAllRecords' => objPerm.PermissionsViewAllRecords,
-                'PermissionsModifyAllRecords' => objPerm.PermissionsModifyAllRecords
-            });
-        }
-
-        return objectPermissionsMap;
+        
+        Map<String, Map<String, Object>> objectPermissionsMap = new Map<String, Map<String, Object>>();
+        for (ObjectPermissions objPerm : [SELECT Id,SObjectType,PermissionsRead,PermissionsCreate,PermissionsEdit,PermissionsDelete,PermissionsViewAllRecords,
+                                          PermissionsModifyAllRecords
+                                          FROM ObjectPermissions
+                                          WHERE ParentId = :permissionSetIds AND SObjectType IN :dependentObjects
+                                         ]) {
+                                             if (objPerm != null) {
+                                                 Map<String, Object> objectPermMap = new Map<String, Object>();
+                                                 objectPermMap.put('PermissionsCreate', objPerm.PermissionsCreate);
+                                                 objectPermMap.put('PermissionsRead', objPerm.PermissionsRead);
+                                                 objectPermMap.put('PermissionsEdit', objPerm.PermissionsEdit);
+                                                 objectPermMap.put('PermissionsDelete', objPerm.PermissionsDelete);
+                                                 objectPermMap.put('PermissionsViewAllRecords',objPerm.PermissionsViewAllRecords);
+                                                 objectPermMap.put('PermissionsModifyAllRecords',objPerm.PermissionsModifyAllRecords);
+                                                 objectPermissionsMap.put(objPerm.SObjectType, objectPermMap);
+                                             }
+                                         }
+        
+        System.debug('Object Permission Map: ' + objectPermissionsMap);
+        permissionWrap.objectPermissions = objectPermissionsMap;
+        return permissionWrap;
     }
 	
     //Wrapper class to get user/system permissions and its dependencies.
@@ -615,44 +606,57 @@ Public Class PermissionSetManager {
     //This Method Used to retrieve fieldDefinition, valid Sobjects for Obj Permissions, Valid field for field Permissions and also fetch Object Permissons Dependencies
     Public Static ProfileObjectPermissionsWrapper getSobjectPermissionsForPermissionSet(String permSetId,String objName,List<String> profileNames)
     {
-        List < Object > dependObjects = PermissionSetManager.checkDependency(objName);
-        Map < String, Boolean > fieldAccess = PermissionSetManager.checkFieldType(objName);
-        Map < String, Map < String, Object >> fieldDefMapByName = PermissionSetManager.getFieldDefinitionProfile(objName);
-
-        // Fetch all field permissions in one query
-        Map < String, FieldPermissions > fieldPermissionsMap = new Map < String, FieldPermissions > ();
-        for (FieldPermissions fieldPerm: [SELECT Field, PermissionsRead, PermissionsEdit
-                FROM FieldPermissions
-                WHERE ParentId =: permSetId AND SObjectType =: objName
-            ]) {
-            fieldPermissionsMap.put(fieldPerm.Field, fieldPerm);
-        }
-
-        List < Map < String, Object >> fieldPermissionsMapList = new List < Map < String, Object >> ();
-        for (String fieldKey: fieldDefMapByName.keySet()) {
-            Map < String, Object > fieldDefMap = fieldDefMapByName.get(fieldKey);
-            if ((Boolean) fieldDefMap.get('isPermissionable') && fieldAccess.get(fieldKey) == true) {
-                Map < String, Object > fieldPermissionMap = new Map < String, Object > {
-                    'Field' => fieldKey,
-                    'label' => fieldDefMap.get('Label'),
-                    'hasEditAccess' => fieldDefMap.get('isCalculated')
-                };
-                FieldPermissions fieldPerm = fieldPermissionsMap.get(fieldKey);
-                if (fieldPerm != null) {
-                    fieldPermissionMap.put('PermissionsRead', fieldPerm.PermissionsRead);
-                    fieldPermissionMap.put('PermissionsEdit', fieldPerm.PermissionsEdit);
-                } else {
-                    fieldPermissionMap.put('PermissionsRead', false);
-                    fieldPermissionMap.put('PermissionsEdit', false);
-                }
-
-                fieldPermissionsMapList.add(fieldPermissionMap);
+        List < Object > dependObjects = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies(objName);
+        List<Map<String, Object>> fieldPermissionsMapList = new List<Map<String, Object>>();
+        //List<Map<String, Object>> recordTypeMapList = new List<Map<String, Object>>();
+        Map<String, Boolean> fieldAccess = PermissionSetManager.checkFieldType(objName);
+        system.debug('fieldAccess' + fieldAccess);
+        Map<String, Map<String, Object>> fieldDefMapByName = PermissionSetManager.getFieldDefinitionProfile(objName);
+        system.debug('fieldAccess' + fieldDefMapByName);
+        system.debug('Before Object Permission');
+        Map<String, FieldPermissions> fieldPermissionsMap = new Map<String, FieldPermissions>();
+        for (FieldPermissions fieldPerm : [SELECT SObjectType, Field, PermissionsRead, PermissionsEdit FROM FieldPermissions WHERE ParentId = :permSetId AND SObjectType = :objName]) {
+            if (fieldPerm != null) {
+                fieldPermissionsMap.put(fieldPerm.Field, fieldPerm);
             }
         }
-        return new ProfileObjectPermissionsWrapper(fieldPermissionsMapList, PermissionSetManager.checkSObjType(objName), dependObjects);
+        // Debug: Check the contents of fieldPermissionsMap
+        System.debug('fieldPermissionsMap: ' + fieldPermissionsMap);
+        
+        // Process each field definition
+        for (String fieldKey : fieldDefMapByName.keySet()) {
+            system.debug('fieldKey'+fieldKey);
+            if (fieldKey != null) {
+                //Map<String, Object> fieldDefMap = fieldDefMapByName.get(fieldKey);
+                system.debug(fieldKey + ' fieldKey ' + fieldAccess.get(fieldKey));
+                if ((Boolean) fieldDefMapByName.get(fieldKey).get('isPermissionable') && fieldAccess.get(fieldKey) == true) {
+                    Map<String, Object> fieldPermissionMap = new Map<String, Object>();
+                    fieldPermissionMap.put('Field', fieldKey);
+                    fieldPermissionMap.put('label',fieldDefMapByName.get(fieldKey).get('Label'));
+                    
+                    // Debug: Check if fieldKey is present in fieldPermissionsMap
+                    System.debug('Processing fieldKey: ' + fieldKey);
+                    if (fieldPermissionsMap.containsKey(fieldKey)) {
+                        system.debug('inside containskey');
+                        FieldPermissions fieldPerm = fieldPermissionsMap.get(fieldKey);
+                        fieldPermissionMap.put('PermissionsRead',fieldPerm.PermissionsRead);
+                        fieldPermissionMap.put('PermissionsEdit',fieldPerm.PermissionsEdit);
+                    } else {
+                        system.debug('inside Else');
+                        fieldPermissionMap.put('PermissionsRead', false);
+                        fieldPermissionMap.put('PermissionsEdit', false);
+                    }
+                    
+                    fieldPermissionMap.put('hasEditAccess',fieldDefMapByName.get(fieldKey).get('isCalculated'));
+                    fieldPermissionsMapList.add(fieldPermissionMap);
+                }
+            }
+        }
+        System.debug('check field permission map' + fieldPermissionsMapList);
+        return new ProfileObjectPermissionsWrapper(fieldPermissionsMapList,PermissionSetManager.checkSObjType(objName),dependObjects);
     }
 
-    @AuraEnabled
+   /* @AuraEnabled
     //Helper method to get dependencies for objects.
     public static List<Object> checkDependency(String objName) {
     UserAccessManager instance = new UserAccessManager();
@@ -739,43 +743,40 @@ Public Class PermissionSetManager {
             processChildObjects(new List < String > (childObjects), allDependencies, sessionId, serverUrl);
         }
     }
-
+*/
     @AuraEnabled
     //Helper to get the valid fields for updating ObjectPermissions.
     Public Static Map<String, Boolean> checkFieldType(String sObjName) {
-         Map < String, Boolean > fieldMap = new Map < String, Boolean > ();
-        String sObjNameDot = sObjName + '.';
-        for (Schema.PicklistEntry p: FieldPermissions.Field.getDescribe().getPicklistValues()) {
-            String fieldValue = p.getValue();
-            if (fieldValue.startsWith(sObjNameDot)) {
-                fieldMap.put(fieldValue, true);
+         Map<String, Boolean> fieldMap = new Map<String, Boolean>();
+        for (Schema.PicklistEntry p : fieldPermissions.Field.getDescribe().getPicklistValues()) {
+            if (sObjName == p.getValue().split('\\.')[0]) {
+                system.debug('p.getValue()'+p.getValue());
+                system.debug('p.getValue().split'+p.getValue().split('\\.')[0]);
+                fieldMap.put(p.getValue(), true);
             }
         }
+        system.debug('fieldMap'+fieldMap);
         return fieldMap;
     }
                       
     @AuraEnabled
     //Helper method to get field names.
     Public Static Map<String, Map<String, Object>> getFieldDefinitionProfile(String objectName) {
-        Map < String, Map < String, Object >> fieldDefMapByName = new Map < String, Map < String, Object >> ();
-        Map < String, Schema.SObjectField > fieldMap = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap();
-
-        for (String fieldName: fieldMap.keySet()) {
-            Schema.DescribeFieldResult fieldDescribe = fieldMap.get(fieldName).getDescribe();
-
-            if (fieldDescribe.isPermissionable()) {
-                String fieldNameKey = objectName + '.' + fieldName;
-                fieldDefMapByName.put(fieldNameKey, new Map < String, Object > {
-                    'Label' => fieldDescribe.getLabel(),
-                    'Name' => fieldName,
-                    'isPermissionable' => true,
-                    'isCalculated' => fieldDescribe.isCalculated()
-                });
-            }
+       Map<String, Map<String, Object>> fieldDefMapByName = new Map<String, Map<String, Object>>();
+        Schema.DescribeSObjectResult describeResult = Schema.getGlobalDescribe().get(objectName).getDescribe();
+        
+        for (Schema.SObjectField field : describeResult.fields.getMap().values()) {
+            Map<String, Object> fieldDefMap = new Map<String, Object>();
+            fieldDefMap.put('Label', field.getDescribe().getLabel());
+            fieldDefMap.put('Name', field.getDescribe().getName());
+            fieldDefMap.put('isPermissionable',field.getDescribe().isPermissionable());
+            fieldDefMap.put('isCalculated', field.getDescribe().isCalculated());
+            String fieldNameKey = objectName + '.' + field.getDescribe().getName();
+            fieldDefMapByName.put(fieldNameKey, fieldDefMap);
         }
         return fieldDefMapByName;
     }
-    
+/*    
     private static void processParentObjects(List < String > parentObjects, List < Object > allDependencies, String sessionId, String serverUrl) {
         if (parentObjects.isEmpty()) {
             return;
@@ -830,7 +831,7 @@ Public Class PermissionSetManager {
             processChildObjects(new List < String > (newChildObjects), allDependencies, sessionId, serverUrl);
         }
     }
-    
+    */
     
     
     @AuraEnabled
@@ -916,8 +917,11 @@ Public Class PermissionSetManager {
             objPermissionsToUpsert.add(objToUpsert);
             resultMap.put(objName, objToUpsert);
         }
-
-        upsert objPermissionsToUpsert;
+        Map<String,Boolean> checkAccessLevelForObjectPermissions = PermissionAnalyzerServer.getObjDefinition('ObjectPermissions');
+             if (!objPermissionsToUpsert.isEmpty() && checkAccessLevelForObjectPermissions.get('Create') 
+                 && checkAccessLevelForObjectPermissions.get('Update')) {
+                 upsert objPermissionsToUpsert;
+             }
     } catch (Exception e) {
         handleException('Error updating object permissions: ', e);
     }
@@ -985,8 +989,11 @@ Public Class PermissionSetManager {
             permissionsToUpsert.add(permission);
             updatedFieldPermissions.add(wrapper);
         }
-    
-        if (!permissionsToUpsert.isEmpty()) {
+        
+       
+        Map<String,Boolean> checkAccessLevelForFieldPermissions = PermissionAnalyzerServer.getObjDefinition('FieldPermissions');
+    if (!permissionsToUpsert.isEmpty() && checkAccessLevelForFieldPermissions.get('Create') 
+        && checkAccessLevelForFieldPermissions.get('Update')) {
             try {
                 upsert permissionsToUpsert;
                 return updatedFieldPermissions;
@@ -998,6 +1005,7 @@ Public Class PermissionSetManager {
     }
 
 	Private Static Void handleException(String message, Exception e) {
+        system.debug('e.getMessage'+ e.getMessage());
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
         System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);

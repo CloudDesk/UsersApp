@@ -1,164 +1,131 @@
 //This class is used for edit,delete,update Profiles.
-Public Class ProfileManager {
-  
-  //This method is used to fetch profile name.
-  @AuraEnabled(cacheable=true)
-   //This method is used to fetch profile name.
-  Public Static List<String> getProfileName(String ProfileId) {
-    UserAccessManager instance = new UserAccessManager();
-    List<String> profileName = new List<String>();
-    String baseUrl = URL.getOrgDomainUrl().toExternalForm();
-    String toolingQuery =
-      '/services/data/v58.0/tooling/query/?q=select+id,+Name,+FullName+from+Profile+where+Id=\'' +
-      ProfileId +
-      '\'';
-    String endPoint = baseUrl + toolingQuery;
-    Http newReq = new Http();
-    HttpRequest req = new HttpRequest();
-    req.setEndpoint(endPoint);
-    req.setMethod('GET');
-    req.setHeader(
-      'Authorization',
-      'Bearer ' + instance.partnerConnection.SessionHeader.sessionId
-    );
-    req.setHeader('Content-Type', 'application/json');
-    HttpResponse res = new HttpResponse();
-    try {
-      res = newReq.send(req);
-      if (res.getStatusCode() == 200) {
-        Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(
-          res.getBody()
-        );
-        List<Object> records = (List<Object>) results.get('records');
-        for (Object record : records) {
-          Map<String, Object> recordMap = (Map<String, Object>) record;
-          profileName.add((String) recordMap.get('FullName'));
-        }
-      } else {
-        System.debug('Error: ' + res.getStatus());
-        System.debug('Response: ' + res.getBody());
-      }
-    } catch (Exception e) {
-      System.debug('Exception: ' + e.getMessage());
-    }
-    System.debug('profileName: ' + profileName);
-    return profileName;
-  }
-  
-  //This method is used to update profile property.
-  @AuraEnabled
-  public static Map < String, String > updateProfile(String profileName, String newProfileName, String newDescription) {
-      System.debug('profileName: ' + profileName);
-      System.debug('newProfileName: ' + newProfileName);
-      System.debug('newDescription: ' + newDescription);
-  
-      UserAccessManager instance = new UserAccessManager();
-      Map < String, String > returnMap = new Map < String, String > ();
-      List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
-          profileName
-      }).getRecords();
-      if (!profiles.isEmpty() && profiles[0].fullName != null) {
-          MetadataService.Profile updatedProfile = new MetadataService.Profile();
-          updatedProfile.fullName = newProfileName;
-          updatedProfile.description = newDescription;
-          MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List < MetadataService.Profile > {
-              updatedProfile
-          });
-          if (!results.isEmpty()) {
-              MetadataService.UpsertResult upsertResult = results[0];
-              if (upsertResult.success) {
-                  System.debug('Profile updated successfully for: ' + upsertResult.fullName);
-                  returnMap.put('label', upsertResult.fullName);
-                  returnMap.put('description', newDescription);
-              } else {
-                  String errorMessage = 'Error updating profile: ' + (upsertResult.errors != null && !upsertResult.errors.isEmpty() ? upsertResult.errors[0].message : 'Unknown error');
-                  handleException(errorMessage, null);
-              }
-          }
-      }
-      System.debug('Return map: ' + returnMap);
-      return returnMap;
-  }
+Public without Sharing Class ProfileManager {
     
-  //This method is used for delete functionality in profile.
-  @AuraEnabled
-  public static void deleteProfile(String profileName) {
-      if (String.isBlank(profileName)) {
-          handleException('Profile name cannot be blank.', null);
-      }
-      try {
-          UserAccessManager instance = new UserAccessManager();
-          MetadataService.DeleteResult[] deleteResults = instance.service.deleteMetadata('Profile', new List < String > {
-              profileName
-          });
-
-          if (deleteResults == null || deleteResults.isEmpty()) {
-              handleException('No response received from delete operation.', null);
-          }
-          MetadataService.DeleteResult deleteResult = deleteResults[0];
-          if (!deleteResult.success) {
-              String errorMessage = deleteResult.errors != null && !deleteResult.errors.isEmpty() ?
-                  deleteResult.errors[0].message :
-                  'Unknown error occurred during profile deletion.';
-                handleException('Failed to delete profile: ', null);
-          }
-
-          System.debug('Successfully deleted profile: ' + deleteResult.fullName);
-      } catch (Exception e) {
-          System.debug(LoggingLevel.ERROR, 'Error in deleteProfile: ' + e.getMessage());
-          handleException('An error occurred while deleting the profile: ', e);
-      }
-  }
-    
-  //Wrapper class to fetch users list & profile name
-  public class UserAndProfileDetails {
-      @AuraEnabled public List<User> userList { get; private set; }
-      @AuraEnabled public String profileName { get; private set; }
-      public UserAndProfileDetails(List<User> userList, String profileName) {
-        this.userList = userList;
-        this.profileName = profileName;
-      }
-    }
-    
-    // This method is used to fetch profile-related users.
     @AuraEnabled(cacheable=true)
-    public static UserAndProfileDetails getProfileUsers(String profId) {
-        List<User> users = [
-            SELECT Id, Name, Username, Profile.UserLicense.Name, IsActive 
-            FROM User 
-            WHERE ProfileId = :profId AND IsActive = TRUE 
-            ORDER BY Name ASC
-        ];
+    //This method is used to fetch profile Name.
+    public static List<String> getProfileName(String profileId) {
+        if (String.isBlank(profileId)) {
+            return null;
+        }      
+        UserAccessManager instance = new UserAccessManager();
+        List<String> profileNames = new List<String>();
+        String baseUrl = URL.getOrgDomainUrl().toExternalForm();
+        String toolingQuery = '/services/data/v58.0/tooling/query/?q=SELECT+Id,+Name,+FullName+FROM+Profile+WHERE+Id=\'' + profileId + '\'';
+        String endPoint = baseUrl + toolingQuery;
         
-        // Get the profile name as a single string
-        String profileName = ProfileManager.getProfileName(profId).isEmpty() 
-            ? '' 
-            : ProfileManager.getProfileName(profId)[0];
-        
-        return new UserAndProfileDetails(users, profileName);
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endPoint);
+        req.setMethod('GET');
+        req.setHeader('Authorization', 'Bearer ' + instance.partnerConnection.SessionHeader.sessionId);
+        req.setHeader('Content-Type', 'application/json');       
+        try {
+            Http http = new Http();
+            HttpResponse res = http.send(req);         
+            if (res.getStatusCode() == 200) {
+                Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+                List<Object> records = (List<Object>) results.get('records');              
+                for (Object record : records) {
+                    Map<String, Object> recordMap = (Map<String, Object>) record;
+                    profileNames.add((String) recordMap.get('FullName'));
+                }
+            } else {
+                System.debug('Error: ' + res.getStatus() + ', Response: ' + res.getBody());
+            }
+        } catch (Exception e) {
+            System.debug('Exception: ' + e.getMessage());
+        }      
+        System.debug('profileNames: ' + profileNames);
+        return profileNames;
     }
     
-    //This method retrieves permission sets associated with profiles.
-    @AuraEnabled(cacheable=true)    
-    public static List<PermissionSet> getProfileDetails() {
-        return [
-            SELECT 
-                Id, 
-                ProfileId, 
-                Profile.Name, 
-                Profile.UserLicense.Name, 
-                Profile.Description, 
-                Profile.UserType, 
-                IsOwnedByProfile, 
-                IsCustom 
-            FROM PermissionSet 
-            WHERE IsOwnedByProfile = TRUE 
-            ORDER BY Profile.Name ASC
-        ];
-    }
-    
-    //This method retrieves tab visibility settings for each profile.
     @AuraEnabled
+    // This method is used to update profile properties.
+    public static Map<String, String> updateProfile(String profileName, String newProfileName, String newDescription) {
+        System.debug('profileName: ' + profileName);
+        System.debug('newProfileName: ' + newProfileName);
+        System.debug('newDescription: ' + newDescription);
+        
+        UserAccessManager instance = new UserAccessManager();
+        Map<String, String> returnMap = new Map<String, String>();
+        
+        // Retrieve the existing profile metadata
+        List<MetadataService.Profile> profiles = (List<MetadataService.Profile>) instance.service.readMetadata('Profile', new List<String>{profileName}).getRecords();
+        
+        if (profiles[0].fullName != null) {
+            MetadataService.Profile updatedProfile = new MetadataService.Profile();
+            updatedProfile.fullName = newProfileName;
+            updatedProfile.description = newDescription;
+            MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List<MetadataService.Profile>{updatedProfile});
+            
+            if (!results.isEmpty()) {
+                MetadataService.UpsertResult upsertResult = results[0];
+                if (upsertResult.success) {
+                    System.debug('Profile updated successfully for: ' + upsertResult.fullName);
+                    returnMap.put('label', upsertResult.fullName);
+                    returnMap.put('description', newDescription);
+                } else {
+                    String errorMessage = 'Error updating profile: ' + (upsertResult.errors != null && !upsertResult.errors.isEmpty() ? upsertResult.errors[0].message : 'Unknown error');
+                    for (MetadataService.Error error : upsertResult.errors) {
+                        System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+                        if (error.fields != null) {
+                            for (String field : error.fields) {
+                                System.debug('Error Field: ' + field);
+                            }
+                        }
+                    }
+                    throw new AuraHandledException(errorMessage);
+                }
+            }
+        }
+        System.debug('Return map: ' + returnMap);
+        return returnMap;
+    }
+    
+    @AuraEnabled
+   //This method is used for delete functionality in profile.
+  Public Static Void deleteProfile(String profileName) {
+    system.debug('Profle Name' + profileName);
+    UserAccessManager instance = new UserAccessManager();
+    MetadataService.DeleteResult[] deleteResults = instance.service.deleteMetadata('Profile',new List<String>{ profileName });
+	system.debug('Delete Results >>>>'+deleteResults);
+    for (MetadataService.DeleteResult deleteResult : deleteResults) {
+      System.debug('Deleted Metadata: ' + deleteResult.fullName);
+      System.debug('Status: ' + deleteResult.success);
+      if (!deleteResult.success) {
+        for (MetadataService.Error error : deleteResult.errors) {
+          System.debug('Error: ' + error.message);
+          throw new AuraHandledException('An error occurred while deleting Profile: ' + error.message);
+        }
+      }
+    }
+  }
+    
+    //Wrapper class to fetch users list & profile name
+  Public Class UserAndProfileDetails {
+    @Auraenabled
+    Public List<User> userList { get; set; }
+    @Auraenabled
+    Public String profileName { get; set; }
+    Public UserAndProfileDetails(List<User> userList, String profileName) {
+      this.userList = userList;
+      this.profileName = profileName;
+    }
+  }
+    
+    @AuraEnabled(cacheable=true)
+   //This method is used to fetch profile related users.
+  Public Static UserAndProfileDetails getProfileusers(String profId) {
+    return new UserAndProfileDetails([SELECT id, Name, Username, Profile.UserLicense.Name, IsActive FROM user WHERE ProfileId = :profId AND IsActive = TRUE ORDER BY Name ASC LIMIT 5000],ProfileManager.getProfileName(profId)[0]);
+  }
+    
+     @AuraEnabled(cacheable=true)
+    //This method retrieves permission sets associated with profiles.
+  Public Static List<PermissionSet> getProfileDetails() {
+    return [SELECT Id,ProfileId,Profile.Name,Profile.UserLicense.Name,Profile.Description,Profile.UserType,IsOwnedByProfile,isCustom FROM Permissionset WHERE IsOwnedByProfile = TRUE ORDER BY Profile.Name ASC LIMIT 5000];
+  }
+    
+    @AuraEnabled
+    //This method retrieves tab visibility settings for each profile.
     Public Static List<Map<String, Object>> getProfileTabSetting(List<String> profileName) {
         List<Map<String, Object>> tabSettingMapList = new List<Map<String, Object>>();
         Map<String, String> tabVisibilities = getTabPermissions(profileName);
@@ -178,32 +145,30 @@ Public Class ProfileManager {
     }
 
     @AuraEnabled
-    //Helper to get tab permissions for each profile.
-    Public Static Map<String, String> getTabPermissions(List<String> profileName) {
-        UserAccessManager instance = new UserAccessManager();
-        List<MetadataService.Profile> profiles = (List<MetadataService.Profile>) instance.service.readMetadata('Profile',profileName).getRecords();
-        Map<String, String> tabSettingObj = new Map<String, String>();
-        if (profiles != null) {
-            try {
-                for (MetadataService.Profile prof : profiles) {
-                    if (prof.tabVisibilities != null) {
-                        for (
-                            MetadataService.ProfileTabVisibility tabVisibility : prof.tabVisibilities
-                        ) {
-                            tabSettingObj.put(tabVisibility.tab, tabVisibility.visibility);
-                        }
-                    }
-                }
-            } catch (exception e) {
-                throw new AuraHandledException(e.getMessage());
-            }
-        }
-        system.debug('check tab setting' + tabSettingObj);
-        return tabSettingObj;
-        
-    }
+      public static Map < String, String > getTabPermissions(List < String > profileNames) {
+          UserAccessManager instance = new UserAccessManager();
+          Map < String, String > tabSettingObj = new Map < String, String > ();
+          try {
+              List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', profileNames).getRecords();
+
+              if (profiles != null) {
+                  for (MetadataService.Profile prof: profiles) {
+                      if (prof.tabVisibilities != null) {
+                          for (MetadataService.ProfileTabVisibility tabVisibility: prof.tabVisibilities) {
+                              tabSettingObj.put(tabVisibility.tab, tabVisibility.visibility);
+                          }
+                      }
+                  }
+              }
+          } catch (Exception e) {
+              handleException('Error processing tab permissions: ', e);
+          }
+
+          System.debug('Tab settings: ' + tabSettingObj);
+          return tabSettingObj;
+      }
     
-      @AuraEnabled
+   @AuraEnabled
       public static ProfileObjectPermissionsWrapper getSobjectPermissionsForProfile(String permSetId, String objName) {
           // Fetch dependencies and field access in parallel
           List < Object > dependObjects = ProfileManager.checkDependency(objName);
@@ -357,19 +322,15 @@ Public Class ProfileManager {
     //Helper to get the valid fields for updating ObjectPermissions.
     @AuraEnabled
     public static Map < String, Boolean > checkFieldType(String sObjName) {
-        Map < String, Boolean > fieldMap = new Map < String, Boolean > ();
-        String prefix = sObjName + '.';
-
-        for (Schema.PicklistEntry p: fieldPermissions.Field.getDescribe().getPicklistValues()) {
-            String value = p.getValue();
-            if (value.startsWith(prefix)) {
-                fieldMap.put(value, true);
+       Map<String, Boolean> fieldMap = new Map<String, Boolean>();
+        for (Schema.PicklistEntry p : fieldPermissions.Field.getDescribe().getPicklistValues()) {
+            if (sObjName == p.getValue().split('\\.')[0]) {
+                fieldMap.put(p.getValue(), true);
             }
         }
         return fieldMap;
     }
-    
-    //Helper to get valid field name.
+                      
     @AuraEnabled
     //Helper to get valid field name.
     Public Static Map<String, Map<String, Object>> getFieldDefinitionProfile(String objectName) {
@@ -470,7 +431,12 @@ Public Class ProfileManager {
     //Helper to get valid sobject.
     @AuraEnabled
     public static Boolean checkSObjType(String sObjName) {
-        return new Set < String > (new List < String > (Schema.getGlobalDescribe().keySet())).contains(sObjName);
+        for (Schema.PicklistEntry p : objectPermissions.SObjectType.getDescribe().getPicklistValues()) {
+            if (sObjName == p.getValue()) {
+                return true;
+            }
+        }
+        return false;
     }
     //Wrapper class for user permissions & its dependencies.
     public class PermissionFieldWrap {
@@ -584,62 +550,66 @@ Public Class ProfileManager {
 
       return sendQueryRequest(query, sessionId, baseUrl);
   }
-
+    
     @AuraEnabled
-    public static Map<String, Boolean> updateSystemPermissionsProf(String profileName, Map<String, Boolean> systemPermissions) {
+    //This method is used to update system permissions & its dependencies in profile.
+    Public Static Map<String, Boolean> updateSystemPermissionsProf(String profileName,Map<String, Boolean> systemPermissions) {
+        // Create an instance of ManageUserAccess
         UserAccessManager instance = new UserAccessManager();
         Map<String, Boolean> updatedResult = new Map<String, Boolean>();
         
-        try {
-            // Fetch the profile
-            List<MetadataService.Profile> profiles = (List<MetadataService.Profile>) instance.service.readMetadata('Profile', new List<String> { profileName }).getRecords();
-            
-            if (profiles.isEmpty()) {
-                handleException('Profile not found: ', null);
-            }
-            
+        // Fetch the profiles
+        List<MetadataService.Profile> profiles = (List<MetadataService.Profile>) instance.service.readMetadata('Profile',new List<String>{ profileName }).getRecords();
+        List<MetadataService.Profile> profilesToUpdate = new List<MetadataService.Profile>();
+        
+        // Iterate through the profiles
+        for (MetadataService.Profile profile : profiles) {
             MetadataService.Profile updatedProfile = new MetadataService.Profile();
-            updatedProfile.fullName = profiles[0].fullName;
+            updatedProfile.fullName = profile.fullName;
             updatedProfile.userPermissions = new List<MetadataService.ProfileUserPermission>();
             
-            // Create user permissions
+            // Iterate through the system permissions to update
             for (String permissionName : systemPermissions.keySet()) {
-                MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
-                userPermission.name = permissionName;
-                userPermission.enabled = systemPermissions.get(permissionName);
-                updatedProfile.userPermissions.add(userPermission);
+                MetadataService.ProfileUserPermission newPermission = new MetadataService.ProfileUserPermission();
+                newPermission.name = permissionName;
+                newPermission.enabled = systemPermissions.get(permissionName);
+                updatedProfile.userPermissions.add(newPermission);
             }
-            
-            // Upsert the updated profile
-            MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List<MetadataService.Profile> { updatedProfile });
-            
-            if (results[0].success) {
-                System.debug('Profile updated successfully for: ' + results[0].fullName);
-                updatedResult.putAll(systemPermissions);
-            } else {
-                handleUpsertError(results[0]);
-            }
-        } catch (Exception e) {
-            handleException('An error occurred while updating the profile: ', e);
+            profilesToUpdate.add(updatedProfile);
         }
         
+        // Upsert the updated profiles
+        MetadataService.UpsertResult[] results = instance.service.upsertMetadata(profilesToUpdate);
+        
+        // Process the upsert results
+        for (MetadataService.UpsertResult upsertResult : results) {
+            if (!upsertResult.success) {
+                for (MetadataService.Error error : upsertResult.errors) {
+                    System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+                    if (error.fields != null) {
+                        for (String field : error.fields) {
+                            System.debug('Error Field: ' + field);
+                        }
+                    }
+                }
+                throw new AuraHandledException('Error updating profile: ' + upsertResult.errors[0].message);
+            } else {
+                System.debug('Profile updated successfully for: ' + upsertResult.fullName);
+                for (MetadataService.Profile updateProf : profilesToUpdate) {
+                    System.debug('updateProf: ' + updateProf);
+                    if (updateProf.userPermissions != null) {
+                        for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
+                            updatedResult.put(updateProfUser.name, updateProfUser.enabled);
+                        }
+                    }
+                }
+            }
+        }
         System.debug('updatedResult: ' + updatedResult);
         return updatedResult;
     }
-
-
-  private static void handleUpsertError(MetadataService.UpsertResult result) {
-      String errorMessage = 'Error updating profile: ';
-      for (MetadataService.Error error: result.errors) {
-          errorMessage += error.message + ' (Status Code: ' + error.statusCode + ') ';
-          if (error.fields != null) {
-              errorMessage += 'Fields: ' + String.join(error.fields, ', ');
-          }
-      }
-      handleException(errorMessage, null);
-  }
     
-  //Wrapper class for object level permissions.
+    //Wrapper class for object level permissions.
   public class ProfileObjectDetails {
     @AuraEnabled public final List<EntityDefinition> entityDefList;
     @AuraEnabled public final Map<String, Object> objectPermissions;
@@ -649,7 +619,7 @@ Public Class ProfileManager {
     }
   }
  
-  //This method is used to retrieve object-level permissions for a specific profile.
+     //This method is used to retrieve object-level permissions for a specific profile.
   @AuraEnabled
   public static ProfileObjectDetails getProfileObjectDetails(String permId) {
     Map < String, Map < String, Boolean >> objectPermissionsMap = new Map < String, Map < String, Boolean >> ();
@@ -678,8 +648,8 @@ Public Class ProfileManager {
         WHERE DefaultCompactLayoutId != NULL
     ], objectPermissionsMap);
   }
-  
-  private static void handleException(String message, Exception e) {
+    
+    private static void handleException(String message, Exception e) {
       String fullMessage = e == null ? message : message + ': ' + e.getMessage();
       System.debug(LoggingLevel.ERROR, fullMessage);
       throw new AuraHandledException(fullMessage);

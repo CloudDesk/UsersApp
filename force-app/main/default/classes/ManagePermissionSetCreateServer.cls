@@ -124,7 +124,7 @@ Public without Sharing class ManagePermissionSetCreateServer {
         List<TabPermissionAnalyzerServer.TabSettingsWrapper> tabSettings = new List<TabPermissionAnalyzerServer.TabSettingsWrapper>();
         for (Map<String, String> item : rawList) {
             for (String tabName : item.keySet()) {
-                String visibility = item.get(tabName);
+                String visibility = item.get(tabName); 
                 TabPermissionAnalyzerServer.TabSettingsWrapper wrapper = new TabPermissionAnalyzerServer.TabSettingsWrapper();
                 wrapper.tab = tabName;
                 wrapper.visibility = visibility;

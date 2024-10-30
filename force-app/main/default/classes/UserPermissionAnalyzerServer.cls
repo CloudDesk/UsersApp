@@ -109,30 +109,21 @@ Public without sharing Class UserPermissionAnalyzerServer {
       return new MutePermissionsOfPermSetGrpWrapper(permSetId, mutingUserPermissions);
   }
 private static String getOrCreateMutingPermissionSetId(String groupId) {
-      PermissionSetGroupComponent psgg = [SELECT PermissionSetId
-          FROM PermissionSetGroupComponent
-          WHERE PermissionSetGroupId =: groupId
-          AND(NOT PermissionSet.Name LIKE '%_%')
-          LIMIT 1
-      ];
-      if (psgg != null) {
-          return psgg.PermissionSetId;
+      List<PermissionSetGroupComponent> psgg = [SELECT PermissionSetId FROM PermissionSetGroupComponent WHERE PermissionSetGroupId =: groupId AND(NOT PermissionSet.Name LIKE '%_%') LIMIT 1];
+      if (!psgg.isEmpty()) {
+          return psgg[0].PermissionSetId;
       }
 
-      PermissionSetGroup permSetGrp = [SELECT MasterLabel, DeveloperName
-          FROM PermissionSetGroup
-          WHERE Id =: groupId
-          LIMIT 1
-      ];
-      if (permSetGrp == null) {
+     List< PermissionSetGroup> permSetGrp = [SELECT MasterLabel, DeveloperName FROM PermissionSetGroup WHERE Id =: groupId LIMIT 1];
+      if (!permSetGrp.isEmpty()) {
           System.debug('PermissionSetGroup not found for Id: ' + groupId);
           return null;
       }
 
       try {
           MutingPermissionSet mutePerm = new MutingPermissionSet(
-              MasterLabel = permSetGrp.MasterLabel + ' Muted',
-              DeveloperName = permSetGrp.DeveloperName + '_Muted'
+              MasterLabel = permSetGrp[0].MasterLabel + ' Muted',
+              DeveloperName = permSetGrp[0].DeveloperName + '_Muted'
           );
           insert mutePerm;
 

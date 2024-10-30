@@ -79,12 +79,17 @@ Public without sharing Class TabPermissionAnalyzerServer {
   }
 //This is Methos Used to updated TabVIsibility for Profile Using MetadataAPI
     Public class TabSettingsWrapper {
-    	Public String tab;
+        Public String tab;
     	Public String visibility;
-
+	
     Public TabSettingsWrapper(String tab, String visibility) {
         this.tab = tab;
         this.visibility = visibility;
+    }
+	 public TabSettingsWrapper() {
+        // Initialize fields if necessary
+        this.tab = '';
+        this.visibility = '';
     }
 }
 //This is the Method Used to Update TabVisibiltity For PermissionSet Deserialize and call an update method
