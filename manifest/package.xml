@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>UserPermissionAnalyzerServer</members>
+        <members>ProfileManager</members>
+        <members>PermissionSetManager</members>
+        <members>UserAccessManager</members>
+        <members>TabPermissionAnalyzerServer</members>
+        <members>PermissionTabServer</members>
+        <members>PermissionSetGroupManager</members>
+        <members>PermissionAnalyzerRecordTypeServer</members>
+        <members>PermissionAnalyzerServer</members>
+        <members>ManagePermissionSetCreateServer</members>
+        <members>PermissionAnalyzerObjectServer</members>
+        <members>ServiceClass</members>
+        <members>ServiceInterface</members>
+        <members>MetadataService</members>
+        <members>ServiceDispatcher</members>
+        <members>PermissionSetCreate</members>
+        <members>FieldCustomValidationException</members>
+        <members>manageUserAccess</members>
+        <members>ManageUserAccessPartner</members>
+        <members>TabSettingManager</members>
+        <members>PermissioAnalyzerServer</members>
+        <members>ObjectandFieldPermissionManager</members>
+        <members>FieldPermissionManager</members>
+        <members>ObjectPermissionManager</members>
+        <members>DependencyManager</members>
+        <members>PermissionTabHelper</members>
+        <members>permissionSobjectPartnerSoapSforceCom</members>
+        <members>ImportTemplateController</members>
+        <members>DataTypeRegistry</members>
+        <members>ServiceObject</members>
+        <name>ApexClass</name>
+    </types>
+    <version>62.0</version>
+</Package>
