@@ -140,6 +140,11 @@ public class ManagePermissionSetCreateServerTest {
         PermissionsEdit = false
     );
 	insert new List<FieldPermissions>{ fieldPerm1, fieldPerm2,fieldPermMute1,fieldPermMute2};
+        PermissionSet testPermissionSet = new PermissionSet(
+            Name = 'Test_Sample_PermSet',
+            Label = PermissionSet_Label
+        );
+        insert testPermissionSet;
     }
     @IsTest
     Static Void duplicatePermissionSetCheck_Test(){
@@ -162,11 +167,9 @@ public class ManagePermissionSetCreateServerTest {
         Test.StopTest();
           System.assertNotEquals(null, result, 'it should Not be null');
     }
+    
     @IsTest
     Static Void createNewPermissionSet_TestWithObj(){
-        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
-        Map<String,Object> newPermSet = new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
-            						'Description'=>'This is Test Sample', 'License'=>null,'hasActivationRequired'=>true};
         Map<String,Boolean> objPerm = new Map<String,Boolean>{'PermissionsRead'=>true, 'PermissionsEdit'=>true,
             'PermissionsDelete'=>true, 'PermissionsViewAllRecords'=>true,'PermissionsCreate'=>true,'PermissionsModifyAllRecords'=>true};
         Map<String, Map<String, Boolean>> objectPermMap = new Map<String, Map<String, Boolean>>{'Opportunity'=>objPerm};
@@ -178,116 +181,91 @@ public class ManagePermissionSetCreateServerTest {
          eligibleFieldWrapper.hasEditAccess = true;
          eligibleFieldWrapper.mutedPermissionsRead = false;
          eligibleFieldWrapper.mutedPermissionsEdit = false;
-        PermissionSet testPermissionSet = new PermissionSet();
-        testPermissionSet.Name = 'Test_Sample_PermSet';
-        testPermissionSet.Label = PermissionSet_Label;
-        insert testPermissionSet; // Insert into test database
 
         System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
         try{
-   			 ManagePermissionSetCreateServer.createNewPermissionSet(newPermSet,new List<String>{testUser.Id},objectPermMap, 
-                                                                                       new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper},'Opportunity','Obj','',
-                                                                                     new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
-          	PermissionSetManager.createPermissionSet(newPermSet, new List<String>{testUser.Id});
+            createPermissionSetTest(objectPermMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper},'Obj','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+   			 
+          	PermissionSetManager.createPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+            						'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}, new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id});
             System.assert(false, Error_Thrown_Message);
         } catch(AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.StopTest();
          PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
-        System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
+        System.assertEquals([Select Id from PermissionSet Where Name = 'Test_Sample_PermSet'].Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
     }
-	    @IsTest
+    @IsTest
     Static Void createNewPermissionSet_TestWithUser(){
-        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
-        Map<String,Object> newPermSet = new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
-            						'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true};
-       
-        PermissionSet testPermissionSet = new PermissionSet();
-        testPermissionSet.Name = 'Test_Sample_PermSet';
-        testPermissionSet.Label = PermissionSet_Label;
-        insert testPermissionSet; // Insert into test database
-
         System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
         try{
-         ManagePermissionSetCreateServer.createNewPermissionSet(newPermSet,new List<String>{testUser.Id},new Map<String, Map<String, Boolean>>(), 
-                                                                                      new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'Opportunity','User','',
-                                                                                      new Map<String, Boolean>{'ApiEnabled'=>true,'EditTask'=>true},new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
-          PermissionSetManager.createPermissionSet(newPermSet, new List<String>{testUser.Id});
+            createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'User','',new Map<String, Boolean>{'ApiEnabled'=>true,'EditTask'=>true},new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+            
+            PermissionSetManager.createPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+                'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}
+                                                     , new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id});
             System.assert(false, Error_Thrown_Message);
         } catch(AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.StopTest();
-         PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
-        System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
+        PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
+        System.assertEquals([Select Id from PermissionSet Where Name = 'Test_Sample_PermSet'].Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
     }
-        @IsTest
+    @IsTest
     Static Void createNewPermissionSet_TestWithTab(){
-        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
-        Map<String,Object> newPermSet = new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
-            						'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true};
-       
-        PermissionSet testPermissionSet = new PermissionSet();
-        testPermissionSet.Name = 'Test_Sample_PermSet';
-        testPermissionSet.Label = PermissionSet_Label;
-        insert testPermissionSet; // Insert into test database
-
         System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
         try{
-           ManagePermissionSetCreateServer.createNewPermissionSet(newPermSet,new List<String>{testUser.Id},new Map<String, Map<String, Boolean>>(), 
-                                                                                      new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'Opportunity','Tab','[{"standard-Account":"visible"}]',
-                                                                                      new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
-            PermissionSetManager.createPermissionSet(newPermSet, new List<String>{testUser.Id});
+            createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'Tab','[{"standard-Account":"visible"}]',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+            
+            PermissionSetManager.createPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+            						'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}
+                                                     , new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id});
             System.assert(false, Error_Thrown_Message);
         } catch(AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.StopTest();
          PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
-        System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
+        System.assertEquals([Select Id from PermissionSet Where Name = 'Test_Sample_PermSet'].Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
     }
     @IsTest
     Static Void createNewPermissionSet_TestWithRecType(){
-        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
-        Map<String,Object> newPermSet = new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
-            						'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true};
-       
-        PermissionSet testPermissionSet = new PermissionSet();
-        testPermissionSet.Name = 'Test_Sample_PermSet';
-        testPermissionSet.Label = PermissionSet_Label;
-        insert testPermissionSet; // Insert into test database
         PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper wrapper = new PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper();
         wrapper.RecordType = 'Account.Healthplan';
         wrapper.Visible = false;
         wrapper.developerName = 'Healthplan';
         wrapper.Default_x = false;
-        
-
         System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
         try{
-          ManagePermissionSetCreateServer.createNewPermissionSet(newPermSet,new List<String>{testUser.Id},new Map<String, Map<String, Boolean>>(), 
-                                                                                      new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'Opportunity','RecordType','',
-                                                                                      new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>{wrapper});
-          PermissionSetManager.createPermissionSet(newPermSet, new List<String>{testUser.Id});
+          createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'RecordType','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>{wrapper});
+            
+          PermissionSetManager.createPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+            						'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}
+                                                   , new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id});
             System.assert(false, Error_Thrown_Message);
         } catch(AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.StopTest();
          PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
-        System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
+        System.assertEquals([Select Id from PermissionSet Where Name = 'Test_Sample_PermSet'].Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
     }
-      
-    
-
-    
+    static void createPermissionSetTest(Map<String, Map<String, Boolean>> objectPermissionsMap, List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> fieldPerms, String updateType, String tabToUpdate, Map<String, Boolean> userToUpdate,List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> recTypeToUpdate){
+        
+        ManagePermissionSetCreateServer.createNewPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+                'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true},
+                                                                   new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id},objectPermissionsMap, 
+                                                                   fieldPerms,'Opportunity',updateType,tabToUpdate,
+                                                                   userToUpdate, recTypeToUpdate);
+    }
 }
