@@ -10,17 +10,15 @@ Public without sharing Class PermissionSetGroupManager {
         // Query all PermissionSetGroupComponents
         for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent]) {
             // Check if the PermissionSetGroupId already exists in the map
+            List<PermissionSetGroupComponent> permSetGrpList = new List<PermissionSetGroupComponent>(); 
             if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
                 // Initialize a new list for this PermissionSetGroupId
-                List<PermissionSetGroupComponent> permSetGrpList = new List<PermissionSetGroupComponent>();
-                permSetGrpList.add(permSetComp);
                 permSetCompMap.put(permSetComp.PermissionSetGroupId, permSetGrpList);
             } else {
                 // Retrieve the existing list
-                List<PermissionSetGroupComponent> permSetGrpList = permSetCompMap.get(permSetComp.PermissionSetGroupId);
-                // Add the current component to the list
-                permSetGrpList.add(permSetComp);
+                permSetGrpList = permSetCompMap.get(permSetComp.PermissionSetGroupId);
             }
+            permSetGrpList.add(permSetComp);
         }
         
         // Query all PermissionSetGroups
@@ -270,12 +268,12 @@ Public without sharing Class PermissionSetGroupManager {
     
     @AuraEnabled
     //This method is used to assign users to Permission Set Groups, retrieve users assigned to groups, and list users who are eligible to be assigned to a group.
-    Public Static Void getPermissionGroup(List<String> userId,String PerSetGrpId) {
+    Public Static Void getPermissionGroup(List<String> userId,String PerSetGrp_Id) {
         List<PermissionSetAssignment> persetasi = new List<PermissionSetAssignment>();
         for (String assignId : userId) {
             PermissionSetAssignment perasi = new PermissionSetAssignment();
             perasi.AssigneeId = assignId;
-            perasi.PermissionSetGroupId = PerSetGrpId;
+            perasi.PermissionSetGroupId = PerSetGrp_Id;
             persetasi.add(perasi);
         }
         
@@ -283,7 +281,7 @@ Public without sharing Class PermissionSetGroupManager {
             insert persetasi;
             System.debug('Permission Set Group assigned successfully to all users');
         } catch (DmlException e) {
-            handleException('Error assigning Permission Set Group: ', e);
+            handleException('Error in fetching Permission Set Group: ', e);
         }
     }
     
@@ -357,7 +355,7 @@ Public without sharing Class PermissionSetGroupManager {
             insert persetasi;
             System.debug('Permission Set Group assigned successfully to Permission Set');
         } catch (DmlException e) {
-            handleException('Error assigning Permission Set Group: ', e);
+            handleException('Error in creating Permission Set Group: ', e);
         }
     }
     
@@ -409,7 +407,6 @@ Public without sharing Class PermissionSetGroupManager {
             if (ps.License != null) {
                 recordMap.put('LicenseId', ps.License.Id);
                 recordMap.put('LicenseName', ps.License.Name);
-                System.debug('Permission Set Id >> ' + ps.Id);
                 System.debug('License Name >> ' + ps.License.Name);
             } else {
                 System.debug('License Name not found for Permission set ID: ' + ps.Id);
@@ -583,8 +580,8 @@ Public without sharing Class PermissionSetGroupManager {
     }
     system.debug('QUery' + query);
 
-    String username = System.Label.Board_Book_Integration_Username;
-    String password = System.Label.Board_Book_Integration_Password;
+    //String username = System.Label.Board_Book_Integration_Username;
+    //String password = System.Label.Board_Book_Integration_Password;
     UserAccessManager instance = new UserAccessManager();
 
     String endpoint =
@@ -1264,8 +1261,8 @@ Public without sharing Class PermissionSetGroupManager {
     System.debug('Object Name' + objName);
     System.debug('PSG Name' + psgname);
     System.debug('PSG API Name' + psgapiname);
-    UserAccessManager instance = new UserAccessManager();
-    List<Object> dependObjects = PermissionSetGroupManager.checkDependency(objName);
+    //UserAccessManager instance = new UserAccessManager();
+    //List<Object> dependObjects = PermissionSetGroupManager.checkDependency(objName);
     Map<String, Boolean> fieldAccess = PermissionSetManager.checkFieldType(objName);
 	system.debug('fieldAccess' + fieldAccess);
 
