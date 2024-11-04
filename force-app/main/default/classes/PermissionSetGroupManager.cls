@@ -7,7 +7,7 @@ Public without sharing Class PermissionSetGroupManager {
         Map<String, List<PermissionSetGroupComponent>> permSetCompMap = new Map<String, List<PermissionSetGroupComponent>>();
         List<permissionSetGroupWrapper> permissionSetGroupWithLicense = new List<permissionSetGroupWrapper>();
         
-        for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent WHERE PermissionSet.License.Name != NULL]) {
+        for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent WHERE PermissionSet.License.Name != NULL limit 5000]) {
           if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
               permSetCompMap.put(permSetComp.PermissionSetGroupId, new List<PermissionSetGroupComponent>());
           }
