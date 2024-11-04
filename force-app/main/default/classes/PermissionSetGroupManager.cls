@@ -540,7 +540,7 @@ Public with sharing Class PermissionSetGroupManager {
 }
   
   //Helper method for checking dependencies.
-  Private Static Map<String, List<String>> CheckForDependencies(Set<String> fieldNames,Boolean isUpdateSystemPermissions) {
+  Private Static Map<String, List<String>> checkForDependencies(Set<String> fieldNames,Boolean isUpdateSystemPermissions) {
   system.debug(fieldNames);
   system.debug(isUpdateSystemPermissions);
   Map<String, List<String>> fieldPermissionsMap = new Map<String, List<String>>();
@@ -621,7 +621,7 @@ Public with sharing Class PermissionSetGroupManager {
   
   @AuraEnabled(cacheable=false)
   //This method is used to get user permissions/system permissions for permission set. 
-  Public Static userObjAndFieldPermissionSetGroupWrapper GetCombinedPermissions(String permissionSetGroupId,string persetapi,string persetname) {
+  Public Static UserObjAndFieldPermissionSetGroupWrapper getCombinedPermissions(String permissionSetGroupId,string persetapi,string persetname) {
       
       List<CombinedPermissionsWrapper> combinedPermissions = new List<CombinedPermissionsWrapper>();
       String baseQueryString = 'SELECT Id, Name';
@@ -841,7 +841,7 @@ Public with sharing Class PermissionSetGroupManager {
   
 // Mute System Permissions for Permission Set Group.
 @AuraEnabled
-public static List<MutingPermissionSet> MutePermissions(String systemPermissionsMapJson,String psgname,String psgapiname,String psgid) {
+public static List<MutingPermissionSet> mutePermissions(String systemPermissionsMapJson,String psgname,String psgapiname,String psgid) {
 
   // Deserialize JSON to a map
   Map<String, Object> tempMap = (Map<String, Object>) JSON.deserializeUntyped(systemPermissionsMapJson);
@@ -984,7 +984,7 @@ public static List<MutingPermissionSet> MutePermissions(String systemPermissions
   
   @AuraEnabled
   //Helper method to get tab settings of group.
-  public static List<Map<String, Object>> GetTabSettingpsg(String persetname) {
+  public static List<Map<String, Object>> getTabSettingpsg(String persetname) {
       UserAccessManager ua_instance = new UserAccessManager();
       List<MetadataService.PermissionSetGroup> permSetGroupList = 
           (List<MetadataService.PermissionSetGroup>) ua_instance.service.readMetadata('PermissionSetGroup', new String[] {persetname}).getRecords();
@@ -1135,7 +1135,7 @@ public static MutePermissionUpdateWrapper updateMutePermissions(string mutePermI
   
   @AuraEnabled
   //Helper method to update field permissions.
-  Public Static List<FieldPermissionUpdateWrapper> UpdateFieldPermissions(List<FieldPermissionUpdateWrapper> fieldPermissionWrapperList,String permissionSetId,String objName,String fieldPermType) {
+  Public Static List<FieldPermissionUpdateWrapper> updateFieldPermissions(List<FieldPermissionUpdateWrapper> fieldPermissionWrapperList,String permissionSetId,String objName,String fieldPermType) {
       List<FieldPermissions> permissionsToUpsert = new List<FieldPermissions>();
       List<FieldPermissionUpdateWrapper> updatedFieldPermissions = new List<FieldPermissionUpdateWrapper>();
       Set<String> fieldNames = new Set<String>();
@@ -1244,7 +1244,7 @@ return new PermissionSetGroupObjectDetails([SELECT Id, Label, QualifiedApiName, 
 
 @AuraEnabled
 //This Method Used to retrieve fieldDefinition, valid Sobjects for Obj Permissions, Valid field for field Permissions and also fetch Object Permissons Dependencies
-Public Static PermissionSetGroupObjectPermissionsWrapper GetSobjectPermissionsForPermissionSetGroup(String permSetId,String objName,String psgname,String psgapiname) {
+Public Static PermissionSetGroupObjectPermissionsWrapper getSobjectPermissionsForPermissionSetGroup(String permSetId,String objName,String psgname,String psgapiname) {
   System.debug('Perset Id' + permSetId);
   System.debug('Object Name' + objName);
   System.debug('PSG Name' + psgname);
