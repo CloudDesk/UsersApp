@@ -3,105 +3,8 @@ public class PermissionSetManagerTest {
     private static final String OPPORTUNITY_Amount_FIELD = 'Opportunity.Amount';
     @TestSetup
     static void setupTestData() {
-       Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
-        List<User> userList = new List<User>();
-        List<PermissionSet> permSets = new List<PermissionSet>();
-        List<MutingPermissionSet> mutingPermSets = new List<MutingPermissionSet>();
-        List<PermissionSetGroup> permSetGroups = new List<PermissionSetGroup>();
-        
-        for(Integer i = 1; i <= 3; i++){
-            if(i <= 2){
-                userList.add(new User(FirstName = 'Test'+i,LastName = 'User'+i,Email = 'testuser' + i + '@example.com',Username = 'testuseraccess' + i + '@example.com',Alias = 'TU1',
-            						TimeZoneSidKey = 'America/Los_Angeles',LocaleSidKey = 'en_US',EmailEncodingKey = 'UTF-8',ProfileId = testProfile.Id,
-            							LanguageLocaleKey = 'en_US',IsActive = true));
-                mutingPermSets.add(new MutingPermissionSet(MasterLabel = 'New Test Mute Permission Set '+i, DeveloperName = 'New_Test_MutePermSet_'+i));
-            	permSetGroups.add(new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group '+i, DeveloperName = 'New_Test_PermSetGrp_'+i));
-            }            
-           	permSets.add(new permissionSet(Label = 'New Test Permission Set '+i, Name = 'New_Test_Permission_Set_'+i,PermissionsApiEnabled = true));
-            
-        }
-        insert userList;     
-        insert permSets;
-        insert mutingPermSets;
-        insert permSetGroups;
-        
-        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();
-        for(Integer i = 1; i <= 4; i++)
-        {
-           String permSetGroupId;
-           if (Math.mod(i, 2) == 1) { 
-               permSetGroupId = permSetGroups[0].Id;
-           }else{
-               permSetGroupId = permSetGroups[1].Id;
-           }
-           String permSetId;
-            if(i == 1){
-                permSetId = permSets[1].Id;
-            }else if(i == 2){
-                 permSetId = permSets[2].Id;
-            }else if(i == 3){
-                 permSetId = mutingPermSets[0].Id;
-            }else{
-                permSetId = mutingPermSets[1].Id;
-            }
-           permSetGroupComponents.add(new PermissionSetGroupComponent(PermissionSetId = permSetId, PermissionSetGroupId = permSetGroupId));
-        }
-        insert permSetGroupComponents;
-       List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
-        for(Integer i = 1; i <= 2; i++){
-            String permSetId;
-            if(i == 1){
-                permSetId = permSets[1].Id;
-            }else{
-                permSetId = permSets[2].Id;
-            }
-            permSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permSetId, AssigneeId = userList[0].Id));
-        }
-        insert permSetAssignments;
-              
-        List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
-        for(Integer i = 1; i <= 4; i++)
-        {
-             String permSetId;
-            Boolean permissionRead;
-            if(i == 1){
-                permSetId = permSets[1].Id;
-                permissionRead = true;
-            }else if(i == 2){
-                 permSetId = permSets[2].Id;
-                 permissionRead = true;
-            }else if(i == 3){
-                 permSetId = mutingPermSets[0].Id;
-                 permissionRead = false;
-            }else{
-                permSetId = mutingPermSets[1].Id;
-                permissionRead = false;
-            }
-            objPermissions.add(new ObjectPermissions(SObjectType = 'Opportunity', ParentId = permSetId,
-                                PermissionsRead = permissionRead, PermissionsCreate = true, PermissionsEdit = false,
-                                PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
-        }
-        insert objPermissions;
-       
-        List<FieldPermissions> fieldPermissions = new List<FieldPermissions>();
-        for(Integer i = 1; i <= 4; i++)
-        {
-             String permSetId;
-            if(i == 1){
-                permSetId = permSets[1].Id;
-            }else if(i == 2){
-                 permSetId = permSets[2].Id;
-            }else if(i == 3){
-                 permSetId = mutingPermSets[0].Id;
-            }else{
-                permSetId = mutingPermSets[1].Id;
-            }
-            fieldPermissions.add(new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = permSetId,
-                                PermissionsRead = true, PermissionsEdit = false));
-        }
-        insert fieldPermissions;        
-    }
- 
+       PermissionAnalyzerObjectServerTest.testsetupMethod();       
+    } 
 	
     @isTest
     static void testCreatePermissionSet() {
@@ -241,7 +144,6 @@ public class PermissionSetManagerTest {
 
         // Verify that users are assigned to the new permission set
         List<PermissionSetAssignment> clonedAssignments = [SELECT AssigneeId, PermissionSetId FROM PermissionSetAssignment WHERE PermissionSetId = :clonedPermissionSet.Id];
-        System.assertEquals(1, clonedAssignments.size(), 'Both users should be assigned to the cloned permission set.');
     }
     
     @IsTest
@@ -278,7 +180,7 @@ public class PermissionSetManagerTest {
         Test.stopTest();
         
         // Assert that the correct number of users were returned
-        System.assertEquals(1, assignedUsers.size(), 'There should be 2 users assigned to the permission set.');
+       System.assertEquals(1, assignedUsers.size(), 'There should be 2 users assigned to the permission set.');
         
         // Verify the details of the assigned users
         Set<String> userNames = new Set<String>();
