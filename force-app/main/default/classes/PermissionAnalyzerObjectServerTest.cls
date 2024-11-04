@@ -4,79 +4,102 @@ Public Class PermissionAnalyzerObjectServerTest {
     private static final String Result_Not_Null_Message = 'Result should not be null';
     @testsetup
     static void testsetupMethod() {
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
+      	Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
+        List<User> userList = new List<User>();
+        List<PermissionSet> permSets = new List<PermissionSet>();
+        List<MutingPermissionSet> mutingPermSets = new List<MutingPermissionSet>();
+        List<PermissionSetGroup> permSetGroups = new List<PermissionSetGroup>();
         
-        List<User> userList = new List<User>{
-            new User(FirstName = 'TestOne', LastName = 'UserOne', Email = 'testuserone@example.com',
-                    Username = 'testuserone@example.com', Alias = 'tuone', ProfileId = testProfile.Id,
-                    TimeZoneSidKey = 'America/Los_Angeles', LocaleSidKey = 'en_US', 
-                    EmailEncodingKey = 'UTF-8', LanguageLocaleKey = 'en_US'),
-            new User(FirstName = 'TestOne', LastName = 'UserTwo', Email = 'testusertwo@example.com',
-                    Username = 'testusertwo@example.com', Alias = 'tutwo', ProfileId = testProfile.Id,
-                    TimeZoneSidKey = 'America/Los_Angeles', LocaleSidKey = 'en_US', 
-                    EmailEncodingKey = 'UTF-8', LanguageLocaleKey = 'en_US')
-        };
-            insert userList;
-            
-        List<PermissionSet> permSets = new List<PermissionSet>{
-            new PermissionSet(Label = 'New Test Permission Set', Name = 'New_Test_Permission_Set', PermissionsApiEnabled = true),
-            new PermissionSet(Label = 'New Test Permission Set 1', Name = 'New_Test_PermSet1', PermissionsApiEnabled = true),
-            new PermissionSet(Label = 'New Test Permission Set 2', Name = 'New_Test_PermSet2', PermissionsApiEnabled = true)
-        };
+        for(Integer i = 1; i <= 3; i++){
+            if(i <= 2){
+                userList.add(new User(FirstName = 'Test'+i,LastName = 'User'+i,Email = 'testuser' + i + '@example.com',Username = 'testuseraccess' + i + '@example.com',Alias = 'TU1',
+            						TimeZoneSidKey = 'America/Los_Angeles',LocaleSidKey = 'en_US',EmailEncodingKey = 'UTF-8',ProfileId = testProfile.Id,
+            							LanguageLocaleKey = 'en_US',IsActive = true));
+                mutingPermSets.add(new MutingPermissionSet(MasterLabel = 'New Test Mute Permission Set '+i, DeveloperName = 'New_Test_MutePermSet_'+i));
+            	permSetGroups.add(new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group '+i, DeveloperName = 'New_Test_PermSetGrp_'+i));
+            }            
+           	permSets.add(new permissionSet(Label = 'New Test Permission Set '+i, Name = 'New_Test_Permission_Set_'+i,PermissionsApiEnabled = true)); 
+        }
+        insert userList;     
         insert permSets;
-            
-        List<MutingPermissionSet> mutingPermSets = new List<MutingPermissionSet>{
-            new MutingPermissionSet(MasterLabel = 'New Test Mute Permission Set 1', DeveloperName = 'New_Test_MutePermSet1'),
-            new MutingPermissionSet(MasterLabel = 'New Test Mute Permission Set 2', DeveloperName = 'New_Test_MutePermSet2')
-        };
         insert mutingPermSets;
-
-        List<PermissionSetGroup> permSetGroups = new List<PermissionSetGroup>{
-            new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group 1', DeveloperName = 'New_Test_PermSetGrp1'),
-            new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group 2', DeveloperName = 'New_Test_PermSetGrp2')
-        };
         insert permSetGroups;
-
-        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>{
-            new PermissionSetGroupComponent(PermissionSetId = permSets[2].Id, PermissionSetGroupId = permSetGroups[1].Id),
-            new PermissionSetGroupComponent(PermissionSetId = permSets[1].Id, PermissionSetGroupId = permSetGroups[0].Id),
-            new PermissionSetGroupComponent(PermissionSetId = mutingPermSets[1].Id, PermissionSetGroupId = permSetGroups[1].Id),
-            new PermissionSetGroupComponent(PermissionSetId = mutingPermSets[0].Id, PermissionSetGroupId = permSetGroups[0].Id)
-        };
+        
+        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();
+        for(Integer i = 1; i <= 4; i++)
+        {
+           String permSetGroupId;
+           if (Math.mod(i, 2) == 1) { 
+               permSetGroupId = permSetGroups[0].Id;
+           }else{
+               permSetGroupId = permSetGroups[1].Id;
+           }
+           String permSetId;
+            if(i == 1){
+                permSetId = permSets[1].Id;
+            }else if(i == 2){
+                 permSetId = permSets[2].Id;
+            }else if(i == 3){
+                 permSetId = mutingPermSets[0].Id;
+            }else{
+                permSetId = mutingPermSets[1].Id;
+            }
+           permSetGroupComponents.add(new PermissionSetGroupComponent(PermissionSetId = permSetId, PermissionSetGroupId = permSetGroupId));
+        }
         insert permSetGroupComponents;
-
-        List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>{
-            new PermissionSetAssignment(PermissionSetId = permSets[1].Id, AssigneeId = userList[0].Id),
-            new PermissionSetAssignment(PermissionSetId = permSets[2].Id, AssigneeId = userList[0].Id)
-        };
+       List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
+        for(Integer i = 1; i <= 2; i++){
+            String permSetId;
+            if(i == 1){
+                permSetId = permSets[1].Id;
+            }else{
+                permSetId = permSets[2].Id;
+            }
+            permSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permSetId, AssigneeId = userList[0].Id));
+        }
         insert permSetAssignments;
-        List<ObjectPermissions> objPermissions = new List<ObjectPermissions>{
-            new ObjectPermissions(SObjectType = 'Opportunity', ParentId = permSets[1].Id,
-                                PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = false,
-                                PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false),
-            new ObjectPermissions(SObjectType = 'Opportunity', ParentId = permSets[2].Id,
-                                PermissionsRead = true, PermissionsCreate = false, PermissionsEdit = true,
-                                PermissionsDelete = true, PermissionsViewAllRecords = true, PermissionsModifyAllRecords = false),
-            new ObjectPermissions(SObjectType = 'Opportunity', ParentId = mutingPermSets[0].Id,
-                                PermissionsRead = false, PermissionsCreate = false, PermissionsEdit = false,
-                                PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = true),
-            new ObjectPermissions(SObjectType = 'Opportunity', ParentId = mutingPermSets[1].Id,
-                                PermissionsRead = false, PermissionsCreate = false, PermissionsEdit = false,
-                                PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = true)
-        };
+              
+        List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
+        for(Integer i = 1; i <= 4; i++)
+        {
+             String permSetId;
+            Boolean permissionRead;
+            if(i == 1){
+                permSetId = permSets[1].Id;
+                permissionRead = true;
+            }else if(i == 2){
+                 permSetId = permSets[2].Id;
+                 permissionRead = true;
+            }else if(i == 3){
+                 permSetId = mutingPermSets[0].Id;
+                 permissionRead = false;
+            }else{
+                permSetId = mutingPermSets[1].Id;
+                permissionRead = false;
+            }
+            objPermissions.add(new ObjectPermissions(SObjectType = 'Opportunity', ParentId = permSetId,
+                                PermissionsRead = permissionRead, PermissionsCreate = true, PermissionsEdit = false,
+                                PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
+        }
         insert objPermissions;
-
-        List<FieldPermissions> fieldPermissions = new List<FieldPermissions>{
-            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = permSets[1].Id,
-                                PermissionsRead = true, PermissionsEdit = false),
-            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = permSets[2].Id,
-                                PermissionsRead = true, PermissionsEdit = true),
-            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = mutingPermSets[0].Id,
-                                PermissionsRead = false, PermissionsEdit = false),
-            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = mutingPermSets[1].Id,
-                                PermissionsRead = false, PermissionsEdit = false)
-        };
-        insert fieldPermissions;
+       
+        List<FieldPermissions> fieldPermissions = new List<FieldPermissions>();
+        for(Integer i = 1; i <= 4; i++)
+        {
+             String permSetId;
+            if(i == 1){
+                permSetId = permSets[1].Id;
+            }else if(i == 2){
+                 permSetId = permSets[2].Id;
+            }else if(i == 3){
+                 permSetId = mutingPermSets[0].Id;
+            }else{
+                permSetId = mutingPermSets[1].Id;
+            }
+            fieldPermissions.add(new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = permSetId,
+                                PermissionsRead = true, PermissionsEdit = false));
+        }
+        insert fieldPermissions;       
     }
     
     @IsTest
@@ -99,7 +122,7 @@ Public Class PermissionAnalyzerObjectServerTest {
     static void getObjAndFieldPermissionsForMutingPermSet_Test() {
         PermissionSetGroup newGroup = new PermissionSetGroup(MasterLabel = 'New Test Group', DeveloperName = 'New_Test_Group');
         insert newGroup;
-        Id groupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp1' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1].Id;
         
         Test.startTest();
         PermissionAnalyzerObjectServer.MutePermissionWrapper result = PermissionAnalyzerObjectServer.getObjAndFieldPermissionsForMutingPermSet(groupId, new List<String>{'Opportunity'}, 'Opportunity');
@@ -119,7 +142,7 @@ Public Class PermissionAnalyzerObjectServerTest {
          eligibleFieldWrapper.hasEditAccess = true;
          eligibleFieldWrapper.mutedPermissionsRead = false;
          eligibleFieldWrapper.mutedPermissionsEdit = false;
-        Id permSetID = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_PermSet1'].Id;
+        Id permSetID = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id;
 
         Test.startTest();
         PermissionAnalyzerObjectServer.UpdatedObjAndFieldResult result = PermissionAnalyzerObjectServer.getSelectePermissionsetObjAndFieldResult(
@@ -148,8 +171,8 @@ Public Class PermissionAnalyzerObjectServerTest {
          eligibleFieldWrapper.mutedPermissionsRead = true;
          eligibleFieldWrapper.mutedPermissionsEdit = true;
 
-        Id permSetID = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_PermSet1'].Id;
-        Id mutingPermSetId = [SELECT Id FROM MutingPermissionSet WHERE DeveloperName = 'New_Test_MutePermSet1'].Id;
+        Id permSetID = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id;
+        Id mutingPermSetId = [SELECT Id FROM MutingPermissionSet WHERE DeveloperName = 'New_Test_MutePermSet_1'].Id;
 
         Test.startTest();
         	PermissionAnalyzerObjectServer.updateObjAndFieldInitiation(
@@ -181,7 +204,7 @@ Public Class PermissionAnalyzerObjectServerTest {
                 'PermissionsViewAllRecords' => true
             }
         };
-        Id permissionSetId = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_PermSet1' LIMIT 1].Id;
+        Id permissionSetId = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id;
         Test.startTest();
         Map<String, Object> result = PermissionAnalyzerObjectServer.updateObjPermissions(objPermissionMap, permissionSetId);
         Test.stopTest();
@@ -207,8 +230,8 @@ Public Class PermissionAnalyzerObjectServerTest {
          eligibleFieldWrapper1.mutedPermissionsRead = false;
          eligibleFieldWrapper1.mutedPermissionsEdit = false;
         
-        Id permSetId = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_PermSet1' LIMIT 1].Id;
-        Id mutingPermSetId = [SELECT Id FROM MutingPermissionSet WHERE DeveloperName = 'New_Test_MutePermSet1' LIMIT 1].Id;
+        Id permSetId = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id;
+        Id mutingPermSetId = [SELECT Id FROM MutingPermissionSet WHERE DeveloperName = 'New_Test_MutePermSet_1' LIMIT 1].Id;
         
         Test.startTest();
         PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper[] result1 = PermissionAnalyzerObjectServer.updateFieldPermissions(new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper,eligibleFieldWrapper1}, permSetId, 'Opportunity', '');
@@ -264,7 +287,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
         
-        User u = [SELECT Id FROM User WHERE Username = 'testuserone@example.com' LIMIT 1];
+        User u = [SELECT Id FROM User WHERE Username = 'testuseraccess1@example.com' LIMIT 1];
         System.runAs(u) {
             Test.startTest();
             PermissionAnalyzerObjectServer.getFieldWrapper fieldRes = PermissionAnalyzerObjectServer.getFieldsAndObjectRelatedDetails('Account', 'Name to Fetch');
