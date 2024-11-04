@@ -10,15 +10,17 @@ Public without sharing Class PermissionSetGroupManager {
         // Query all PermissionSetGroupComponents
         for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent]) {
             // Check if the PermissionSetGroupId already exists in the map
-            List<PermissionSetGroupComponent> permSetGrpList = new List<PermissionSetGroupComponent>(); 
             if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
                 // Initialize a new list for this PermissionSetGroupId
+                List<PermissionSetGroupComponent> permSetGrpList = new List<PermissionSetGroupComponent>();
+                permSetGrpList.add(permSetComp);
                 permSetCompMap.put(permSetComp.PermissionSetGroupId, permSetGrpList);
             } else {
                 // Retrieve the existing list
-                permSetGrpList = permSetCompMap.get(permSetComp.PermissionSetGroupId);
+                List<PermissionSetGroupComponent> permSetGrpList = permSetCompMap.get(permSetComp.PermissionSetGroupId);
+                // Add the current component to the list
+                permSetGrpList.add(permSetComp);
             }
-            permSetGrpList.add(permSetComp);
         }
         
         // Query all PermissionSetGroups
@@ -268,12 +270,12 @@ Public without sharing Class PermissionSetGroupManager {
     
     @AuraEnabled
     //This method is used to assign users to Permission Set Groups, retrieve users assigned to groups, and list users who are eligible to be assigned to a group.
-    Public Static Void getPermissionGroup(List<String> userId,String PerSetGrp_Id) {
+    Public Static Void getPermissionGroup(List<String> userId,String PerSetGrpId) {
         List<PermissionSetAssignment> persetasi = new List<PermissionSetAssignment>();
         for (String assignId : userId) {
             PermissionSetAssignment perasi = new PermissionSetAssignment();
             perasi.AssigneeId = assignId;
-            perasi.PermissionSetGroupId = PerSetGrp_Id;
+            perasi.PermissionSetGroupId = PerSetGrpId;
             persetasi.add(perasi);
         }
         
@@ -281,7 +283,7 @@ Public without sharing Class PermissionSetGroupManager {
             insert persetasi;
             System.debug('Permission Set Group assigned successfully to all users');
         } catch (DmlException e) {
-            handleException('Error in fetching Permission Set Group: ', e);
+            handleException('Error assigning Permission Set Group: ', e);
         }
     }
     
@@ -355,7 +357,7 @@ Public without sharing Class PermissionSetGroupManager {
             insert persetasi;
             System.debug('Permission Set Group assigned successfully to Permission Set');
         } catch (DmlException e) {
-            handleException('Error in creating Permission Set Group: ', e);
+            handleException('Error assigning Permission Set Group: ', e);
         }
     }
     
@@ -407,6 +409,7 @@ Public without sharing Class PermissionSetGroupManager {
             if (ps.License != null) {
                 recordMap.put('LicenseId', ps.License.Id);
                 recordMap.put('LicenseName', ps.License.Name);
+                System.debug('Permission Set Id >> ' + ps.Id);
                 System.debug('License Name >> ' + ps.License.Name);
             } else {
                 System.debug('License Name not found for Permission set ID: ' + ps.Id);
@@ -489,7 +492,7 @@ Public without sharing Class PermissionSetGroupManager {
     }
     
     //Wrapper class for system,object,muted Object,field,muted field permissions.
-    Public Class userObjAndFieldPermissionSetGroupWrapper {
+    Public Class UserObjAndFieldPermissionSetGroupWrapper {
     @AuraEnabled Public List<CombinedPermissionsWrapper> combinedPermissions { get; set; }
     @AuraEnabled Public Map<String, ObjectPermissions> objectPermissions { get; set; }
     @AuraEnabled Public Map<String, ObjectPermissions> mutingobjectPermissions { get; set; }
@@ -497,7 +500,7 @@ Public without sharing Class PermissionSetGroupManager {
     @AuraEnabled Public Map<String, List<fieldPermissions>> mutingfieldPermissions { get;set; }
     @AuraEnabled Public List<TabDefinition> tabsetting { get; set; }
 
-    Public userObjAndFieldPermissionSetGroupWrapper(
+    Public UserObjAndFieldPermissionSetGroupWrapper(
       List<CombinedPermissionsWrapper> combinedPermissions,
       Map<String, ObjectPermissions> objectPermissions,
       Map<String, ObjectPermissions> mutingobjectPermissions,
@@ -580,8 +583,8 @@ Public without sharing Class PermissionSetGroupManager {
     }
     system.debug('QUery' + query);
 
-    //String username = System.Label.Board_Book_Integration_Username;
-    //String password = System.Label.Board_Book_Integration_Password;
+    String username = System.Label.Board_Book_Integration_Username;
+    String password = System.Label.Board_Book_Integration_Password;
     UserAccessManager instance = new UserAccessManager();
 
     String endpoint =
@@ -1261,8 +1264,8 @@ Public without sharing Class PermissionSetGroupManager {
     System.debug('Object Name' + objName);
     System.debug('PSG Name' + psgname);
     System.debug('PSG API Name' + psgapiname);
-    //UserAccessManager instance = new UserAccessManager();
-    //List<Object> dependObjects = PermissionSetGroupManager.checkDependency(objName);
+    UserAccessManager instance = new UserAccessManager();
+    //List<Object> dependObjects = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies(objName);
     Map<String, Boolean> fieldAccess = PermissionSetManager.checkFieldType(objName);
 	system.debug('fieldAccess' + fieldAccess);
 
@@ -1342,7 +1345,7 @@ Public without sharing Class PermissionSetGroupManager {
     System.debug('check field permission map' + fieldPermissionsMapList);
     System.debug('check mute Id' + muteId);
 
-    return new PermissionSetGroupObjectPermissionsWrapper(fieldPermissionsMapList,PermissionSetManager.checkSObjType(objName),PermissionSetGroupManager.checkDependency(objName),
+    return new PermissionSetGroupObjectPermissionsWrapper(fieldPermissionsMapList,PermissionSetManager.checkSObjType(objName),PermissionAnalyzerObjectServer.checkObjectPermissionDependencies(objName),
       recordTypeDetails,
       muteId
     );
@@ -1367,7 +1370,7 @@ Public without sharing Class PermissionSetGroupManager {
         return fieldDefMapByName;
     }
     
-    @AuraEnabled
+  /*  @AuraEnabled
     //Helper method to get dependencies for objects.
     public static List<Object> checkDependency(String objName) {
     UserAccessManager instance = new UserAccessManager();
@@ -1419,14 +1422,14 @@ Public without sharing Class PermissionSetGroupManager {
         if (String.isBlank(objName)) {
             return;
         }
-    
+        String likePattern = '%' + objName + '%';
         String query = 'SELECT Id, Permission, RequiredPermission ' +
             'FROM PermissionDependency ' +
-            'WHERE (Permission LIKE :likePattern OR RequiredPermission LIKE :likePattern) ' +
+            'WHERE (Permission LIKE \'' + likePattern + '\' OR RequiredPermission LIKE \'' + likePattern + '\') ' +
             'AND PermissionType = \'Object Permission\' ' +
             'AND RequiredPermissionType = \'Object Permission\'';
+
     
-        String likePattern = '%' + objName + '%';
         List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
     
         Set < String > parentObjects = new Set < String > ();
@@ -1531,7 +1534,7 @@ Public without sharing Class PermissionSetGroupManager {
             return new List < Object > ();
         }
     }
-    
+    */
     Public Class MutePermissionWrapper {
     @AuraEnabled Public String mutePermSetId { get; set; }
     @AuraEnabled Public SObjectPermissionWrapper wrapper { get; set; }
