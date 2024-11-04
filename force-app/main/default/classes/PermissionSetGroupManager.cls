@@ -226,9 +226,9 @@ Public with sharing Class PermissionSetGroupManager {
   
   //This method is used to show list of users for Permission Set group to assign.
   @AuraEnabled
-  Public Static List<User> getUserPermissionSetGroup(String profileName, String userLicense, String perSetGrpId) {
+  Public Static List<User> getUserPermissionSetGroup(String profileName, String userLicense, String perSetGrpId_tofetch) {
       // Fetch assigned users
-      List<PermissionSetAssignment> assignedUsers = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrpId];
+      List<PermissionSetAssignment> assignedUsers = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrpId_tofetch];
       Set<Id> assignedUserIds = new Set<Id>();
       for (PermissionSetAssignment psa : assignedUsers) {
           assignedUserIds.add(psa.AssigneeId);
@@ -260,12 +260,12 @@ Public with sharing Class PermissionSetGroupManager {
   
   @AuraEnabled
   //This method is used to assign users to Permission Set Groups, retrieve users assigned to groups, and list users who are eligible to be assigned to a group.
-  Public Static Void getPermissionGroup(List<String> userId,String PerSetGrpId) {
+  Public Static Void getPermissionGroup(List<String> userId,String PerGrp_Id) {
       List<PermissionSetAssignment> persetasi = new List<PermissionSetAssignment>();
       for (String assignId : userId) {
           PermissionSetAssignment perasi = new PermissionSetAssignment();
           perasi.AssigneeId = assignId;
-          perasi.PermissionSetGroupId = PerSetGrpId;
+          perasi.PermissionSetGroupId = PerGrp_Id;
           persetasi.add(perasi);
       }
       
@@ -279,8 +279,8 @@ Public with sharing Class PermissionSetGroupManager {
   
   @AuraEnabled
   //This method is used to retrieve list of users who are already assigned to a specified Permission Set Group.
-  Public Static List<User> getPermissionSetGroup(String perSetGrpId) {
-      List<PermissionSetAssignment> persetaList = [SELECT PermissionSetGroupId, AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrpId];
+  Public Static List<User> getPermissionSetGroup(String perSetGrp_Id) {
+      List<PermissionSetAssignment> persetaList = [SELECT PermissionSetGroupId, AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrp_Id];
       Set<Id> userIds = new Set<Id>();
       for (PermissionSetAssignment perseta : persetaList) {
           userIds.add(perseta.AssigneeId);
@@ -291,8 +291,8 @@ Public with sharing Class PermissionSetGroupManager {
   
   @AuraEnabled
   // This method deletes the assignments of users from a specified Permission Set Group.
-  Public Static Void deletePermissionGroup(List<String> userId,String perSetGrpId) {
-      List<PermissionSetAssignment> persetAssignForDlt = [SELECT id FROM PermissionSetAssignment WHERE AssigneeId IN :userId AND PermissionSetGroupId = :perSetGrpId];
+  Public Static Void deletePermissionGroup(List<String> userId,String delPerGrpId) {
+      List<PermissionSetAssignment> persetAssignForDlt = [SELECT id FROM PermissionSetAssignment WHERE AssigneeId IN :userId AND PermissionSetGroupId = :delPerGrpId];
       try {
           delete persetAssignForDlt;
           System.debug('Permission Set Group Deleted successfully for the users');
@@ -353,8 +353,8 @@ Public with sharing Class PermissionSetGroupManager {
   
   @AuraEnabled
   //This method is used to unassign permission set from permission set group.
-  Public Static Void deletePermissionSet(List<String> permissionSetId,String perSetGrpId) {
-      List<PermissionSetGroupComponent> persetAssignForDlt = [SELECT id FROM PermissionSetGroupComponent WHERE PermissionSetId IN :permissionSetId AND PermissionSetGroupId = :perSetGrpId];
+  Public Static Void deletePermissionSet(List<String> permissionSetId,String delPerSetId) {
+      List<PermissionSetGroupComponent> persetAssignForDlt = [SELECT id FROM PermissionSetGroupComponent WHERE PermissionSetId IN :permissionSetId AND PermissionSetGroupId = :delPerSetId];
       try {
           delete persetAssignForDlt;
           System.debug(
@@ -771,12 +771,12 @@ Public with sharing Class PermissionSetGroupManager {
   
   @AuraEnabled
   //Helper method to retrieve object permissions of group.
-  Public Static Map<String, ObjectPermissions> getObjectPermissionsforPSG(String persetgrpid)
+  Public Static Map<String, ObjectPermissions> getObjectPermissionsforPSG(String parent_persetgrpid)
   {
   Map<String, ObjectPermissions> objMap = new Map<String, ObjectPermissions>();
   List<ObjectPermissions> objPermissions = [SELECT SobjectType,PermissionsRead,PermissionsCreate,PermissionsEdit,PermissionsDelete,PermissionsViewAllRecords,PermissionsModifyAllRecords
     FROM ObjectPermissions
-    WHERE Parent.PermissionSetGroupId = :persetgrpid
+    WHERE Parent.PermissionSetGroupId = :parent_persetgrpid
   ];
 
   for (ObjectPermissions obj : objPermissions) {
@@ -790,14 +790,14 @@ Public with sharing Class PermissionSetGroupManager {
   
   @AuraEnabled
   //Helper method to get muted object permissions.
-  Public Static Map<String, ObjectPermissions> getmutingObjectPermissionsforPSG(String persetgrpid,String psgapiname,String psgname)
+  Public Static Map<String, ObjectPermissions> getmutingObjectPermissionsforPSG(String muting_persetgrpid,String psgapiname,String psgname)
   {
   Map<String, ObjectPermissions> objMap = new Map<String, ObjectPermissions>();
 
   String nullValue = '%_%';
   list<PermissionSetGroupComponent> per = [SELECT id,PermissionSetId,PermissionSet.Name,PermissionSetGroupId,PermissionSetGroup.DeveloperName
     FROM PermissionSetGroupComponent
-    WHERE PermissionSetGroupId = :persetgrpid AND (NOT PermissionSet.Name LIKE :nullValue)];
+    WHERE PermissionSetGroupId = :muting_persetgrpid AND (NOT PermissionSet.Name LIKE :nullValue)];
   String perSet_ids;
   for (PermissionSetGroupComponent pe : per) {
     system.debug(pe);
@@ -820,7 +820,7 @@ Public with sharing Class PermissionSetGroupManager {
     system.debug('Id' + mutingPermissionSet.Id);
     perSet_ids = mutingPermissionSet.Id;
 
-    PermissionSetGroup psGroup = [SELECT Id FROM PermissionSetGroup WHERE Id = :persetgrpid LIMIT 1];
+    PermissionSetGroup psGroup = [SELECT Id FROM PermissionSetGroup WHERE Id = :muting_persetgrpid LIMIT 1];
     PermissionSetGroupComponent component = new PermissionSetGroupComponent(
       PermissionSetGroupId = psGroup.Id,
       PermissionSetId = mutingPermissionSet.Id
@@ -956,12 +956,12 @@ public static List<MutingPermissionSet> mutePermissions(String systemPermissions
   
   @AuraEnabled
   //Helper method to get muted field permissions of group.
-  Public Static Map<String, List<fieldPermissions>> getmutingFieldPermissionspsg(String persetgrpid) {
+  Public Static Map<String, List<fieldPermissions>> getmutingFieldPermissionspsg(String persetgrpid_toMute) {
   String nullValue = '%_%';
   list<PermissionSetGroupComponent> per = [SELECT id,PermissionSetId,PermissionSet.Name,PermissionSetGroupId,PermissionSetGroup.DeveloperName
     FROM PermissionSetGroupComponent
     WHERE
-      PermissionSetGroupId = :persetgrpid
+      PermissionSetGroupId = :persetgrpid_toMute
       AND (NOT PermissionSet.Name LIKE :nullValue)];
   String perSetGrpCmpIds;
   for (PermissionSetGroupComponent pe : per) {
