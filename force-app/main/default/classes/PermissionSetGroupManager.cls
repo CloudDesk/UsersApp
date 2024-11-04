@@ -1288,7 +1288,7 @@ Public Static PermissionSetGroupObjectPermissionsWrapper getSobjectPermissionsFo
   }
 
   List<Map<String, Object>> fieldPermissionsMapList = new List<Map<String, Object>>();
-  Map<String, Map<String, Object>> fieldDefMapByName = PermissionSetGroupManager.getFieldDefinitionProfile(objName);
+  Map<String, Map<String, Object>> fieldDefMapByName = PermissionSetManager.getFieldDefinitionProfile(objName);
   system.debug('Before Object Permission');  
   Map<String, FieldPermissions> fieldPermissionsMap = new Map<String, FieldPermissions>();
   for (FieldPermissions fieldPerm : [SELECT SObjectType, Field, PermissionsRead, PermissionsEdit FROM FieldPermissions WHERE Parent.PermissionSetGroup.Id = :permSetId AND SObjectType = :objName]) {
@@ -1333,26 +1333,6 @@ Public Static PermissionSetGroupObjectPermissionsWrapper getSobjectPermissionsFo
     muteId
   );
 }
-  
-  @AuraEnabled
-  //Helper method to fetch field names.
-  Public Static Map<String, Map<String, Object>> getFieldDefinitionProfile(String objectName) 
-  {
-      Map<String, Map<String, Object>> fieldDefMapByName = new Map<String, Map<String, Object>>();
-      Schema.DescribeSObjectResult describeResult = Schema.getGlobalDescribe().get(objectName).getDescribe();
-      
-      for (Schema.SObjectField field : describeResult.fields.getMap().values()) {
-          Map<String, Object> fieldDefMap = new Map<String, Object>();
-          fieldDefMap.put('Label', field.getDescribe().getLabel());
-          fieldDefMap.put('Name', field.getDescribe().getName());
-          fieldDefMap.put('isPermissionable',field.getDescribe().isPermissionable());
-          fieldDefMap.put('isCalculated', field.getDescribe().isCalculated());
-          String fieldNameKey = objectName + '.' + field.getDescribe().getName();
-          fieldDefMapByName.put(fieldNameKey, fieldDefMap);
-      }
-      return fieldDefMapByName;
-  }
-
   Public Class MutePermissionWrapper {
   @AuraEnabled Public String mutePermSetId { get; set; }
   @AuraEnabled Public SObjectPermissionWrapper wrapper { get; set; }
