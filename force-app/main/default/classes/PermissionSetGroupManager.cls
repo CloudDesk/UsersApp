@@ -7,20 +7,11 @@ Public without sharing Class PermissionSetGroupManager {
         Map<String, List<PermissionSetGroupComponent>> permSetCompMap = new Map<String, List<PermissionSetGroupComponent>>();
         List<permissionSetGroupWrapper> permissionSetGroupWithLicense = new List<permissionSetGroupWrapper>();
         
-        // Query all PermissionSetGroupComponents
-        for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent]) {
-            // Check if the PermissionSetGroupId already exists in the map
-            if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
-                // Initialize a new list for this PermissionSetGroupId
-                List<PermissionSetGroupComponent> permSetGrpList = new List<PermissionSetGroupComponent>();
-                permSetGrpList.add(permSetComp);
-                permSetCompMap.put(permSetComp.PermissionSetGroupId, permSetGrpList);
-            } else {
-                // Retrieve the existing list
-                List<PermissionSetGroupComponent> permSetGrpList = permSetCompMap.get(permSetComp.PermissionSetGroupId);
-                // Add the current component to the list
-                permSetGrpList.add(permSetComp);
-            }
+        for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent WHERE PermissionSet.License.Name != NULL]) {
+          if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
+              permSetCompMap.put(permSetComp.PermissionSetGroupId, new List<PermissionSetGroupComponent>());
+          }
+          permSetCompMap.get(permSetComp.PermissionSetGroupId).add(permSetComp);
         }
         
         // Query all PermissionSetGroups
@@ -29,11 +20,8 @@ Public without sharing Class PermissionSetGroupManager {
             
             if (permSetCompMap.containsKey(permSetGrp.Id)) {
                 for (PermissionSetGroupComponent permSetGrpComp : permSetCompMap.get(permSetGrp.Id)) {
-                    if(permSetGrpComp.PermissionSet.License.Name != null){
-                        licenseList.add(permSetGrpComp.PermissionSet.License.Name);
-                    }
-                }
-                
+                    licenseList.add(permSetGrpComp.PermissionSet.License.Name);
+                }            
             }
             permissionSetGroupWrapper permSetGrpWrapper = new permissionSetGroupWrapper();
             permSetGrpWrapper.perSetGrpId = permSetGrp.Id;
