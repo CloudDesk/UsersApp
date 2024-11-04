@@ -1,5 +1,5 @@
 //This class is used for create,edit,delete,clone functionality for Permission Set Group.
-Public without sharing Class PermissionSetGroupManager {
+Public with sharing Class PermissionSetGroupManager {
 	
   @AuraEnabled(cacheable=true)
   //This method is used to fetch permission set group details.
@@ -7,61 +7,41 @@ Public without sharing Class PermissionSetGroupManager {
       Map<String, List<PermissionSetGroupComponent>> permSetCompMap = new Map<String, List<PermissionSetGroupComponent>>();
       List<permissionSetGroupWrapper> permissionSetGroupWithLicense = new List<permissionSetGroupWrapper>();
       
-      if (Schema.sObjectType.PermissionSetGroupComponent.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroupComponent.fields.PermissionSetId.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroupComponent.fields.PermissionSetGroupId.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroupComponent.fields.PermissionSetId.isAccessible() &&
-          Schema.sObjectType.PermissionSet.fields.LicenseId.isAccessible() &&
-          Schema.sObjectType.PermissionSetLicense.isAccessible()){
-            for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent WHERE PermissionSet.License.Name != NULL limit 5000]) {
-              if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
-                  permSetCompMap.put(permSetComp.PermissionSetGroupId, new List<PermissionSetGroupComponent>());
-              }
-              permSetCompMap.get(permSetComp.PermissionSetGroupId).add(permSetComp);
-            }
+      // Query all PermissionSetGroupComponents
+      for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent where PermissionSet.License.Name != NULL limit 5000]) {
+        if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
+          permSetCompMap.put(permSetComp.PermissionSetGroupId, new List<PermissionSetGroupComponent>());
+        }
+        permSetCompMap.get(permSetComp.PermissionSetGroupId).add(permSetComp);
       }
       
       // Query all PermissionSetGroups
-      if (Schema.sObjectType.PermissionSetGroup.isAccessible() && 
-          Schema.sObjectType.PermissionSetGroup.fields.DeveloperName.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.MasterLabel.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.Description.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.Status.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.NamespacePrefix.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.CreatedById.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.CreatedDate.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.LastModifiedById.isAccessible() &&
-          Schema.sObjectType.PermissionSetGroup.fields.LastModifiedDate.isAccessible() &&
-          Schema.sObjectType.User.isAccessible() &&
-          Schema.sObjectType.User.fields.Name.isAccessible()
-          ){
-            for (PermissionSetGroup permSetGrp : [SELECT Id, DeveloperName, MasterLabel, Description, Status, NamespacePrefix, CreatedById, CreatedBy.Name, CreatedDate, LastModifiedById, LastModifiedBy.Name, LastModifiedDate FROM PermissionSetGroup ORDER BY MasterLabel ASC limit 5000]) {
-              Set<String> licenseList = new Set<String>();
-              
-              if (permSetCompMap.containsKey(permSetGrp.Id)) {
-                  for (PermissionSetGroupComponent permSetGrpComp : permSetCompMap.get(permSetGrp.Id)) {
-                      licenseList.add(permSetGrpComp.PermissionSet.License.Name);
-                  }            
+      for (PermissionSetGroup permSetGrp : [SELECT Id, DeveloperName, MasterLabel, Description, Status, NamespacePrefix, CreatedById, CreatedBy.Name, CreatedDate, LastModifiedById, LastModifiedBy.Name, LastModifiedDate FROM PermissionSetGroup ORDER BY MasterLabel ASC limit 5000]) {
+          Set<String> licenseList = new Set<String>();
+          
+          if (permSetCompMap.containsKey(permSetGrp.Id)) {
+              for (PermissionSetGroupComponent permSetGrpComp : permSetCompMap.get(permSetGrp.Id)) {
+                licenseList.add(permSetGrpComp.PermissionSet.License.Name);
               }
-              permissionSetGroupWrapper permSetGrpWrapper = new permissionSetGroupWrapper();
-              permSetGrpWrapper.perSetGrpId = permSetGrp.Id;
-              permSetGrpWrapper.DeveloperName = permSetGrp.DeveloperName;
-              permSetGrpWrapper.MasterLabel = permSetGrp.MasterLabel;
-              permSetGrpWrapper.Description = permSetGrp.Description;
-              permSetGrpWrapper.Status = permSetGrp.Status;
-              permSetGrpWrapper.NamespacePrefix = permSetGrp.NamespacePrefix;
-              permSetGrpWrapper.CreatedById = permSetGrp.CreatedById;
-              permSetGrpWrapper.CreatedByName = permSetGrp.CreatedBy.Name;
-              permSetGrpWrapper.CreatedDate = permSetGrp.CreatedDate;
-              permSetGrpWrapper.LastModifiedById = permSetGrp.LastModifiedById;
-              permSetGrpWrapper.LastModifiedByName = permSetGrp.LastModifiedBy.Name;
-              permSetGrpWrapper.LastModifiedDate = permSetGrp.LastModifiedDate;
-              permSetGrpWrapper.sameLicense = licenseList.size() <= 1? true : false;
-              permissionSetGroupWithLicense.add(permSetGrpWrapper);
               
           }
+          permissionSetGroupWrapper permSetGrpWrapper = new permissionSetGroupWrapper();
+          permSetGrpWrapper.perSetGrpId = permSetGrp.Id;
+          permSetGrpWrapper.DeveloperName = permSetGrp.DeveloperName;
+          permSetGrpWrapper.MasterLabel = permSetGrp.MasterLabel;
+          permSetGrpWrapper.Description = permSetGrp.Description;
+          permSetGrpWrapper.Status = permSetGrp.Status;
+          permSetGrpWrapper.NamespacePrefix = permSetGrp.NamespacePrefix;
+          permSetGrpWrapper.CreatedById = permSetGrp.CreatedById;
+          permSetGrpWrapper.CreatedByName = permSetGrp.CreatedBy.Name;
+          permSetGrpWrapper.CreatedDate = permSetGrp.CreatedDate;
+          permSetGrpWrapper.LastModifiedById = permSetGrp.LastModifiedById;
+          permSetGrpWrapper.LastModifiedByName = permSetGrp.LastModifiedBy.Name;
+          permSetGrpWrapper.LastModifiedDate = permSetGrp.LastModifiedDate;
+          permSetGrpWrapper.sameLicense = licenseList.size() <= 1? true : false;
+          permissionSetGroupWithLicense.add(permSetGrpWrapper);
+          
       }
-      
       System.debug('permissionSetGroupWithLicense' + permissionSetGroupWithLicense);
       System.debug('permissionSetGroupWithLicense size: ' + permissionSetGroupWithLicense.size());
       return permissionSetGroupWithLicense;
@@ -122,11 +102,7 @@ Public without sharing Class PermissionSetGroupManager {
               query += 'id = :perSetId LIMIT 1';
               perSet = Database.query(query);
           } else if (format == 'permission set') {
-              String permissionSetGroupId = null;
-              if(Schema.sObjectType.PermissionSet.isAccessible() && 
-                 Schema.sObjectType.PermissionSet.fields.PermissionSetGroupId.isAccessible() ){
-                  permissionSetGroupId = [SELECT PermissionSetGroupId FROM PermissionSet WHERE id =: perSetId LIMIT 1].PermissionSetGroupId;
-              }
+              String permissionSetGroupId = [SELECT PermissionSetGroupId FROM PermissionSet WHERE id =: perSetId LIMIT 1].PermissionSetGroupId;
               if (permissionSetGroupId == null) {
                   handleException('No PermissionSetGroup found for the provided PermissionSet ID.', null);
               }
@@ -153,15 +129,8 @@ Public without sharing Class PermissionSetGroupManager {
   Public Static Void clonePermissionSetGroup(String sourcePermissionSetGroupName,String newLabel,String newApiName,String newDescription) {
       try {
           // Fetch the source Permission Set Group
-          PermissionSetGroup sourcePSG;
+          PermissionSetGroup sourcePSG = [SELECT Id, MasterLabel, DeveloperName, Description FROM PermissionSetGroup WHERE MasterLabel = :sourcePermissionSetGroupName LIMIT 1];
           
-          if(Schema.sObjectType.PermissionSetGroup.isAccessible() && 
-              Schema.sObjectType.PermissionSetGroup.fields.MasterLabel.isAccessible() &&
-              Schema.sObjectType.PermissionSetGroup.fields.DeveloperName.isAccessible() &&
-              Schema.sObjectType.PermissionSetGroup.fields.Description.isAccessible()
-            ){
-              sourcePSG = [SELECT Id, MasterLabel, DeveloperName, Description FROM PermissionSetGroup WHERE MasterLabel = :sourcePermissionSetGroupName LIMIT 1];
-          }
           // Create a new Permission Set Group
           PermissionSetGroup newPSG = new PermissionSetGroup();
           newPSG.MasterLabel = newLabel;
@@ -173,11 +142,7 @@ Public without sharing Class PermissionSetGroupManager {
           Id newPSGId = newPSG.Id;
           
           // Clone Permission Set Group Components
-          List<PermissionSetGroupComponent> sourceComponents = new List<PermissionSetGroupComponent>();
-          if (Schema.sObjectType.PermissionSetGroupComponent.isAccessible() &&
-              Schema.sObjectType.PermissionSetGroupComponent.fields.PermissionSetId.isAccessible()){
-                sourceComponents = [SELECT PermissionSetId FROM PermissionSetGroupComponent WHERE PermissionSetGroupId = :sourcePSG.Id];
-          }            
+          List<PermissionSetGroupComponent> sourceComponents = [SELECT PermissionSetId FROM PermissionSetGroupComponent WHERE PermissionSetGroupId = :sourcePSG.Id];
           Set<Id> permissionSetIds = new Set<Id>();
           for (PermissionSetGroupComponent component : sourceComponents) {
               permissionSetIds.add(component.PermissionSetId);
@@ -185,10 +150,7 @@ Public without sharing Class PermissionSetGroupManager {
           }
           system.debug('First Permission Set Ids' + permissionSetIds);
           Set<Id> newpermissionSetIds = new Set<Id>();
-          List<PermissionSet> perset = new List<PermissionSet>();
-          if(Schema.sObjectType.PermissionSet.isAccessible()){
-            perset = [SELECT Id FROM PermissionSet WHERE Id IN :permissionSetIds];
-          }
+          List<PermissionSet> perset = [SELECT Id FROM PermissionSet WHERE Id IN :permissionSetIds];
           for (PermissionSet component : perset) {
               newpermissionSetIds.add(component.Id);
               system.debug('Second Permission Set Ids' + component);
@@ -204,25 +166,12 @@ Public without sharing Class PermissionSetGroupManager {
           insert newComponents;
           
           //Get User
-          List<PermissionSetAssignment> assignedUsers = new List<PermissionSetAssignment>();
-          if(Schema.sObjectType.PermissionSetAssignment.isAccessible() && 
-            Schema.sObjectType.PermissionSetAssignment.fields.AssigneeId.isAccessible() ){
-              assignedUsers = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :sourcePSG.Id];
-          }
+          List<PermissionSetAssignment> assignedUsers = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :sourcePSG.Id];
           Set<Id> assignedUserIds = new Set<Id>();
           for (PermissionSetAssignment psa : assignedUsers) {
               assignedUserIds.add(psa.AssigneeId);
           }
-          List<User> userList = new List<User>();
-          if(Schema.sObjectType.User.isAccessible() && 
-            Schema.sObjectType.User.fields.Name.isAccessible() &&
-            Schema.sObjectType.User.fields.Username.isAccessible() &&
-            Schema.sObjectType.Profile.fields.Name.isAccessible() &&
-            Schema.sObjectType.User.fields.IsActive.isAccessible() &&
-            Schema.sObjectType.Profile.fields.UserLicenseId.isAccessible()
-            ){
-              userList = [SELECT id,Name,Username,Profile.Name,IsActive,Profile.UserLicense.Name FROM user WHERE IsActive = TRUE AND Id IN :assignedUserIds];
-          }
+          List<User> userList = [SELECT id,Name,Username,Profile.Name,IsActive,Profile.UserLicense.Name FROM user WHERE IsActive = TRUE AND Id IN :assignedUserIds];
           Set<Id> userids = new Set<Id>();
           for (User psa : userList) {
               userids.add(psa.id);
@@ -254,19 +203,10 @@ Public without sharing Class PermissionSetGroupManager {
   Public Static Void deletePermissionSetGroupWithUnassignments(String permissionSetGroupId) {
       try {
           // Step 1: Retrieve all related records in a single query
-
-          List<PermissionSetAssignment> assignmentsToDelete = new List<PermissionSetAssignment>();
-          List<PermissionSetGroupComponent> componentsToDelete = new List<PermissionSetGroupComponent>();
-          PermissionSetGroup permissionSetGroupToDelete = new PermissionSetGroup();
-          if(Schema.sObjectType.PermissionSetAssignment.isAccessible()){
-            assignmentsToDelete = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetGroupId = :permissionSetGroupId];
-          }
-          if(Schema.sObjectType.PermissionSetGroupComponent.isAccessible()){
-            componentsToDelete = [SELECT Id FROM PermissionSetGroupComponent WHERE PermissionSetGroupId = :permissionSetGroupId];
-          }
-          if(Schema.sObjectType.PermissionSetGroup.isAccessible()){
-            permissionSetGroupToDelete = [SELECT Id FROM PermissionSetGroup WHERE Id = :permissionSetGroupId];
-          }
+          List<PermissionSetAssignment> assignmentsToDelete = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetGroupId = :permissionSetGroupId];
+          List<PermissionSetGroupComponent> componentsToDelete = [SELECT Id FROM PermissionSetGroupComponent WHERE PermissionSetGroupId = :permissionSetGroupId];
+          PermissionSetGroup permissionSetGroupToDelete = [SELECT Id FROM PermissionSetGroup WHERE Id = :permissionSetGroupId];
+          
           // Step 2: Perform bulk DML operations
           List<SObject> recordsToDelete = new List<SObject>();
           recordsToDelete.addAll(assignmentsToDelete);
@@ -288,11 +228,7 @@ Public without sharing Class PermissionSetGroupManager {
   @AuraEnabled
   Public Static List<User> getUserPermissionSetGroup(String profileName, String userLicense, String perSetGrpId) {
       // Fetch assigned users
-      List<PermissionSetAssignment> assignedUsers = new List<PermissionSetAssignment>();
-      if(Schema.sObjectType.PermissionSetAssignment.isAccessible() && 
-         Schema.sObjectType.PermissionSetAssignment.fields.AssigneeId.isAccessible() ){
-          assignedUsers = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrpId];
-      }
+      List<PermissionSetAssignment> assignedUsers = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrpId];
       Set<Id> assignedUserIds = new Set<Id>();
       for (PermissionSetAssignment psa : assignedUsers) {
           assignedUserIds.add(psa.AssigneeId);
@@ -344,26 +280,12 @@ Public without sharing Class PermissionSetGroupManager {
   @AuraEnabled
   //This method is used to retrieve list of users who are already assigned to a specified Permission Set Group.
   Public Static List<User> getPermissionSetGroup(String perSetGrpId) {
-      List<PermissionSetAssignment> persetaList = new List<PermissionSetAssignment>();
-      List<User> users = new List<User>();
-
-      if(Schema.sObjectType.PermissionSetAssignment.isAccessible() && 
-        Schema.sObjectType.PermissionSetAssignment.fields.PermissionSetGroupId.isAccessible() &&
-        Schema.sObjectType.PermissionSetAssignment.fields.AssigneeId.isAccessible()){
-          persetaList = [SELECT PermissionSetGroupId, AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrpId];
-      }
+      List<PermissionSetAssignment> persetaList = [SELECT PermissionSetGroupId, AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroupId = :perSetGrpId];
       Set<Id> userIds = new Set<Id>();
       for (PermissionSetAssignment perseta : persetaList) {
           userIds.add(perseta.AssigneeId);
       }
-      if(Schema.sObjectType.User.isAccessible() && 
-        Schema.sObjectType.User.fields.Name.isAccessible() && 
-        Schema.sObjectType.User.fields.Username.isAccessible() &&
-        Schema.sObjectType.Profile.fields.Name.isAccessible() &&
-        Schema.sObjectType.Profile.fields.UserLicenseId.isAccessible()
-        ){
-          users = [SELECT id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE Id IN :userIds ORDER BY Name ASC limit 5000];
-      }
+      List<User> users = [SELECT id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE Id IN :userIds ORDER BY Name ASC limit 5000];
       return users;
   }
   
