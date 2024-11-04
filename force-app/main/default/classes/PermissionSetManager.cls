@@ -101,13 +101,13 @@ Public without sharing Class PermissionSetManager {
    
   //Method to Insert Users to Permission Set
   @AuraEnabled
-  Public Static Void insertUsertoPermissionSet(List<String> userId,String PerSetId) 
+  Public Static Void insertUsertoPermissionSet(List<String> userId,String perSetId) 
   {
     List<PermissionSetAssignment> perSetAsi = new List<PermissionSetAssignment>();
     for (String assignId : userId) {
       PermissionSetAssignment perAsi = new PermissionSetAssignment();
       perAsi.AssigneeId = assignId;
-      perAsi.PermissionSetId = PerSetId;
+      perAsi.PermissionSetId = perSetId;
       perSetAsi.add(perAsi);
     }
     try {
@@ -608,7 +608,6 @@ Public without sharing Class PermissionSetManager {
     {
         List < Object > dependObjects = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies(objName);
         List<Map<String, Object>> fieldPermissionsMapList = new List<Map<String, Object>>();
-        //List<Map<String, Object>> recordTypeMapList = new List<Map<String, Object>>();
         Map<String, Boolean> fieldAccess = PermissionSetManager.checkFieldType(objName);
         system.debug('fieldAccess' + fieldAccess);
         Map<String, Map<String, Object>> fieldDefMapByName = PermissionSetManager.getFieldDefinitionProfile(objName);
@@ -627,7 +626,6 @@ Public without sharing Class PermissionSetManager {
         for (String fieldKey : fieldDefMapByName.keySet()) {
             system.debug('fieldKey'+fieldKey);
             if (fieldKey != null) {
-                //Map<String, Object> fieldDefMap = fieldDefMapByName.get(fieldKey);
                 system.debug(fieldKey + ' fieldKey ' + fieldAccess.get(fieldKey));
                 if ((Boolean) fieldDefMapByName.get(fieldKey).get('isPermissionable') && fieldAccess.get(fieldKey) == true) {
                     Map<String, Object> fieldPermissionMap = new Map<String, Object>();
@@ -655,95 +653,6 @@ Public without sharing Class PermissionSetManager {
         System.debug('check field permission map' + fieldPermissionsMapList);
         return new ProfileObjectPermissionsWrapper(fieldPermissionsMapList,PermissionSetManager.checkSObjType(objName),dependObjects);
     }
-
-   /* @AuraEnabled
-    //Helper method to get dependencies for objects.
-    public static List<Object> checkDependency(String objName) {
-    UserAccessManager instance = new UserAccessManager();
-    List<Object> allDependencies = new List<Object>();
-
-    // Fetch dependencies for the given object
-    fetchDependencies(objName, allDependencies, instance.partnerConnection.SessionHeader.sessionId, URL.getSalesforceBaseUrl().toExternalForm());
-
-    // Extract object names and store dependencies in a map
-    Map<String, Object> dependenciesByObjName = new Map<String, Object>();
-    for (Object record : allDependencies) {
-        Map<String, Object> recordMap = (Map<String, Object>) record;
-        String permission = (String) recordMap.get('Permission');
-        String requiredPermission = (String) recordMap.get('RequiredPermission');
-
-        if (permission != null) {
-            String objNameFromPermission = permission.substringBefore('<');
-            dependenciesByObjName.put(objNameFromPermission, record);
-        }
-
-        if (requiredPermission != null) {
-            String objNameFromReqPermission = requiredPermission.substringBefore('<');
-            dependenciesByObjName.put(objNameFromReqPermission, record);
-        }
-    }
-
-    // Query FieldDefinition based on object names
-    Set<String> polymorphicObjects = new Set<String>();
-    for (FieldDefinition fieldDef : [SELECT EntityDefinition.QualifiedApiName
-                                      FROM FieldDefinition
-                                      WHERE IsPolymorphicForeignKey = TRUE
-                                      AND EntityDefinition.QualifiedApiName IN :dependenciesByObjName.keySet()]) {
-        polymorphicObjects.add(fieldDef.EntityDefinition.QualifiedApiName);
-    }
-
-    // Filter dependencies
-    List<Object> filteredDependencies = new List<Object>();
-    for (String depObjName : dependenciesByObjName.keySet()) { // Renamed inner loop variable
-        if (!polymorphicObjects.contains(depObjName)) {
-            filteredDependencies.add(dependenciesByObjName.get(depObjName));
-        }
-    }
-    System.debug('Filtered Dependencies: ' + filteredDependencies);
-    System.debug('Filtered Dependencies Count: ' + filteredDependencies.size());
-    return filteredDependencies;
-}
-    
-    private static void fetchDependencies(String objName, List < Object > allDependencies, String sessionId, String serverUrl) {
-        if (String.isBlank(objName)) {
-            return;
-        }
-    
-        String query = 'SELECT Id, Permission, RequiredPermission ' +
-            'FROM PermissionDependency ' +
-            'WHERE (Permission LIKE :likePattern OR RequiredPermission LIKE :likePattern) ' +
-            'AND PermissionType = \'Object Permission\' ' +
-            'AND RequiredPermissionType = \'Object Permission\'';
-    
-        String likePattern = '%' + objName + '%';
-        List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
-    
-        Set < String > parentObjects = new Set < String > ();
-        Set < String > childObjects = new Set < String > ();
-        for (Object record: queryResults) {
-            Map < String, Object > recordMap = (Map < String, Object > ) record;
-            allDependencies.add(record);
-            String permission = (String) recordMap.get('Permission');
-            String requiredPermission = (String) recordMap.get('RequiredPermission');
-    
-            if (permission != null && permission.contains(objName)) {
-                parentObjects.add('\'' + requiredPermission + '\'');
-            }
-            if (requiredPermission != null && requiredPermission.contains(objName)) {
-                childObjects.add('\'' + permission + '\'');
-            }
-        }
-        System.debug('Parent Objects: ' + parentObjects);
-        System.debug('Child Objects: ' + childObjects);
-    
-        if (!parentObjects.isEmpty()) {
-            processParentObjects(new List < String > (parentObjects), allDependencies, sessionId, serverUrl);
-        }
-        if (!childObjects.isEmpty()) {
-            processChildObjects(new List < String > (childObjects), allDependencies, sessionId, serverUrl);
-        }
-    }
-*/
     @AuraEnabled
     //Helper to get the valid fields for updating ObjectPermissions.
     Public Static Map<String, Boolean> checkFieldType(String sObjName) {
@@ -776,64 +685,6 @@ Public without sharing Class PermissionSetManager {
         }
         return fieldDefMapByName;
     }
-/*    
-    private static void processParentObjects(List < String > parentObjects, List < Object > allDependencies, String sessionId, String serverUrl) {
-        if (parentObjects.isEmpty()) {
-            return;
-        }
-    
-        String parentObjNames = String.join(parentObjects, ',');
-        String query = 'SELECT Id, Permission, RequiredPermission ' +
-            'FROM PermissionDependency ' +
-            'WHERE Permission IN (' + parentObjNames + ') ' +
-            'AND PermissionType = \'Object Permission\' ' +
-            'AND RequiredPermissionType = \'Object Permission\'';
-        List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
-        Set < String > newParentObjects = new Set < String > ();
-        for (Object record: queryResults) {
-            Map < String, Object > recordMap = (Map < String, Object > ) record;
-            allDependencies.add(record);
-            String requiredPermission = (String) recordMap.get('RequiredPermission');
-            if (String.isNotBlank(requiredPermission)) {
-                newParentObjects.add('\'' + requiredPermission + '\'');
-            }
-        }
-        if (!newParentObjects.isEmpty()) {
-            processParentObjects(new List < String > (newParentObjects), allDependencies, sessionId, serverUrl);
-        }
-    }
-    
-    private static void processChildObjects(List < String > childObjects, List < Object > allDependencies, String sessionId, String serverUrl) {
-        if (childObjects.isEmpty()) {
-            return;
-        }
-    
-        String childObjNames = String.join(childObjects, ',');
-        System.debug('ChildObjName : ' + childObjNames);
-    
-        String query = 'SELECT Id, Permission, RequiredPermission ' +
-            'FROM PermissionDependency ' +
-            'WHERE RequiredPermission IN (' + childObjNames + ') ' +
-            'AND PermissionType = \'Object Permission\' ' +
-            'AND RequiredPermissionType = \'Object Permission\'';
-    
-        List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
-        Set < String > newChildObjects = new Set < String > ();
-        for (Object record: queryResults) {
-            Map < String, Object > recordMap = (Map < String, Object > ) record;
-            allDependencies.add(record);
-            String permission = (String) recordMap.get('Permission');
-            if (String.isNotBlank(permission)) {
-                newChildObjects.add('\'' + permission + '\'');
-            }
-        }
-        if (!newChildObjects.isEmpty()) {
-            processChildObjects(new List < String > (newChildObjects), allDependencies, sessionId, serverUrl);
-        }
-    }
-    */
-    
-    
     @AuraEnabled
     //Helper to get the valid Sobject for updating ObjectPermissions.
     Public Static Boolean checkSObjType(string sObjName) {

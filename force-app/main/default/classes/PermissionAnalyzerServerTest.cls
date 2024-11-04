@@ -1,6 +1,10 @@
 @IsTest
 public class PermissionAnalyzerServerTest {
-	
+	private static final String PermissionSet_Label = 'New Test Permission Set Two';
+    private static final String Account_Name_FIELD = 'Account.Name';
+    private static final String Updated_Description_Message = 'This is an updated description';
+    private static final String Updated_PermissionSet_Message = 'Updated Permission Set';
+    private static final String Script_Thrown_Message = 'Script-thrown exception';
     @TestSetup
     static void setupTestData() {
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'HCH Sales'
@@ -19,7 +23,7 @@ public class PermissionAnalyzerServerTest {
 
         List < PermissionSet > permSetsToInsert = new List < PermissionSet > {
             new PermissionSet(Name = 'New_Test_Permission_Set_One', Label = 'New Test Permission Set One', Description = 'Permission Set for Testing'),
-            new PermissionSet(Name = 'New_Test_Permission_Set_Two', Label = 'New Test Permission Set Two', Description = 'Permission Set for Testing')
+            new PermissionSet(Name = 'New_Test_Permission_Set_Two', Label = PermissionSet_Label, Description = 'Permission Set for Testing')
         };
         insert permSetsToInsert;
 
@@ -150,7 +154,7 @@ public class PermissionAnalyzerServerTest {
     @IsTest
     static void testConsolidateFieldPermissions() {
         Map < String, Object > existingPermissions = new Map < String, Object > {
-            'Account.Name' => new Map < String,
+            Account_Name_FIELD => new Map < String,
             Object > {
                 'PermissionsRead' => true,
                 'PermissionsEdit' => true
@@ -158,7 +162,7 @@ public class PermissionAnalyzerServerTest {
         };
 
         FieldPermissions newPerm = new FieldPermissions(
-            Field = 'Account.Name',
+            Field = Account_Name_FIELD,
             PermissionsRead = false,
             PermissionsEdit = false
         );
@@ -166,8 +170,8 @@ public class PermissionAnalyzerServerTest {
         Map < String, Object > result = PermissionAnalyzerServer.consolidateFieldPermissions(existingPermissions, newPerm);
         Test.stopTest();
 
-        System.assert(result.containsKey('Account.Name'), 'Account.Name should exist.');
-        Map < String, Object > fieldPermissions = (Map < String, Object > ) result.get('Account.Name');
+        System.assert(result.containsKey(Account_Name_FIELD), 'Account.Name should exist.');
+        Map < String, Object > fieldPermissions = (Map < String, Object > ) result.get(Account_Name_FIELD);
         System.assert(Boolean.valueOf(fieldPermissions.get('PermissionsRead')), 'PermissionsRead should remain true.');
         System.assert(Boolean.valueOf(fieldPermissions.get('PermissionsEdit')), 'PermissionsEdit should remain true.');
     }
@@ -230,14 +234,14 @@ public class PermissionAnalyzerServerTest {
         ];
     
         Test.startTest();
-        PermissionSetGroup updatedGroup = PermissionAnalyzerServer.editPermSetGrpProperties(permSet.Id, 'Updated Permission Set Group Analyzer1234', 'Updated_PermSetGroup_Analyzer1234', 'This is an updated description', 'permission set');
+        PermissionSetGroup updatedGroup = PermissionAnalyzerServer.editPermSetGrpProperties(permSet.Id, 'Updated Permission Set Group Analyzer1234', 'Updated_PermSetGroup_Analyzer1234', Updated_Description_Message, 'permission set');
         Test.stopTest();
     
         System.assertNotEquals(null, updatedGroup, 'Updated Permission Set Group should not be null.');
         PermissionSetGroup dbGroup = [SELECT MasterLabel, DeveloperName, Description FROM PermissionSetGroup WHERE Id =: updatedGroup.Id];
         System.assertEquals('Updated Permission Set Group Analyzer1234', dbGroup.MasterLabel, 'MasterLabel should be updated.');
         System.assertEquals('Updated_PermSetGroup_Analyzer1234', dbGroup.DeveloperName, 'DeveloperName should be updated.');
-        System.assertEquals('This is an updated description', dbGroup.Description, 'Description should be updated.');
+        System.assertEquals(Updated_Description_Message, dbGroup.Description, 'Description should be updated.');
     }
     
     @IsTest
@@ -248,10 +252,10 @@ public class PermissionAnalyzerServerTest {
     
         Test.startTest();
         try {
-            PermissionAnalyzerServer.editPermSetGrpProperties(permSet.Id, 'Updated Permission Set Group', 'Updated_PermSetGroup', 'This is an updated description', 'permission set');
+            PermissionAnalyzerServer.editPermSetGrpProperties(permSet.Id, 'Updated Permission Set Group', 'Updated_PermSetGroup', Updated_Description_Message, 'permission set');
             System.assert(false, 'Expected AuraHandledException not thrown.');
         } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains('Script-thrown exception'), 'Script-thrown exception');
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.stopTest();
     }
@@ -263,12 +267,12 @@ public class PermissionAnalyzerServerTest {
         ];
     
         Test.startTest();
-        PermissionSet updatedPermSet = PermissionAnalyzerServer.editPermSetProperties(permSet.Id, 'Updated Permission Set', 'Updated Permission Set', 'This is an updated description');
+        PermissionSet updatedPermSet = PermissionAnalyzerServer.editPermSetProperties(permSet.Id, Updated_PermissionSet_Message, Updated_PermissionSet_Message, Updated_Description_Message);
         Test.stopTest();
         PermissionSet dbPermSet = [SELECT Label, Name, Description FROM PermissionSet WHERE Id =: updatedPermSet.Id];
-        System.assertEquals('Updated Permission Set', dbPermSet.Label, 'Label should be updated.');
+        System.assertEquals(Updated_PermissionSet_Message, dbPermSet.Label, 'Label should be updated.');
         System.assertEquals('Updated_Permission_Set', dbPermSet.Name, 'Name should be updated with underscores.');
-        System.assertEquals('This is an updated description', dbPermSet.Description, 'Description should be updated.');
+        System.assertEquals(Updated_Description_Message, dbPermSet.Description, 'Description should be updated.');
     }
     
     @IsTest
@@ -279,10 +283,10 @@ public class PermissionAnalyzerServerTest {
     
         Test.startTest();
         try {
-            PermissionAnalyzerServer.editPermSetProperties(permSet.Id, 'New Test Permission Set Two', 'New Test Permission Set Two', 'This is an updated description');
+            PermissionAnalyzerServer.editPermSetProperties(permSet.Id, PermissionSet_Label, PermissionSet_Label, Updated_Description_Message);
             System.assert(false, 'Expected AuraHandledException not thrown.');
         } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains('Script-thrown exception'), 'Script-thrown exception');
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.stopTest();
     }

@@ -1,6 +1,9 @@
 public class PermissionDependencyMock implements HttpCalloutMock {
-    private Map<String, String> queryToResponseMap;
-    
+    private Map<String, String> queryToResponseMap;    
+    private static final String PermDependency_Query = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ';
+    private static final String permDependency_Where_Query = 'AND PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\'';
+    private static final String Null_Response = '{"size": 0, "totalSize": 0, "done": true, "queryLocator": null, ' +
+                '"entityTypeName": "PermissionDependency", "records": []}';
     public PermissionDependencyMock() {
         queryToResponseMap = new Map<String, String>();
         setupDefaultMockResponses();
@@ -13,9 +16,9 @@ public class PermissionDependencyMock implements HttpCalloutMock {
     
     private void setupDefaultMockResponses() {
         // Account initial query response
-        String accountQuery = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ' +
+        String accountQuery = PermDependency_Query +
             'WHERE (Permission LIKE \'%Account%\' OR RequiredPermission LIKE \'%Account%\') ' +
-            'AND PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\'';
+            permDependency_Where_Query;
             
         String accountResponse = '{"size": 3, "totalSize": 3, "done": true, "queryLocator": null, ' +
             '"entityTypeName": "PermissionDependency", "records": [' +
@@ -28,22 +31,21 @@ public class PermissionDependencyMock implements HttpCalloutMock {
             ']}';
         
         // Contact parent query response (empty)
-        String contactParentQuery = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ' +
+        String contactParentQuery = PermDependency_Query +
             'WHERE Permission IN (\'Contact<read>\') ' +
-            'AND PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\'';
+            permDependency_Where_Query;
             
-        String contactResponse = '{"size": 0, "totalSize": 0, "done": true, "queryLocator": null, ' +
-            '"entityTypeName": "PermissionDependency", "records": []}';
-		String planHistoryQuery = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ' +
+        String contactResponse = Null_Response;
+		String planHistoryQuery = PermDependency_Query+
             'WHERE RequiredPermission IN (\'Plan_History__c<read>\') ' +
-            'AND PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\'';
+            permDependency_Where_Query;
             
-        String planHistoryResponse = '{"size": 0, "totalSize": 0, "done": true, "queryLocator": null, ' +
-            '"entityTypeName": "PermissionDependency", "records": []}';
+        String planHistoryResponse = Null_Response;
 
 		    
         queryToResponseMap.put(normalizeQuery(accountQuery), accountResponse);
         queryToResponseMap.put(normalizeQuery(contactParentQuery), contactResponse);
+        queryToResponseMap.put(normalizeQuery(planHistoryQuery), planHistoryResponse);
     }
     
     private String normalizeQuery(String query) {
@@ -67,8 +69,7 @@ public class PermissionDependencyMock implements HttpCalloutMock {
         String responseBody = queryToResponseMap.get(query);
         
         if (responseBody == null) {
-            responseBody = '{"size": 0, "totalSize": 0, "done": true, "queryLocator": null, ' +
-                '"entityTypeName": "PermissionDependency", "records": []}';
+            responseBody = Null_Response;
         }
         
         res.setBody(responseBody);

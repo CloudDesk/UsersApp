@@ -1,6 +1,7 @@
 @isTest
 private class PermissionTabServerTest {
-    
+    private static final String OPPORTUNITY_Amount_FIELD = 'Opportunity.Amount';
+    private static final String Result_Not_Null_Message = 'Result should not be null';
     @TestSetup
     static void setupTestData() {
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User'
@@ -57,10 +58,10 @@ private class PermissionTabServerTest {
         insert objPermissions;
     
         List < FieldPermissions > fieldPermissions = new List < FieldPermissions > {
-            new FieldPermissions(SObjectType = 'Opportunity', Field = 'Opportunity.Eligible__c', ParentId = permSets[1].Id, PermissionsRead = true, PermissionsEdit = false),
-            new FieldPermissions(SObjectType = 'Opportunity', Field = 'Opportunity.Eligible__c', ParentId = permSets[2].Id, PermissionsRead = true, PermissionsEdit = true),
-            new FieldPermissions(SObjectType = 'Opportunity', Field = 'Opportunity.Eligible__c', ParentId = mutingPermSets[0].Id, PermissionsRead = false, PermissionsEdit = false),
-            new FieldPermissions(SObjectType = 'Opportunity', Field = 'Opportunity.Eligible__c', ParentId = mutingPermSets[1].Id, PermissionsRead = false, PermissionsEdit = false)
+            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = permSets[1].Id, PermissionsRead = true, PermissionsEdit = false),
+            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = permSets[2].Id, PermissionsRead = true, PermissionsEdit = true),
+            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = mutingPermSets[0].Id, PermissionsRead = false, PermissionsEdit = false),
+            new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = mutingPermSets[1].Id, PermissionsRead = false, PermissionsEdit = false)
         };
         insert fieldPermissions;
     }
@@ -116,12 +117,12 @@ private class PermissionTabServerTest {
     
         List < Map < String, List < String >>> results = new List < Map < String, List < String >>> {
             PermissionTabServer.getObjOrFieldPerm('Opportunity', 'PermissionsRead', null, userId),
-            PermissionTabServer.getObjOrFieldPerm('Opportunity', 'PermissionsRead', 'Opportunity.Eligible__C', userId),
-            PermissionTabServer.getObjOrFieldPerm('Opportunity', 'PermissionsRead', 'Opportunity.Eligible__C', 'DummyID')
+            PermissionTabServer.getObjOrFieldPerm('Opportunity', 'PermissionsRead', OPPORTUNITY_Amount_FIELD, userId),
+            PermissionTabServer.getObjOrFieldPerm('Opportunity', 'PermissionsRead', OPPORTUNITY_Amount_FIELD, 'DummyID')
         };
     
         for (Map < String, List < String >> result: results) {
-            System.assertNotEquals(null, result, 'Result should not be null');
+            System.assertNotEquals(null, result, Result_Not_Null_Message);
         }
     }
     
@@ -140,7 +141,7 @@ private class PermissionTabServerTest {
         };
     
         for (Map < String, List < String >> result: results) {
-            System.assertNotEquals(null, result, 'Result should not be null');
+            System.assertNotEquals(null, result, Result_Not_Null_Message);
         }
     }
     
@@ -153,11 +154,11 @@ private class PermissionTabServerTest {
     
         List < Map < String, List < String >>> results = new List < Map < String, List < String >>> {
             PermissionTabServer.getObjOrFieldPermissionsOrigin('PermissionsRead', permSetIdList, 'Opportunity', null),
-            PermissionTabServer.getObjOrFieldPermissionsOrigin('PermissionsRead', permSetIdList, 'Opportunity', 'Opportunity.Eligible__c')
+            PermissionTabServer.getObjOrFieldPermissionsOrigin('PermissionsRead', permSetIdList, 'Opportunity', OPPORTUNITY_Amount_FIELD)
         };
     
         for (Map < String, List < String >> result: results) {
-            System.assertNotEquals(null, result, 'Result should not be null');
+            System.assertNotEquals(null, result, Result_Not_Null_Message);
             System.assert(!result.isEmpty(), 'Result should not be empty');
         }
     }
