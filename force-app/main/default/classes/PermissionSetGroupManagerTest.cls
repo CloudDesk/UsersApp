@@ -610,7 +610,7 @@ public class PermissionSetGroupManagerTest {
         Test.stopTest();
         
         
-        List<Object> result1 = PermissionSetManager.checkDependency('Account');
+        List<Object> result1 = PermissionSetGroupManager.checkDependency('Account');
 
     }
 

@@ -1,4 +1,4 @@
-public class permissionSobjectPartnerSoapSforceCom {
+public class PermissionSobjectPartnerSoapSforceCom {
     public class sObject_x {
         public String type_x;
         public String[] fieldsToNull;

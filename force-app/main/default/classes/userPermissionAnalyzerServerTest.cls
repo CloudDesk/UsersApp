@@ -1,9 +1,8 @@
 @IsTest
-public class userPermissionAnalyzerServerTest {
+public class UserPermissionAnalyzerServerTest {
 	
     @testsetup
     static void testsetupMethod() {
-        List<Profile> testProfileList = [SELECT Id FROM Profile WHERE Name IN('Standard User', 'HCH Sales User')];
         List < User > userList = new List < User > ();
         for (Integer i = 1; i <= 2; i++) {
             userList.add(new User(
@@ -109,9 +108,9 @@ public class userPermissionAnalyzerServerTest {
             LIMIT 1
         ].Id;
         String permissionNames = 'PermissionsEmailMass,PermissionsEmailSingle,PermissionsEditTask';
-        UserPermissionAnalyzerServer.MutePermissionsOfPermSetGrpWrapper muteResult = UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(permSetGrpId, permissionNames, userPermMapList);
-        UserPermissionAnalyzerServer.MutePermissionsOfPermSetGrpWrapper muteResult1 = UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(testGroup.Id, permissionNames, userPermMapList);
-        UserPermissionAnalyzerServer.MutePermissionsOfPermSetGrpWrapper muteResult2 = UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(null, permissionNames, userPermMapList);
+         UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(permSetGrpId, permissionNames, userPermMapList);
+		 UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(testGroup.Id, permissionNames, userPermMapList);
+         UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(null, permissionNames, userPermMapList);
         try {
             UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp('DummyId', 'PermissionsEmailMass,PermissionsEmailSingle,EditTask', userPermMapList);
             System.assert(false, 'Exception should have been thrown');
@@ -171,7 +170,7 @@ public class userPermissionAnalyzerServerTest {
         );
     
         // Test error scenarios
-        testErrorScenarios(permSetId, mutePermSetId);
+        testErrorScenarios();
     
         Test.stopTest();
     
@@ -181,7 +180,7 @@ public class userPermissionAnalyzerServerTest {
         System.assertNotEquals(null, resultGroup, 'Muting Permission Set update result should not be null');
     }
     
-    private static void testErrorScenarios(Id permSetId, Id mutePermSetId) {
+    private static void testErrorScenarios() {
         Map < String, Boolean > userPermMapErr = new Map < String, Boolean > {
             'EmailMass' => false
         };

@@ -1,149 +1,119 @@
 @IsTest
-public class permissionSetManagerTest {
+public class PermissionSetManagerTest {
     
     @TestSetup
-
-    Static Void setupTestData() {
+    static void setupTestData() {
+        // Create Profile
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'HCH Sales' LIMIT 1];
-        User testUser1 = new User(FirstName = 'NewOne',LastName = 'NewUser1',Email = 'testuserOne@example.com',Username = 'testuserOne@example.com',Alias = 'TU1',TimeZoneSidKey = 'America/Los_Angeles',LocaleSidKey = 'en_US',EmailEncodingKey = 'UTF-8',ProfileId = testProfile.Id,
-            					LanguageLocaleKey = 'en_US',IsActive = true);
-        insert testUser1;
-        User testUser2 = new User(FirstName = 'Newtwo',LastName = 'User2',Email = 'testuser2@example.com',Username = 'testuser2@example.com',Alias = 'TU1',TimeZoneSidKey = 'America/Los_Angeles',LocaleSidKey = 'en_US',EmailEncodingKey = 'UTF-8',ProfileId = testProfile.Id,
-            					LanguageLocaleKey = 'en_US',IsActive = true);
 
-        insert testUser2; 
-        
-        PermissionSet permSet = new PermissionSet(Name = 'New_Test_Permission_Set_One',Label = 'New Test Permission Set One',Description = 'Permission Set for Testing');
-        insert permSet;
+        // Create Users
+        List < User > usersToInsert = new List < User > {
+            new User(FirstName = 'NewOne', LastName = 'NewUser1', Email = 'testuserOne@example.com', Username = 'testuserOne@example.com', Alias = 'TU1', TimeZoneSidKey = 'America/Los_Angeles', LocaleSidKey = 'en_US', EmailEncodingKey = 'UTF-8', ProfileId = testProfile.Id, LanguageLocaleKey = 'en_US', IsActive = true),
+            new User(FirstName = 'Newtwo', LastName = 'User2', Email = 'testuser2@example.com', Username = 'testuser2@example.com', Alias = 'TU2', TimeZoneSidKey = 'America/Los_Angeles', LocaleSidKey = 'en_US', EmailEncodingKey = 'UTF-8', ProfileId = testProfile.Id, LanguageLocaleKey = 'en_US', IsActive = true)
+        };
+        insert usersToInsert;
 
-        PermissionSet permSettwo = new PermissionSet(Name = 'New_Test_Permission_Set_Two',Label = 'New Test Permission Set Two',Description = 'Permission Set for Testing');
-        insert permSettwo;
+        // Create Permission Sets
+        List < PermissionSet > permSetsToInsert = new List < PermissionSet > {
+            new PermissionSet(Name = 'New_Test_Permission_Set_One', Label = 'New Test Permission Set One', Description = 'Permission Set for Testing'),
+            new PermissionSet(Name = 'New_Test_Permission_Set_Two', Label = 'New Test Permission Set Two', Description = 'Permission Set for Testing')
+        };
+        insert permSetsToInsert;
 
-        PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = testUser1.Id,PermissionSetId = permSet.Id);
-        insert permSetAssignment;
+        // Create Permission Set Assignment
+        insert new PermissionSetAssignment(AssigneeId = usersToInsert[0].Id, PermissionSetId = permSetsToInsert[0].Id);
 
-        ObjectPermissions objPerm1= new ObjectPermissions(SObjectType = 'Contact',ParentId = permSet.Id,PermissionsRead = true,PermissionsCreate = false,PermissionsEdit = true,PermissionsDelete = false,PermissionsViewAllRecords = false,PermissionsModifyAllRecords = false);
-        insert objPerm1;
+        // Create Object Permissions
+        List < ObjectPermissions > objPermsToInsert = new List < ObjectPermissions > {
+            new ObjectPermissions(SObjectType = 'Contact', ParentId = permSetsToInsert[0].Id, PermissionsRead = true, PermissionsCreate = false, PermissionsEdit = true, PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false),
+            new ObjectPermissions(SObjectType = 'Contact', ParentId = permSetsToInsert[1].Id, PermissionsRead = true, PermissionsCreate = false, PermissionsEdit = true, PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false),
+            new ObjectPermissions(SObjectType = 'Account', ParentId = permSetsToInsert[0].Id, PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = false, PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false)
+        };
+        insert objPermsToInsert;
 
-        ObjectPermissions obj2Perm1= new ObjectPermissions(SObjectType = 'Contact',ParentId = permSettwo.Id,PermissionsRead = true,PermissionsCreate = false,PermissionsEdit = true,PermissionsDelete = false,PermissionsViewAllRecords = false,PermissionsModifyAllRecords = false);
-        insert obj2Perm1;
+        // Create Field Permissions
+        List < FieldPermissions > fieldPermsToInsert = new List < FieldPermissions > {
+            new FieldPermissions(SObjectType = 'Account', ParentId = permSetsToInsert[1].Id, Field = 'Account.of_Savings__c', PermissionsRead = true, PermissionsEdit = true),
+            new FieldPermissions(SObjectType = 'Contact', ParentId = permSetsToInsert[0].Id, Field = 'Contact.Email', PermissionsRead = true, PermissionsEdit = false),
+            new FieldPermissions(SObjectType = 'Account', ParentId = permSetsToInsert[0].Id, Field = 'Account.of_Savings__c', PermissionsRead = true, PermissionsEdit = true)
+        };
+        insert fieldPermsToInsert;
 
-        FieldPermissions field2Perm2 = new FieldPermissions(SObjectType = 'Account',ParentId = permSettwo.Id,Field = 'Account.of_Savings__c',PermissionsRead = true,PermissionsEdit = true);
-        insert field2Perm2;
+        // Create Permission Set Groups
+        List < PermissionSetGroup > permSetGroupsToInsert = new List < PermissionSetGroup > {
+            new PermissionSetGroup(DeveloperName = 'New_Test_Permission_Set_Group_One', MasterLabel = 'New Test Permission Set Group One', Description = 'This is a test permission set group.'),
+            new PermissionSetGroup(DeveloperName = 'New_Test_Permission_Set_Group_Two', MasterLabel = 'New Test Permission Set Group Two', Description = 'This is a test permission set group.')
+        };
+        insert permSetGroupsToInsert;
 
-        FieldPermissions fieldPerm1 = new FieldPermissions(SObjectType = 'Contact',ParentId = permSet.Id,Field = 'Contact.Email',PermissionsRead = true,PermissionsEdit = false);
-        insert fieldPerm1;
-
-        ObjectPermissions objPerm2 = new ObjectPermissions(SObjectType = 'Account',ParentId = permSet.Id,PermissionsRead = true,PermissionsCreate = true,PermissionsEdit = false,PermissionsDelete = false,PermissionsViewAllRecords = false,PermissionsModifyAllRecords = false);
-        insert objPerm2;
-
-        FieldPermissions fieldPerm2 = new FieldPermissions(SObjectType = 'Account',ParentId = permSet.Id,Field = 'Account.of_Savings__c',PermissionsRead = true,PermissionsEdit = true);
-        insert fieldPerm2;
-
-        PermissionSetGroup permSetGroup = new PermissionSetGroup(DeveloperName = 'New_Test_Permission_Set_Group_One',MasterLabel = 'New Test Permission Set Group One',Description = 'This is a test permission set group.');
-        insert permSetGroup;
-
-        PermissionSetGroup permSetGrouptwo = new PermissionSetGroup(DeveloperName = 'New_Test_Permission_Set_Group_Two',MasterLabel = 'New Test Permission Set Group Two',Description = 'This is a test permission set group.');
-        insert permSetGrouptwo;
-
-        PermissionSetGroupComponent psgComponent = new PermissionSetGroupComponent(PermissionSetGroupId = permSetGroup.Id,PermissionSetId = permSet.Id);
-        
-
+        // Create Permission Set Group Component
+        insert new PermissionSetGroupComponent(PermissionSetGroupId = permSetGroupsToInsert[0].Id, PermissionSetId = permSetsToInsert[0].Id);
     }
  
 	
     @isTest
-	static void testCreatePermissionSet() {
-        // Mocking the Metadata API service
-        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+    static void testCreatePermissionSet() {
+        // Create test data
+        PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
+        insert testPermissionSet;
+        User u = [SELECT Id FROM User WHERE Email = 'testuserOne@example.com' LIMIT 1];
     
-        // Create input data for the permission set creation
-        Map<String, Object> permSetToCreate = new Map<String, Object>{
+        // Mock external service
+        Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+    
+        // Prepare input data
+        Map < String, Object > permSetToCreate = new Map < String, Object > {
             'Name' => 'Test_Test_Permission_Set',
             'Label' => 'Test Test Permission Set Label',
             'Description' => 'Test Permission Set Description',
             'License' => null,
             'hasActivationRequired' => false
         };
-		PermissionSet testPermissionSet = new PermissionSet();
-        testPermissionSet.Name = 'Test_Sample_PermSet';
-        testPermissionSet.Label = 'Test Sample PermSet';
-        insert testPermissionSet; // Insert into test database
+        List < Id > userIds = new List < Id > {u.Id};
     
-        // Retrieve a test user or create a new test user if needed
-        User testUser = [SELECT Id FROM User WHERE Email = 'testuserOne@example.com' LIMIT 1];
-        List<Id> userIds = new List<Id>{testUser.Id};
-    	//List<PermissionSet> permSet = [Select Id from PermissionSet where Name = 'New_Test_Permission_Set_One' LIMIT 1];
-        // Test execution of the createPermissionSet method
+        // Test the method
         Test.startTest();
-        String resultIds = PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
+        String permissionSetId = PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
         Test.stopTest();
     
-        // Assert that the permission set was created and an ID was returned
-        System.assertNotEquals(0, 1, 'Result should contain at least one Permission Set ID.');
-        String createdPermSetId = resultIds;
-    
+        // Verify results
         PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
         System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, 'The created PermissionSet should be found in the query.');
-}
+    }
     
      @IsTest
     public static void testGetPermissionSet() {
-
-        // Running the tested method
+        // Test the method
         Test.startTest();
-        List<Map<String, String>> result = PermissionSetManager.getPermissionSet();
+        List < Map < String, String >> result = PermissionSetManager.getPermissionSet();
         Test.stopTest();
-
-        // Verify the size of the result list
-        //System.assertEquals(2, result.size(), 'The result should contain 2 permission sets.');
-
-        // Check the first permission set details
-        Map<String, String> permissionSet1 = result[0];
-        System.assertNotEquals('TestPermissionSet1', permissionSet1.get('Name'), 'First permission set name should match.');
-        System.assertNotEquals('Test Permission Set 1', permissionSet1.get('Label'), 'First permission set label should match.');
-        System.assertNotEquals('Description for Test Permission Set 1', permissionSet1.get('Description'), 'First permission set description should match.');
-        System.assertNotEquals('TestNS1', permissionSet1.get('NamespacePrefix'), 'First permission set namespace should match.');
-
-     }
     
-     @IsTest
+        // Verify results
+        System.assertNotEquals(0, result.size(), 'The result should contain permission sets.');
+    
+        if (!result.isEmpty()) {
+            Map < String, String > permissionSet1 = result[0];
+            System.assertNotEquals(null, permissionSet1.get('Name'), 'Permission set name should not be null.');
+            System.assertNotEquals(null, permissionSet1.get('Label'), 'Permission set label should not be null.');
+        }
+    }
+    
+    @IsTest
     static void testInsertUsertoPermissionSet() {
         // Create test data
-        Profile p = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
-        User testUser = new User(FirstName = 'TestName',LastName = 'TestUser',Email = 'testuser3@example.com',Username = 'testuser3@example.com',Alias = 'tuser',ProfileId = p.Id,TimeZoneSidKey = 'America/Los_Angeles',LocaleSidKey = 'en_US',EmailEncodingKey = 'UTF-8',LanguageLocaleKey = 'en_US');
-        insert testUser;
-        
+        User testUser = [SELECT Id FROM User WHERE Email = 'testuserOne@example.com' LIMIT 1];
         // Query an existing Permission Set
-        PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1];
-		List<String> userIds = new List<String>{ testUser.Id };
-        List<String> invalidUserIds = new List<String>{ 'invalidUserId' };
-        // Test case: Successful Permission Set assignment
+        PermissionSet testPermissionSet = new PermissionSet(name = 'Test_for_Insert_user_to_Perm_Set', label = 'Test for Insert user to Perm Set');
+        insert testPermissionSet;
+        List < String > userIds = new List < String > {testUser.Id};
         Test.startTest();
         PermissionSetManager.insertUsertoPermissionSet(userIds, testPermissionSet.Id);
         Test.stopTest();
-
+    
         // Verify that PermissionSetAssignment was created successfully
-        List<PermissionSetAssignment> assignments = [SELECT Id, AssigneeId, PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :testUser.Id AND PermissionSetId = :testPermissionSet.Id];
+        List < PermissionSetAssignment > assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: testUser.Id AND PermissionSetId =: testPermissionSet.Id];
         System.assertEquals(1, assignments.size(), 'PermissionSetAssignment should be inserted successfully.');
     }
-    
-    /*
-    @IsTest
-    static void testInsertUserToPermissionSetNegative() {
-        PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1];
-        List<String> invalidUserIds = new List<String>{ 'invalidUserId' }; // Invalid user ID
-        String permSetId = testPermSet.Id;
-        Test.startTest();
-        try {
-            PermissionSetManager.insertUsertoPermissionSet(invalidUserIds, permSetId);
-            System.assert(false, 'DmlException should have been thrown for invalid user ID.');
-        } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains('Error assigning Permission Set'), 'Expected AuraHandledException should be thrown for invalid user ID.');
-        }
-        Test.stopTest();
-    }
-*/
     
     @IsTest
     static void testDeleteUserFromPermissionSet() {
@@ -263,9 +233,6 @@ public class permissionSetManagerTest {
         for (User u : assignedUsers) {
             userNames.add(u.Username);
         }
-        
-        //System.assert(userNames.contains('testuserOne@example.com'), 'testuser1 should be assigned to the permission set.');
-        //System.assert(userNames.contains('testuser2@example.com'), 'testuser2 should be assigned to the permission set.');
     }
     
     @IsTest
@@ -274,18 +241,18 @@ public class permissionSetManagerTest {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1];
         
         Test.startTest();
-        List<User> unassignedUsers = PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'All', '', '');
-        List<User> unassignedUsersWithProfile = PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'Standard User', '', '');
-        List<User> unassignedUsersWithLicense = PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'All', 'Salesforce', 'Salesforce');
+        PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'All', '', '');
+        PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'Standard User', '', '');
+        PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'All', 'Salesforce', 'Salesforce');
         Test.stopTest();
     }
     
     @IsTest
     static void testGetUserForPermissionSetWithUserLicense() {
         Test.startTest();
-        List<User> usersWithLicense = PermissionSetManager.getUserForPermissionSet('Salesforce');
-        List<User> usersWithLicense1 = PermissionSetManager.getUserForPermissionSet('Test_License');
-        List<User> usersWithLicense2 = PermissionSetManager.getUserForPermissionSet('');
+        PermissionSetManager.getUserForPermissionSet('Salesforce');
+        PermissionSetManager.getUserForPermissionSet('Test_License');
+        PermissionSetManager.getUserForPermissionSet('');
         Test.stopTest();
 	}
     
@@ -317,7 +284,7 @@ public class permissionSetManagerTest {
     @IsTest
     static void testGetProfiles() {
         Test.startTest();
-        List<Profile> profiles = PermissionSetManager.getProfiles();
+        PermissionSetManager.getProfiles();
         Test.stopTest();
         
 	}
@@ -340,7 +307,7 @@ public class permissionSetManagerTest {
         // Step 2: Mock the getTabForPermissionSet to return visibility settings for the tabs
         Test.startTest();
         
-        List<Map<String, Object>> result = PermissionSetManager.getPermissionSetTabSetting(permissionSet.Name);
+        PermissionSetManager.getPermissionSetTabSetting(permissionSet.Name);
         Test.stopTest();
     }
     
@@ -351,7 +318,7 @@ public class permissionSetManagerTest {
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
         Test.startTest();
         PermissionSetManager.PermissionFieldWrap result = PermissionSetManager.getCombinedPermissionsforProfile([SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1].Id);
-        List<Object> result1 = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
+        PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
         Test.stopTest();
        
     }
@@ -359,23 +326,21 @@ public class permissionSetManagerTest {
     @isTest
     Static Void testUpdateSystemPermissions(){
         Test.startTest();
-        list<PermissionSet> result = PermissionSetManager.updateSystemPermissions('{"PermissionsApiEnabled":true}',[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1].Id);
+        PermissionSetManager.updateSystemPermissions('{"PermissionsApiEnabled":true}',[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1].Id);
         Test.stopTest();
     }
     @isTest
     Static Void testGetSobjectPermissionsForPermissionSet(){
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
 		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
-        UserAccessManager manager = new UserAccessManager();
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
       PermissionSet perm =  [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1];
        Test.StartTest();
-        PermissionSetManager.ProfileObjectPermissionsWrapper result = PermissionSetManager.getSobjectPermissionsForPermissionSet(perm.Id,'Account',new List<String>{perm.Name});
+        PermissionSetManager.getSobjectPermissionsForPermissionSet(perm.Id,'Account',new List<String>{perm.Name});
        Test.StopTest();
     }
     @IsTest
     Static Void testupdateSobjectMeta(){
-        //Map<String, Map<String, Boolean>> objPermissionMap = new Map<String, Map<String, Boolean>>();
         Map<String, Boolean> caseObjPermissions = new Map<String, Boolean>{
             'PermissionsCreate' => true,
             'PermissionsRead' => true,
@@ -384,7 +349,6 @@ public class permissionSetManagerTest {
             'PermissionsModifyAllRecords' => true,
             'PermissionsViewAllRecords' => true
         };
-        //objPermissionMap.put('Case',caseObjPermissions);
         List<PermissionSetManager.FieldPermissionUpdateWrapper> fieldPermissionUpdateList = new List<PermissionSetManager.FieldPermissionUpdateWrapper>();
         PermissionSetManager.FieldPermissionUpdateWrapper fieldPermUpdateWrapper = new PermissionSetManager.FieldPermissionUpdateWrapper();
         fieldPermUpdateWrapper.Field = 'Opportunity.Amount';
@@ -396,30 +360,9 @@ public class permissionSetManagerTest {
         fieldPermUpdateWrapper.mutedPermissionsEdit = true; 
         fieldPermissionUpdateList.add(fieldPermUpdateWrapper);
         Test.StartTest();
-        PermissionSetManager.updatedObjPermResult result = PermissionSetManager.updateSobjectMeta(new Map<String, Map<String, Boolean>>{'Case'=>caseObjPermissions},fieldPermissionUpdateList,[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1].Id,'Opportunity');
+        PermissionSetManager.updateSobjectMeta(new Map<String, Map<String, Boolean>>{'Case'=>caseObjPermissions},fieldPermissionUpdateList,[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1].Id,'Opportunity');
    		Test.stopTest();
      }
     
-   /* @IsTest
-    static void testGetTabForPermissionSet() {
-        PermissionSet permissionSet = [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_PermSet1' LIMIT 1];
-        
-         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
-		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
-           UserAccessManager manager = new UserAccessManager();
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'ProfileName'));
-        Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
-
-    
-        Test.startTest();
-        // Step 2: Call the method
-        Map<String, String> tabSettings = PermissionSetManager.getTabForPermissionSet(permissionSet.Name);
-
-        // Step 3: Validate the results
-        System.assertEquals(2, tabSettings.size(), 'There should be two tab settings.');
-        System.assertEquals('Visible', tabSettings.get('AccountTab'), 'Account tab should be visible.');
-        System.assertEquals('None', tabSettings.get('ContactTab'), 'Contact tab should have no visibility.');
-
-        Test.stopTest();
-    }*/
+   
 }

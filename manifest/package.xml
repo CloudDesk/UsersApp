@@ -2,38 +2,38 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>ManagePermissionSetCreateServer</members>
-        <members>ManagePermissionSetCreateServer_Test</members>
+        <members>ManagePermissionSetCreateServerTest</members>
         <members>MetadataService</members>
         <members>MockHttpResponseGenerator</members>
-        <members>partnerSObjectWsdl2Apex</members>
+        <members>PartnerSObjectWsdl2Apex</members>
         <members>PartnerSObjectWsdl2ApexTest</members>
-        <members>partnerWsdl2Apex</members>
-        <members>PartnerWsdl2ApexMock</members>
         <members>PartnerWsdl2ApexMockWithError</members>
-        <members>partnerWsdl2ApexTest</members>
         <members>PermissionAnalyzerObjectServer</members>
-        <members>PermissionAnalyzerObjectServer_Test</members>
+        <members>PermissionAnalyzerObjectServerTest</members>
         <members>PermissionAnalyzerRecordTypeServer</members>
         <members>PermissionAnalyzerRecordTypeServerTest</members>
         <members>PermissionAnalyzerServer</members>
         <members>PermissionAnalyzerServerTest</members>
         <members>PermissionDependencyMock</members>
-        <members>permissionFaultPartnerSoapSforceCom</members>
-        <members>permissionPartnerSoapSforceCom</members>
-        <members>permissionPartnerSoapSforceComMock</members>
-        <members>permissionPartnerSoapSforceComTest</members>
+        <members>PermissionFaultPartnerSoapSforceCom</members>
+        <members>PermissionPartnerSoapSforceCom</members>
+        <members>PermissionPartnerSoapSforceComMock</members>
+        <members>PermissionPartnerSoapSforceComTest</members>
         <members>PermissionSetGroupManager</members>
         <members>PermissionSetGroupManagerTest</members>
         <members>PermissionSetManager</members>
-        <members>permissionSetManagerTest</members>
-        <members>permissionSobjectPartnerSoapSforceCom</members>
+        <members>PermissionSetManagerTest</members>
+        <members>PermissionSobjectPartnerSoapSforceCom</members>
         <members>PermissionTabServer</members>
         <members>PermissionTabServerTest</members>
         <members>ProfileManager</members>
         <members>TabPermissionAnalyzerServer</members>
         <members>UserAccessManager</members>
         <members>UserPermissionAnalyzerServer</members>
-        <members>userPermissionAnalyzerServerTest</members>
+        <members>UserPermissionAnalyzerServerTest</members>
+        <members>UserAccessManagerTest</members>
+        <members>TabPermissionAnalyzerServerTest</members>
+        <members>ProfileManagerTest</members>
         <name>ApexClass</name>
     </types>
     <version>62.0</version>

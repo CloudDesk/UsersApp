@@ -1,5 +1,5 @@
 @isTest
-public class permissionPartnerSoapSforceComMock implements WebServiceMock  {
+public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
     public static string indicatorVar;
     public void doInvoke(
         object stud,
@@ -131,9 +131,8 @@ public class permissionPartnerSoapSforceComMock implements WebServiceMock  {
             response_x.result = testDeleteResult;
             response.put('response_x', response_x);
         }
-        if(indicatorVar == 'LoginResult')
+        if(indicatorVar == 'LoginResult' && request instanceof permissionPartnerSoapSforceCom.login_element)
         {
-			if (request instanceof permissionPartnerSoapSforceCom.login_element) {
             // Create a successful login response
             permissionPartnerSoapSforceCom.loginResponse_element loginResponse = 
                 new permissionPartnerSoapSforceCom.loginResponse_element();
@@ -154,7 +153,6 @@ public class permissionPartnerSoapSforceComMock implements WebServiceMock  {
             
             // Put the response in the output map
             response.put('response_x', loginResponse);
-        }
             
         }
         if(indicatorVar == 'QueryAllResult')
