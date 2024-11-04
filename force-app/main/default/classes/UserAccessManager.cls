@@ -1,4 +1,4 @@
-Public without sharing Class UserAccessManager {
+Public with sharing Class UserAccessManager {
     @AuraEnabled(cacheable=true)
   public static Map<String, String> getSessionInfo() {
       String sessionId = UserInfo.getSessionId();

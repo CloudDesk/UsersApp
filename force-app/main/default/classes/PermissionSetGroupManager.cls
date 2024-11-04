@@ -273,7 +273,7 @@ Public with sharing Class PermissionSetGroupManager {
           insert persetasi;
           System.debug('Permission Set Group assigned successfully to all users');
       } catch (DmlException e) {
-          handleException('Error assigning Permission Set Group: ', e);
+          handleException('Error in fetching Permission Set Group: ', e);
       }
   }
   
@@ -297,7 +297,7 @@ Public with sharing Class PermissionSetGroupManager {
           delete persetAssignForDlt;
           System.debug('Permission Set Group Deleted successfully for the users');
       } catch (DmlException e) {
-          handleException('Error assigning Permission Set Group: ', e);
+          handleException('Error in deleting Permission Set Group: ', e);
       }
   }
   
@@ -347,7 +347,7 @@ Public with sharing Class PermissionSetGroupManager {
           insert persetasi;
           System.debug('Permission Set Group assigned successfully to Permission Set');
       } catch (DmlException e) {
-          handleException('Error assigning Permission Set Group: ', e);
+          handleException('Error in creating Permission Set Group: ', e);
       }
   }
   
@@ -399,7 +399,6 @@ Public with sharing Class PermissionSetGroupManager {
           if (ps.License != null) {
               recordMap.put('LicenseId', ps.License.Id);
               recordMap.put('LicenseName', ps.License.Name);
-              System.debug('Permission Set Id >> ' + ps.Id);
               System.debug('License Name >> ' + ps.License.Name);
           } else {
               System.debug('License Name not found for Permission set ID: ' + ps.Id);
@@ -409,7 +408,6 @@ Public with sharing Class PermissionSetGroupManager {
           if (ps.CreatedBy != null) {
               recordMap.put('CreatedById', ps.CreatedBy.Id);
               recordMap.put('CreatedByName', ps.CreatedBy.Name);
-              System.debug('Permission Set Id >> ' + ps.Id);
               System.debug('Createdby Name >> ' + ps.CreatedBy.Name);
           } else {
               System.debug('CreatedBy Name not found for Permission set ID: ' + ps.Id);
@@ -555,7 +553,7 @@ Public with sharing Class PermissionSetGroupManager {
     quotedFieldNames.add('\'' + fieldName + '\'');
   }
   system.debug(quotedFieldNames);
-  String pertype = 'User Permission';
+  //String pertype = 'User Permission';
   String query;
   if (isUpdateSystemPermissions) {
     string usertype = 'User Permission';
@@ -573,8 +571,8 @@ Public with sharing Class PermissionSetGroupManager {
   }
   system.debug('QUery' + query);
 
-  String username = System.Label.Board_Book_Integration_Username;
-  String password = System.Label.Board_Book_Integration_Password;
+  //String username = System.Label.Board_Book_Integration_Username;
+  //String password = System.Label.Board_Book_Integration_Password;
   UserAccessManager instance = new UserAccessManager();
 
   String endpoint =
@@ -800,19 +798,19 @@ Public with sharing Class PermissionSetGroupManager {
   list<PermissionSetGroupComponent> per = [SELECT id,PermissionSetId,PermissionSet.Name,PermissionSetGroupId,PermissionSetGroup.DeveloperName
     FROM PermissionSetGroupComponent
     WHERE PermissionSetGroupId = :persetgrpid AND (NOT PermissionSet.Name LIKE :nullValue)];
-  String ids;
+  String perSet_ids;
   for (PermissionSetGroupComponent pe : per) {
     system.debug(pe);
-    ids = pe.PermissionSetId;
+    perSet_ids = pe.PermissionSetId;
   }
 
-  List<MutingPermissionSet> mpsList = [SELECT id FROM MutingPermissionSet WHERE id = :ids];
+  List<MutingPermissionSet> mpsList = [SELECT id FROM MutingPermissionSet WHERE id = :perSet_ids];
   MutingPermissionSet mutingPermissionSet;
 
   if (!mpsList.isEmpty()) {
     mutingPermissionSet = mpsList[0];
-    ids = mutingPermissionSet.Id;
-    system.debug('Id' + ids);
+    perSet_ids = mutingPermissionSet.Id;
+    system.debug('Id' + perSet_ids);
   } else {
     mutingPermissionSet = new MutingPermissionSet();
     mutingPermissionSet.MasterLabel = psgname + ' Muted';
@@ -820,7 +818,7 @@ Public with sharing Class PermissionSetGroupManager {
     insert mutingPermissionSet;
 
     system.debug('Id' + mutingPermissionSet.Id);
-    ids = mutingPermissionSet.Id;
+    perSet_ids = mutingPermissionSet.Id;
 
     PermissionSetGroup psGroup = [SELECT Id FROM PermissionSetGroup WHERE Id = :persetgrpid LIMIT 1];
     PermissionSetGroupComponent component = new PermissionSetGroupComponent(
@@ -832,7 +830,7 @@ Public with sharing Class PermissionSetGroupManager {
 
   List<ObjectPermissions> objPermissions = [SELECT SobjectType,PermissionsRead,PermissionsCreate,PermissionsEdit,PermissionsDelete,PermissionsViewAllRecords,PermissionsModifyAllRecords
     FROM ObjectPermissions
-    WHERE ParentId = :ids
+    WHERE ParentId = :perSet_ids
   ];
 
   for (ObjectPermissions obj : objPermissions) {
@@ -965,16 +963,16 @@ public static List<MutingPermissionSet> mutePermissions(String systemPermissions
     WHERE
       PermissionSetGroupId = :persetgrpid
       AND (NOT PermissionSet.Name LIKE :nullValue)];
-  String ids;
+  String perSetGrpCmpIds;
   for (PermissionSetGroupComponent pe : per) {
     system.debug(pe);
-    ids = pe.PermissionSetId;
+    perSetGrpCmpIds = pe.PermissionSetId;
   }
 
-  List<MutingPermissionSet> mpsList = [SELECT id FROM MutingPermissionSet WHERE id = :ids];
-  ids = mpsList[0].Id;
+  List<MutingPermissionSet> mpsList = [SELECT id FROM MutingPermissionSet WHERE id = :perSetGrpCmpIds];
+  perSetGrpCmpIds = mpsList[0].Id;
 
-  List<FieldPermissions> fieldPermissions = [SELECT SObjectType, Field, PermissionsRead, PermissionsEdit FROM FieldPermissions WHERE ParentId = :ids];
+  List<FieldPermissions> fieldPermissions = [SELECT SObjectType, Field, PermissionsRead, PermissionsEdit FROM FieldPermissions WHERE ParentId = :perSetGrpCmpIds];
   Map<String, List<FieldPermissions>> fieldmap = new Map<String, List<FieldPermissions>>();
 
   for (FieldPermissions fie : fieldPermissions) {
@@ -990,9 +988,9 @@ public static List<MutingPermissionSet> mutePermissions(String systemPermissions
   @AuraEnabled
   //Helper method to get tab settings of group.
   public static List<Map<String, Object>> getTabSettingpsg(String persetname) {
-      UserAccessManager instance = new UserAccessManager();
+      UserAccessManager ua_instance = new UserAccessManager();
       List<MetadataService.PermissionSetGroup> permSetGroupList = 
-          (List<MetadataService.PermissionSetGroup>) instance.service.readMetadata('PermissionSetGroup', new String[] {persetname}).getRecords();
+          (List<MetadataService.PermissionSetGroup>) ua_instance.service.readMetadata('PermissionSetGroup', new String[] {persetname}).getRecords();
       MetadataService.PermissionSetGroup permSetGroup = permSetGroupList[0];
       
       // Map to store unique tab settings (key: tab name, value: visibility)
@@ -1001,7 +999,7 @@ public static List<MutingPermissionSet> mutePermissions(String systemPermissions
       if (permSetGroup.permissionSets != null) {
           for (String permissionSetName : permSetGroup.permissionSets) {
               List<MetadataService.PermissionSet> permSetList = 
-                  (List<MetadataService.PermissionSet>) instance.service.readMetadata('PermissionSet', new String[] {permissionSetName}).getRecords();
+                  (List<MetadataService.PermissionSet>) ua_instance.service.readMetadata('PermissionSet', new String[] {permissionSetName}).getRecords();
               if (permSetList.size() > 0) {
                   MetadataService.PermissionSet permSet = permSetList[0];
                   if (permSet.tabSettings != null) {
@@ -1254,7 +1252,7 @@ Public Static PermissionSetGroupObjectPermissionsWrapper getSobjectPermissionsFo
   System.debug('Object Name' + objName);
   System.debug('PSG Name' + psgname);
   System.debug('PSG API Name' + psgapiname);
-  UserAccessManager instance = new UserAccessManager();
+  //UserAccessManager instance = new UserAccessManager();
   //List<Object> dependObjects = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies(objName);
   Map<String, Boolean> fieldAccess = PermissionSetManager.checkFieldType(objName);
 system.debug('fieldAccess' + fieldAccess);
