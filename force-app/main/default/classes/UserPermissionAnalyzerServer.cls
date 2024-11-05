@@ -1,7 +1,6 @@
 //This CLass is used to Maintain User Permissions for Users
 //Used in UserPermissionAnalyzer - LWC
-
-Public without sharing Class UserPermissionAnalyzerServer {
+Public with sharing Class UserPermissionAnalyzerServer {
     public class FormattedUserPermissions {
         @AuraEnabled public String fieldName { get;  set; }
         @AuraEnabled public String fieldLabel { get; set; }

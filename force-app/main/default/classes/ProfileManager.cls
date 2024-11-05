@@ -1,5 +1,5 @@
 //This class is used for edit,delete,update Profiles.
-Public without Sharing Class ProfileManager {
+Public with Sharing Class ProfileManager {
     
     @AuraEnabled(cacheable=true)
     //This method is used to fetch profile Name.

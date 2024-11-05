@@ -1,6 +1,6 @@
 //This Class is Used to Handle object and Field Permissions
 // Used In PermissionAnalyzerObject _LWC
-Public without Sharing Class PermissionAnalyzerObjectServer {    
+Public with Sharing Class PermissionAnalyzerObjectServer {    
     Public Class GetFieldWrapper {
         @AuraEnabled
         Public List<Map<String, Object>> fieldLabelMap { get; set; }

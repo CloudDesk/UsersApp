@@ -1,6 +1,6 @@
+//This class is for 
 @IsTest
 public class UserPermissionAnalyzerServerTest {
-	
     @testsetup
     static void testsetupMethod() {
         List < User > userList = new List < User > ();
@@ -19,20 +19,17 @@ public class UserPermissionAnalyzerServerTest {
             ));
         }
         insert userList;
-
         List < PermissionSet > permSets = new List < PermissionSet > {
             new PermissionSet(Label = 'New Test Permission Set', Name = 'New_Test_Permission_Set', PermissionsApiEnabled = true),
             new PermissionSet(Label = 'New Test Permission Set 1', Name = 'New_Test_PermSet1', PermissionsApiEnabled = true, PermissionsEmailSingle = true, PermissionsEditTask = true, PermissionsListEmailSend = true, PermissionsEmailMass = true),
             new PermissionSet(Label = 'New Test Permission Set 2', Name = 'New_Test_PermSet2', PermissionsApiEnabled = true, PermissionsEmailSingle = true, PermissionsEditTask = true, PermissionsListEmailSend = true, PermissionsEmailMass = true)
         };
         insert permSets;
-
         List < MutingPermissionSet > mutingPermSets = new List < MutingPermissionSet > {
             new MutingPermissionSet(MasterLabel = 'New Test Mute Permission Set 1', DeveloperName = 'New_Test_MutePermSet1', PermissionsEmailSingle = false, PermissionsEditTask = false, PermissionsListEmailSend = false, PermissionsEmailMass = false),
             new MutingPermissionSet(MasterLabel = 'New Test Mute Permission Set 2', DeveloperName = 'New_Test_MutePermSet2', PermissionsEmailSingle = false, PermissionsEditTask = false, PermissionsListEmailSend = false, PermissionsEmailMass = false)
         };
         insert mutingPermSets;
-
         List < PermissionSetGroup > permSetGroups = new List < PermissionSetGroup > {
             new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group 1', DeveloperName = 'New_Test_PermSetGrp1'),
             new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group 2', DeveloperName = 'New_Test_PermSetGrp2'),

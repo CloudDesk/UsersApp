@@ -30,7 +30,6 @@ public class PermissionSobjectPartnerSoapSforceCom {
         public string PermissionSetId;
         public string Type;
         public string UserLicenseId;
-        //public string profileName;
         Public string Profile;
         Public string ParentId;
         Public string Parent;
@@ -52,38 +51,7 @@ public class PermissionSobjectPartnerSoapSforceCom {
         public string FullName;
         public string DurableId;
         public string RecordId;
-        /*
-        public Map<String, String> fieldValues = new Map<String, String>();
-        public void put(String fieldName, String fieldValue) {
-            fieldValues.put(fieldName, fieldValue);
-        }
-
         
-        public object getfield(SObject sObjectRecord, String fieldName){
-           return sObjectRecord.get(fieldName); 
-        }
-        
-        public string getSobject(String fieldName) {
-            if(fieldName == 'Name'){
-            string samp = (string) getSobject(fieldName);
-                return samp;
-                }
-            else{
-                return null;
-            }
-        }
-        
-        public String get(String fieldName) {
-            if(fieldName == 'Name'){
-        return (String) get(fieldName);
-                }
-            else{
-                return null;
-            }
-
-        }*/
-
-  		
         private string[] RecordId_type_info = new string[]{'RecordId','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};
         private string[] EntityDefinition_type_info = new string[]{'EntityDefinition','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};
         private string[] EntityDefinitionId_type_info = new string[]{'EntityDefinitionId','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};
@@ -122,7 +90,6 @@ public class PermissionSobjectPartnerSoapSforceCom {
         Private string[] AssigneeId_type_info = new String[]{'AssigneeId','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};   
         Private string[] PermissionSetId_type_info = new String[]{'PermissionSetId','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};    
         private string[] Type_type_info = new String[]{'Type','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};
-       // private string[] profileName_type_info = new String[]{'Profile.Name','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};
         Private string[] Profile_type_info = new String[]{'Profile','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};
         Private string[] ParentId_type_info = new String[]{'ParentId','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};
         Private string[] Parent_type_info = new String[]{'Parent','urn:sobject.partner.soap.sforce.com',null,'1','1','true'};

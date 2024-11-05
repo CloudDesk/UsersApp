@@ -1,5 +1,5 @@
 //This class is used for create,edit,delete,update,assign user,unassign user in Permission Set..
-Public without sharing Class PermissionSetManager {
+Public with sharing Class PermissionSetManager {
  	//Method to Create Permission Set
     @AuraEnabled(cacheable=false)
     Public Static String createPermissionSet(Map<String,Object> permSetToCreate,List<Id> userIds) 

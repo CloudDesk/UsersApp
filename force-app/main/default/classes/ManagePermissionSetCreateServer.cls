@@ -1,7 +1,6 @@
 //This Method is Used to Create Permission Set and its related Object Permissions field Permissions, User Permissions and Tab setting;
 //This Class referred In LWC - ManagePermissionSetCreate
-
-Public without Sharing class ManagePermissionSetCreateServer {
+Public with Sharing class ManagePermissionSetCreateServer {
 	// This Method is used to check the dublicate Permission label and Api Name
     @AuraEnabled(cacheable=true)
   	Public Static Boolean duplicatePermissionSetCheck(String label,String apiName) 

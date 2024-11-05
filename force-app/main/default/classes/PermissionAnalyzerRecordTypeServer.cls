@@ -1,7 +1,6 @@
 //This Method is user to Fetch RecordType Permissions or Profile/Permissionset
 //Used in LWC Component ==> PermissionAnalyzerRecordType
-
-Public without Sharing Class PermissionAnalyzerRecordTypeServer {  
+Public with Sharing Class PermissionAnalyzerRecordTypeServer {  
     Public permissionPartnerSoapSforceCom.Soap partnerConnection;
     Public MetadataService.MetadataPort service;
     Public Class GetRecTypeVisibilityResutlWrapper {

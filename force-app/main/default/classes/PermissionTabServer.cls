@@ -1,7 +1,7 @@
 // This Class is Handle to Display Users having UserPermissions, objectPermissions and fieldPermissions 
 // through Profile,PermissionSet and PermissionSetGroup.
 //This CLass Used IN PermissionAnalyzer  && ManagePermissionComponentClone LWC Component
-Public Without sharing Class PermissionTabServer {
+Public with sharing Class PermissionTabServer {
  //Used to fetch User Permissions
     @AuraEnabled
     Public Static Map<String, String> getUserDefinitions() {   

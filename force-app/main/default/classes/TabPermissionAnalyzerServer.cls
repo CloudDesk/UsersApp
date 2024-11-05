@@ -1,6 +1,6 @@
 //This class is used to Handling tab setting permissions For Profile And PermissionSet.
 //This Class referred In LWC --> tabPermissionAnalyzer
-Public without sharing Class TabPermissionAnalyzerServer {
+Public with sharing Class TabPermissionAnalyzerServer {
 //This Method is used to retrieve TabSettings Permissions for Profile Or Permission, Try to Combine with TabDefinition for Name and label
 	@AuraEnabled
     Public Static List < Map < String, Object >> getProfileOrPermSetTabVisibility(List < String > profileOrPermissionSetName, String typeProfileOrPermissionSet) {

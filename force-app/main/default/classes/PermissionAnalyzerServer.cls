@@ -1,5 +1,5 @@
 //This Class is used to fetch User and its Related Profile/PermissionSet/PermissionSetgroup details and used in permissionAnalyzer LWC Component
-Public Without Sharing Class PermissionAnalyzerServer {
+Public with Sharing Class PermissionAnalyzerServer {
     //Retrive Users Based on SearchName.
     @AuraEnabled
     Public Static List<User> getUser(String searchUserName) 
