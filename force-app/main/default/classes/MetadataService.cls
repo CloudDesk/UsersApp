@@ -328,7 +328,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'caseAssignNotificationTemplate','caseCloseNotificationTemplate','caseCommentNotificationTemplate','caseCreateNotificationTemplate','caseFeedItemSettings','closeCaseThroughStatusChange','defaultCaseOwner','defaultCaseOwnerType','defaultCaseUser','emailActionDefaultsHandlerClass','emailToCase','enableCaseFeed','enableDraftEmails','enableEarlyEscalationRuleTriggers','enableEmailActionDefaultsHandler','enableSuggestedArticlesApplication','enableSuggestedArticlesCustomerPortal','enableSuggestedArticlesPartnerPortal','enableSuggestedSolutions','keepRecordTypeOnAssignmentRule','notifyContactOnCaseComment','notifyDefaultCaseOwner','notifyOwnerOnCaseComment','notifyOwnerOnCaseOwnerChange','showEmailAttachmentsInCaseAttachmentsRL','showFewerCloseActions','systemUserEmail','useSystemEmailAddress','useSystemUserAsDefaultCaseUser','webToCase'};
     }
-    public class readMetadataResponse_element {
+    public class ReadMetadataResponse_element {
         public MetadataService.ReadResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -650,7 +650,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'customTabListAdditionalFields','excludedStandardButtons','listViewButtons','lookupDialogsAdditionalFields','lookupFilterFields','lookupPhoneDialogsAdditionalFields','searchFilterFields','searchResultsAdditionalFields','searchResultsCustomButtons'};
     }
-    public class retrieve_element {
+    public class Retrieve_element {
         public MetadataService.RetrieveRequest retrieveRequest;
         private String[] retrieveRequest_type_info = new String[]{'retrieveRequest',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -926,7 +926,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'documentContentSearchEnabled','optimizeSearchForCJKEnabled','recentlyViewedUsersForBlankLookupEnabled','searchSettingsByObject','sidebarAutoCompleteEnabled','sidebarDropDownListEnabled','sidebarLimitToItemsIOwnCheckboxEnabled','singleSearchResultShortcutEnabled','spellCorrectKnowledgeSearchEnabled'};
     }
-    public class listMetadata_element {
+    public class ListMetadata_element {
         public MetadataService.ListMetadataQuery[] queries;
         public Double asOfVersion;
         private String[] queries_type_info = new String[]{'queries',SOAP_M_URI,null,'0','-1','false'};
@@ -2043,7 +2043,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'skill'};
     }
-    public class describeValueTypeResponse_element {
+    public class DescribeValueTypeResponse_element {
         public MetadataService.DescribeValueTypeResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -2282,7 +2282,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'valueTranslation'};
     }
-    public class deployResponse_element {
+    public class DeployResponse_element {
         public MetadataService.AsyncResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -3302,7 +3302,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'name','value'};
     }
-    public class deployRecentValidationResponse_element {
+    public class DeployRecentValidationResponse_element {
         public String result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -3332,7 +3332,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'description','end_x','start'};
     }
-    public class deployRecentValidation_element {
+    public class DeployRecentValidation_element {
         public String validationId;
         private String[] validationId_type_info = new String[]{'validationId',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -4070,7 +4070,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'description','fields','label'};
     }
-    public class checkRetrieveStatusResponse_element {
+    public class CheckRetrieveStatusResponse_element {
         public MetadataService.RetrieveResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -4156,7 +4156,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'authProvider','certificate','customConfiguration','endpoint','isWritable','label','oauthRefreshToken','oauthScope','oauthToken','password','principalType','protocol','repository','type_x','username','version'};
     }
-    public class retrieveResponse_element {
+    public class RetrieveResponse_element {
         public MetadataService.AsyncResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -4246,7 +4246,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'assignRecordIdToReference','connector','faultConnector','inputAssignments','inputReference','object_x'};
     }
-    public class upsertMetadataResponse_element {
+    public class UpsertMetadataResponse_element {
         public MetadataService.UpsertResult[] result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -4294,7 +4294,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'instanceUrl','label','organizationIdentifier','sortIndex'};
     }
-    public class cancelDeploy_element {
+    public class CancelDeploy_element {
         public String String_x;
         private String[] String_x_type_info = new String[]{'String',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -5206,7 +5206,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'connectors'};
     }
-    public class updateMetadata_element {
+    public class UpdateMetadata_element {
         public MetadataService.Metadata[] metadata;
         private String[] metadata_type_info = new String[]{'metadata',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -5460,7 +5460,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'category','lightningBoltFeatures','lightningBoltImages','lightningBoltItems','masterLabel','publisher','summary'};
     }
-    public class upsertMetadata_element {
+    public class UpsertMetadata_element {
         public MetadataService.Metadata[] metadata;
         private String[] metadata_type_info = new String[]{'metadata',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -5534,7 +5534,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName','accessType','folderShares','name','publicFolderAccess','sharedTo'};
     }
-    public class renameMetadata_element {
+    public class RenameMetadata_element {
         public String type_x;
         public String oldFullName;
         public String newFullName;
@@ -6063,7 +6063,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'attributes','canvasConfig','contactEmail','contactPhone','description','iconUrl','infoUrl','ipRanges','label','logoUrl','mobileAppConfig','mobileStartUrl','oauthConfig','plugin','samlConfig','startUrl'};
     }
-    public class describeMetadata_element {
+    public class DescribeMetadata_element {
         public Double asOfVersion;
         private String[] asOfVersion_type_info = new String[]{'asOfVersion',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -6497,7 +6497,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName','accessType','folderShares','name','publicFolderAccess','sharedTo'};
     }
-    public class createMetadataResponse_element {
+    public class CreateMetadataResponse_element {
         public MetadataService.SaveResult[] result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -6801,7 +6801,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'components','customDataTypeName','description','label'};
     }
-    public class readMetadata_element {
+    public class ReadMetadata_element {
         public String type_x;
         public String[] fullNames;
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
@@ -6885,7 +6885,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'accountAccessLevel','parentTerritory'};
     }
-    public class updateMetadataResponse_element {
+    public class UpdateMetadataResponse_element {
         public MetadataService.SaveResult[] result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -7347,7 +7347,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'field','operator','value'};
     }
-    public class deleteMetadata_element {
+    public class DeleteMetadata_element {
         public String type_x;
         public String[] fullNames;
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
@@ -7887,7 +7887,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'assignments','description','label'};
     }
-    public class renameMetadataResponse_element {
+    public class RenameMetadataResponse_element {
         public MetadataService.SaveResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -8136,7 +8136,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomSiteResponse_element implements IReadResponseElement {
+    public class ReadCustomSiteResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomSiteResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8150,7 +8150,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readListViewResponse_element implements IReadResponseElement {
+    public class ReadListViewResponse_element implements IReadResponseElement {
         public MetadataService.ReadListViewResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8164,7 +8164,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readInstalledPackageResponse_element implements IReadResponseElement {
+    public class ReadInstalledPackageResponse_element implements IReadResponseElement {
         public MetadataService.ReadInstalledPackageResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8178,7 +8178,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomFieldResponse_element implements IReadResponseElement {
+    public class ReadCustomFieldResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomFieldResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8192,7 +8192,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readFieldSetResponse_element implements IReadResponseElement {
+    public class ReadFieldSetResponse_element implements IReadResponseElement {
         public MetadataService.ReadFieldSetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8206,7 +8206,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readPicklistValueResponse_element implements IReadResponseElement {
+    public class ReadPicklistValueResponse_element implements IReadResponseElement {
         public MetadataService.ReadPicklistValueResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8220,7 +8220,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readRecordTypeResponse_element implements IReadResponseElement {
+    public class ReadRecordTypeResponse_element implements IReadResponseElement {
         public MetadataService.ReadRecordTypeResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8234,7 +8234,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWebLinkResponse_element implements IReadResponseElement {
+    public class ReadWebLinkResponse_element implements IReadResponseElement {
         public MetadataService.ReadWebLinkResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8248,7 +8248,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAddressSettingsResponse_element implements IReadResponseElement {
+    public class ReadAddressSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadAddressSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8262,7 +8262,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCaseSettingsResponse_element implements IReadResponseElement {
+    public class ReadCaseSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadCaseSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8276,7 +8276,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomObjectResponse_element implements IReadResponseElement {
+    public class ReadCustomObjectResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomObjectResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8290,7 +8290,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLayoutResponse_element implements IReadResponseElement {
+    public class ReadLayoutResponse_element implements IReadResponseElement {
         public MetadataService.ReadLayoutResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8304,7 +8304,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEmailTemplateResponse_element implements IReadResponseElement {
+    public class ReadEmailTemplateResponse_element implements IReadResponseElement {
         public MetadataService.ReadEmailTemplateResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8318,7 +8318,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readScontrolResponse_element implements IReadResponseElement {
+    public class ReadScontrolResponse_element implements IReadResponseElement {
         public MetadataService.ReadScontrolResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8332,7 +8332,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readApexPageResponse_element implements IReadResponseElement {
+    public class ReadApexPageResponse_element implements IReadResponseElement {
         public MetadataService.ReadApexPageResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8346,7 +8346,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readApexComponentResponse_element implements IReadResponseElement {
+    public class ReadApexComponentResponse_element implements IReadResponseElement {
         public MetadataService.ReadApexComponentResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8360,7 +8360,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readApexClassResponse_element implements IReadResponseElement {
+    public class ReadApexClassResponse_element implements IReadResponseElement {
         public MetadataService.ReadApexClassResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8374,7 +8374,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readApexTriggerResponse_element implements IReadResponseElement {
+    public class ReadApexTriggerResponse_element implements IReadResponseElement {
         public MetadataService.ReadApexTriggerResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8388,7 +8388,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readStaticResourceResponse_element implements IReadResponseElement {
+    public class ReadStaticResourceResponse_element implements IReadResponseElement {
         public MetadataService.ReadStaticResourceResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8402,7 +8402,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readDocumentResponse_element implements IReadResponseElement {
+    public class ReadDocumentResponse_element implements IReadResponseElement {
         public MetadataService.ReadDocumentResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8416,7 +8416,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomLabelsResponse_element implements IReadResponseElement {
+    public class ReadCustomLabelsResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomLabelsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8430,7 +8430,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomLabelResponse_element implements IReadResponseElement {
+    public class ReadCustomLabelResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomLabelResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8444,7 +8444,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAccountSettingsResponse_element implements IReadResponseElement {
+    public class ReadAccountSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadAccountSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8458,7 +8458,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readQueueResponse_element implements IReadResponseElement {
+    public class ReadQueueResponse_element implements IReadResponseElement {
         public MetadataService.ReadQueueResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8472,7 +8472,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomDataTypeResponse_element implements IReadResponseElement {
+    public class ReadCustomDataTypeResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomDataTypeResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8486,7 +8486,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readExternalDataSourceResponse_element implements IReadResponseElement {
+    public class ReadExternalDataSourceResponse_element implements IReadResponseElement {
         public MetadataService.ReadExternalDataSourceResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8500,7 +8500,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readGroupResponse_element implements IReadResponseElement {
+    public class ReadGroupResponse_element implements IReadResponseElement {
         public MetadataService.ReadGroupResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8514,7 +8514,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readBusinessProcessResponse_element implements IReadResponseElement {
+    public class ReadBusinessProcessResponse_element implements IReadResponseElement {
         public MetadataService.ReadBusinessProcessResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8528,7 +8528,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCompactLayoutResponse_element implements IReadResponseElement {
+    public class ReadCompactLayoutResponse_element implements IReadResponseElement {
         public MetadataService.ReadCompactLayoutResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8542,7 +8542,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSharingReasonResponse_element implements IReadResponseElement {
+    public class ReadSharingReasonResponse_element implements IReadResponseElement {
         public MetadataService.ReadSharingReasonResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8556,7 +8556,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readValidationRuleResponse_element implements IReadResponseElement {
+    public class ReadValidationRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadValidationRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8570,7 +8570,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readReportTypeResponse_element implements IReadResponseElement {
+    public class ReadReportTypeResponse_element implements IReadResponseElement {
         public MetadataService.ReadReportTypeResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8584,7 +8584,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readReportResponse_element implements IReadResponseElement {
+    public class ReadReportResponse_element implements IReadResponseElement {
         public MetadataService.ReadReportResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8598,7 +8598,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readDashboardResponse_element implements IReadResponseElement {
+    public class ReadDashboardResponse_element implements IReadResponseElement {
         public MetadataService.ReadDashboardResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8612,7 +8612,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAnalyticSnapshotResponse_element implements IReadResponseElement {
+    public class ReadAnalyticSnapshotResponse_element implements IReadResponseElement {
         public MetadataService.ReadAnalyticSnapshotResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8626,7 +8626,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomPageWebLinkResponse_element implements IReadResponseElement {
+    public class ReadCustomPageWebLinkResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomPageWebLinkResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8640,7 +8640,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readQuickActionResponse_element implements IReadResponseElement {
+    public class ReadQuickActionResponse_element implements IReadResponseElement {
         public MetadataService.ReadQuickActionResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8654,7 +8654,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readFlexiPageResponse_element implements IReadResponseElement {
+    public class ReadFlexiPageResponse_element implements IReadResponseElement {
         public MetadataService.ReadFlexiPageResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8668,7 +8668,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomTabResponse_element implements IReadResponseElement {
+    public class ReadCustomTabResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomTabResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8682,7 +8682,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomApplicationComponentResponse_element implements IReadResponseElement {
+    public class ReadCustomApplicationComponentResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomApplicationComponentResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8696,7 +8696,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomApplicationResponse_element implements IReadResponseElement {
+    public class ReadCustomApplicationResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomApplicationResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8710,7 +8710,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readPortalResponse_element implements IReadResponseElement {
+    public class ReadPortalResponse_element implements IReadResponseElement {
         public MetadataService.ReadPortalResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8724,7 +8724,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLetterheadResponse_element implements IReadResponseElement {
+    public class ReadLetterheadResponse_element implements IReadResponseElement {
         public MetadataService.ReadLetterheadResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8738,7 +8738,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readFlowResponse_element implements IReadResponseElement {
+    public class ReadFlowResponse_element implements IReadResponseElement {
         public MetadataService.ReadFlowResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8752,7 +8752,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowResponse_element implements IReadResponseElement {
+    public class ReadWorkflowResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8766,7 +8766,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowRuleResponse_element implements IReadResponseElement {
+    public class ReadWorkflowRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8780,7 +8780,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAssignmentRulesResponse_element implements IReadResponseElement {
+    public class ReadAssignmentRulesResponse_element implements IReadResponseElement {
         public MetadataService.ReadAssignmentRulesResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8794,7 +8794,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAssignmentRuleResponse_element implements IReadResponseElement {
+    public class ReadAssignmentRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadAssignmentRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8808,7 +8808,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAutoResponseRulesResponse_element implements IReadResponseElement {
+    public class ReadAutoResponseRulesResponse_element implements IReadResponseElement {
         public MetadataService.ReadAutoResponseRulesResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8822,7 +8822,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAutoResponseRuleResponse_element implements IReadResponseElement {
+    public class ReadAutoResponseRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadAutoResponseRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8836,7 +8836,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEscalationRulesResponse_element implements IReadResponseElement {
+    public class ReadEscalationRulesResponse_element implements IReadResponseElement {
         public MetadataService.ReadEscalationRulesResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8850,7 +8850,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEscalationRuleResponse_element implements IReadResponseElement {
+    public class ReadEscalationRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadEscalationRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8864,7 +8864,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readPostTemplateResponse_element implements IReadResponseElement {
+    public class ReadPostTemplateResponse_element implements IReadResponseElement {
         public MetadataService.ReadPostTemplateResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8878,7 +8878,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readApprovalProcessResponse_element implements IReadResponseElement {
+    public class ReadApprovalProcessResponse_element implements IReadResponseElement {
         public MetadataService.ReadApprovalProcessResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8892,7 +8892,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readHomePageComponentResponse_element implements IReadResponseElement {
+    public class ReadHomePageComponentResponse_element implements IReadResponseElement {
         public MetadataService.ReadHomePageComponentResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8906,7 +8906,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readHomePageLayoutResponse_element implements IReadResponseElement {
+    public class ReadHomePageLayoutResponse_element implements IReadResponseElement {
         public MetadataService.ReadHomePageLayoutResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8920,7 +8920,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomObjectTranslationResponse_element implements IReadResponseElement {
+    public class ReadCustomObjectTranslationResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomObjectTranslationResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8934,7 +8934,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readTranslationsResponse_element implements IReadResponseElement {
+    public class ReadTranslationsResponse_element implements IReadResponseElement {
         public MetadataService.ReadTranslationsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8948,7 +8948,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readProfileResponse_element implements IReadResponseElement {
+    public class ReadProfileResponse_element implements IReadResponseElement {
         public MetadataService.ReadProfileResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8962,7 +8962,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readPermissionSetResponse_element implements IReadResponseElement {
+    public class ReadPermissionSetResponse_element implements IReadResponseElement {
         public MetadataService.ReadPermissionSetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8976,7 +8976,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readPermissionSetGroupResponse_element implements IReadResponseElement {
+    public class ReadPermissionSetGroupResponse_element implements IReadResponseElement {
         public MetadataService.ReadPermissionSetGroupResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -8990,7 +8990,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readDataCategoryGroupResponse_element implements IReadResponseElement {
+    public class ReadDataCategoryGroupResponse_element implements IReadResponseElement {
         public MetadataService.ReadDataCategoryGroupResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9004,7 +9004,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readRemoteSiteSettingResponse_element implements IReadResponseElement {
+    public class ReadRemoteSiteSettingResponse_element implements IReadResponseElement {
         public MetadataService.ReadRemoteSiteSettingResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9018,7 +9018,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readPackageResponse_element implements IReadResponseElement {
+    public class ReadPackageResponse_element implements IReadResponseElement {
         public MetadataService.ReadPackageResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9032,7 +9032,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAuthProviderResponse_element implements IReadResponseElement {
+    public class ReadAuthProviderResponse_element implements IReadResponseElement {
         public MetadataService.ReadAuthProviderResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9046,7 +9046,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readKnowledgeSettingsResponse_element implements IReadResponseElement {
+    public class ReadKnowledgeSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadKnowledgeSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9060,7 +9060,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSharingSetResponse_element implements IReadResponseElement {
+    public class ReadSharingSetResponse_element implements IReadResponseElement {
         public MetadataService.ReadSharingSetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9074,7 +9074,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSecuritySettingsResponse_element implements IReadResponseElement {
+    public class ReadSecuritySettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadSecuritySettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9088,7 +9088,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readIdeasSettingsResponse_element implements IReadResponseElement {
+    public class ReadIdeasSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadIdeasSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9102,7 +9102,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readChatterAnswersSettingsResponse_element implements IReadResponseElement {
+    public class ReadChatterAnswersSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadChatterAnswersSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9116,7 +9116,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCommunityResponse_element implements IReadResponseElement {
+    public class ReadCommunityResponse_element implements IReadResponseElement {
         public MetadataService.ReadCommunityResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9130,7 +9130,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readActivitiesSettingsResponse_element implements IReadResponseElement {
+    public class ReadActivitiesSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadActivitiesSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9144,7 +9144,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readContractSettingsResponse_element implements IReadResponseElement {
+    public class ReadContractSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadContractSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9158,7 +9158,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readOrderSettingsResponse_element implements IReadResponseElement {
+    public class ReadOrderSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadOrderSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9172,7 +9172,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readOpportunitySettingsResponse_element implements IReadResponseElement {
+    public class ReadOpportunitySettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadOpportunitySettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9186,7 +9186,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readProductSettingsResponse_element implements IReadResponseElement {
+    public class ReadProductSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadProductSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9200,7 +9200,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readQuoteSettingsResponse_element implements IReadResponseElement {
+    public class ReadQuoteSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadQuoteSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9214,7 +9214,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCallCenterResponse_element implements IReadResponseElement {
+    public class ReadCallCenterResponse_element implements IReadResponseElement {
         public MetadataService.ReadCallCenterResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9228,7 +9228,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEntitlementProcessResponse_element implements IReadResponseElement {
+    public class ReadEntitlementProcessResponse_element implements IReadResponseElement {
         public MetadataService.ReadEntitlementProcessResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9242,7 +9242,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readMilestoneTypeResponse_element implements IReadResponseElement {
+    public class ReadMilestoneTypeResponse_element implements IReadResponseElement {
         public MetadataService.ReadMilestoneTypeResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9256,7 +9256,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEntitlementTemplateResponse_element implements IReadResponseElement {
+    public class ReadEntitlementTemplateResponse_element implements IReadResponseElement {
         public MetadataService.ReadEntitlementTemplateResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9270,7 +9270,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEntitlementSettingsResponse_element implements IReadResponseElement {
+    public class ReadEntitlementSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadEntitlementSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9284,7 +9284,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readBusinessHoursSettingsResponse_element implements IReadResponseElement {
+    public class ReadBusinessHoursSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadBusinessHoursSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9298,7 +9298,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readBusinessHoursEntryResponse_element implements IReadResponseElement {
+    public class ReadBusinessHoursEntryResponse_element implements IReadResponseElement {
         public MetadataService.ReadBusinessHoursEntryResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9312,7 +9312,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readConnectedAppResponse_element implements IReadResponseElement {
+    public class ReadConnectedAppResponse_element implements IReadResponseElement {
         public MetadataService.ReadConnectedAppResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9326,7 +9326,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAppMenuResponse_element implements IReadResponseElement {
+    public class ReadAppMenuResponse_element implements IReadResponseElement {
         public MetadataService.ReadAppMenuResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9340,7 +9340,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readMobileSettingsResponse_element implements IReadResponseElement {
+    public class ReadMobileSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadMobileSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9354,7 +9354,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readNetworkResponse_element implements IReadResponseElement {
+    public class ReadNetworkResponse_element implements IReadResponseElement {
         public MetadataService.ReadNetworkResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9368,7 +9368,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCompanySettingsResponse_element implements IReadResponseElement {
+    public class ReadCompanySettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadCompanySettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9382,7 +9382,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readForecastingSettingsResponse_element implements IReadResponseElement {
+    public class ReadForecastingSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadForecastingSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9396,7 +9396,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSamlSsoConfigResponse_element implements IReadResponseElement {
+    public class ReadSamlSsoConfigResponse_element implements IReadResponseElement {
         public MetadataService.ReadSamlSsoConfigResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9410,7 +9410,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLiveAgentSettingsResponse_element implements IReadResponseElement {
+    public class ReadLiveAgentSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadLiveAgentSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9424,7 +9424,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSkillResponse_element implements IReadResponseElement {
+    public class ReadSkillResponse_element implements IReadResponseElement {
         public MetadataService.ReadSkillResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9438,7 +9438,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLiveChatDeploymentResponse_element implements IReadResponseElement {
+    public class ReadLiveChatDeploymentResponse_element implements IReadResponseElement {
         public MetadataService.ReadLiveChatDeploymentResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9452,7 +9452,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLiveChatButtonResponse_element implements IReadResponseElement {
+    public class ReadLiveChatButtonResponse_element implements IReadResponseElement {
         public MetadataService.ReadLiveChatButtonResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9466,7 +9466,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLiveChatAgentConfigResponse_element implements IReadResponseElement {
+    public class ReadLiveChatAgentConfigResponse_element implements IReadResponseElement {
         public MetadataService.ReadLiveChatAgentConfigResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9480,7 +9480,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSynonymDictionaryResponse_element implements IReadResponseElement {
+    public class ReadSynonymDictionaryResponse_element implements IReadResponseElement {
         public MetadataService.ReadSynonymDictionaryResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9494,7 +9494,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readFolderResponse_element implements IReadResponseElement {
+    public class ReadFolderResponse_element implements IReadResponseElement {
         public MetadataService.ReadFolderResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9508,7 +9508,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readReportFolderResponse_element implements IReadResponseElement {
+    public class ReadReportFolderResponse_element implements IReadResponseElement {
         public MetadataService.ReadReportFolderResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9522,7 +9522,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readDashboardFolderResponse_element implements IReadResponseElement {
+    public class ReadDashboardFolderResponse_element implements IReadResponseElement {
         public MetadataService.ReadDashboardFolderResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9536,7 +9536,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readDocumentFolderResponse_element implements IReadResponseElement {
+    public class ReadDocumentFolderResponse_element implements IReadResponseElement {
         public MetadataService.ReadDocumentFolderResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9550,7 +9550,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEmailFolderResponse_element implements IReadResponseElement {
+    public class ReadEmailFolderResponse_element implements IReadResponseElement {
         public MetadataService.ReadEmailFolderResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9564,7 +9564,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readRoleOrTerritoryResponse_element implements IReadResponseElement {
+    public class ReadRoleOrTerritoryResponse_element implements IReadResponseElement {
         public MetadataService.ReadRoleOrTerritoryResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9578,7 +9578,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowActionResponse_element implements IReadResponseElement {
+    public class ReadWorkflowActionResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowActionResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9592,7 +9592,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSiteDotComResponse_element implements IReadResponseElement {
+    public class ReadSiteDotComResponse_element implements IReadResponseElement {
         public MetadataService.ReadSiteDotComResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9606,7 +9606,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowTaskResponse_element implements IReadResponseElement {
+    public class ReadWorkflowTaskResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowTaskResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9620,7 +9620,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowSendResponse_element implements IReadResponseElement {
+    public class ReadWorkflowSendResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowSendResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9634,7 +9634,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowOutboundMessageResponse_element implements IReadResponseElement {
+    public class ReadWorkflowOutboundMessageResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowOutboundMessageResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9648,7 +9648,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowKnowledgePublishResponse_element implements IReadResponseElement {
+    public class ReadWorkflowKnowledgePublishResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowKnowledgePublishResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9662,7 +9662,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowFieldUpdateResponse_element implements IReadResponseElement {
+    public class ReadWorkflowFieldUpdateResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowFieldUpdateResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9676,7 +9676,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWorkflowAlertResponse_element implements IReadResponseElement {
+    public class ReadWorkflowAlertResponse_element implements IReadResponseElement {
         public MetadataService.ReadWorkflowAlertResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9690,7 +9690,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readVisualizationPluginResponse_element implements IReadResponseElement {
+    public class ReadVisualizationPluginResponse_element implements IReadResponseElement {
         public MetadataService.ReadVisualizationPluginResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9704,7 +9704,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomMetadataResponse_element implements IReadResponseElement {
+    public class ReadCustomMetadataResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomMetadataResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9718,7 +9718,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readNameSettingsResponse_element implements IReadResponseElement {
+    public class ReadNameSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadNameSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9732,7 +9732,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readMarketingActionSettingsResponse_element implements IReadResponseElement {
+    public class ReadMarketingActionSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadMarketingActionSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9746,7 +9746,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomPermissionResponse_element implements IReadResponseElement {
+    public class ReadCustomPermissionResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomPermissionResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9760,7 +9760,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readAuraDefinitionBundleResponse_element implements IReadResponseElement {
+    public class ReadAuraDefinitionBundleResponse_element implements IReadResponseElement {
         public MetadataService.ReadAuraDefinitionBundleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9774,7 +9774,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCorsWhitelistOriginResponse_element implements IReadResponseElement {
+    public class ReadCorsWhitelistOriginResponse_element implements IReadResponseElement {
         public MetadataService.ReadCorsWhitelistOriginResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9788,7 +9788,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readManagedTopicsResponse_element implements IReadResponseElement {
+    public class ReadManagedTopicsResponse_element implements IReadResponseElement {
         public MetadataService.ReadManagedTopicsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9802,7 +9802,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readTerritory2Response_element implements IReadResponseElement {
+    public class ReadTerritory2Response_element implements IReadResponseElement {
         public MetadataService.ReadTerritory2Result result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9816,7 +9816,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readTerritory2ModelResponse_element implements IReadResponseElement {
+    public class ReadTerritory2ModelResponse_element implements IReadResponseElement {
         public MetadataService.ReadTerritory2ModelResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9830,7 +9830,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readTerritory2SettingsResponse_element implements IReadResponseElement {
+    public class ReadTerritory2SettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadTerritory2SettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9844,7 +9844,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readTerritory2TypeResponse_element implements IReadResponseElement {
+    public class ReadTerritory2TypeResponse_element implements IReadResponseElement {
         public MetadataService.ReadTerritory2TypeResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9858,7 +9858,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readXOrgHubResponse_element implements IReadResponseElement {
+    public class ReadXOrgHubResponse_element implements IReadResponseElement {
         public MetadataService.ReadXOrgHubResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9872,7 +9872,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readActionLinkGroupTemplateResponse_element implements IReadResponseElement {
+    public class ReadActionLinkGroupTemplateResponse_element implements IReadResponseElement {
         public MetadataService.ReadActionLinkGroupTemplateResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9886,7 +9886,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLicenseDefinitionResponse_element implements IReadResponseElement {
+    public class ReadLicenseDefinitionResponse_element implements IReadResponseElement {
         public MetadataService.ReadLicenseDefinitionResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9900,7 +9900,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readMarketingResourceTypeResponse_element implements IReadResponseElement {
+    public class ReadMarketingResourceTypeResponse_element implements IReadResponseElement {
         public MetadataService.ReadMarketingResourceTypeResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9914,7 +9914,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readMatchingRuleResponse_element implements IReadResponseElement {
+    public class ReadMatchingRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadMatchingRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9928,7 +9928,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readMatchingRulesResponse_element implements IReadResponseElement {
+    public class ReadMatchingRulesResponse_element implements IReadResponseElement {
         public MetadataService.ReadMatchingRulesResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9942,7 +9942,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readNamedCredentialResponse_element implements IReadResponseElement {
+    public class ReadNamedCredentialResponse_element implements IReadResponseElement {
         public MetadataService.ReadNamedCredentialResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9956,7 +9956,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readPersonalJourneySettingsResponse_element implements IReadResponseElement {
+    public class ReadPersonalJourneySettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadPersonalJourneySettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9970,7 +9970,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSharingRulesResponse_element implements IReadResponseElement {
+    public class ReadSharingRulesResponse_element implements IReadResponseElement {
         public MetadataService.ReadSharingRulesResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9984,7 +9984,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSharingBaseRuleResponse_element implements IReadResponseElement {
+    public class ReadSharingBaseRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadSharingBaseRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -9998,7 +9998,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSharingCriteriaRuleResponse_element implements IReadResponseElement {
+    public class ReadSharingCriteriaRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadSharingCriteriaRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10012,7 +10012,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSharingOwnerRuleResponse_element implements IReadResponseElement {
+    public class ReadSharingOwnerRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadSharingOwnerRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10026,7 +10026,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSharingTerritoryRuleResponse_element implements IReadResponseElement {
+    public class ReadSharingTerritoryRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadSharingTerritoryRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10040,7 +10040,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readMetadataWithContentResponse_element implements IReadResponseElement {
+    public class ReadMetadataWithContentResponse_element implements IReadResponseElement {
         public MetadataService.ReadMetadataWithContentResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10054,7 +10054,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readDelegateGroupResponse_element implements IReadResponseElement {
+    public class ReadDelegateGroupResponse_element implements IReadResponseElement {
         public MetadataService.ReadDelegateGroupResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10068,7 +10068,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEventDeliveryResponse_element implements IReadResponseElement {
+    public class ReadEventDeliveryResponse_element implements IReadResponseElement {
         public MetadataService.ReadEventDeliveryResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10082,7 +10082,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEventSubscriptionResponse_element implements IReadResponseElement {
+    public class ReadEventSubscriptionResponse_element implements IReadResponseElement {
         public MetadataService.ReadEventSubscriptionResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10096,7 +10096,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEventTypeResponse_element implements IReadResponseElement {
+    public class ReadEventTypeResponse_element implements IReadResponseElement {
         public MetadataService.ReadEventTypeResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10110,7 +10110,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCertificateResponse_element implements IReadResponseElement {
+    public class ReadCertificateResponse_element implements IReadResponseElement {
         public MetadataService.ReadCertificateResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10124,7 +10124,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readModerationRuleResponse_element implements IReadResponseElement {
+    public class ReadModerationRuleResponse_element implements IReadResponseElement {
         public MetadataService.ReadModerationRuleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10138,7 +10138,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWaveApplicationResponse_element implements IReadResponseElement {
+    public class ReadWaveApplicationResponse_element implements IReadResponseElement {
         public MetadataService.ReadWaveApplicationResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10152,7 +10152,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWaveDatasetResponse_element implements IReadResponseElement {
+    public class ReadWaveDatasetResponse_element implements IReadResponseElement {
         public MetadataService.ReadWaveDatasetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10166,7 +10166,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWaveDashboardResponse_element implements IReadResponseElement {
+    public class ReadWaveDashboardResponse_element implements IReadResponseElement {
         public MetadataService.ReadWaveDashboardResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10180,7 +10180,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWaveDataflowResponse_element implements IReadResponseElement {
+    public class ReadWaveDataflowResponse_element implements IReadResponseElement {
         public MetadataService.ReadWaveDataflowResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10194,7 +10194,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWaveLensResponse_element implements IReadResponseElement {
+    public class ReadWaveLensResponse_element implements IReadResponseElement {
         public MetadataService.ReadWaveLensResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10208,7 +10208,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readOrgPreferenceSettingsResponse_element implements IReadResponseElement {
+    public class ReadOrgPreferenceSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadOrgPreferenceSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10222,7 +10222,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSearchSettingsResponse_element implements IReadResponseElement {
+    public class ReadSearchSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadSearchSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10236,7 +10236,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readGlobalValueSetResponse_element implements IReadResponseElement {
+    public class ReadGlobalValueSetResponse_element implements IReadResponseElement {
         public MetadataService.ReadGlobalValueSetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10250,7 +10250,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readGlobalPicklistValueResponse_element implements IReadResponseElement {
+    public class ReadGlobalPicklistValueResponse_element implements IReadResponseElement {
         public MetadataService.ReadGlobalPicklistValueResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10264,7 +10264,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readStandardValueSetResponse_element implements IReadResponseElement {
+    public class ReadStandardValueSetResponse_element implements IReadResponseElement {
         public MetadataService.ReadStandardValueSetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10278,7 +10278,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readStandardValueResponse_element implements IReadResponseElement {
+    public class ReadStandardValueResponse_element implements IReadResponseElement {
         public MetadataService.ReadStandardValueResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10292,7 +10292,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCustomValueResponse_element implements IReadResponseElement {
+    public class ReadCustomValueResponse_element implements IReadResponseElement {
         public MetadataService.ReadCustomValueResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10306,7 +10306,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readApexTestSuiteResponse_element implements IReadResponseElement {
+    public class ReadApexTestSuiteResponse_element implements IReadResponseElement {
         public MetadataService.ReadApexTestSuiteResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10320,7 +10320,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readChannelLayoutResponse_element implements IReadResponseElement {
+    public class ReadChannelLayoutResponse_element implements IReadResponseElement {
         public MetadataService.ReadChannelLayoutResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10334,7 +10334,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readContentAssetResponse_element implements IReadResponseElement {
+    public class ReadContentAssetResponse_element implements IReadResponseElement {
         public MetadataService.ReadContentAssetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10348,7 +10348,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEmailServicesFunctionResponse_element implements IReadResponseElement {
+    public class ReadEmailServicesFunctionResponse_element implements IReadResponseElement {
         public MetadataService.ReadEmailServicesFunctionResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10362,7 +10362,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEmbeddedServiceBrandingResponse_element implements IReadResponseElement {
+    public class ReadEmbeddedServiceBrandingResponse_element implements IReadResponseElement {
         public MetadataService.ReadEmbeddedServiceBrandingResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10376,7 +10376,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEmbeddedServiceConfigResponse_element implements IReadResponseElement {
+    public class ReadEmbeddedServiceConfigResponse_element implements IReadResponseElement {
         public MetadataService.ReadEmbeddedServiceConfigResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10390,7 +10390,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEmbeddedServiceLiveAgentResponse_element implements IReadResponseElement {
+    public class ReadEmbeddedServiceLiveAgentResponse_element implements IReadResponseElement {
         public MetadataService.ReadEmbeddedServiceLiveAgentResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10404,7 +10404,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCaseSubjectParticleResponse_element implements IReadResponseElement {
+    public class ReadCaseSubjectParticleResponse_element implements IReadResponseElement {
         public MetadataService.ReadCaseSubjectParticleResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10418,7 +10418,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readNetworkBrandingResponse_element implements IReadResponseElement {
+    public class ReadNetworkBrandingResponse_element implements IReadResponseElement {
         public MetadataService.ReadNetworkBrandingResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10432,7 +10432,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readSocialCustomerServiceSettingsResponse_element implements IReadResponseElement {
+    public class ReadSocialCustomerServiceSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadSocialCustomerServiceSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10446,7 +10446,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readTopicsForObjectsResponse_element implements IReadResponseElement {
+    public class ReadTopicsForObjectsResponse_element implements IReadResponseElement {
         public MetadataService.ReadTopicsForObjectsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10460,7 +10460,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readBrandingSetResponse_element implements IReadResponseElement {
+    public class ReadBrandingSetResponse_element implements IReadResponseElement {
         public MetadataService.ReadBrandingSetResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10474,7 +10474,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readProfilePasswordPolicyResponse_element implements IReadResponseElement {
+    public class ReadProfilePasswordPolicyResponse_element implements IReadResponseElement {
         public MetadataService.ReadProfilePasswordPolicyResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10488,7 +10488,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readProfileSessionSettingResponse_element implements IReadResponseElement {
+    public class ReadProfileSessionSettingResponse_element implements IReadResponseElement {
         public MetadataService.ReadProfileSessionSettingResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10502,7 +10502,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readCspTrustedSiteResponse_element implements IReadResponseElement {
+    public class ReadCspTrustedSiteResponse_element implements IReadResponseElement {
         public MetadataService.ReadCspTrustedSiteResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10516,7 +10516,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readEclairGeoDataResponse_element implements IReadResponseElement {
+    public class ReadEclairGeoDataResponse_element implements IReadResponseElement {
         public MetadataService.ReadEclairGeoDataResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10530,7 +10530,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readExternalServiceRegistrationResponse_element implements IReadResponseElement {
+    public class ReadExternalServiceRegistrationResponse_element implements IReadResponseElement {
         public MetadataService.ReadExternalServiceRegistrationResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10544,7 +10544,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readFileUploadAndDownloadSecuritySettingsResponse_element implements IReadResponseElement {
+    public class ReadFileUploadAndDownloadSecuritySettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadFileUploadAndDownloadSecuritySettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10558,7 +10558,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readLeadConvertSettingsResponse_element implements IReadResponseElement {
+    public class ReadLeadConvertSettingsResponse_element implements IReadResponseElement {
         public MetadataService.ReadLeadConvertSettingsResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10572,7 +10572,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readUserCriteriaResponse_element implements IReadResponseElement {
+    public class ReadUserCriteriaResponse_element implements IReadResponseElement {
         public MetadataService.ReadUserCriteriaResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -10586,7 +10586,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'records'};
     }
-    public class readWavexmdResponse_element implements IReadResponseElement {
+    public class ReadWavexmdResponse_element implements IReadResponseElement {
         public MetadataService.ReadWavexmdResult result;
         public IReadResult getResult() { return result; }
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
@@ -11009,7 +11009,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'customLabel','detailHeading','editHeading','label','layoutColumns','style'};
     }
-    public class cancelDeployResponse_element {
+    public class CancelDeployResponse_element {
         public MetadataService.CancelDeployResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -11289,7 +11289,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'defaultListViewId','label','position','publiclyAvailable','subMenu','target','targetPreference','type_x'};
     }
-    public class checkRetrieveStatus_element {
+    public class CheckRetrieveStatus_element {
         public String asyncProcessId;
         public Boolean includeZip;
         private String[] asyncProcessId_type_info = new String[]{'asyncProcessId',SOAP_M_URI,null,'1','1','false'};
@@ -11563,7 +11563,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'autogenerated','baseObject','category','deployed','description','join_x','label','sections'};
     }
-    public class deleteMetadataResponse_element {
+    public class DeleteMetadataResponse_element {
         public MetadataService.DeleteResult[] result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -11891,7 +11891,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/04/metadata','true','false'};
         private String[] field_order_type_info = new String[]{'controllingField','picklistValues','restrictedPicklist','sorted'};
     }
-    public class deploy_element {
+    public class Deploy_element {
         public String ZipFile;
         public MetadataService.DeployOptions DeployOptions;
         private String[] ZipFile_type_info = new String[]{'ZipFile',SOAP_M_URI,null,'1','1','false'};
@@ -12237,7 +12237,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'fields','name'};
     }
-    public class createMetadata_element {
+    public class CreateMetadata_element {
         public MetadataService.Metadata[] metadata;
         private String[] metadata_type_info = new String[]{'metadata',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -12279,7 +12279,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'label','name'};
     }
-    public class describeMetadataResponse_element {
+    public class DescribeMetadataResponse_element {
         public MetadataService.DescribeMetadataResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -12303,7 +12303,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'editable','field','readable'};
     }
-    public class checkDeployStatus_element {
+    public class CheckDeployStatus_element {
         public String asyncProcessId;
         public Boolean includeDetails;
         private String[] asyncProcessId_type_info = new String[]{'asyncProcessId',SOAP_M_URI,null,'1','1','false'};
@@ -12348,7 +12348,7 @@ public class MetadataService {
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'user_x'};
     }
-    public class checkDeployStatusResponse_element {
+    public class CheckDeployStatusResponse_element {
         public MetadataService.DeployResult result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -12600,7 +12600,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'description','name','priority'};
     }
-    public class listMetadataResponse_element {
+    public class ListMetadataResponse_element {
         public MetadataService.FileProperties[] result;
         private String[] result_type_info = new String[]{'result',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -12676,7 +12676,7 @@ public class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'attributeName','attributeNameIdFormat','decryptionCertificate','errorUrl','executionUserId','identityLocation','identityMapping','issuer','loginUrl','logoutUrl','name','oauthTokenEndpoint','redirectBinding','requestSignatureMethod','requestSigningCertId','salesforceLoginUrl','samlEntityId','samlJitHandlerId','samlVersion','singleLogoutBinding','singleLogoutUrl','userProvisioning','validationCert'};
     }
-    public class describeValueType_element {
+    public class DescribeValueType_element {
         public String type_x;
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
@@ -13252,11 +13252,11 @@ public class MetadataService {
         private String AllOrNoneHeader_hns = 'AllOrNoneHeader=http://soap.sforce.com/2006/04/metadata';
         private String[] ns_map_type_info = new String[]{SOAP_M_URI, 'MetadataService'};
         public MetadataService.DeleteResult[] deleteMetadata(String type_x,String[] fullNames) {
-            MetadataService.deleteMetadata_element request_x = new MetadataService.deleteMetadata_element();
+            MetadataService.DeleteMetadata_element request_x = new MetadataService.DeleteMetadata_element();
             request_x.type_x = type_x;
             request_x.fullNames = fullNames;
-            MetadataService.deleteMetadataResponse_element response_x;
-            Map<String, MetadataService.deleteMetadataResponse_element> response_map_x = new Map<String, MetadataService.deleteMetadataResponse_element>();
+            MetadataService.DeleteMetadataResponse_element response_x;
+            Map<String, MetadataService.DeleteMetadataResponse_element> response_map_x = new Map<String, MetadataService.DeleteMetadataResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13268,18 +13268,18 @@ public class MetadataService {
               'deleteMetadata',
               SOAP_M_URI,
               'deleteMetadataResponse',
-              'MetadataService.deleteMetadataResponse_element'}
+              'MetadataService.DeleteMetadataResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.SaveResult renameMetadata(String type_x,String oldFullName,String newFullName) {
-            MetadataService.renameMetadata_element request_x = new MetadataService.renameMetadata_element();
+            MetadataService.RenameMetadata_element request_x = new MetadataService.RenameMetadata_element();
             request_x.type_x = type_x;
             request_x.oldFullName = oldFullName;
             request_x.newFullName = newFullName;
-            MetadataService.renameMetadataResponse_element response_x;
-            Map<String, MetadataService.renameMetadataResponse_element> response_map_x = new Map<String, MetadataService.renameMetadataResponse_element>();
+            MetadataService.RenameMetadataResponse_element response_x;
+            Map<String, MetadataService.RenameMetadataResponse_element> response_map_x = new Map<String, MetadataService.RenameMetadataResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13291,16 +13291,16 @@ public class MetadataService {
               'renameMetadata',
               SOAP_M_URI,
               'renameMetadataResponse',
-              'MetadataService.renameMetadataResponse_element'}
+              'MetadataService.RenameMetadataResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.SaveResult[] updateMetadata(MetadataService.Metadata[] metadata) {
-            MetadataService.updateMetadata_element request_x = new MetadataService.updateMetadata_element();
+            MetadataService.UpdateMetadata_element request_x = new MetadataService.UpdateMetadata_element();
             request_x.metadata = metadata;
-            MetadataService.updateMetadataResponse_element response_x;
-            Map<String, MetadataService.updateMetadataResponse_element> response_map_x = new Map<String, MetadataService.updateMetadataResponse_element>();
+            MetadataService.UpdateMetadataResponse_element response_x;
+            Map<String, MetadataService.UpdateMetadataResponse_element> response_map_x = new Map<String, MetadataService.UpdateMetadataResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13312,16 +13312,16 @@ public class MetadataService {
               'updateMetadata',
               SOAP_M_URI,
               'updateMetadataResponse',
-              'MetadataService.updateMetadataResponse_element'}
+              'MetadataService.UpdateMetadataResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.DescribeMetadataResult describeMetadata(Double asOfVersion) {
-            MetadataService.describeMetadata_element request_x = new MetadataService.describeMetadata_element();
+            MetadataService.DescribeMetadata_element request_x = new MetadataService.DescribeMetadata_element();
             request_x.asOfVersion = asOfVersion;
-            MetadataService.describeMetadataResponse_element response_x;
-            Map<String, MetadataService.describeMetadataResponse_element> response_map_x = new Map<String, MetadataService.describeMetadataResponse_element>();
+            MetadataService.DescribeMetadataResponse_element response_x;
+            Map<String, MetadataService.DescribeMetadataResponse_element> response_map_x = new Map<String, MetadataService.DescribeMetadataResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13333,17 +13333,17 @@ public class MetadataService {
               'describeMetadata',
               SOAP_M_URI,
               'describeMetadataResponse',
-              'MetadataService.describeMetadataResponse_element'}
+              'MetadataService.DescribeMetadataResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.DeployResult checkDeployStatus(String asyncProcessId,Boolean includeDetails) {
-            MetadataService.checkDeployStatus_element request_x = new MetadataService.checkDeployStatus_element();
+            MetadataService.CheckDeployStatus_element request_x = new MetadataService.CheckDeployStatus_element();
             request_x.asyncProcessId = asyncProcessId;
             request_x.includeDetails = includeDetails;
-            MetadataService.checkDeployStatusResponse_element response_x;
-            Map<String, MetadataService.checkDeployStatusResponse_element> response_map_x = new Map<String, MetadataService.checkDeployStatusResponse_element>();
+            MetadataService.CheckDeployStatusResponse_element response_x;
+            Map<String, MetadataService.CheckDeployStatusResponse_element> response_map_x = new Map<String, MetadataService.CheckDeployStatusResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13355,17 +13355,17 @@ public class MetadataService {
               'checkDeployStatus',
               SOAP_M_URI,
               'checkDeployStatusResponse',
-              'MetadataService.checkDeployStatusResponse_element'}
+              'MetadataService.CheckDeployStatusResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.RetrieveResult checkRetrieveStatus(String asyncProcessId,Boolean includeZip) {
-            MetadataService.checkRetrieveStatus_element request_x = new MetadataService.checkRetrieveStatus_element();
+            MetadataService.CheckRetrieveStatus_element request_x = new MetadataService.CheckRetrieveStatus_element();
             request_x.asyncProcessId = asyncProcessId;
             request_x.includeZip = includeZip;
-            MetadataService.checkRetrieveStatusResponse_element response_x;
-            Map<String, MetadataService.checkRetrieveStatusResponse_element> response_map_x = new Map<String, MetadataService.checkRetrieveStatusResponse_element>();
+            MetadataService.CheckRetrieveStatusResponse_element response_x;
+            Map<String, MetadataService.CheckRetrieveStatusResponse_element> response_map_x = new Map<String, MetadataService.CheckRetrieveStatusResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13377,16 +13377,16 @@ public class MetadataService {
               'checkRetrieveStatus',
               SOAP_M_URI,
               'checkRetrieveStatusResponse',
-              'MetadataService.checkRetrieveStatusResponse_element'}
+              'MetadataService.CheckRetrieveStatusResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.AsyncResult retrieve(MetadataService.RetrieveRequest retrieveRequest) {
-            MetadataService.retrieve_element request_x = new MetadataService.retrieve_element();
+            MetadataService.Retrieve_element request_x = new MetadataService.Retrieve_element();
             request_x.retrieveRequest = retrieveRequest;
-            MetadataService.retrieveResponse_element response_x;
-            Map<String, MetadataService.retrieveResponse_element> response_map_x = new Map<String, MetadataService.retrieveResponse_element>();
+            MetadataService.RetrieveResponse_element response_x;
+            Map<String, MetadataService.RetrieveResponse_element> response_map_x = new Map<String, MetadataService.RetrieveResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13398,16 +13398,16 @@ public class MetadataService {
               'retrieve',
               SOAP_M_URI,
               'retrieveResponse',
-              'MetadataService.retrieveResponse_element'}
+              'MetadataService.RetrieveResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.CancelDeployResult cancelDeploy(String String_x) {
-            MetadataService.cancelDeploy_element request_x = new MetadataService.cancelDeploy_element();
+            MetadataService.CancelDeploy_element request_x = new MetadataService.CancelDeploy_element();
             request_x.String_x = String_x;
-            MetadataService.cancelDeployResponse_element response_x;
-            Map<String, MetadataService.cancelDeployResponse_element> response_map_x = new Map<String, MetadataService.cancelDeployResponse_element>();
+            MetadataService.CancelDeployResponse_element response_x;
+            Map<String, MetadataService.CancelDeployResponse_element> response_map_x = new Map<String, MetadataService.CancelDeployResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13419,16 +13419,16 @@ public class MetadataService {
               'cancelDeploy',
               SOAP_M_URI,
               'cancelDeployResponse',
-              'MetadataService.cancelDeployResponse_element'}
+              'MetadataService.CancelDeployResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public String deployRecentValidation(String validationId) {
-            MetadataService.deployRecentValidation_element request_x = new MetadataService.deployRecentValidation_element();
+            MetadataService.DeployRecentValidation_element request_x = new MetadataService.DeployRecentValidation_element();
             request_x.validationId = validationId;
-            MetadataService.deployRecentValidationResponse_element response_x;
-            Map<String, MetadataService.deployRecentValidationResponse_element> response_map_x = new Map<String, MetadataService.deployRecentValidationResponse_element>();
+            MetadataService.DeployRecentValidationResponse_element response_x;
+            Map<String, MetadataService.DeployRecentValidationResponse_element> response_map_x = new Map<String, MetadataService.DeployRecentValidationResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13440,16 +13440,16 @@ public class MetadataService {
               'deployRecentValidation',
               SOAP_M_URI,
               'deployRecentValidationResponse',
-              'MetadataService.deployRecentValidationResponse_element'}
+              'MetadataService.DeployRecentValidationResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.DescribeValueTypeResult describeValueType(String type_x) {
-            MetadataService.describeValueType_element request_x = new MetadataService.describeValueType_element();
+            MetadataService.DescribeValueType_element request_x = new MetadataService.DescribeValueType_element();
             request_x.type_x = type_x;
-            MetadataService.describeValueTypeResponse_element response_x;
-            Map<String, MetadataService.describeValueTypeResponse_element> response_map_x = new Map<String, MetadataService.describeValueTypeResponse_element>();
+            MetadataService.DescribeValueTypeResponse_element response_x;
+            Map<String, MetadataService.DescribeValueTypeResponse_element> response_map_x = new Map<String, MetadataService.DescribeValueTypeResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13461,16 +13461,16 @@ public class MetadataService {
               'describeValueType',
               SOAP_M_URI,
               'describeValueTypeResponse',
-              'MetadataService.describeValueTypeResponse_element'}
+              'MetadataService.DescribeValueTypeResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.SaveResult[] createMetadata(MetadataService.Metadata[] metadata) {
-            MetadataService.createMetadata_element request_x = new MetadataService.createMetadata_element();
+            MetadataService.CreateMetadata_element request_x = new MetadataService.CreateMetadata_element();
             request_x.metadata = metadata;
-            MetadataService.createMetadataResponse_element response_x;
-            Map<String, MetadataService.createMetadataResponse_element> response_map_x = new Map<String, MetadataService.createMetadataResponse_element>();
+            MetadataService.CreateMetadataResponse_element response_x;
+            Map<String, MetadataService.CreateMetadataResponse_element> response_map_x = new Map<String, MetadataService.CreateMetadataResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13482,17 +13482,17 @@ public class MetadataService {
               'createMetadata',
               SOAP_M_URI,
               'createMetadataResponse',
-              'MetadataService.createMetadataResponse_element'}
+              'MetadataService.CreateMetadataResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.AsyncResult deploy(String ZipFile,MetadataService.DeployOptions DeployOptions) {
-            MetadataService.deploy_element request_x = new MetadataService.deploy_element();
+            MetadataService.Deploy_element request_x = new MetadataService.Deploy_element();
             request_x.ZipFile = ZipFile;
             request_x.DeployOptions = DeployOptions;
-            MetadataService.deployResponse_element response_x;
-            Map<String, MetadataService.deployResponse_element> response_map_x = new Map<String, MetadataService.deployResponse_element>();
+            MetadataService.DeployResponse_element response_x;
+            Map<String, MetadataService.DeployResponse_element> response_map_x = new Map<String, MetadataService.DeployResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13504,13 +13504,13 @@ public class MetadataService {
               'deploy',
               SOAP_M_URI,
               'deployResponse',
-              'MetadataService.deployResponse_element'}
+              'MetadataService.DeployResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.IReadResult readMetadata(String type_x,String[] fullNames) {
-            MetadataService.readMetadata_element request_x = new MetadataService.readMetadata_element();
+            MetadataService.ReadMetadata_element request_x = new MetadataService.ReadMetadata_element();
             request_x.type_x = type_x;
             request_x.fullNames = fullNames;
             MetadataService.IReadResponseElement response_x;
@@ -13532,10 +13532,10 @@ public class MetadataService {
             return response_x.getResult();
         }
         public MetadataService.UpsertResult[] upsertMetadata(MetadataService.Metadata[] metadata) {
-            MetadataService.upsertMetadata_element request_x = new MetadataService.upsertMetadata_element();
+            MetadataService.UpsertMetadata_element request_x = new MetadataService.UpsertMetadata_element();
             request_x.metadata = metadata;
-            MetadataService.upsertMetadataResponse_element response_x;
-            Map<String, MetadataService.upsertMetadataResponse_element> response_map_x = new Map<String, MetadataService.upsertMetadataResponse_element>();
+            MetadataService.UpsertMetadataResponse_element response_x;
+            Map<String, MetadataService.UpsertMetadataResponse_element> response_map_x = new Map<String, MetadataService.UpsertMetadataResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13547,17 +13547,17 @@ public class MetadataService {
               'upsertMetadata',
               SOAP_M_URI,
               'upsertMetadataResponse',
-              'MetadataService.upsertMetadataResponse_element'}
+              'MetadataService.UpsertMetadataResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public MetadataService.FileProperties[] listMetadata(MetadataService.ListMetadataQuery[] queries,Double asOfVersion) {
-            MetadataService.listMetadata_element request_x = new MetadataService.listMetadata_element();
+            MetadataService.ListMetadata_element request_x = new MetadataService.ListMetadata_element();
             request_x.queries = queries;
             request_x.asOfVersion = asOfVersion;
-            MetadataService.listMetadataResponse_element response_x;
-            Map<String, MetadataService.listMetadataResponse_element> response_map_x = new Map<String, MetadataService.listMetadataResponse_element>();
+            MetadataService.ListMetadataResponse_element response_x;
+            Map<String, MetadataService.ListMetadataResponse_element> response_map_x = new Map<String, MetadataService.ListMetadataResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
@@ -13569,7 +13569,7 @@ public class MetadataService {
               'listMetadata',
               SOAP_M_URI,
               'listMetadataResponse',
-              'MetadataService.listMetadataResponse_element'}
+              'MetadataService.ListMetadataResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
