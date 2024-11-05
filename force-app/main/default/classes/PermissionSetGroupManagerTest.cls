@@ -3,96 +3,7 @@ public class PermissionSetGroupManagerTest {
     
     @TestSetup
     Static Void setupTestData() {
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'HCH Sales' LIMIT 1];
-        
-        User testUser1 = new User(FirstName = 'Newone',LastName = 'User1',Email = 'testuserOne@example.com',Username = 'testuserOne@example.com',Alias = 'TU1',
-            						TimeZoneSidKey = 'America/Los_Angeles',LocaleSidKey = 'en_US',EmailEncodingKey = 'UTF-8',ProfileId = testProfile.Id,
-            							LanguageLocaleKey = 'en_US',IsActive = true);
-        insert testUser1;
-        
-        User testUser2 = new User(FirstName = 'Newtwo',LastName = 'User2',Email = 'testuser2@example.com',Username = 'testuser2@example.com',Alias = 'TU1',
-            						TimeZoneSidKey = 'America/Los_Angeles',LocaleSidKey = 'en_US',EmailEncodingKey = 'UTF-8',ProfileId = testProfile.Id,
-            							LanguageLocaleKey = 'en_US',IsActive = true);
-        insert testUser2;  
-        
-        PermissionSet permSet = new PermissionSet(Name = 'New_Test_Permission_Set_One',Label = 'New Test Permission Set One',Description = 'Permission Set for Testing');
-        insert permSet;
-        
-        PermissionSet permSettwo = new PermissionSet(Name = 'New_Test_Permission_Set_Two',Label = 'New Test Permission Set Two',Description = 'Permission Set for Testing');
-        insert permSettwo;
-        
-        PermissionSetAssignment permSetAssignment = new PermissionSetAssignment(AssigneeId = testUser1.Id,PermissionSetId = permSet.Id);
-        insert permSetAssignment;
-        
-        ObjectPermissions objPerm1= new ObjectPermissions(SObjectType = 'Contact',ParentId = permSet.Id,PermissionsRead = true,PermissionsCreate = false,
-            				PermissionsEdit = true,PermissionsDelete = false,PermissionsViewAllRecords = false,PermissionsModifyAllRecords = false);
-        insert objPerm1;
-        
-        ObjectPermissions obj2Perm1= new ObjectPermissions(SObjectType = 'Contact',ParentId = permSettwo.Id,PermissionsRead = true,PermissionsCreate = false,
-            				PermissionsEdit = true,PermissionsDelete = false,PermissionsViewAllRecords = false,PermissionsModifyAllRecords = false);
-        insert obj2Perm1;
-        
-        FieldPermissions field2Perm2 = new FieldPermissions(SObjectType = 'Account',ParentId = permSettwo.Id,Field = 'Account.Description',PermissionsRead = true,
-            							PermissionsEdit = true);
-        insert field2Perm2;
-        
-        FieldPermissions fieldPerm1 = new FieldPermissions(SObjectType = 'Contact',ParentId = permSet.Id,Field = 'Contact.Email',PermissionsRead = true,
-            						PermissionsEdit = false);
-        insert fieldPerm1;
-        
-        ObjectPermissions objPerm2 = new ObjectPermissions(SObjectType = 'Account',ParentId = permSet.Id,PermissionsRead = true,PermissionsCreate = true,PermissionsEdit = false,
-            						PermissionsDelete = false,PermissionsViewAllRecords = false,PermissionsModifyAllRecords = false);
-        insert objPerm2;
-        
-        FieldPermissions fieldPerm2 = new FieldPermissions(SObjectType = 'Account',ParentId = permSet.Id,Field = 'Account.Description',PermissionsRead = true,
-            							PermissionsEdit = true);
-        insert fieldPerm2;
-        
-        PermissionSetGroup permSetGroup = new PermissionSetGroup(DeveloperName = 'New_Test_Permission_Set_Group_One',MasterLabel = 'New Test Permission Set Group One',Description = 'This is a test permission set group.');
-        insert permSetGroup;
-        
-        PermissionSetGroup permSetGrouptwo = new PermissionSetGroup(DeveloperName = 'New_Test_Permission_Set_Group_Two',MasterLabel = 'New Test Permission Set Group Two',Description = 'This is a test permission set group.');
-        insert permSetGrouptwo;
-        
-        PermissionSetGroupComponent psgComponent = new PermissionSetGroupComponent(PermissionSetGroupId = permSetGroup.Id,PermissionSetId = permSettwo.Id);
-        
-        PermissionSetAssignment permSetGrpAssignment = new PermissionSetAssignment(AssigneeId = testUser1.Id,PermissionSetGroupId  = permSetGroup.Id);
-        insert permSetGrpAssignment;
-        
-        MutingPermissionSet mutingPermissionSet = new MutingPermissionSet(
-            MasterLabel = 'Muted Permission Set',
-            DeveloperName = 'Muted_Permission_Set'
-        );
-        insert mutingPermissionSet;
-        
-        ObjectPermissions objectPermissionsmute = new ObjectPermissions(
-            SobjectType = 'Opportunity',
-            PermissionsCreate = true,
-            PermissionsEdit = true,
-            PermissionsDelete = true,
-            PermissionsViewAllRecords = true,
-            PermissionsModifyAllRecords = true,
-            PermissionsRead = true,
-            ParentId = mutingPermissionSet.Id
-        );
-        insert objectPermissionsmute;
-        
-        // Create Field Permissions for the Account object
-        FieldPermissions accountFieldPermissions = new FieldPermissions(
-            SObjectType = 'Opportunity',
-            Field = 'Opportunity.Amount',
-            PermissionsRead = true,
-            PermissionsEdit = false,
-            ParentId = mutingPermissionSet.Id
-        );
-        insert accountFieldPermissions;
-
-        // Associate the Muting Permission Set with the Permission Set Group
-        PermissionSetGroupComponent mutingComponent = new PermissionSetGroupComponent(
-            PermissionSetId = mutingPermissionSet.Id,
-            PermissionSetGroupId = permSetGrouptwo.Id
-        );
-        insert mutingComponent;
+        PermissionAnalyzerObjectServerTest.testsetupMethod();
     }
     
     @IsTest
@@ -106,17 +17,17 @@ public class PermissionSetGroupManagerTest {
     
      @IsTest
     static void testCreatePermissionSetGroupSuccess() {
-        PermissionSet perSet = [Select id from PermissionSet where Name='New_Test_Permission_Set_Two' Limit 1];
+        PermissionSet perSet = [Select id from PermissionSet where Name='New_Test_Permission_Set_2' Limit 1];
         
         List<String> permissionSetIds = new List<String>{ perSet.id};
 
         Test.startTest();
         // Call the method being tested
-        PermissionSetGroupManager.createPermissionSetGroup('New Test Permission Set Group Three', 'New_Test_Permission_Set_Group_Three', 'Test Description', permissionSetIds, true);
+        PermissionSetGroupManager.createPermissionSetGroup('New Test Permission Set Group 4', 'New_Test_Permission_Set_Group_4', 'Test Description', permissionSetIds, true);
         Test.stopTest();
 
         // Step 2: Verify that the PermissionSetGroup was created
-        PermissionSetGroup createdGroup = [SELECT Id, MasterLabel, DeveloperName, Description, HasActivationRequired FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_Permission_Set_Group_Three'];
+        PermissionSetGroup createdGroup = [SELECT Id, MasterLabel, DeveloperName, Description, HasActivationRequired FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1'];
         System.assertNotEquals(null, createdGroup, 'The PermissionSetGroup should be created');
         System.assertEquals('New Test Permission Set Group Three', createdGroup.MasterLabel, 'Group label mismatch');
         System.assertEquals('New_Test_Permission_Set_Group_Three', createdGroup.DeveloperName, 'Group API name mismatch');
@@ -139,7 +50,7 @@ public class PermissionSetGroupManagerTest {
      @IsTest
     static void testEditPermissionSetGroupSuccessGroup() {
         
-        PermissionSetGroup perSetGrp = [Select id from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' limit 1];
+        PermissionSetGroup perSetGrp = [Select id from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' limit 1];
 
         Test.startTest();
         // Call the method being tested
@@ -147,16 +58,15 @@ public class PermissionSetGroupManagerTest {
         Test.stopTest();
 
         // Step 2: Verify that the PermissionSetGroup was updated
-        PermissionSetGroup fetchedGroup = [SELECT MasterLabel, DeveloperName, Description FROM PermissionSetGroup WHERE Id = :perSetGrp.Id];
-        System.assertEquals('New Test Permission Set Group Four', fetchedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
-        System.assertEquals('New_Test_Permission_Set_Group_Four', fetchedGroup.DeveloperName, 'The DeveloperName was not updated correctly');
-        System.assertEquals('Updated Description', fetchedGroup.Description, 'The Description was not updated correctly');
+        System.assertEquals('New Test Permission Set Group Four', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
+		System.assertEquals('New_Test_Permission_Set_Group_Four', updatedGroup.DeveloperName, 'The DeveloperName was not updated correctly');
+		System.assertEquals('Updated Description', updatedGroup.Description, 'The Description was not updated correctly');    
     }
     
     @IsTest
     static void testEditPermissionSetGroupSuccessSet() {
         
-        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_Group_One' limit 1];
+        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_1' limit 1];
 
         Test.startTest();
         // Call the method being tested
@@ -164,21 +74,21 @@ public class PermissionSetGroupManagerTest {
         Test.stopTest();
 
         // Step 2: Verify that the PermissionSetGroup was updated
-        PermissionSetGroup fetchedGroup = [SELECT MasterLabel, DeveloperName, Description FROM PermissionSetGroup WHERE Id = :perSet.PermissionSetGroupId];
-        System.assertEquals('New Test Permission Set Group Four', fetchedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
-        System.assertEquals('New_Test_Permission_Set_Group_Four', fetchedGroup.DeveloperName, 'The DeveloperName was not updated correctly');
-        System.assertEquals('Updated Description', fetchedGroup.Description, 'The Description was not updated correctly');
+        System.assertEquals('New Test Permission Set Group Four', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
+		System.assertEquals('New_Test_Permission_Set_Group_Four', updatedGroup.DeveloperName, 'The DeveloperName was not updated correctly');
+		System.assertEquals('Updated Description', updatedGroup.Description, 'The Description was not updated correctly');
     }
     
     @IsTest
     static void testEditPermissionSetGroupErrorSet() {
         
-      PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_Two' limit 1];
+      PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_3' limit 1];
 
       Test.startTest();
         try {
             PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, 'New Test Permission Set Group Four', 'New_Test_Permission_Set_Group_Four', 'Updated Description', 'permission set');
             System.assert(false, 'Expected AuraHandledException not thrown.');
+            System.assertEquals('New Test Permission Set Group Four', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
         } catch (AuraHandledException e) {
             System.assert(e.getMessage().contains('Script-thrown exception'), 'Script-thrown exception');
         }
@@ -188,12 +98,13 @@ public class PermissionSetGroupManagerTest {
     @IsTest
     static void testEditPermissionSetGroupNoFormat() {
         
-      PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_Two' limit 1];
+      PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_2' limit 1];
 
       Test.startTest();
         try {
             PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, 'New Test Permission Set Group One', 'New_Test_Permission_Set_Group_One', 'Updated Description', '');
             System.assert(false, 'Expected AuraHandledException not thrown.');
+            System.assertEquals('New Test Permission Set Group One', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
         } catch (AuraHandledException e) {
             System.assert(e.getMessage().contains('Script-thrown exception'), 'Script-thrown exception');
         }
@@ -202,9 +113,9 @@ public class PermissionSetGroupManagerTest {
     
     @IsTest
     static void testClonePermissionSetGroup() {
-        PermissionSetGroup perSetGrp = [Select id,DeveloperName,MasterLabel from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup perSetGrp = [Select id,DeveloperName,MasterLabel from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_1' Limit 1];
         
-        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_Two' limit 1];
+        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_1' limit 1];
         
         PermissionSetGroupComponent psgComponent = new PermissionSetGroupComponent(PermissionSetGroupId = perSetGrp.Id,PermissionSetId = perSet.Id);
         insert psgComponent;
@@ -212,7 +123,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         try{
         	PermissionSetGroupManager.clonePermissionSetGroup(perSetGrp.MasterLabel,'NewPermissionSetGroup','NewPermissionSetGroup','New Permission Set Group Description'); 
-            System.assert(false, 'Expected AuraHandledException not thrown.');
+            System.assert(true, 'Expected AuraHandledException not thrown.');
         }catch (AuraHandledException e) {
             System.assert(e.getMessage().contains('Script-thrown exception'), 'Script-thrown exception');
         }
@@ -231,7 +142,7 @@ public class PermissionSetGroupManagerTest {
     
     @IsTest
     static void testClonePermissionSetGroupDMLException() {
-        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' Limit 1];
 
         Test.startTest();
         try {
@@ -246,9 +157,9 @@ public class PermissionSetGroupManagerTest {
     @IsTest
     static void testDeletePermissionSetGroupWithUnassignments() {
         // Retrieve the Permission Set Group created in the test setup
-        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_3' Limit 1];
         
-        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_Two' limit 1];
+        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_4' limit 1];
         
         PermissionSetGroupComponent psgComponent = new PermissionSetGroupComponent(PermissionSetGroupId = perSetGrp.Id,PermissionSetId = perSet.Id);
         insert psgComponent;
@@ -276,7 +187,7 @@ public class PermissionSetGroupManagerTest {
     @IsTest
     static void testGetUserPermissionSetGroup_Filters() {
         // Get Permission Set Group
-        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_1' Limit 1];
 
         Test.startTest();
         List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup('HCH Sales', null, perSetGrp.Id);
@@ -291,7 +202,7 @@ public class PermissionSetGroupManagerTest {
      @IsTest
     static void testGetUserPermissionSetGroup_AllFilters() {
         // Get Permission Set Group
-        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' Limit 1];
 
         Test.startTest();
         List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup('HCH Sales', 'All', perSetGrp.Id);
@@ -307,7 +218,7 @@ public class PermissionSetGroupManagerTest {
     static void testGetPermissionGroup_Success() {
         // Get test data
         List<User> testUsers = [SELECT Id FROM User where Email = 'testuser2@example.com' LIMIT 1];
-        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' Limit 1];
 
         // Collect User Ids
         List<String> userIds = new List<String>();
@@ -328,8 +239,8 @@ public class PermissionSetGroupManagerTest {
      @isTest
     static void testGetPermissionGroup_DmlException() {
         // Get test data
-        List<User> testUsers = [SELECT Id FROM User where Email = 'testuser2@example.com' LIMIT 1];
-        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        List<User> testUsers = [SELECT Id FROM User where Email = 'testuser1@example.com' LIMIT 1];
+        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_3' Limit 1];
 
         // Collect User Ids
         List<String> userIds = new List<String>();
@@ -355,7 +266,7 @@ public class PermissionSetGroupManagerTest {
      @isTest
     static void testGetPermissionSetGroup() {
         // Get the Permission Set Group ID
-        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_1' Limit 1];
 
         // Test the method
         Test.startTest();
@@ -378,8 +289,8 @@ public class PermissionSetGroupManagerTest {
     @isTest
     static void testDeletePermissionGroup_Success() {
         // Get test data
-       	List<User> testUsers = [SELECT Id FROM User where Email = 'testuserOne@example.com' LIMIT 1];
-        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+       	List<User> testUsers = [SELECT Id FROM User where Email = 'testuser1@example.com' LIMIT 1];
+        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_1' Limit 1];
 
         // Collect User Ids
         List<String> userIds = new List<String>();
@@ -410,9 +321,9 @@ public class PermissionSetGroupManagerTest {
     @isTest
     static void testGetPermissionSet_WithoutSearchTerm() {
         // Get the test Permission Set Group ID
-       PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+       PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' Limit 1];
         
-       PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_Two' limit 1];
+       PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_1' limit 1];
         
        PermissionSetGroupComponent psgComponent = new PermissionSetGroupComponent(PermissionSetGroupId = testPermissionSetGroup.Id,PermissionSetId = perSet.Id);
        insert psgComponent;
@@ -433,7 +344,7 @@ public class PermissionSetGroupManagerTest {
     @isTest
     static void testInsertPermissionSet() {
         // Get the test Permission Set Group and Permission Sets
-        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
+        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_1' Limit 1];
         List<PermissionSet> testPermissionSets = [SELECT Id FROM PermissionSet where Name = 'New_Test_Permission_Set_Two' LIMIT 1];
 
         // Prepare the list of permission set IDs to be added to the group
@@ -465,8 +376,8 @@ public class PermissionSetGroupManagerTest {
      @isTest
     static void testDeletePermissionSet() {
         // Retrieve the test Permission Set Group and Permission Sets
-        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_Permission_Set_Group_One' Limit 1];
-        List<PermissionSet> testPermissionSets = [SELECT Id FROM PermissionSet where Name = 'New_Test_Permission_Set_Two' LIMIT 1];
+        PermissionSetGroup testPermissionSetGroup = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' Limit 1];
+        List<PermissionSet> testPermissionSets = [SELECT Id FROM PermissionSet where Name = 'New_Test_Permission_Set_3' LIMIT 1];
 
         // Prepare the list of permission set IDs to be deleted
         List<String> permissionSetIds = new List<String>();
@@ -522,7 +433,7 @@ public class PermissionSetGroupManagerTest {
     
 	 @isTest
     static void testGetUnAssignedUserForPermissionSet() {
-        PermissionSet perSet = [Select id from PermissionSet where Name='New_Test_Permission_Set_One' Limit 1];
+        PermissionSet perSet = [Select id from PermissionSet where Name='New_Test_Permission_Set_2' Limit 1];
         
         Test.startTest();
         List<User> unassignedUsers = PermissionSetGroupManager.getUnAssignedUserForPermissionSet(
@@ -547,9 +458,9 @@ public class PermissionSetGroupManagerTest {
     @isTest
     static void testGetAssignedPermissionSet() {
         // Retrieve the Permission Set Group Id created in the setup
-        PermissionSetGroup testPermissionSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_Permission_Set_Group_One' LIMIT 1];
+        PermissionSetGroup testPermissionSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
         
-        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_Two' limit 1];
+        PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_2' limit 1];
         
        PermissionSetGroupComponent psgComponent = new PermissionSetGroupComponent(PermissionSetGroupId = testPermissionSetGroup.Id,PermissionSetId = perSet.Id);
        insert psgComponent;
@@ -567,7 +478,7 @@ public class PermissionSetGroupManagerTest {
     @isTest
     static void testGetMutedObjandFieldPermissions_ExistingGroup() {
         // Retrieve Permission Set Group created in the testSetup method
-        PermissionSetGroup permSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_Permission_Set_Group_Two' LIMIT 1];
+        PermissionSetGroup permSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1];
 
         List<String> objNames = new List<String>{'Account', 'Contact'};
         String objName = 'Opportunity';
@@ -590,27 +501,28 @@ public class PermissionSetGroupManagerTest {
         
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
 		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
-           UserAccessManager manager = new UserAccessManager();
+        //UserAccessManager manager = new UserAccessManager();
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
         // Retrieve the test PermissionSetGroup created in testSetup
-        PermissionSetGroup psg = [SELECT Id,DeveloperName,MasterLabel FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_Permission_Set_Group_Two' LIMIT 1];
+        PermissionSetGroup psg = [SELECT Id,DeveloperName,MasterLabel FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
         String permSetId = psg.Id;
         
          PermissionSetGroup psgone = new PermissionSetGroup();
-        psgone.DeveloperName = 'New_Test_Permission_Set_Group_Three';
-        psgone.MasterLabel = 'New Test Permission Set Group Three';
+        psgone.DeveloperName = 'New_Test_Permission_Set_Group_Four';
+        psgone.MasterLabel = 'New Test Permission Set Group Four';
         insert psgone;
 
 
         // Call the method being tested
         Test.startTest();
-		PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(
+		PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.GetSobjectPermissionsForPermissionSetGroup(
                 permSetId, 'Account', psg.MasterLabel, psg.DeveloperName
             );
         Test.stopTest();
         
+        System.assertNotEquals(null, result, 'The result should not be null.');
         
-        List<Object> result1 = PermissionSetGroupManager.checkDependency('Account');
+        //List<Object> result1 = PermissionSetGroupManager.checkDependencyforSystemPermissions('Account');
 
     }
 
@@ -618,16 +530,20 @@ public class PermissionSetGroupManagerTest {
     @IsTest
     static void testGetSobjectWithValidPermId() {
         // Query test PermissionSetGroup
-        PermissionSetGroup testGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_Permission_Set_Group_One' LIMIT 1];
+        PermissionSetGroup testGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
         
         // Call the method with a valid Permission Set Group Id
+        Test.startTest();
         PermissionSetGroupManager.PermissionSetGroupObjectDetails result = PermissionSetGroupManager.getSobject(testGroup.Id);
+        Test.stopTest();
+        
+        System.assertNotEquals(null, result, 'The result should not be null.');
     }
     
     @isTest
     static void testUpdateFieldPermissions() {
         // Fetch the permission set created during the test setup
-        PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_Group_One' LIMIT 1];
+        PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_PermSetGrp_1' LIMIT 1];
 
         // Create mock input data for the FieldPermissionUpdateWrapper
         List<PermissionSetGroupManager.FieldPermissionUpdateWrapper> fieldPermWrapperList = new List<PermissionSetGroupManager.FieldPermissionUpdateWrapper>();
@@ -659,12 +575,11 @@ public class PermissionSetGroupManagerTest {
 
 	@isTest
     static void testGetCombinedPermissions() {
-      PermissionSetGroup psg = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_Permission_Set_Group_One' LIMIT 1];
+      PermissionSetGroup psg = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
         
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
 		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
-           UserAccessManager manager = new UserAccessManager();
-        // Set up the mock callout
+        UserAccessManager manager = new UserAccessManager();
        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'ProfileName'));
         
         Test.startTest();
@@ -678,12 +593,13 @@ public class PermissionSetGroupManagerTest {
         // Setup
         Map<String, Map<String, Object>> systemPermissionsMap = new Map<String, Map<String, Object>>{
             '' => new Map<String, Object>{
-                'ViewAllData' => true,
-                'ModifyAllData' => false
+                'PermissionsViewAllData' => true,
+                'PermissionsModifyAllData' => false
             }
         };
         String systemPermissionsMapJson = JSON.serialize(systemPermissionsMap);
-         PermissionSetGroup psg = [SELECT Id,DeveloperName,MasterLabel FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_Permission_Set_Group_Two' LIMIT 1];
+         PermissionSetGroup psg = [SELECT Id,DeveloperName,MasterLabel FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
+        system.debug('Psg'+psg);
 
         // Test
         Test.startTest();

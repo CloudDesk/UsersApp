@@ -69,22 +69,20 @@ public class ProfileManagerTest {
     @IsTest
     public static void updateSystemPermissionsProf_Test() {
         
-        Map<String, Boolean> systemPermissions = new Map<String, Boolean>{
-            'MockPermission1' => true,
-            'MockPermission2' => true
-        };
+        Map<String, Boolean> systemPermissions = new Map<String, Boolean>{'MockPermission1' => true,'MockPermission2' => true};
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         
         Test.startTest();     
         Map<String, Boolean> updatedResult = ProfileManager.updateSystemPermissionsProf('Test_Profile', systemPermissions);
         Test.stopTest();
+        
+        System.assertNotEquals(null, updatedResult, 'The Result should not be Null.');
     }
     
     @IsTest
     public static void testGetSobjectPermissionsForProfile() {
         PermissionSet perSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_2' LIMIT 1];
-        String objectName = 'Account';
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
 		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
@@ -92,10 +90,7 @@ public class ProfileManagerTest {
         Test.startTest();
         ProfileManager.ProfileObjectPermissionsWrapper result = ProfileManager.getSobjectPermissionsForProfile(perSet.Id,'Account');
         Test.stopTest();
-        System.assertNotEquals(null, result, 'Expected non-null ProfileObjectPermissionsWrapper result');
-
-        Map<String, Object> fieldPermission1 = result.fieldPermissions.get(0);
-        
+        System.assertNotEquals(null, result, 'Expected non-null ProfileObjectPermissionsWrapper result');        
         System.assertNotEquals(null, result.dependentObj, 'Expected non-null dependentObj list');
         System.assertEquals(true, result.hasObjAccess, 'Expected hasObjAccess to be true');
     }
@@ -149,6 +144,8 @@ public class ProfileManagerTest {
         Test.startTest();
         Map<String, String> result = ProfileManager.getTabPermissions(profileNames);
         Test.stopTest();
+        
+        System.assertNotEquals(null, result, 'Expected non-null result');     
     }
     
     @IsTest
@@ -160,6 +157,8 @@ public class ProfileManagerTest {
         Test.startTest();
         Map<String, String> result = ProfileManager.getTabPermissions(profileNames);
         Test.stopTest();
+        
+        System.assertNotEquals(null, result, 'Expected non-null result');  
     }
     
     @IsTest
@@ -169,5 +168,7 @@ public class ProfileManagerTest {
         Test.startTest();
         ProfileManager.ProfileObjectDetails result = ProfileManager.getProfileObjectDetails(testPermSet.id);
         Test.stopTest();
+        
+        System.assertNotEquals(null, result, 'Expected non-null result');  
     }
 }

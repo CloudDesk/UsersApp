@@ -1,14 +1,15 @@
 @IsTest
 public class TabPermissionAnalyzerServerTest {
-     @IsTest
+    @IsTest
     static void testGetProfileOrPermSetTabVisibilityForProfile() {
         Test.startTest();
         List<String> profileNames = new List<String> { 'ProfileA' };
         String typeProfile = 'Profile';
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
-        List<Map<String, Object>> result = TabPermissionAnalyzerServer.getProfileOrPermSetTabVisibility(profileNames, typeProfile);
+        TabPermissionAnalyzerServer.getProfileOrPermSetTabVisibility(profileNames, typeProfile);
         Test.stopTest();
-    }    
+    }
+    
     @IsTest
     static void tabVisibilityRetrieverForProfile_Test()
     {
@@ -36,11 +37,7 @@ public class TabPermissionAnalyzerServerTest {
     {
         List<String> profileNames = new List<String> { 'HCH Sales User' };
         List<Map<String, Object>> tabToUpdate = new List<Map<String, Object>>();
-         Map<String, Object> tab1 = new Map<String, Object>{
-            'Label' => 'Account',
-            'Name' => 'standard-Account',
-            'Visibility' => 'DefaultOn'
-        };
+        Map<String, Object> tab1 = new Map<String, Object>{'Label' => 'Account','Name' => 'standard-Account','Visibility' => 'DefaultOn'};
         tabToUpdate.add(tab1);
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
@@ -50,15 +47,12 @@ public class TabPermissionAnalyzerServerTest {
     }
     
     @IsTest
-    static void UpdatePermissionSetTabVisibilities_Test() {
-        // Sample JSON string to simulate the input
-        String tabSettingsJson = '[{"standard-Account":"visible"}]';
-        String permissionSetName = 'New Test Permission Set 1';
-		
+    static void updatePermissionSetTabVisibilities_Test() {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
-        TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities(tabSettingsJson, permissionSetName);
+        TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', 'New Test Permission Set 1');
         Test.stopTest();
+        
     }
-    }
+}

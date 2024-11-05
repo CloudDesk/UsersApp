@@ -8,42 +8,31 @@ public class PermissionSetManagerTest {
 	
     @isTest
     static void testCreatePermissionSet() {
-        // Create test data
         PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
         insert testPermissionSet;
         User u = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
     
-        // Mock external service
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
     
-        // Prepare input data
-        Map < String, Object > permSetToCreate = new Map < String, Object > {
-            'Name' => 'Test_Test_Permission_Set',
-            'Label' => 'Test Test Permission Set Label',
-            'Description' => 'Test Permission Set Description',
-            'License' => null,
-            'hasActivationRequired' => false
-        };
+        Map < String, Object > permSetToCreate = new Map < String, Object > {'Name' => 'Test_Test_Permission_Set','Label' => 'Test Test Permission Set Label',
+            										'Description' => 'Test Permission Set Description','License' => null,'hasActivationRequired' => false};
         List < Id > userIds = new List < Id > {u.Id};
     
-        // Test the method
         Test.startTest();
         String permissionSetId = PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
         Test.stopTest();
     
-        // Verify results
         PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
         System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, 'The created PermissionSet should be found in the query.');
+        System.assertNotEquals(null, permissionSetId, 'There Should be not Null.');
     }
     
      @IsTest
     public static void testGetPermissionSet() {
-        // Test the method
         Test.startTest();
         List < Map < String, String >> result = PermissionSetManager.getPermissionSet();
         Test.stopTest();
     
-        // Verify results
         System.assertNotEquals(0, result.size(), 'The result should contain permission sets.');
     
         if (!result.isEmpty()) {
@@ -55,9 +44,7 @@ public class PermissionSetManagerTest {
     
     @IsTest
     static void testInsertUsertoPermissionSet() {
-        // Create test data
         User testUser = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
-        // Query an existing Permission Set
         PermissionSet testPermissionSet = new PermissionSet(name = 'Test_for_Insert_user_to_Perm_Set', label = 'Test for Insert user to Perm Set');
         insert testPermissionSet;
         List < String > userIds = new List < String > {testUser.Id};
@@ -65,7 +52,6 @@ public class PermissionSetManagerTest {
         PermissionSetManager.insertUsertoPermissionSet(userIds, testPermissionSet.Id);
         Test.stopTest();
     
-        // Verify that PermissionSetAssignment was created successfully
         List < PermissionSetAssignment > assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: testUser.Id AND PermissionSetId =: testPermissionSet.Id];
         System.assertEquals(1, assignments.size(), 'PermissionSetAssignment should be inserted successfully.');
     }
@@ -73,7 +59,6 @@ public class PermissionSetManagerTest {
     @IsTest
     static void testDeleteUserFromPermissionSet() {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
-
         List<User> testUsers = [SELECT id FROM User WHERE userName = 'testuseraccess1@example.com' limit 1];
 
         List<String> userIds = new List<String>{testUsers[0].id};
@@ -81,17 +66,14 @@ public class PermissionSetManagerTest {
         PermissionSetManager.deleteUserfromPermissionSet(userIds, testPermissionSet.Id);
         Test.stopTest();
 
-        List<PermissionSetAssignment> assignments = [
-            SELECT Id FROM PermissionSetAssignment
-            WHERE PermissionSetId = :testPermissionSet.Id AND AssigneeId IN :userIds
-        ];
+        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :testPermissionSet.Id AND AssigneeId IN :userIds];
         
         System.assertEquals(0, assignments.size(), 'No assignments should exist for the deleted users');
     }
     
      @IsTest
     static void testEditPermissionSet() {
-       PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         Test.startTest();
         PermissionSet updatedPermSet = PermissionSetManager.editPermissionSet(testPermissionSet.Id,'Updated Test Permission Set','Updated_TestPermissionSet','Updated description for test');
 		Test.stopTest();
@@ -102,63 +84,41 @@ public class PermissionSetManagerTest {
     
      @IsTest
     static void testDeletePerSet() {
-        // Create a test permission set to be deleted
-         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         
-        // Test Case 1: Successful Deletion of Permission Set and its Assignments
         Test.startTest();
         String result = PermissionSetManager.deletePerSet(testPermissionSet.Id);
         Test.stopTest();
-
-        // Assert that the Permission Set and its assignments were deleted successfully
+        
         System.assertEquals('Permission set and its assignments deleted successfully.', result);
-
-        // Verify that the permission set no longer exists
+        
         List<PermissionSet> deletedPermissionSet = [SELECT Id FROM PermissionSet WHERE Id = :testPermissionSet.Id];
         System.assertEquals(0, deletedPermissionSet.size(), 'Permission set should be deleted');
-
-        // Verify that the permission set assignments are deleted
+        
         List<PermissionSetAssignment> deletedAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :testPermissionSet.Id];
         System.assertEquals(0, deletedAssignments.size(), 'Permission set assignments should be deleted');
     }
     
     @IsTest
     static void testClonePermissionSetwithUsers() {
-        // Get the source Permission Set and users
         PermissionSet sourcePermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         
-        // Start the test
         Test.startTest();
-        
-        // Call the method to clone the Permission Set and assign users
-        PermissionSetManager.clonePermissionSetwithUsers(sourcePermissionSet.Id,'Cloned Permission Set','Cloned_Permission_Set',
-            'This is a cloned permission set',null);
-        
+        PermissionSetManager.clonePermissionSetwithUsers(sourcePermissionSet.Id,'Cloned Permission Set','Cloned_Permission_Set','This is a cloned permission set',null);        
         Test.stopTest();
         
-        // Query the newly created permission set and verify details
         PermissionSet clonedPermissionSet = [SELECT Id, Name, Label, Description FROM PermissionSet WHERE Name = 'Cloned_Permission_Set' LIMIT 1];
         System.assertEquals('Cloned_Permission_Set', clonedPermissionSet.Name);
         System.assertEquals('Cloned Permission Set', clonedPermissionSet.Label);
         System.assertEquals('This is a cloned permission set', clonedPermissionSet.Description);
-
-        // Verify that users are assigned to the new permission set
-        List<PermissionSetAssignment> clonedAssignments = [SELECT AssigneeId, PermissionSetId FROM PermissionSetAssignment WHERE PermissionSetId = :clonedPermissionSet.Id];
     }
     
     @IsTest
     static void testClonePermissionSetwithoutUsers() {
-        
-        // Start the test
         Test.startTest();
-        
-        // Call the method to clone the Permission Set and assign users
-        PermissionSetManager.clonePermissionSetWithoutUser('Cloned Permission Set','Cloned_Permission_Set',
-            'This is a cloned permission set',null);
-        
+        PermissionSetManager.clonePermissionSetWithoutUser('Cloned Permission Set','Cloned_Permission_Set','This is a cloned permission set',null);
         Test.stopTest();
         
-        // Query the newly created permission set and verify details
         PermissionSet clonedPermissionSet = [SELECT Id, Name, Label, Description FROM PermissionSet WHERE Name = 'Cloned_Permission_Set' LIMIT 1];
         System.assertEquals('Cloned_Permission_Set', clonedPermissionSet.Name);
         System.assertEquals('Cloned Permission Set', clonedPermissionSet.Label);
@@ -168,21 +128,14 @@ public class PermissionSetManagerTest {
     
     @IsTest
     static void testGetAssignedUserForPermissionSet() {
-        // Query the test permission set
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
 
-        // Start the test
         Test.startTest();
-        
-        // Call the method to get assigned users for the permission set
-        List<User> assignedUsers = PermissionSetManager.getAssignedUserForPermissionSet(testPermissionSet.Id);
-        
+        List<User> assignedUsers = PermissionSetManager.getAssignedUserForPermissionSet(testPermissionSet.Id);        
         Test.stopTest();
         
-        // Assert that the correct number of users were returned
-       System.assertEquals(1, assignedUsers.size(), 'There should be 2 users assigned to the permission set.');
+       	System.assertEquals(1, assignedUsers.size(), 'There should be 2 users assigned to the permission set.');
         
-        // Verify the details of the assigned users
         Set<String> userNames = new Set<String>();
         for (User u : assignedUsers) {
             userNames.add(u.Username);
@@ -191,7 +144,6 @@ public class PermissionSetManagerTest {
     
     @IsTest
     static void testGetUnAssignedUserForPermissionSet() {
-        // Query the test permission set
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         
         Test.startTest();
@@ -225,11 +177,9 @@ public class PermissionSetManagerTest {
         Test.startTest();
         Map<String, List<Map<String, String>>> result = PermissionSetManager.getPermissionSetLicenseCreate();
         Test.stopTest();
-
-        // Assert that the result map contains the 'UserLicense' key
+        
         System.assert(result.containsKey('UserLicense'), 'Result should contain key "UserLicense".');
         
-        // Get the list of user licenses from the result
         List<Map<String, String>> userLicenseList = result.get('UserLicense');
         System.assertNotEquals(2, userLicenseList.size(), 'There should be two UserLicense records.');
         
@@ -248,19 +198,17 @@ public class PermissionSetManagerTest {
         Test.startTest();
         Boolean isDuplicate = PermissionSetManager.checkDuplicatePermissionSet('Test Permission Set', 'Test_Permission_Set');
         Test.stopTest();
-
-        // Assert that the method returns true since the permission set exists
+        
         System.assertEquals(true, isDuplicate, 'The method should return true for an existing permission set.');
     }
     
     @IsTest
     static void testGetPermissionSetTabSetting() {
     	PermissionSet permissionSet = [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1]; 
-         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
-        // Step 2: Mock the getTabForPermissionSet to return visibility settings for the tabs
-        Test.startTest();
         
+        Test.startTest();
         PermissionSetManager.getPermissionSetTabSetting(permissionSet.Name);
         Test.stopTest();
     }
@@ -274,6 +222,8 @@ public class PermissionSetManagerTest {
         PermissionSetManager.PermissionFieldWrap result = PermissionSetManager.getCombinedPermissionsforProfile([SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id);
         PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
         Test.stopTest();
+        
+        System.assertNotEquals(null,result,'There Should not be Null');
        
     }
     
@@ -288,21 +238,15 @@ public class PermissionSetManagerTest {
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
 		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
-      PermissionSet perm =  [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
-       Test.StartTest();
+      	PermissionSet perm =  [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+       	Test.StartTest();
         PermissionSetManager.getSobjectPermissionsForPermissionSet(perm.Id,'Account',new List<String>{perm.Name});
-       Test.StopTest();
+       	Test.StopTest();
     }
     @IsTest
     Static Void testupdateSobjectMeta(){
-        Map<String, Boolean> caseObjPermissions = new Map<String, Boolean>{
-            'PermissionsCreate' => true,
-            'PermissionsRead' => true,
-            'PermissionsEdit' => true,
-            'PermissionsDelete' => true,
-            'PermissionsModifyAllRecords' => true,
-            'PermissionsViewAllRecords' => true
-        };
+        Map<String, Boolean> caseObjPermissions = new Map<String, Boolean>{'PermissionsCreate' => true,'PermissionsRead' => true,'PermissionsEdit' => true,
+            									'PermissionsDelete' => true,'PermissionsModifyAllRecords' => true,'PermissionsViewAllRecords' => true};
         List<PermissionSetManager.FieldPermissionUpdateWrapper> fieldPermissionUpdateList = new List<PermissionSetManager.FieldPermissionUpdateWrapper>();
         PermissionSetManager.FieldPermissionUpdateWrapper fieldPermUpdateWrapper = new PermissionSetManager.FieldPermissionUpdateWrapper();
         fieldPermUpdateWrapper.Field = 'Opportunity.Amount';

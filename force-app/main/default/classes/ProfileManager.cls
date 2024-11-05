@@ -171,7 +171,7 @@ Public without Sharing Class ProfileManager {
    @AuraEnabled
       public static ProfileObjectPermissionsWrapper getSobjectPermissionsForProfile(String permSetId, String objName) {
           // Fetch dependencies and field access in parallel
-          List < Object > dependObjects = ProfileManager.checkDependency(objName);
+          List < Object > dependObjects = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies(objName);
           Map < String, Boolean > fieldAccess = ProfileManager.checkFieldType(objName);
       
           // Get field definitions
@@ -215,7 +215,7 @@ Public without Sharing Class ProfileManager {
       }
     
     //Helper method to fetch dependencies for object.
-    @AuraEnabled
+   /* @AuraEnabled
     public static List < Object > checkDependency(String objName) {
         UserAccessManager instance = new UserAccessManager();
         List < Object > allDependencies = new List < Object > ();
@@ -256,7 +256,7 @@ Public without Sharing Class ProfileManager {
         System.debug('Filtered Dependencies: ' + filteredDependencies);
         System.debug('Filtered Dependencies: ' + filteredDependencies.size());
         return filteredDependencies;
-    }
+    }*/
 	
     //Wrapper class to fetch object & field permissions.
     public class ProfileObjectPermissionsWrapper {
@@ -270,7 +270,7 @@ Public without Sharing Class ProfileManager {
       }
     }
 
-    Private Static Void fetchDependencies(String objName, List < Object > allDependencies, String sessionId, String serverUrl) {
+   /* Private Static Void fetchDependencies(String objName, List < Object > allDependencies, String sessionId, String serverUrl) {
       if (String.isBlank(objName)) {
           return;
       }
@@ -317,7 +317,7 @@ Public without Sharing Class ProfileManager {
       if (!childObjects.isEmpty()) {
           processChildObjects(new List < String > (childObjects), allDependencies, sessionId, serverUrl);
       }
-    }
+    }*/
 
     //Helper to get the valid fields for updating ObjectPermissions.
     @AuraEnabled
@@ -349,7 +349,7 @@ Public without Sharing Class ProfileManager {
         return fieldDefMapByName;
     }
     
-    //Helper to get parent object dependencies
+  /*  //Helper to get parent object dependencies
     private static void processParentObjects(List < String > parentObjects, List < Object > allDependencies, String sessionId, String serverUrl) {
       if (parentObjects.isEmpty()) {
           return;
@@ -402,7 +402,7 @@ Public without Sharing Class ProfileManager {
       if (!newChildObjects.isEmpty()) {
           processChildObjects(new List < String > (newChildObjects), allDependencies, sessionId, serverUrl);
       }
-    }
+    }*/
     
     public static List<Object> sendQueryRequest(String query, String sessionId, String serverUrl) {
         String endpoint = serverUrl + '/services/data/v58.0/tooling/query?q=' + EncodingUtil.urlEncode(query, 'UTF-8');
@@ -477,8 +477,8 @@ Public without Sharing Class ProfileManager {
     private static List < Map < String, Object >> getUserPermissions(String permissionSetIds) {
       List < Map < String, Object >> userPermissionsList = new List < Map < String, Object >> ();
   
-      String query = 'SELECT Id, Name, ' + String.join(getPermissionFields(), ', ') +
-          ' FROM PermissionSet WHERE Id = :permissionSetIds';
+      String query = 'SELECT Id, Name, ' + String.join(getPermissionFields(), ', ') + 
+        ' FROM PermissionSet WHERE Id = \'' + permissionSetIds + '\'';
   
       for (PermissionSet ps: Database.query(query)) {
           for (String fieldName: getPermissionFields()) {

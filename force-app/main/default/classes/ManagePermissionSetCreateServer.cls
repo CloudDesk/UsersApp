@@ -51,30 +51,17 @@ Public without Sharing class ManagePermissionSetCreateServer {
     Public Static PermissionSet createNewPermissionSet(Map<String,Object> newPermSet, List<Id> userIds,
         Map<String, Map<String, Boolean>> objectPermissionsMap,
         List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> fieldPerms,String objName, String updateType, String tabToUpdate, Map<String, Boolean> userToUpdate,List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> recTypeToUpdate){
-            System.debug('newPermSet'+newPermSet);
-            System.debug('userIds'+userIds);
-            System.debug('objectPermissionsMap'+objectPermissionsMap);
-            System.debug('fieldPerms'+fieldPerms);
-            System.debug('objName'+objName);
-            System.debug('updateType'+updateType);
-            System.debug('tabToUpdate'+tabToUpdate);
-            System.debug('userToUpdate'+userToUpdate);
-            System.debug('recTypeToUpdate'+recTypeToUpdate);
             String permSetId;  
             if(updateType == 'Obj' || updateType == 'User'){
                 system.debug('Obj type' + updateType);
                 permSetId = PermissionSetManager.createPermissionSet(newPermSet,userIds);                
              }
-            if(updateType == 'Obj'){
-                if(permSetId != null && permSetId != ''){
-                        PermissionAnalyzerObjectServer.updateObjAndFieldInitiation(objectPermissionsMap,fieldPerms,permSetId,objName,'');
-                  } 
-            }
-            if(updateType == 'User'){
-                if(permSetId != null && permSetId != ''){
-                        UserPermissionAnalyzerServer.updateUserPermissionsforProfOrPermSetOrMuteGroups(permSetId,'',userToUpdate);
-                  } 
-            }
+            if(updateType == 'Obj' && permSetId != null && permSetId != ''){
+                PermissionAnalyzerObjectServer.updateObjAndFieldInitiation(objectPermissionsMap,fieldPerms,permSetId,objName,'');
+            } 
+            if(updateType == 'User' && permSetId != null && permSetId != ''){
+                UserPermissionAnalyzerServer.updateUserPermissionsforProfOrPermSetOrMuteGroups(permSetId,'',userToUpdate);
+            } 
             if(updateType == 'Tab'){
                 permSetId = createPermissionSetWithTabsAndUsers(newPermSet,tabToUpdate,userIds);
             }
@@ -108,7 +95,7 @@ Public without Sharing class ManagePermissionSetCreateServer {
                 if (!upsertResult.success) {
                     for (MetadataService.Error error : upsertResult.errors) {
                         System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
-                        throw new AuraHandledException('Error inserting Permission Set: ' + error.message);
+                        throw new AuraHandledException('Error inserting Permission Set createPermissionSetWithTabsAndUsers: ' + error.message);
                     }
                 } else {
                     System.debug('Permission Set Inserted successfully for: ' + upsertResult.fullName);                    
@@ -116,7 +103,7 @@ Public without Sharing class ManagePermissionSetCreateServer {
             }
         } catch (Exception e) {
             System.debug('Error Inserting Permission Set: ' + e.getMessage());
-            throw new AuraHandledException('Error inserting Permission Set: ' + e.getMessage());
+            throw new AuraHandledException('Error inserting Permission Set catch: ' + e.getMessage());
         }
     }
         System.debug('tabSettingsJson: ' + tabSettingsJson);
@@ -224,7 +211,7 @@ Public without Sharing class ManagePermissionSetCreateServer {
     Private Static Void handleUpsertResults(MetadataService.UpsertResult[] results) {
         for (MetadataService.UpsertResult result: results) {
             if (!result.success) {
-                throw new AuraHandledException('Error inserting Permission Set: ' + result.errors[0].message);
+                throw new AuraHandledException('Error inserting Permission Set handleUpsertResults: ' + result.errors[0].message);
             }
         }
     }
