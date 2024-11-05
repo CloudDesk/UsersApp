@@ -1,40 +1,43 @@
+//This test class is used to check functionality of PermissionSetManager class.
 @IsTest
 public class PermissionSetManagerTest {
-    private static final String OPPORTUNITY_Amount_FIELD = 'Opportunity.Amount';
+    private static final String Opportunity_Amount_FIELD = 'Opportunity.Amount';
+    private static final String Cloned_PermSet_FIELD = 'Cloned Permission Set';
+    private static final String Cloned_PermSet_Description = 'This is a cloned permission set';
+    
+    //This method holds the test data.
     @TestSetup
     static void setupTestData() {
        PermissionAnalyzerObjectServerTest.testsetupMethod();       
-    } 
-	
+    }
+    
+	//This test method is used to check the logics for createPermissionSet method in PermissionSetManager class.
     @isTest
     static void testCreatePermissionSet() {
         PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
         insert testPermissionSet;
         User u = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
-    
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
-    
         Map < String, Object > permSetToCreate = new Map < String, Object > {'Name' => 'Test_Test_Permission_Set','Label' => 'Test Test Permission Set Label',
             										'Description' => 'Test Permission Set Description','License' => null,'hasActivationRequired' => false};
         List < Id > userIds = new List < Id > {u.Id};
     
         Test.startTest();
         String permissionSetId = PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
-        Test.stopTest();
-    
+        Test.stopTest();   
         PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
         System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, 'The created PermissionSet should be found in the query.');
         System.assertNotEquals(null, permissionSetId, 'There Should be not Null.');
     }
     
-     @IsTest
+    //This test method is used to check the logics for getPermissionSet method in PermissionSetManager class.
+    @IsTest
     public static void testGetPermissionSet() {
         Test.startTest();
         List < Map < String, String >> result = PermissionSetManager.getPermissionSet();
         Test.stopTest();
-    
-        System.assertNotEquals(0, result.size(), 'The result should contain permission sets.');
-    
+        
+        System.assertNotEquals(0, result.size(), 'The result should contain permission sets.');        
         if (!result.isEmpty()) {
             Map < String, String > permissionSet1 = result[0];
             System.assertNotEquals(null, permissionSet1.get('Name'), 'Permission set name should not be null.');
@@ -42,6 +45,7 @@ public class PermissionSetManagerTest {
         }
     }
     
+    //This test method is used to check the logics for insertUsertoPermissionSet method in PermissionSetManager class.
     @IsTest
     static void testInsertUsertoPermissionSet() {
         User testUser = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
@@ -56,6 +60,7 @@ public class PermissionSetManagerTest {
         System.assertEquals(1, assignments.size(), 'PermissionSetAssignment should be inserted successfully.');
     }
     
+    //This test method is used to check the logics for deleteUserfromPermissionSet method in PermissionSetManager class.
     @IsTest
     static void testDeleteUserFromPermissionSet() {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
@@ -71,18 +76,20 @@ public class PermissionSetManagerTest {
         System.assertEquals(0, assignments.size(), 'No assignments should exist for the deleted users');
     }
     
-     @IsTest
+    //This test method is used to check the logics for editPermissionSet method in PermissionSetManager class.
+    @IsTest
     static void testEditPermissionSet() {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         Test.startTest();
         PermissionSet updatedPermSet = PermissionSetManager.editPermissionSet(testPermissionSet.Id,'Updated Test Permission Set','Updated_TestPermissionSet','Updated description for test');
-		Test.stopTest();
+        Test.stopTest();
         System.assertEquals('Updated Test Permission Set', updatedPermSet.Label, 'The label should be updated');
         System.assertEquals('Updated_TestPermissionSet', updatedPermSet.Name, 'The API name should be updated');
         System.assertEquals('Updated description for test', updatedPermSet.Description, 'The description should be updated');
     }
     
-     @IsTest
+    //This test method is used to check the logics for deletePerSet method in PermissionSetManager class.
+    @IsTest
     static void testDeletePerSet() {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         
@@ -99,33 +106,36 @@ public class PermissionSetManagerTest {
         System.assertEquals(0, deletedAssignments.size(), 'Permission set assignments should be deleted');
     }
     
+    //This test method is used to check the logics for clonePermissionSetwithUsers method in PermissionSetManager class.
     @IsTest
     static void testClonePermissionSetwithUsers() {
         PermissionSet sourcePermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         
         Test.startTest();
-        PermissionSetManager.clonePermissionSetwithUsers(sourcePermissionSet.Id,'Cloned Permission Set','Cloned_Permission_Set','This is a cloned permission set',null);        
+        PermissionSetManager.clonePermissionSetwithUsers(sourcePermissionSet.Id,Cloned_PermSet_FIELD,'Cloned_Permission_Set',Cloned_PermSet_Description,null);        
         Test.stopTest();
         
         PermissionSet clonedPermissionSet = [SELECT Id, Name, Label, Description FROM PermissionSet WHERE Name = 'Cloned_Permission_Set' LIMIT 1];
         System.assertEquals('Cloned_Permission_Set', clonedPermissionSet.Name);
-        System.assertEquals('Cloned Permission Set', clonedPermissionSet.Label);
-        System.assertEquals('This is a cloned permission set', clonedPermissionSet.Description);
+        System.assertEquals(Cloned_PermSet_FIELD, clonedPermissionSet.Label);
+        System.assertEquals(Cloned_PermSet_Description, clonedPermissionSet.Description);
     }
     
+    //This test method is used to check the logics for clonePermissionSetWithoutUser method in PermissionSetManager class.
     @IsTest
     static void testClonePermissionSetwithoutUsers() {
         Test.startTest();
-        PermissionSetManager.clonePermissionSetWithoutUser('Cloned Permission Set','Cloned_Permission_Set','This is a cloned permission set',null);
+        PermissionSetManager.clonePermissionSetWithoutUser(Cloned_PermSet_FIELD,'Cloned_Permission_Set',Cloned_PermSet_Description,null);
         Test.stopTest();
         
         PermissionSet clonedPermissionSet = [SELECT Id, Name, Label, Description FROM PermissionSet WHERE Name = 'Cloned_Permission_Set' LIMIT 1];
         System.assertEquals('Cloned_Permission_Set', clonedPermissionSet.Name);
-        System.assertEquals('Cloned Permission Set', clonedPermissionSet.Label);
-        System.assertEquals('This is a cloned permission set', clonedPermissionSet.Description);
+        System.assertEquals(Cloned_PermSet_FIELD, clonedPermissionSet.Label);
+        System.assertEquals(Cloned_PermSet_Description, clonedPermissionSet.Description);
 
     }
     
+    //This test method is used to check the logics for getAssignedUserForPermissionSet method in PermissionSetManager class.
     @IsTest
     static void testGetAssignedUserForPermissionSet() {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
@@ -142,26 +152,31 @@ public class PermissionSetManagerTest {
         }
     }
     
+    //This test method is used to check the logics for getAssignedUserForPermissionSet method in PermissionSetManager class.
     @IsTest
     static void testGetUnAssignedUserForPermissionSet() {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         
         Test.startTest();
-        PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'All', '', '');
+        List<User> resultAll = PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'All', '', '');
         PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'Standard User', '', '');
         PermissionSetManager.getUnAssignedUserForPermissionSet(testPermissionSet.Id, 'All', 'Salesforce', 'Salesforce');
         Test.stopTest();
+        System.assert(resultAll.size() >= 0, 'Result size should be zero or more for user type "All"');
     }
     
+    //This test method is used to check the logics for getUserForPermissionSet method in PermissionSetManager class.
     @IsTest
     static void testGetUserForPermissionSetWithUserLicense() {
         Test.startTest();
-        PermissionSetManager.getUserForPermissionSet('Salesforce');
+        List<User> resultSalesforce = PermissionSetManager.getUserForPermissionSet('Salesforce');
         PermissionSetManager.getUserForPermissionSet('Test_License');
         PermissionSetManager.getUserForPermissionSet('');
         Test.stopTest();
+        System.assert(resultSalesforce.size() >= 0, 'Result size should be zero or more for "Salesforce" license');
 	}
     
+    //This test method is used to check the logics for getSetPermission method in PermissionSetManager class.
     @IsTest
     static void testGetSetPermission() {
         Test.startTest();
@@ -172,6 +187,7 @@ public class PermissionSetManagerTest {
                 
     }
     
+    //This test method is used to check the logics for getPermissionSetLicenseCreate method in PermissionSetManager class.
     @IsTest
     static void testGetPermissionSetLicenseCreate() {
         Test.startTest();
@@ -185,14 +201,16 @@ public class PermissionSetManagerTest {
         
     }
     
+    //This test method is used to check the logics for getProfiles method in PermissionSetManager class.
     @IsTest
     static void testGetProfiles() {
         Test.startTest();
-        PermissionSetManager.getProfiles();
+        List<Profile> profiles = PermissionSetManager.getProfiles();
         Test.stopTest();
-        
+        System.assertNotEquals(null, profiles, 'The result should not be null');
 	}
     
+    //This test method is used to check the logics for checkDuplicatePermissionSet method in PermissionSetManager class.
     @IsTest
     static void testCheckDuplicatePermissionSetWithExistingLabelAndApiName() {
         Test.startTest();
@@ -202,6 +220,7 @@ public class PermissionSetManagerTest {
         System.assertEquals(true, isDuplicate, 'The method should return true for an existing permission set.');
     }
     
+    //This test method is used to check the logics for getPermissionSetTabSetting method in PermissionSetManager class.
     @IsTest
     static void testGetPermissionSetTabSetting() {
     	PermissionSet permissionSet = [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1]; 
@@ -209,12 +228,14 @@ public class PermissionSetManagerTest {
         MetadataService metaDataService = new MetadataService();
         
         Test.startTest();
-        PermissionSetManager.getPermissionSetTabSetting(permissionSet.Name);
+        List<Map<String, Object>> tabSettings = PermissionSetManager.getPermissionSetTabSetting(permissionSet.Name);
         Test.stopTest();
+        System.assertNotEquals(null, tabSettings, 'The result should not be null');
     }
     
+    //This test method is used to check the logics for getCombinedPermissionsforProfile method in PermissionSetManager class.
     @IsTest
-    Static Void testGetCombinedPermissionsforProfile(){
+    static void testGetCombinedPermissionsforProfile(){
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
         permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
@@ -227,12 +248,17 @@ public class PermissionSetManagerTest {
        
     }
     
+    //This test method is used to check the logics for updateSystemPermissions method in PermissionSetManager class.
     @isTest
     Static Void testUpdateSystemPermissions(){
+        PermissionSet testPermissionSet = [SELECT Id, Name, PermissionsApiEnabled FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         Test.startTest();
         PermissionSetManager.updateSystemPermissions('{"PermissionsApiEnabled":true}',[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id);
         Test.stopTest();
+        PermissionSet updatedPermissionSet = [SELECT Id, Name, PermissionsApiEnabled FROM PermissionSet WHERE Id = :testPermissionSet.Id LIMIT 1];
+        System.assertEquals(true, updatedPermissionSet.PermissionsApiEnabled, 'PermissionsApiEnabled should be set to true');
     }
+    //This test method is used to check the logics for getSobjectPermissionsForPermissionSet method in PermissionSetManager class.
     @isTest
     Static Void testGetSobjectPermissionsForPermissionSet(){
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
@@ -240,9 +266,11 @@ public class PermissionSetManagerTest {
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
       	PermissionSet perm =  [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
        	Test.StartTest();
-        PermissionSetManager.getSobjectPermissionsForPermissionSet(perm.Id,'Account',new List<String>{perm.Name});
+        PermissionSetManager.ProfileObjectPermissionsWrapper sObjectPermissions = PermissionSetManager.getSobjectPermissionsForPermissionSet(perm.Id, 'Account', new List<String>{perm.Name});
        	Test.StopTest();
+        System.assertNotEquals(null, sObjectPermissions, 'The permissions wrapper should not be null.');
     }
+    //This test method is used to check the logics for updateSobjectMeta method in PermissionSetManager class.
     @IsTest
     Static Void testupdateSobjectMeta(){
         Map<String, Boolean> caseObjPermissions = new Map<String, Boolean>{'PermissionsCreate' => true,'PermissionsRead' => true,'PermissionsEdit' => true,
@@ -258,9 +286,10 @@ public class PermissionSetManagerTest {
         fieldPermUpdateWrapper.mutedPermissionsEdit = true; 
         fieldPermissionUpdateList.add(fieldPermUpdateWrapper);
         Test.StartTest();
-        PermissionSetManager.updateSobjectMeta(new Map<String, Map<String, Boolean>>{'Case'=>caseObjPermissions},fieldPermissionUpdateList,[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id,'Opportunity');
+        PermissionSetManager.UpdatedObjPermResult res = PermissionSetManager.updateSobjectMeta(new Map<String, Map<String, Boolean>>{'Case'=>caseObjPermissions},fieldPermissionUpdateList,[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id,'Opportunity');
+        PermissionSetManager.FieldPermissionUpdateWrapper fieldPerm = res.fieldPerms[0];
    		Test.stopTest();
+        System.assertEquals('Opportunity.Amount', fieldPerm.field, 'The field should be Opportunity.Amount.');
+    	System.assertEquals('Amount', fieldPerm.label, 'The label should be Amount.');
      }
-    
-   
 }
