@@ -143,8 +143,8 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             
             // Set the required fields
             loginResult.sessionId = 'dummy-session-id-' + System.currentTimeMillis();
-            loginResult.serverUrl = 'https://test.salesforce.com/services/Soap/u/54.0';
-            loginResult.metadataServerUrl = 'https://test.salesforce.com/services/Soap/m/54.0';
+            loginResult.serverUrl = System.Url.getOrgDomainUrl().toExternalForm()+'/services/Soap/u/60.0';
+            loginResult.metadataServerUrl = System.Url.getOrgDomainUrl().toExternalForm()+'/services/Soap/u/60.0';
             loginResult.passwordExpired = false;
             loginResult.userId = UserInfo.getUserId();
             
