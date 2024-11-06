@@ -32,12 +32,11 @@ public class UserAccessManagerTest {
         Test.startTest();
         Test.setMock(WebServiceMock.class, new PartnerWsdl2ApexMockWithError());
         try {
-            UserAccessManager manager = new UserAccessManager();
+            new UserAccessManager();
             System.assert(true, 'Expected an exception to be thrown for failed login, but it did not.');
         } catch (Exception e) {
             System.assert(e.getMessage().contains('Login failed'), 'The expected login failure message should be present.');
         }
         Test.stopTest();
     }
-
 }

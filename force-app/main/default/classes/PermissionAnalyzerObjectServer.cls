@@ -1,6 +1,7 @@
 //This Class is Used to Handle object and Field Permissions
 // Used In PermissionAnalyzerObject _LWC
-public with sharing class PermissionAnalyzerObjectServer {    
+public with sharing class PermissionAnalyzerObjectServer {
+    private static final String PERM_DEP_QUERY_STRING = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency WHERE PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\' ';
     public class GetFieldWrapper {
         @AuraEnabled
         public List<Map<String, Object>> fieldLabelMap { get; set; }
@@ -90,11 +91,8 @@ public with sharing class PermissionAnalyzerObjectServer {
         if (String.isBlank(objName)) {
             return;
         }
-        String query = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ' +
-            'WHERE (Permission LIKE \'%' + String.escapeSingleQuotes(objName) + '%\' ' +
-            'OR RequiredPermission LIKE \'%' + String.escapeSingleQuotes(objName) + '%\') ' +
-            'AND PermissionType = \'Object Permission\' ' +
-            'AND RequiredPermissionType = \'Object Permission\'';
+        String query = PERM_DEP_QUERY_STRING + ' AND (Permission LIKE \'%' + String.escapeSingleQuotes(objName) + '%\' ' +
+            'OR RequiredPermission LIKE \'%' + String.escapeSingleQuotes(objName) + '%\') ';
         List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
         Set < String > parentObjects = new Set < String > ();
         Set < String > childObjects = new Set < String > ();
@@ -124,10 +122,7 @@ public with sharing class PermissionAnalyzerObjectServer {
             return;
         }
         String parentObjNames = String.join(parentObjects, ',');
-        String query = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ' +
-            'WHERE Permission IN (' + parentObjNames + ') ' +
-            'AND PermissionType = \'Object Permission\' ' +
-            'AND RequiredPermissionType = \'Object Permission\'';
+        String query = PERM_DEP_QUERY_STRING + ' AND Permission IN (' + parentObjNames + ') ';
         List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
         Set < String > newParentObjects = new Set < String > ();
         for (Object record: queryResults) {
@@ -148,10 +143,7 @@ public with sharing class PermissionAnalyzerObjectServer {
             return;
         }  
         String childObjNames = String.join(childObjects, ',');
-        String query = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ' +
-            'WHERE RequiredPermission IN (' + childObjNames + ') ' +
-            'AND PermissionType = \'Object Permission\' ' +
-            'AND RequiredPermissionType = \'Object Permission\'';
+        String query = PERM_DEP_QUERY_STRING + ' AND RequiredPermission IN (' + childObjNames + ') ';
         List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
         Set < String > newChildObjects = new Set < String > ();
         for (Object record: queryResults) {
@@ -435,6 +427,5 @@ public with sharing class PermissionAnalyzerObjectServer {
                 }
             }
         return null;
-    }  
-    
+    }
 }

@@ -4,6 +4,8 @@ public class PermissionSetManagerTest {
     private static final String Opportunity_Amount_FIELD = 'Opportunity.Amount';
     private static final String Cloned_PermSet_FIELD = 'Cloned Permission Set';
     private static final String Cloned_PermSet_Description = 'This is a cloned permission set';
+    private static final String Script_Thrown_Message = 'Script-thrown exception';
+    private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
     
     //This method holds the test data.
     @TestSetup
@@ -45,7 +47,7 @@ public class PermissionSetManagerTest {
         System.assertEquals(1, assignments.size(), 'PermissionSetAssignment should be inserted successfully.');
     }
     
-    //This test method is used to check the logics for deleteUserfromPermissionSet method in PermissionSetManager class.
+    //This test method is used to check the logics for deleteUserfromPermissionSet(Success) method in PermissionSetManager class.
     @IsTest
     static void testDeleteUserFromPermissionSet() {
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
@@ -54,6 +56,28 @@ public class PermissionSetManagerTest {
         List<String> userIds = new List<String>{testUsers[0].id};
         Test.startTest();
         PermissionSetManager.deleteUserfromPermissionSet(userIds, testPermissionSet.Id);
+        Test.stopTest();
+
+        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :testPermissionSet.Id AND AssigneeId IN :userIds];
+        
+        System.assertEquals(0, assignments.size(), 'No assignments should exist for the deleted users');
+    }
+    
+    //This test method is used to check the logics for deleteUserfromPermissionSet(Fail) method in PermissionSetManager class.
+    @IsTest
+    static void testDeleteUserFromPermissionSet_DmlException() {
+        PermissionSet testPermissionSet = new PermissionSet(Name = 'New_Test_Permission_Set_4',Label='New Test Permission Set 4');
+        insert testPermissionSet;
+        List<User> testUsers = [SELECT id FROM User WHERE userName = 'testuseraccess1@example.com' limit 1];
+
+        List<String> userIds = new List<String>{testUsers[0].id};
+        Test.startTest();
+        try {
+            PermissionSetManager.deleteUserfromPermissionSet(userIds, testPermissionSet.Id);
+            System.assert(true, Error_Thrown_Message);
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+        }
         Test.stopTest();
 
         List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :testPermissionSet.Id AND AssigneeId IN :userIds];
@@ -73,6 +97,20 @@ public class PermissionSetManagerTest {
         System.assertEquals('Updated description for test', updatedPermSet.Description, 'The description should be updated');
     }
     
+    //This test method is used to check the logics for editPermissionSet method in PermissionSetManager class.
+    @IsTest
+    static void testEditPermissionSet_DmlException() {
+        PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        Test.startTest();
+        try {
+            PermissionSetManager.editPermissionSet(testPermissionSet.Id,'','Updated_TestPermissionSet','');
+            System.assert(false, Error_Thrown_Message);
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+        }
+        Test.stopTest();
+    }
+    
     //This test method is used to check the logics for deletePerSet method in PermissionSetManager class.
     @IsTest
     static void testDeletePerSet() {
@@ -89,6 +127,21 @@ public class PermissionSetManagerTest {
         
         List<PermissionSetAssignment> deletedAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :testPermissionSet.Id];
         System.assertEquals(0, deletedAssignments.size(), 'Permission set assignments should be deleted');
+    }
+    
+    //This test method is used to check the functionality of deletePerSet(DML Exception) method in PermissionSetManager class
+    @isTest
+    static void testDeletePerSet_DmlException() {
+        PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_3' LIMIT 1];
+        delete testPermissionSet;
+        Test.startTest();
+        try {
+            PermissionSetManager.deletePerSet(testPermissionSet.id);
+            System.assert(false, Error_Thrown_Message);
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+        }
+        Test.stopTest();
     }
     
     //This test method is used to check the logics for clonePermissionSetwithUsers method in PermissionSetManager class.
@@ -260,9 +313,12 @@ public class PermissionSetManagerTest {
     Static Void testupdateSobjectMeta(){
         Map<String, Boolean> caseObjPermissions = new Map<String, Boolean>{'PermissionsCreate' => true,'PermissionsRead' => true,'PermissionsEdit' => true,
             									'PermissionsDelete' => true,'PermissionsModifyAllRecords' => true,'PermissionsViewAllRecords' => true};
+         Map<String, Boolean> caseObjPermissionsWithNoPer = new Map<String, Boolean>{
+            'InvalidPermission' => true
+        };
         List<PermissionSetManager.FieldPermissionUpdateWrapper> fieldPermissionUpdateList = new List<PermissionSetManager.FieldPermissionUpdateWrapper>();
         PermissionSetManager.FieldPermissionUpdateWrapper fieldPermUpdateWrapper = new PermissionSetManager.FieldPermissionUpdateWrapper();
-        fieldPermUpdateWrapper.Field = 'Opportunity.Amount';
+        fieldPermUpdateWrapper.Field = Opportunity_Amount_FIELD;
         fieldPermUpdateWrapper.PermissionsRead = true; 
         fieldPermUpdateWrapper.PermissionsEdit = true;
         fieldPermUpdateWrapper.label = 'Amount';
@@ -272,9 +328,15 @@ public class PermissionSetManagerTest {
         fieldPermissionUpdateList.add(fieldPermUpdateWrapper);
         Test.StartTest();
         PermissionSetManager.UpdatedObjPermResult res = PermissionSetManager.updateSobjectMeta(new Map<String, Map<String, Boolean>>{'Case'=>caseObjPermissions},fieldPermissionUpdateList,[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id,'Opportunity');
+        PermissionSetManager.UpdatedObjPermResult res1 = PermissionSetManager.updateSobjectMeta(
+            new Map<String, Map<String, Boolean>>{'Case' => caseObjPermissions},
+            fieldPermissionUpdateList,
+            null,
+            'InvalidObject'
+        );
         PermissionSetManager.FieldPermissionUpdateWrapper fieldPerm = res.fieldPerms[0];
    		Test.stopTest();
-        System.assertEquals('Opportunity.Amount', fieldPerm.field, 'The field should be Opportunity.Amount.');
+        System.assertEquals(Opportunity_Amount_FIELD, fieldPerm.field, 'The field should be ' + Opportunity_Amount_FIELD);
     	System.assertEquals('Amount', fieldPerm.label, 'The label should be Amount.');
      }
 }

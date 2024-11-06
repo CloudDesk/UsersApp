@@ -1,5 +1,6 @@
 //This class is used for edit,delete,update Profiles.
-public with sharing class ProfileManager {
+public with Sharing class ProfileManager {
+    private static final String ERROR_MESSAGE = 'Error: ';
     //This method is used to fetch profile Name
     @AuraEnabled(cacheable=true)
     public static List<String> getProfileName(String profileId) {
@@ -27,7 +28,7 @@ public with sharing class ProfileManager {
                     profileNames.add((String) recordMap.get('FullName'));
                 }
             } else {
-                System.debug('Error: ' + res.getStatus() + ', Response: ' + res.getBody());
+                System.debug(ERROR_MESSAGE + res.getStatus() + ', Response: ' + res.getBody());
             }
         } catch (Exception e) {
             System.debug('Exception: ' + e.getMessage());
@@ -55,7 +56,7 @@ public with sharing class ProfileManager {
                 } else {
                     String errorMessage = 'Error updating profile: ' + (upsertResult.errors != null && !upsertResult.errors.isEmpty() ? upsertResult.errors[0].message : 'Unknown error');
                     for (MetadataService.Error error : upsertResult.errors) {
-                        System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+                        System.debug(ERROR_MESSAGE + error.message + ' Status Code: ' + error.statusCode);
                         if (error.fields != null) {
                             for (String field : error.fields) {
                                 System.debug('Error Field: ' + field);
@@ -71,13 +72,13 @@ public with sharing class ProfileManager {
     }    
     //This method is used for delete functionality in profile
     @AuraEnabled
-    public static void deleteProfile(String profileName) {
+    public static Void deleteProfile(String profileName) {
         UserAccessManager instance = new UserAccessManager();
         MetadataService.DeleteResult[] deleteResults = instance.service.deleteMetadata('Profile',new List<String>{ profileName });
         for (MetadataService.DeleteResult deleteResult : deleteResults) {
             if (!deleteResult.success) {
                 for (MetadataService.Error error : deleteResult.errors) {
-                    System.debug('Error: ' + error.message);
+                    System.debug(ERROR_MESSAGE + error.message);
                     throw new AuraHandledException('An error occurred while deleting Profile: ' + error.message);
                 }
             }
@@ -235,7 +236,7 @@ public with sharing class ProfileManager {
                 Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
                 return (List<Object>) responseMap.get('records') ?? new List<Object>();
             } else {
-                System.debug('Error: ' + res.getStatus() + ' - ' + res.getBody());
+                System.debug(ERROR_MESSAGE + res.getStatus() + ' - ' + res.getBody());
             }
         } catch (Exception e) {
             System.debug('Exception occurred: ' + e.getMessage());
@@ -302,7 +303,8 @@ public with sharing class ProfileManager {
             }
         }
         return permissionFields;
-    }  
+    }
+    @TestVisible
     private static Set < String > extractDependentObjects(List < Object > dependSystemPermissions) {
         Set < String > dependentObjects = new Set < String > ();
         for (Object record: dependSystemPermissions) {
@@ -314,6 +316,7 @@ public with sharing class ProfileManager {
         }
         return dependentObjects;
     }  
+    @TestVisible
     private static Map < String, Map < String, Object >> getObjectPermissions(String permissionSetIds, Set < String > dependentObjects) {
         Map < String, Map < String, Object >> objectPermissionsMap = new Map < String, Map < String, Object >> ();
         for (ObjectPermissions objPerm: [SELECT SObjectType, PermissionsRead, PermissionsCreate, PermissionsEdit,
@@ -366,7 +369,7 @@ public with sharing class ProfileManager {
         for (MetadataService.UpsertResult upsertResult : results) {
             if (!upsertResult.success) {
                 for (MetadataService.Error error : upsertResult.errors) {
-                    System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+                    System.debug(ERROR_MESSAGE + error.message + ' Status Code: ' + error.statusCode);
                     if (error.fields != null) {
                         for (String field : error.fields) {
                             System.debug('Error Field: ' + field);

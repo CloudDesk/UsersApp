@@ -1,5 +1,7 @@
 //This class is used for create,edit,delete,clone functionality for Permission Set Group.
 public with sharing class PermissionSetGroupManager {	
+
+    private static final String MUTED_SUFFIX_CONSTANT = '_Muted';
     //This method is used to fetch permission set group details.
     @AuraEnabled(cacheable=true)
     public static List<permissionSetGroupWrapper> getPermissionSetGrp() {
@@ -647,7 +649,7 @@ public with sharing class PermissionSetGroupManager {
           } else {
               mutingPermissionSet = new MutingPermissionSet();
               mutingPermissionSet.MasterLabel = psgname + ' Muted';
-              mutingPermissionSet.DeveloperName = psgapiname + '_Muted';
+              mutingPermissionSet.DeveloperName = psgapiname + MUTED_SUFFIX_CONSTANT;
               insert mutingPermissionSet;
               perSet_ids = mutingPermissionSet.Id;
               PermissionSetGroup psGroup = [SELECT Id FROM PermissionSetGroup WHERE Id = :muting_persetgrpid LIMIT 1];
@@ -684,7 +686,7 @@ public with sharing class PermissionSetGroupManager {
           if (systemPermissionsMap.containsKey('')) {
               mutingPermissionSet = new MutingPermissionSet();
               mutingPermissionSet.MasterLabel = psgname + ' Muted';
-              mutingPermissionSet.DeveloperName = psgapiname + '_Muted';
+              mutingPermissionSet.DeveloperName = psgapiname + MUTED_SUFFIX_CONSTANT;
               insert mutingPermissionSet;   
               mutingId = mutingPermissionSet.Id;
               PermissionSetGroup psGroup = [SELECT Id FROM PermissionSetGroup WHERE Id = :psgid LIMIT 1];
@@ -1012,7 +1014,7 @@ public with sharing class PermissionSetGroupManager {
           } else {
               mutingPermissionSet = new MutingPermissionSet();
               mutingPermissionSet.MasterLabel = psgname + ' Muted';
-              mutingPermissionSet.DeveloperName = psgapiname + '_Muted';
+              mutingPermissionSet.DeveloperName = psgapiname + MUTED_SUFFIX_CONSTANT;
               insert mutingPermissionSet;
               muteId = mutingPermissionSet.Id;
               PermissionSetGroup psGroup = [SELECT Id FROM PermissionSetGroup WHERE Id = : permSetId LIMIT 1];
@@ -1129,7 +1131,7 @@ public with sharing class PermissionSetGroupManager {
                   if (permSetGrp != null) {
                       MutingPermissionSet mutePerm = new MutingPermissionSet();
                       mutePerm.MasterLabel = permSetGrp.MasterLabel + ' Muted';
-                      mutePerm.DeveloperName = permSetGrp.DeveloperName + '_Muted';
+                      mutePerm.DeveloperName = permSetGrp.DeveloperName + MUTED_SUFFIX_CONSTANT;
                       insert mutePerm;
                       permSetId = mutePerm.Id;
                       PermissionSetGroupComponent component = new PermissionSetGroupComponent(PermissionSetGroupId = permSetGrp.Id,PermissionSetId = permSetId);
