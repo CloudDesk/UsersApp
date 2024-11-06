@@ -212,17 +212,18 @@ public with sharing class UserPermissionAnalyzerServer {
         UserAccessManager instance = new UserAccessManager();
         Map<String, Boolean> updatedResultForProfile = new Map<String, Boolean>();
         List<MetadataService.Profile> profilesToUpdate = new List<MetadataService.Profile>();
+        List<MetadataService.ProfileUserPermission> userPermissionsList = new List<MetadataService.ProfileUserPermission>();
+        for (String permissionName : systemPermissions.keySet()) {
+            MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
+            userPermission.name = permissionName;
+            userPermission.enabled = systemPermissions.get(permissionName);
+            userPermissionsList.add(userPermission);
+        }
+        
         for (MetadataService.Profile profile : (List<MetadataService.Profile>) instance.service.readMetadata('Profile', profileNames).getRecords()) {
             MetadataService.Profile updatedProfile = new MetadataService.Profile();
             updatedProfile.fullName = profile.fullName;
-            updatedProfile.userPermissions = new List<MetadataService.ProfileUserPermission>();
-            
-            for (String permissionName : systemPermissions.keySet()) {
-                MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
-                userPermission.name = permissionName;
-                userPermission.enabled = systemPermissions.get(permissionName);
-                updatedProfile.userPermissions.add(userPermission);
-            }
+            updatedProfile.userPermissions = userPermissionsList;
             profilesToUpdate.add(updatedProfile);
         }
         
