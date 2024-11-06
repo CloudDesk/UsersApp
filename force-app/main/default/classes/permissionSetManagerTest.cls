@@ -286,7 +286,31 @@ public class PermissionSetManagerTest {
        
     }
     
-    //This test method is used to check the logics for updateSystemPermissions method in PermissionSetManager class.
+    //This test method is used to check the logics for getCombinedPermissionsforProfile(objPerm) method in PermissionSetManager class.
+    @IsTest
+    static void testGetCombinedPermissionsforProfileObjPerm(){
+        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
+        permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
+        Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
+        PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
+        objPermissions.add(new ObjectPermissions(SObjectType = 'Account', ParentId = testPermSet.Id,
+                                                 PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = true,
+                                                 PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
+        objPermissions.add(new ObjectPermissions(SObjectType = 'Contact', ParentId = testPermSet.Id,
+                                                 PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = true,
+                                                 PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
+        insert objPermissions;
+        Test.startTest();
+        PermissionSetManager.PermissionFieldWrap result = PermissionSetManager.getCombinedPermissionsforProfile(testPermSet.Id);
+        //PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
+        Test.stopTest();
+        
+        System.assertNotEquals(null,result,'There Should not be Null');
+       
+    }
+    
+    //This test method is used to check the logics for updateSystemPermissions(Success method) method in PermissionSetManager class.
     @IsTest
     Static Void testUpdateSystemPermissions(){
         PermissionSet testPermissionSet = [SELECT Id, Name, PermissionsApiEnabled FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
@@ -295,6 +319,20 @@ public class PermissionSetManagerTest {
         Test.stopTest();
         PermissionSet updatedPermissionSet = [SELECT Id, Name, PermissionsApiEnabled FROM PermissionSet WHERE Id = :testPermissionSet.Id LIMIT 1];
         System.assertEquals(true, updatedPermissionSet.PermissionsApiEnabled, 'PermissionsApiEnabled should be set to true');
+    }
+    
+    //This test method is used to check the logics for updateSystemPermissions(Fail method) method in PermissionSetManager class.
+    @IsTest
+    Static Void testUpdateSystemPermissions_DmlException(){
+        PermissionSet testPermissionSet = [SELECT Id, Name, PermissionsApiEnabled FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        Test.startTest();
+        try {
+            PermissionSetManager.updateSystemPermissions('{"PermissionsApiEnabled":true}',null);
+            System.assert(true, Error_Thrown_Message);
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+        }
+        Test.stopTest();
     }
     //This test method is used to check the logics for getSobjectPermissionsForPermissionSet method in PermissionSetManager class.
     @IsTest
@@ -313,9 +351,6 @@ public class PermissionSetManagerTest {
     Static Void testupdateSobjectMeta(){
         Map<String, Boolean> caseObjPermissions = new Map<String, Boolean>{'PermissionsCreate' => true,'PermissionsRead' => true,'PermissionsEdit' => true,
             									'PermissionsDelete' => true,'PermissionsModifyAllRecords' => true,'PermissionsViewAllRecords' => true};
-         Map<String, Boolean> caseObjPermissionsWithNoPer = new Map<String, Boolean>{
-            'InvalidPermission' => true
-        };
         List<PermissionSetManager.FieldPermissionUpdateWrapper> fieldPermissionUpdateList = new List<PermissionSetManager.FieldPermissionUpdateWrapper>();
         PermissionSetManager.FieldPermissionUpdateWrapper fieldPermUpdateWrapper = new PermissionSetManager.FieldPermissionUpdateWrapper();
         fieldPermUpdateWrapper.Field = Opportunity_Amount_FIELD;
@@ -328,7 +363,7 @@ public class PermissionSetManagerTest {
         fieldPermissionUpdateList.add(fieldPermUpdateWrapper);
         Test.StartTest();
         PermissionSetManager.UpdatedObjPermResult res = PermissionSetManager.updateSobjectMeta(new Map<String, Map<String, Boolean>>{'Case'=>caseObjPermissions},fieldPermissionUpdateList,[SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1].Id,'Opportunity');
-        PermissionSetManager.UpdatedObjPermResult res1 = PermissionSetManager.updateSobjectMeta(
+        PermissionSetManager.updateSobjectMeta(
             new Map<String, Map<String, Boolean>>{'Case' => caseObjPermissions},
             fieldPermissionUpdateList,
             null,
