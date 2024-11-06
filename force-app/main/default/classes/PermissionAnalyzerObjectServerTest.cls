@@ -1,7 +1,9 @@
+//This class is used to check the functionality of PermissionAnalyzerObjectServer class
 @IsTest
-Public Class PermissionAnalyzerObjectServerTest { 
+public class PermissionAnalyzerObjectServerTest { 
     private static final String OPPORTUNITY_Amount_FIELD = 'Opportunity.Amount';
     private static final String Result_Not_Null_Message = 'Result should not be null';
+    //This method holds the test data
     @testsetup
     public static void testsetupMethod() {
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
@@ -97,7 +99,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         }
         insert fieldPermissions;       
     }
-    
+    //This test method is used to check the functionality of checkSobjectFoundInPicklist method in PermissionAnalyzerObjectServer class
     @IsTest
     static void checkSobjectFoundInPicklist_Test() {
         Test.startTest();
@@ -105,6 +107,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         System.assert(!PermissionAnalyzerObjectServer.checkSobjectFoundInPicklist('TestObj'), 'TestObj should not be a valid SObject type');
         Test.stopTest();
     }    
+    //This test method is used to check the functionality of checkFieldFoundInPicklist method in PermissionAnalyzerObjectServer class
     @IsTest
     static void checkFieldFoundInPicklist_Test() {
         Test.startTest();
@@ -113,6 +116,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         System.assertNotEquals(null, result, 'The fieldMap should not be null');
         System.assert(!result.isEmpty(), 'The fieldMap should have at least one value');
     } 
+    //This test method is used to check the functionality of getObjAndFieldPermissionsForMutingPermSet method in PermissionAnalyzerObjectServer class
     @IsTest
     static void getObjAndFieldPermissionsForMutingPermSet_Test() {
         PermissionSetGroup newGroup = new PermissionSetGroup(MasterLabel = 'New Test Group', DeveloperName = 'New_Test_Group');
@@ -125,6 +129,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         Test.stopTest();
         System.assertNotEquals(null, result, 'The result should not be null');
     }
+    //This test method is used to check the functionality of getSelectePermissionsetObjAndFieldResult method in PermissionAnalyzerObjectServer class
     @IsTest
     static void getSelectePermissionsetObjAndFieldResult_Test() {       
         PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
@@ -143,6 +148,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         Test.stopTest();
         System.assertNotEquals(null, result, 'Result should not be null');
     }
+    //This test method is used to check the functionality of updateObjAndFieldInitiation method in PermissionAnalyzerObjectServer class
     @IsTest
     static void updateObjAndFieldInitiation_Test() {
         Map<String, Map<String, Boolean>> objPermissionMap = new Map<String, Map<String, Boolean>>{
@@ -177,6 +183,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         Test.stopTest();
         System.assert(isExceptionThrown, 'An exception should be thrown for invalid ID');
     }
+    //This test method is used to check the functionality of updateObjPermissions method in PermissionAnalyzerObjectServer class
     @IsTest
     static void updateObjPermissions_Test() {
         Map<String, Map<String, Boolean>> objPermissionMap = new Map<String, Map<String, Boolean>>{
@@ -195,6 +202,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         Test.stopTest();
         System.assertNotEquals(null, result, Result_Not_Null_Message);
     }
+    //This test method is used to check the functionality of updateFieldPermissions method in PermissionAnalyzerObjectServer class
     @IsTest
     static void updateFieldPermissions_Test() {
         PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
@@ -242,6 +250,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         System.assertEquals(new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper,eligibleFieldWrapper1}.size(), result2.size(), 'Expected same size of updated wrappers for muting permission set');
         System.assert(isExceptionThrown, 'Exception should be thrown for invalid object');
     }
+    //This test method is used to check the functionality of checkObjectPermissionDependencies method in PermissionAnalyzerObjectServer class
     @IsTest
     static void checkObjectPermissionDependencies_Test() {
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
@@ -256,6 +265,7 @@ Public Class PermissionAnalyzerObjectServerTest {
         System.assertEquals('Account<read>', firstResult.get('Permission'), 'First permission should be Account read');
         System.assertEquals('Contact<read>', firstResult.get('RequiredPermission'), 'First required permission should be Contact read');
     }
+    //This test method is used to check the functionality of getFieldsAndObjectRelatedDetails method in PermissionAnalyzerObjectServer class
     @IsTest
     static void getFieldsAndObjectRelatedDetails_Test() {
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());

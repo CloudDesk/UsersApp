@@ -1,5 +1,5 @@
 //This class is used to check the functionality of PermissionTabServer class
-@isTest
+@IsTest
 private class PermissionTabServerTest {
     private static final String OPPORTUNITY_Amount_FIELD = 'Opportunity.Amount';
     private static final String Result_Not_Null_Message = 'Result should not be null';
@@ -9,28 +9,28 @@ private class PermissionTabServerTest {
         PermissionAnalyzerObjectServerTest.testsetupMethod();
     }
 	//This test method is used to check the functionality of getUserDefinitions method
-    @isTest
+    @IsTest
     static void testGetUserDefinitions() {
         Map < String, String > result = PermissionTabServer.getUserDefinitions();
         System.assertNotEquals(null, result, 'User definitions should not be null');
         System.assert(!result.isEmpty(), 'User definitions should not be empty');
     }
     //This test method is used to check the functionality of getObjectDefinition method
-    @isTest
+    @IsTest
     static void testGetObjectDefinition() {
         List < EntityDefinition > result = PermissionTabServer.getObjectDefinition();
         System.assertNotEquals(null, result, 'Object definitions should not be null');
         System.assert(!result.isEmpty(), 'Object definitions should not be empty');
     }
     //This test method is used to check the functionality of getFieldDefinition method
-    @isTest
+    @IsTest
     static void testGetFieldDefinition() {
         List < Map < String, Object >> result = PermissionTabServer.getFieldDefinition('Opportunity');
         System.assertNotEquals(null, result, 'Field definitions should not be null');
         System.assert(!result.isEmpty(), 'Field definitions should not be empty');
     }
     //This test method is used to check the functionality of getPermsandUsersOfSelectedPerms method
-    @isTest
+    @IsTest
     static void testGetPermsandUsersOfSelectedPerms() {
         String permSetId = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id;
         
@@ -56,7 +56,7 @@ private class PermissionTabServerTest {
                     }
     }
     //This test method is used to check the functionality of getObjOrFieldPerm method
-    @isTest
+    @IsTest
     static void testGetObjOrFieldPerm() {
         Id userId = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com'].Id;
         
@@ -71,7 +71,7 @@ private class PermissionTabServerTest {
                     }
     }
     //This test method is used to check the functionality of getUserPerm method
-    @isTest
+    @IsTest
     static void testGetUserPerm() {
         Id userId = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com'].Id;
         
@@ -90,7 +90,7 @@ private class PermissionTabServerTest {
                     }
     }
     //This test method is used to check the functionality of getObjOrFieldPermissionsOrigin method
-    @isTest
+    @IsTest
     static void testGetObjOrFieldPermissionsOrigin() {
         List < String > permSetIdList = new List < String > ();
         for (PermissionSet perm: [SELECT Id FROM PermissionSet]) {

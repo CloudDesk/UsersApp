@@ -22,7 +22,7 @@ public class ProfileManagerTest {
         System.assertEquals('Standard User', profileNames[0], 'The profile name should match the expected value.');
     }
     //This test Method Used to Check the getProfileusers Method
-    @isTest
+    @IsTest
     static void testGetProfileUsers() {
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
@@ -36,7 +36,7 @@ public class ProfileManagerTest {
         System.assertEquals(2, result.userList.size(), 'Expected two users in the result');
     }
     //This test Method Used to Check the getProfileDetails Method
-    @isTest
+    @IsTest
     static void testGetProfileDetails() {
         Test.startTest();
         List<PermissionSet> result = ProfileManager.getProfileDetails();

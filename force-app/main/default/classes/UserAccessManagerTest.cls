@@ -15,7 +15,7 @@ public class UserAccessManagerTest {
         insert userList;
     }
     //This test method is used to check successful login.    
-    @isTest
+    @IsTest
     static void testSuccessfulLogin() {
         Test.startTest();
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
@@ -27,7 +27,7 @@ public class UserAccessManagerTest {
         System.assertNotEquals(null, manager.partnerConnection.SessionHeader.sessionId, 'Session ID should be present in SessionHeader.');
     }
     //This test method is used to check Failed login.
-    @isTest
+    @IsTest
     static void testFailedLogin() {
         Test.startTest();
         Test.setMock(WebServiceMock.class, new PartnerWsdl2ApexMockWithError());

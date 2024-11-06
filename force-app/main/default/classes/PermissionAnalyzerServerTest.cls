@@ -1,3 +1,4 @@
+//This test class is used to check functionality of PermissionAnalyzerServer class.
 @IsTest
 public class PermissionAnalyzerServerTest {
 	private static final String PermissionSet_Label = 'New Test Permission Set Two';
@@ -5,6 +6,7 @@ public class PermissionAnalyzerServerTest {
     private static final String Updated_Description_Message = 'This is an updated description';
     private static final String Updated_PermissionSet_Message = 'Updated Permission Set';
     private static final String Script_Thrown_Message = 'Script-thrown exception';
+    //This method holds the test data.
     @TestSetup
     static void setupTestData() {
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'HCH Sales'
@@ -48,6 +50,7 @@ public class PermissionAnalyzerServerTest {
         insert new PermissionSetGroupComponent(PermissionSetGroupId = permSetGroupsToInsert[0].Id, PermissionSetId = permSetsToInsert[0].Id);
     }
 
+    //This test method is used to check the logics for getUser method in PermissionAnalyzerServer class.
     @IsTest
     static void testGetUser() {
         Test.startTest();
@@ -58,6 +61,7 @@ public class PermissionAnalyzerServerTest {
         System.assertEquals(0, resultsNoSearch.size(), 'There should be no users returned when search term is null');
     }
 
+    //This test method is used to check the logics for getUserRelatedPermissionSets method in PermissionAnalyzerServer class.
     @IsTest
     static void testGetUserRelatedPermissionSets() {
         User testUser = [SELECT Id FROM User WHERE Username = 'testuserOne@example.com'
@@ -71,6 +75,7 @@ public class PermissionAnalyzerServerTest {
         System.assertEquals(0, permissionSetsInvalid.size(), 'No permission sets should be returned for invalid user ID.');
     }
 
+    //This test method is used to check the logics for getEntityDefinition method in PermissionAnalyzerServer class.
     @IsTest
     static void testGetEntityDefinition() {
         Test.startTest();
@@ -84,6 +89,8 @@ public class PermissionAnalyzerServerTest {
             System.assertNotEquals(null, ed.NamespacePrefix, 'Managed package objects should have a NamespacePrefix.');
         }
     }
+    
+    //This test method is used to check the logics for getCombinedObjAndFieldPermsForUser method in PermissionAnalyzerServer class.
     @IsTest
     static void testGetCombinedObjAndFieldPermsForUser() {
         // Get the Permission Set IDs created in test setup
@@ -129,6 +136,8 @@ public class PermissionAnalyzerServerTest {
         // Verify resultNull is empty
         System.assertEquals(0, resultNull.size(), 'Result for dummy permission set should be empty.');
     }
+    
+    //This test method is used to check the logics for consolidateFieldPermissions method in PermissionAnalyzerServer class.
     @IsTest
     static void testConsolidateFieldPermissions() {
         Map < String, Object > existingPermissions = new Map < String, Object > {
@@ -151,6 +160,8 @@ public class PermissionAnalyzerServerTest {
         System.assert(Boolean.valueOf(fieldPermissions.get('PermissionsRead')), 'PermissionsRead should remain true.');
         System.assert(Boolean.valueOf(fieldPermissions.get('PermissionsEdit')), 'PermissionsEdit should remain true.');
     }
+    
+    //This test method is used to check the logics for getProfileName method in PermissionAnalyzerServer class.
     @IsTest
     static void testGetProfileName() {
         Profile standardUserProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
@@ -164,6 +175,7 @@ public class PermissionAnalyzerServerTest {
         System.assertEquals('Standard User', profileNames[0], 'The profile name should be Standard User');
     }
 
+    //This test method is used to check the logics for getProfileName(Empty response) method in PermissionAnalyzerServer class.
     @IsTest
     static void testGetProfileNameEmptyResponse() {
         Profile standardUserProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
@@ -174,7 +186,9 @@ public class PermissionAnalyzerServerTest {
         List < String > profileNames = PermissionAnalyzerServer.getProfileName(standardUserProfile.Id);
         Test.stopTest();
         System.assertEquals(0, profileNames.size(), 'There should be no profile name returned.');
-    }    
+    }
+    
+    //This test method is used to check the logics for getAssignedUsersForProfilePerSetPerSetGrp method in PermissionAnalyzerServer class.
     @IsTest
     static void testGetAssignedUsersForProfilePerSetPerSetGrp() {
         PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1];    
@@ -187,6 +201,8 @@ public class PermissionAnalyzerServerTest {
         System.assertNotEquals(null, assignment.Assignee.Name, 'Assignee Name should not be null.');
         System.assertNotEquals(null, assignment.Assignee.Username, 'Assignee Username should not be null.');
     }
+    
+    //This test method is used to check the logics for editPermSetGrpProperties method in PermissionAnalyzerServer class.
     @IsTest
     static void testEditPermSetGroupProperties() {
         PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE PermissionSetGroup.DeveloperName = 'New_Test_Permission_Set_Group_One' LIMIT 1];    
@@ -198,7 +214,9 @@ public class PermissionAnalyzerServerTest {
         System.assertEquals('Updated Permission Set Group Analyzer1234', dbGroup.MasterLabel, 'MasterLabel should be updated.');
         System.assertEquals('Updated_PermSetGroup_Analyzer1234', dbGroup.DeveloperName, 'DeveloperName should be updated.');
         System.assertEquals(Updated_Description_Message, dbGroup.Description, 'Description should be updated.');
-    }    
+    }  
+    
+    //This test method is used to check the logics for editPermSetGrpProperties(without permission set group Id) method in PermissionAnalyzerServer class.
     @IsTest
     static void testEditPermSetGroupPropertiesWithoutPerSetGrpId() {
         PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_Two' LIMIT 1];    
@@ -210,7 +228,9 @@ public class PermissionAnalyzerServerTest {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.stopTest();
-    }    
+    } 
+    
+    //This test method is used to check the logics for editPermSetProperties method in PermissionAnalyzerServer class.
     @IsTest
     static void testEditPermSetProperties() {
         PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1];    
@@ -221,7 +241,9 @@ public class PermissionAnalyzerServerTest {
         System.assertEquals(Updated_PermissionSet_Message, dbPermSet.Label, 'Label should be updated.');
         System.assertEquals('Updated_Permission_Set', dbPermSet.Name, 'Name should be updated with underscores.');
         System.assertEquals(Updated_Description_Message, dbPermSet.Description, 'Description should be updated.');
-    }    
+    }  
+    
+    //This test method is used to check the logics for editPermSetProperties(without ID) method in PermissionAnalyzerServer class.
     @IsTest
     static void testEditPermSetProperties_DmlException() {
         PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_One' LIMIT 1];    
@@ -233,7 +255,9 @@ public class PermissionAnalyzerServerTest {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.stopTest();
-    }    
+    }
+
+	//This test method is used to check the logics for editProfileProperties method in PermissionAnalyzerServer class.    
     @IsTest
     static void testEditProfileProperties_Success() {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
