@@ -1,6 +1,6 @@
 //This CLass is used to Maintain User Permissions for Users
 //Used in UserPermissionAnalyzer - LWC
-Public with sharing Class UserPermissionAnalyzerServer {
+public with sharing class UserPermissionAnalyzerServer {
     public class FormattedUserPermissions {
         @AuraEnabled public String fieldName { get;  set; }
         @AuraEnabled public String fieldLabel { get; set; }
@@ -11,10 +11,9 @@ Public with sharing Class UserPermissionAnalyzerServer {
             this.fieldValue = fieldValue;
         }
     }
-    Public Class UserPermissionsWrapper{
+    public class UserPermissionsWrapper{
         @AuraEnabled public List < FormattedUserPermissions > combinedWrapper { get; set; }
-        @AuraEnabled public List < Object > permDependency { get; set; }
-        
+        @AuraEnabled public List < Object > permDependency { get; set; }        
         public UserPermissionsWrapper(List < FormattedUserPermissions > combinedWrapper, List < Object > permDependency) {
             this.combinedWrapper = combinedWrapper;
             this.permDependency = permDependency;
@@ -32,11 +31,9 @@ Public with sharing Class UserPermissionAnalyzerServer {
                 permissionFields.add(new FormattedUserPermissions(fieldName, field.getDescribe().getLabel(), null));
             }
         }
-        
         String query = 'SELECT ' + String.join(new List < String > (permissionFieldNames), ', ') +
             ' FROM PermissionSet WHERE Id IN :permissionSetIds';
         Map < String, Boolean > finalPermissionValues = new Map < String, Boolean > ();
-        
         for (PermissionSet ps: Database.query(query)) {
             for (String fieldName: permissionFieldNames) {
                 Boolean fieldValue = (Boolean) ps.get(fieldName);
@@ -79,12 +76,10 @@ Public with sharing Class UserPermissionAnalyzerServer {
             System.debug('Exception: ' + e.getMessage());
         }
         return new List < Object > ();
-    }
-    
+    }    
     public class MutePermissionsOfPermSetGrpWrapper {
         @AuraEnabled public String muteId { get; set; }
-        @AuraEnabled public List < Map < String, Object >> mutePermissions { get; set; }
-        
+        @AuraEnabled public List < Map < String, Object >> mutePermissions { get; set; }        
         public MutePermissionsOfPermSetGrpWrapper(String muteId, List < Map < String, Object >> mutePermissions) {
             this.muteId = muteId;
             this.mutePermissions = mutePermissions;
@@ -96,12 +91,10 @@ Public with sharing Class UserPermissionAnalyzerServer {
         if (String.isBlank(groupId)) {
             return new MutePermissionsOfPermSetGrpWrapper(null, new List < Map < String, Object >> ());
         }
-        
         String permSetId = getOrCreateMutingPermissionSetId(groupId);
         if (String.isBlank(permSetId)) {
             return new MutePermissionsOfPermSetGrpWrapper(null, new List < Map < String, Object >> ());
         }
-        
         List < Map < String, Object >> mutingUserPermissions = getMutingUserPermissions(permSetId, fieldNames, userPermissions);
         return new MutePermissionsOfPermSetGrpWrapper(permSetId, mutingUserPermissions);
     }
@@ -110,26 +103,22 @@ Public with sharing Class UserPermissionAnalyzerServer {
         if (!psgg.isEmpty()) {
             return psgg[0].PermissionSetId;
         }
-        
         List< PermissionSetGroup> permSetGrp = [SELECT MasterLabel, DeveloperName FROM PermissionSetGroup WHERE Id =: groupId LIMIT 1];
         if (!permSetGrp.isEmpty()) {
             System.debug('PermissionSetGroup not found for Id: ' + groupId);
             return null;
         }
-        
         try {
             MutingPermissionSet mutePerm = new MutingPermissionSet(
                 MasterLabel = permSetGrp[0].MasterLabel + ' Muted',
                 DeveloperName = permSetGrp[0].DeveloperName + '_Muted'
             );
             insert mutePerm;
-            
             PermissionSetGroupComponent component = new PermissionSetGroupComponent(
                 PermissionSetGroupId = groupId,
                 PermissionSetId = mutePerm.Id
             );
             insert component;
-            
             return mutePerm.Id;
         } catch (DmlException e) {
             System.debug('Error inserting MutingPermissionSet or PermissionSetGroupComponent: ' + e.getMessage());
@@ -139,11 +128,9 @@ Public with sharing Class UserPermissionAnalyzerServer {
     private static List < Map < String, Object >> getMutingUserPermissions(String permSetId, String fieldNames, List < Map < String, Object >> userPermissions) {
         String query = 'SELECT Id, ' + fieldNames + ' FROM MutingPermissionSet WHERE Id = \'' + permSetId + '\' LIMIT 1';
         MutingPermissionSet mutePerm = Database.query(query);
-        
         if (mutePerm == null) {
             return new List < Map < String, Object >> ();
         }
-        
         List < Map < String, Object >> mutingUserPermissions = new List < Map < String, Object >> ();
         for (Map < String, Object > obj: userPermissions) {
             Object fieldValueMute = mutePerm.get((String) obj.get('fieldName'));
@@ -151,7 +138,6 @@ Public with sharing Class UserPermissionAnalyzerServer {
             newObj.put('fieldValueMute', fieldValueMute);
             mutingUserPermissions.add(newObj);
         }
-        
         return mutingUserPermissions;
     }
     //This Method is Used to retrieve User Permission Origins
@@ -161,7 +147,6 @@ Public with sharing Class UserPermissionAnalyzerServer {
         if (permSetIds.isEmpty()) {
             return userPermEnabledPermSets;
         }
-        
         String query = 'SELECT Id, Type, Name, Profile.Name FROM PermissionSet WHERE Id IN :permSetIds AND ' + permissionType + ' = true';
         
         for (PermissionSet permSet: Database.query(query)) {
@@ -227,7 +212,6 @@ Public with sharing Class UserPermissionAnalyzerServer {
         UserAccessManager instance = new UserAccessManager();
         Map<String, Boolean> updatedResultForProfile = new Map<String, Boolean>();
         List<MetadataService.Profile> profilesToUpdate = new List<MetadataService.Profile>();
-        
         for (MetadataService.Profile profile : (List<MetadataService.Profile>) instance.service.readMetadata('Profile', profileNames).getRecords()) {
             MetadataService.Profile updatedProfile = new MetadataService.Profile();
             updatedProfile.fullName = profile.fullName;
