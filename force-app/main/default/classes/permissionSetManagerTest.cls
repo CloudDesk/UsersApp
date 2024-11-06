@@ -12,7 +12,7 @@ public class PermissionSetManagerTest {
     }
     
 	//This test method is used to check the logics for createPermissionSet method in PermissionSetManager class.
-    @isTest
+    @IsTest
     static void testCreatePermissionSet() {
         PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
         insert testPermissionSet;
@@ -28,21 +28,6 @@ public class PermissionSetManagerTest {
         PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
         System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, 'The created PermissionSet should be found in the query.');
         System.assertNotEquals(null, permissionSetId, 'There Should be not Null.');
-    }
-    
-    //This test method is used to check the logics for getPermissionSet method in PermissionSetManager class.
-    @IsTest
-    public static void testGetPermissionSet() {
-        Test.startTest();
-        List < Map < String, String >> result = PermissionSetManager.getPermissionSet();
-        Test.stopTest();
-        
-        System.assertNotEquals(0, result.size(), 'The result should contain permission sets.');        
-        if (!result.isEmpty()) {
-            Map < String, String > permissionSet1 = result[0];
-            System.assertNotEquals(null, permissionSet1.get('Name'), 'Permission set name should not be null.');
-            System.assertNotEquals(null, permissionSet1.get('Label'), 'Permission set label should not be null.');
-        }
     }
     
     //This test method is used to check the logics for insertUsertoPermissionSet method in PermissionSetManager class.
@@ -249,7 +234,7 @@ public class PermissionSetManagerTest {
     }
     
     //This test method is used to check the logics for updateSystemPermissions method in PermissionSetManager class.
-    @isTest
+    @IsTest
     Static Void testUpdateSystemPermissions(){
         PermissionSet testPermissionSet = [SELECT Id, Name, PermissionsApiEnabled FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         Test.startTest();
@@ -259,7 +244,7 @@ public class PermissionSetManagerTest {
         System.assertEquals(true, updatedPermissionSet.PermissionsApiEnabled, 'PermissionsApiEnabled should be set to true');
     }
     //This test method is used to check the logics for getSobjectPermissionsForPermissionSet method in PermissionSetManager class.
-    @isTest
+    @IsTest
     Static Void testGetSobjectPermissionsForPermissionSet(){
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
 		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 

@@ -1,17 +1,16 @@
 //This Class is Used to Handle object and Field Permissions
 // Used In PermissionAnalyzerObject _LWC
-Public with Sharing Class PermissionAnalyzerObjectServer {    
-    Public Class GetFieldWrapper {
+public with sharing class PermissionAnalyzerObjectServer {    
+    public class GetFieldWrapper {
         @AuraEnabled
-        Public List<Map<String, Object>> fieldLabelMap { get; set; }
+        public List<Map<String, Object>> fieldLabelMap { get; set; }
         @AuraEnabled
-        Public Boolean hasObjAccess { get; set; }      
+        public Boolean hasObjAccess { get; set; }      
         @AuraEnabled
-        Public Map<String, Boolean> hasFieldAccess { get; set; }
+        public Map<String, Boolean> hasFieldAccess { get; set; }
         @AuraEnabled
-        Public List<Object> dependentObj { get; set; }
-        
-        Public GetFieldWrapper(
+        public List<Object> dependentObj { get; set; }
+        public GetFieldWrapper(
             List<Map<String, Object>> fieldLabelMap,Boolean hasObjAccess,Map<String, Boolean> hasFieldAccess,List<Object> dependentObj) {
                 this.fieldLabelMap = fieldLabelMap;
                 this.hasObjAccess = hasObjAccess;      
@@ -21,14 +20,14 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
     }
     //This Method Used to retrieve fieldDefinition, valid Sobjects for Obj Permissions, Valid field for field Permissions and also fetch Object Permissons Dependencies
     @AuraEnabled
-    Public Static GetFieldWrapper getFieldsAndObjectRelatedDetails(String sObjectNameList,String permissionSetIdToFetchName) {
+    public static GetFieldWrapper getFieldsAndObjectRelatedDetails(String sObjectNameList,String permissionSetIdToFetchName) {
         List<Map<string, Object>> fieldLabelMap = PermissionTabServer.getFieldDefinition(sObjectNameList);
         return new GetFieldWrapper(fieldLabelMap,checkSobjectFoundInPicklist(sObjectNameList),
                                    checkFieldFoundInPicklist(sObjectNameList),checkObjectPermissionDependencies(sObjectNameList));
     }
     //Helper to get the valid Sobject for updating ObjectPermissions.
     @AuraEnabled
-    Public Static Boolean checkSobjectFoundInPicklist(string sObjName) {
+    public static Boolean checkSobjectFoundInPicklist(string sObjName) {
         for (Schema.PicklistEntry p : objectPermissions.SObjectType.getDescribe().getPicklistValues()) {
             if (sObjName == p.getValue()) {
                 return true;
@@ -38,7 +37,7 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
     }
     //Helper to get the valid fields for updating ObjectPermissions.
     @AuraEnabled
-    Public Static Map<String, Boolean> checkFieldFoundInPicklist(String sObjName) {
+    public static Map<String, Boolean> checkFieldFoundInPicklist(String sObjName) {
         Map<String, Boolean> fieldMap = new Map<String, Boolean>();
         for (Schema.PicklistEntry p : fieldPermissions.Field.getDescribe().getPicklistValues()) {
             if (sObjName == p.getValue().split('\\.')[0]) {
@@ -49,10 +48,9 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
     }
     //Helper to get the ObjectPermission Dependencies 
     @AuraEnabled
-    Public Static List<Object> checkObjectPermissionDependencies(String objName) {
+    public static List<Object> checkObjectPermissionDependencies(String objName) {
         UserAccessManager instance = new UserAccessManager();
         List<Object> allDependencies = new List<Object>();
-        // Fetch dependencies for the given object
         fetchDependencies(objName,allDependencies,instance.partnerConnection.SessionHeader.sessionId,System.Url.getOrgDomainUrl().toExternalForm());
         Set<String> sObjectNameSet = new Set<String>();
         for (Object record : allDependencies) {
@@ -77,7 +75,6 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
                 }
         }
         System.debug('Filtered Dependencies: ' + filteredDependencies);
-        System.debug('filteredDependencies'+ filteredDependencies.size());
         return filteredDependencies;        
     }
     private static void addObjectNameToSet(Set < String > sObjectNameSet, String permission) {
@@ -90,8 +87,6 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
     }
     @TestVisible
     private static void fetchDependencies(String objName, List < Object > allDependencies, String sessionId, String serverUrl) {
-        System.debug('Inside fetchDependencies');
-        
         if (String.isBlank(objName)) {
             return;
         }
@@ -100,8 +95,6 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
             'OR RequiredPermission LIKE \'%' + String.escapeSingleQuotes(objName) + '%\') ' +
             'AND PermissionType = \'Object Permission\' ' +
             'AND RequiredPermissionType = \'Object Permission\'';
-        
-        System.debug('fetch query: ' + query);
         List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
         Set < String > parentObjects = new Set < String > ();
         Set < String > childObjects = new Set < String > ();
@@ -155,13 +148,10 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
             return;
         }  
         String childObjNames = String.join(childObjects, ',');
-        System.debug('ChildObjName : ' + childObjNames);
         String query = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ' +
             'WHERE RequiredPermission IN (' + childObjNames + ') ' +
             'AND PermissionType = \'Object Permission\' ' +
             'AND RequiredPermissionType = \'Object Permission\'';
-        System.debug('child query: ' + query);
-        
         List < Object > queryResults = sendQueryRequest(query, sessionId, serverUrl);
         Set < String > newChildObjects = new Set < String > ();
         for (Object record: queryResults) {
@@ -179,17 +169,14 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
     @TestVisible
     private static List < Object > sendQueryRequest(String query, String sessionId, String serverUrl) {
         String endpoint = serverUrl + '/services/data/v58.0/tooling/query?q=' + EncodingUtil.urlEncode(query, 'UTF-8');
-        
         HttpRequest req = new HttpRequest();
         req.setEndpoint(endpoint);
         req.setMethod('GET');
         req.setHeader('Authorization', 'Bearer ' + sessionId);
         req.setHeader('Content-Type', 'application/json');
-        
         try {
             Http http = new Http();
             HttpResponse res = http.send(req);
-            
             if (res.getStatusCode() == 200) {
                 Map < String, Object > responseMap = (Map < String, Object > ) JSON.deserializeUntyped(res.getBody());
                 return (List < Object > ) responseMap.get('records');
@@ -199,11 +186,9 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
         } catch (Exception e) {
             System.debug('Exception occurred: ' + e.getMessage());
         }
-        
         return new List < Object > ();
-    }  
-    
-    Public Class MutePermissionWrapper {
+    }      
+    public class MutePermissionWrapper {
         @AuraEnabled public final String mutePermSetId;
         @AuraEnabled public final PermissionAnalyzerServer.ObjANdFieldPermissionsWrapper wrapper;
         public MutePermissionWrapper(String mutePermSetId, PermissionAnalyzerServer.ObjANdFieldPermissionsWrapper wrapper) {
@@ -217,7 +202,6 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
         if (String.isBlank(groupId)) {
             return null;
         }
-        
         String permSetId = getMutingPermissionSetId(groupId);
         if (String.isBlank(permSetId)) {
             return null;
@@ -232,22 +216,18 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
         if (!permSetGroupComponents.isEmpty()) {
             return permSetGroupComponents[0].PermissionSetId;
         }
-        
         List<PermissionSetGroup> permSetGrp = [SELECT MasterLabel, DeveloperName FROM PermissionSetGroup WHERE Id =: groupId LIMIT 1];
         String mutePermissionId;
         if (permSetGrp.isEmpty()) {
-            System.debug('PermissionSetGroup not found for Id: ' + groupId);
             return null;
         }else if(permSetGrp.size() == 1){
             Map<String,Boolean> checkAccessLevelForMutingPermissioSet = PermissionAnalyzerServer.getObjDefinition('MutingPermissionSet');
-            system.debug('checkAccessLevelForMutingPermissioSet'+ checkAccessLevelForMutingPermissioSet);
             if(checkAccessLevelForMutingPermissioSet.get('Create')){
                 MutingPermissionSet mutePerm = new MutingPermissionSet(
                     MasterLabel = permSetGrp[0].MasterLabel + ' Muted',
                     DeveloperName = permSetGrp[0].DeveloperName + '_Muted'
                 );
                 insert mutePerm;
-                
                 Map<String,Boolean> checkAccessLevelForPermissionSetGroupComponent = PermissionAnalyzerServer.getObjDefinition('PermissionSetGroupComponent');
                 if(checkAccessLevelForPermissionSetGroupComponent.get('Create')){
                     mutePermissionId = mutePerm.Id;
@@ -258,15 +238,12 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
             }
         }
         return mutePermissionId;
-    }
-    
+    }    
     @AuraEnabled
     public static PermissionAnalyzerServer.ObjANdFieldPermissionsWrapper objAndFieldCombinedWrapperResult(String permSetId, List < String > objNames, String objName) {
         Map < String, Object > permissionSetMap = new Map < String, Object > ();
         Map < String, Object > fieldPermissionsMap = new Map < String, Object > ();
-        
         if (String.isNotBlank(permSetId)) {
-            // Query for ObjectPermissions
             for (ObjectPermissions objPerm: [SELECT SObjectType, PermissionsCreate, PermissionsEdit, PermissionsRead,
                                              PermissionsDelete, PermissionsModifyAllRecords, PermissionsViewAllRecords
                                              FROM ObjectPermissions WHERE ParentId =: permSetId AND SObjectType IN: objNames LIMIT 50000
@@ -281,8 +258,6 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
                                                         'PermissionsModifyAllRecords' => objPerm.PermissionsModifyAllRecords
                                                         });
                                             }
-            
-            // Query for FieldPermissions
             for (FieldPermissions fieldPerm: [SELECT Field, PermissionsRead, PermissionsEdit
                                               FROM FieldPermissions
                                               WHERE ParentId =: permSetId AND SObjectType =: objName LIMIT 50000
@@ -296,7 +271,6 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
         }
         return new PermissionAnalyzerServer.ObjANdFieldPermissionsWrapper(permissionSetMap, fieldPermissionsMap);
     }  
-    
     public class FieldPermissionUpdateWrapper {
         @AuraEnabled public String Field { get; set; }
         @AuraEnabled public Boolean PermissionsRead { get; set; }
@@ -306,23 +280,20 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
         @AuraEnabled public Boolean mutedPermissionsRead { get; set; }
         @AuraEnabled public Boolean mutedPermissionsEdit { get; set; }
     }
-    Public Class UpdatedObjAndFieldResult {
-        @AuraEnabled Public Map<String, Object> objectPerms { get; set; }
-        @AuraEnabled Public List<FieldPermissionUpdateWrapper> fieldPerms { get; set; }
-        Public UpdatedObjAndFieldResult(Map<String, Object> objectPerms,List<FieldPermissionUpdateWrapper> fieldPerms) {
+    public class UpdatedObjAndFieldResult {
+        @AuraEnabled public Map<String, Object> objectPerms { get; set; }
+        @AuraEnabled public List<FieldPermissionUpdateWrapper> fieldPerms { get; set; }
+        public UpdatedObjAndFieldResult(Map<String, Object> objectPerms,List<FieldPermissionUpdateWrapper> fieldPerms) {
             this.objectPerms = objectPerms;
             this.fieldPerms = fieldPerms;
         }
-    }
-    
+    }    
     //This Method is Used to Fetch the PermissionSet's Object/Field permissions to update the profile Changes to PermissionSet 
     @AuraEnabled
     public static UpdatedObjAndFieldResult getSelectePermissionsetObjAndFieldResult(String permSetId, List < String > objNames, List < FieldPermissionUpdateWrapper > fieldMap, List < String > fieldsList) {
         Map < String, Object > existingObjPermsMap = new Map < String, Object > ();
-        Map < String, FieldPermissionUpdateWrapper > fieldWrapperMap = new Map < String, FieldPermissionUpdateWrapper > ();
-        
+        Map < String, FieldPermissionUpdateWrapper > fieldWrapperMap = new Map < String, FieldPermissionUpdateWrapper > ();        
         if (String.isNotBlank(permSetId)) {
-            // Query Object Permissions
             for (ObjectPermissions objPerm: [SELECT SObjectType, PermissionsRead, PermissionsDelete, PermissionsEdit, PermissionsCreate, PermissionsViewAllRecords, PermissionsModifyAllRecords
                                              FROM ObjectPermissions
                                              WHERE ParentId =: permSetId AND SobjectType IN: objNames LIMIT 50000
@@ -340,8 +311,7 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
             // Create a map for quick lookup of FieldPermissionUpdateWrapper objects
             for (FieldPermissionUpdateWrapper wrapper: fieldMap) {
                 fieldWrapperMap.put(wrapper.Field, wrapper);
-            }
-            
+            }            
             // Query Field Permissions
             if (!fieldMap.isEmpty()) {
                 for (FieldPermissions fieldPerm: [SELECT PermissionsRead, PermissionsEdit, Field
@@ -360,19 +330,13 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
     }
     //This Method is Used to Update Object ANd Field Permissions For Profile and PermissionSets And PermissionSetGroup
     @AuraEnabled
-    Public Static UpdatedObjAndFieldResult updateObjAndFieldInitiation(Map<String, Map<String, Boolean>> objectPermissionsMap, List<FieldPermissionUpdateWrapper> fieldPerms, String permSetId, String objName, String muteOrFilePermissionsType) {
-        system.debug('objectPermissionsMap'+objectPermissionsMap);
-        system.debug('fieldPerms'+fieldPerms);
-        system.debug('permSetId'+permSetId);
-        system.debug('objName'+objName);
-        system.debug('muteOrFilePermissionsType'+muteOrFilePermissionsType);
+    public static UpdatedObjAndFieldResult updateObjAndFieldInitiation(Map<String, Map<String, Boolean>> objectPermissionsMap, List<FieldPermissionUpdateWrapper> fieldPerms, String permSetId, String objName, String muteOrFilePermissionsType) {   
         Map<String, Object> objPermissionResult = new Map<String, Object>();
         List<FieldPermissionUpdateWrapper> fieldPermissionResult = new List<FieldPermissionUpdateWrapper>();
         try {
             if (objectPermissionsMap != null && !objectPermissionsMap.isEmpty()) {
                 objPermissionResult = updateObjPermissions(objectPermissionsMap, permSetId);
-            }
-            
+            }            
             if (fieldPerms != null && !fieldPerms.isEmpty()) {
                 String fieldPermType = (muteOrFilePermissionsType == 'MutePermissions') ? 'MutePermissions' : '';
                 fieldPermissionResult = updateFieldPermissions(fieldPerms, permSetId, objName, fieldPermType);
@@ -384,12 +348,11 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
     }
     // This Method is the Handler for Updating Object Permissions
     @AuraEnabled
-    Public Static Map<String, Object> updateObjPermissions(Map<String, Map<String, Object>> objPerms, String permSetId) {
+    public static Map<String, Object> updateObjPermissions(Map<String, Map<String, Object>> objPerms, String permSetId) {
         Map < String, Object > resultMap = new Map < String, Object > ();
         if (String.isBlank(permSetId) || objPerms == null || objPerms.isEmpty()) {
             return resultMap;
         }
-        
         try {
             Set < String > objNames = objPerms.keySet();
             Map < String, ObjectPermissions > existingPermMap = new Map < String, ObjectPermissions > ();
@@ -400,23 +363,19 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
                                           WHERE ParentId =: permSetId AND SobjectType IN: objNames LIMIT 50000
                                          ]) {
                                              existingPermMap.put(perm.SobjectType, perm);
-                                         }
-            
-            List < ObjectPermissions > objPermissionsToUpsert = new List < ObjectPermissions > ();
-            
+                                         }            
+            List < ObjectPermissions > objPermissionsToUpsert = new List < ObjectPermissions > ();            
             for (String objName: objPerms.keySet()) {
                 Map < String, Object > permissionsMap = objPerms.get(objName);
                 //This Method is the Handler for Updating Field Permissions
                 ObjectPermissions objToUpsert = existingPermMap.containsKey(objName) ?
-                    existingPermMap.get(objName) : new ObjectPermissions(ParentId = permSetId, SobjectType = objName);
-                
+                 existingPermMap.get(objName) : new ObjectPermissions(ParentId = permSetId, SobjectType = objName);
                 objToUpsert.PermissionsCreate = (Boolean) permissionsMap.get('PermissionsCreate');
                 objToUpsert.PermissionsRead = (Boolean) permissionsMap.get('PermissionsRead');
                 objToUpsert.PermissionsEdit = (Boolean) permissionsMap.get('PermissionsEdit');
                 objToUpsert.PermissionsDelete = (Boolean) permissionsMap.get('PermissionsDelete');
                 objToUpsert.PermissionsModifyAllRecords = (Boolean) permissionsMap.get('PermissionsModifyAllRecords');
                 objToUpsert.PermissionsViewAllRecords = (Boolean) permissionsMap.get('PermissionsViewAllRecords');
-                
                 objPermissionsToUpsert.add(objToUpsert);
                 resultMap.put(objName, objToUpsert);
             }
@@ -432,19 +391,17 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
         }
     }
     //This Method is the Handler for Updating Field Permissions
-    Public Static List<FieldPermissionUpdateWrapper> updateFieldPermissions(List<FieldPermissionUpdateWrapper> fieldPermissionWrapperList, String permissionSetId, String objName, String fieldPermType)
+    public static List<FieldPermissionUpdateWrapper> updateFieldPermissions(List<FieldPermissionUpdateWrapper> fieldPermissionWrapperList, String permissionSetId, String objName, String fieldPermType)
     {
         if (String.isBlank(permissionSetId) || fieldPermissionWrapperList == null || fieldPermissionWrapperList.isEmpty()) {
             return null;
-        }
-        
+        }        
         List < FieldPermissions > permissionsToUpsert = new List < FieldPermissions > ();
         Map < String, FieldPermissionUpdateWrapper > fieldWrapperMap = new Map < String, FieldPermissionUpdateWrapper > ();
         
         for (FieldPermissionUpdateWrapper wrapper: fieldPermissionWrapperList) {
             fieldWrapperMap.put(wrapper.Field, wrapper);
-        }
-        
+        }        
         Map < String, FieldPermissions > existingPermissionsMap = new Map < String, FieldPermissions > ();
         for (FieldPermissions fieldPerm: [SELECT Id, SObjectType, Field, PermissionsRead, PermissionsEdit
                                           FROM FieldPermissions
@@ -452,21 +409,18 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
                                          ]) {
                                              existingPermissionsMap.put(fieldPerm.Field, fieldPerm);
                                          }
-        
         for (String fieldName: fieldWrapperMap.keySet()) {
             FieldPermissionUpdateWrapper fieldPermWrap = fieldWrapperMap.get(fieldName);
             FieldPermissions permission = existingPermissionsMap.containsKey(fieldName) ?
                 existingPermissionsMap.get(fieldName) :
-            new FieldPermissions(SObjectType = objName, Field = fieldName, ParentId = permissionSetId);
-            
+            new FieldPermissions(SObjectType = objName, Field = fieldName, ParentId = permissionSetId);            
             if (fieldPermType != 'MutePermissions') {
                 permission.PermissionsRead = fieldPermWrap.PermissionsRead;
                 permission.PermissionsEdit = fieldPermWrap.PermissionsEdit;
             } else {
                 permission.PermissionsRead = fieldPermWrap.mutedPermissionsRead;
                 permission.PermissionsEdit = fieldPermWrap.mutedPermissionsEdit;
-            }
-            
+            }            
             permissionsToUpsert.add(permission);
         }
         Map<String,Boolean> checkAccessLevelForFieldPermissions = PermissionAnalyzerServer.getObjDefinition('FieldPermissions');
@@ -481,7 +435,6 @@ Public with Sharing Class PermissionAnalyzerObjectServer {
                 }
             }
         return null;
-    }
-    
+    }  
     
 }

@@ -1,8 +1,8 @@
 //This Class is used to fetch User and its Related Profile/PermissionSet/PermissionSetgroup details and used in permissionAnalyzer LWC Component
-Public with Sharing Class PermissionAnalyzerServer {
+public with sharing class PermissionAnalyzerServer {
     //Retrive Users Based on SearchName.
     @AuraEnabled
-    Public Static List<User> getUser(String searchUserName) 
+    public static List<User> getUser(String searchUserName) 
     {
         if (String.isNotBlank(searchUserName)) {
             List<User> userList = [SELECT Id, Name, ProfileId, Email FROM User WHERE Name LIKE :'%' + String.escapeSingleQuotes(searchUserName) + '%' LIMIT 1000];
@@ -32,7 +32,7 @@ Public with Sharing Class PermissionAnalyzerServer {
     }
     // Used to fetch EntityDefinition Objects.
     @AuraEnabled
-    Public Static List<EntityDefinition> getEntityDefinition(string objType) 
+    public static List<EntityDefinition> getEntityDefinition(string objType) 
     {
         String query = 'Select Id, Label,QualifiedApiName,NamespacePrefix FROM EntityDefinition WHERE DefaultCompactLayoutId != null ';
         if (objType == 'Native') {
@@ -46,11 +46,10 @@ Public with Sharing Class PermissionAnalyzerServer {
         return Database.Query(query);
     }
     //Wrapper Class for User's Object And Field Permissions
-    Public Class ObjANdFieldPermissionsWrapper 
+    public class ObjANdFieldPermissionsWrapper 
     {
         @AuraEnabled public Map < String, Object > objectPermissions { get; set; }
         @AuraEnabled public Map < String, Object > fieldPermissions { get; set; }
-        
         public ObjAndFieldPermissionsWrapper(Map < String, Object > objectPermissions, Map < String, Object > fieldPermissions) {
             this.objectPermissions = objectPermissions ?? new Map < String, Object > ();
             this.fieldPermissions = fieldPermissions ?? new Map < String, Object > ();
@@ -61,7 +60,7 @@ Public with Sharing Class PermissionAnalyzerServer {
     }
     //User To Fetch user's Object and Field Permissions based on User's Profile && PermissionSet && PermissionSetGroup.
     @AuraEnabled
-    Public Static Map<String, ObjANdFieldPermissionsWrapper> getCombinedObjAndFieldPermsForUser(List<String> permissionSetIds) 
+    public static Map<String, ObjANdFieldPermissionsWrapper> getCombinedObjAndFieldPermsForUser(List<String> permissionSetIds) 
     {
         Map<String, ObjANdFieldPermissionsWrapper> objANdFieldPermissionsWrapperMap = new Map<String, ObjANdFieldPermissionsWrapper>();
         for (ObjectPermissions objPerm : [
@@ -79,8 +78,7 @@ Public with Sharing Class PermissionAnalyzerServer {
                         'PermissionsViewAllRecords' => objPerm.PermissionsViewAllRecords,
                         'PermissionsModifyAllRecords' => objPerm.PermissionsModifyAllRecords
                         };
-                            
-                            wrapper = new ObjAndFieldPermissionsWrapper(permissionSetMap, new Map < String, Object > ());
+                 wrapper = new ObjAndFieldPermissionsWrapper(permissionSetMap, new Map < String, Object > ());
                 objAndFieldPermissionsWrapperMap.put(objPerm.SObjectType, wrapper);
             } else {
                 wrapper.objectPermissions = consolidateObjectPermissions(wrapper.objectPermissions, objPerm);
@@ -113,33 +111,27 @@ Public with Sharing Class PermissionAnalyzerServer {
     // Gives the consolidated Object Permissions for an User
     public static Map < String, Object > consolidateObjectPermissions(Map < String, Object > existingPermissions, ObjectPermissions newPerm) {
         Map < String, Object > result = existingPermissions == null ? new Map < String, Object > () : existingPermissions.clone();
-        
         result.put('PermissionsRead', (Boolean) result.get('PermissionsRead') || newPerm.PermissionsRead);
         result.put('PermissionsCreate', (Boolean) result.get('PermissionsCreate') ||newPerm.PermissionsCreate);
         result.put('PermissionsEdit', (Boolean) result.get('PermissionsEdit') || newPerm.PermissionsEdit);
         result.put('PermissionsDelete', (Boolean) result.get('PermissionsDelete') || newPerm.PermissionsDelete);
         result.put('PermissionsViewAllRecords', (Boolean) result.get('PermissionsViewAllRecords') || newPerm.PermissionsViewAllRecords);
-        result.put('PermissionsModifyAllRecords', (Boolean) result.get('PermissionsModifyAllRecords') || newPerm.PermissionsModifyAllRecords);
-        
+        result.put('PermissionsModifyAllRecords', (Boolean) result.get('PermissionsModifyAllRecords') || newPerm.PermissionsModifyAllRecords);        
         return result;
     }
     // Gives the consolidated Field Permissions for an User
     public static Map<String, Object> consolidateFieldPermissions(Map<String, Object> existingPermissions, FieldPermissions newPerm) {
         existingPermissions = existingPermissions ?? new Map<String, Object>();
-        
         Map<String, Object> fieldPermission = (Map<String, Object>)existingPermissions.get(newPerm.Field);
         fieldPermission = fieldPermission ?? new Map<String, Object>();
-        
         fieldPermission.put('PermissionsRead', fieldPermission.containsKey('PermissionsRead') ? (Boolean) fieldPermission.get('PermissionsRead') || newPerm.PermissionsRead : newPerm.PermissionsRead);
-        fieldPermission.put('PermissionsEdit', fieldPermission.containsKey('PermissionsEdit') ? (Boolean) fieldPermission.get('PermissionsEdit') || newPerm.PermissionsEdit : newPerm.PermissionsEdit);
-        
+        fieldPermission.put('PermissionsEdit', fieldPermission.containsKey('PermissionsEdit') ? (Boolean) fieldPermission.get('PermissionsEdit') || newPerm.PermissionsEdit : newPerm.PermissionsEdit);        
         existingPermissions.put(newPerm.Field, fieldPermission);
-        
         return existingPermissions;
     }
     //Uses to fetch Profile API Name Using Tooling API
     @AuraEnabled
-    Public Static List<String> getProfileName(String profileId) 
+    public static List<String> getProfileName(String profileId) 
     {
         UserAccessManager instance = new UserAccessManager();
         List<String> profileName = new List<String>(); 
@@ -153,7 +145,7 @@ Public with Sharing Class PermissionAnalyzerServer {
         HttpResponse res = new HttpResponse();
         try {
             res = newReq.send(req);
-            system.debug('check result' + res);
+            System.debug('check result' + res);
             if (res.getStatusCode() == 200) {
                 Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
                 List<Object> records = (List<Object>) results.get('records');
@@ -168,13 +160,13 @@ Public with Sharing Class PermissionAnalyzerServer {
         } catch (exception e) {
             System.debug('Exception: ' + e.getMessage());
         }
-        system.debug('check profile Name' + profileName);
+        System.debug('check profile Name' + profileName);
         return profileName;
     }
     
     //Uses To fetch the Assigned List of users for Profile/PermissionSet and PermissionSetGroup
     @AuraEnabled
-    Public Static List<PermissionSetAssignment> getAssignedUsersForProfilePerSetPerSetGrp(String profpersetId) {
+    public static List<PermissionSetAssignment> getAssignedUsersForProfilePerSetPerSetGrp(String profpersetId) {
         return [SELECT Id, AssigneeId, Assignee.Name, Assignee.IsActive, Assignee.Profile.UserLicense.Name,Assignee.Username FROM PermissionSetAssignment WHERE PermissionSetId = :profpersetId 
                 AND Assignee.IsActive = true order by Assignee.Name asc LIMIT 50000
                ]; 
@@ -182,12 +174,11 @@ Public with Sharing Class PermissionAnalyzerServer {
     
     //This method is used to edit the properties of PermissionSetGroup
     @AuraEnabled
-    Public Static PermissionSetGroup editPermSetGrpProperties( String perSetId, String label, String apiName, String description, String format) {
+    public static PermissionSetGroup editPermSetGrpProperties( String perSetId, String label, String apiName, String description, String format) {
         if (String.isBlank(perSetId)) {
             throw new AuraHandledException('Invalid Permission Set Id');
         }
         List<PermissionSet> permissioSetList = [SELECT PermissionSetGroupId FROM PermissionSet WHERE Id = :perSetId LIMIT 1];
-        System.debug('permissioSetList'+permissioSetList);
         PermissionSetGroup permsetGroup = new PermissionSetGroup();
         Map<String,Boolean> checkAccessLevelForPermSetGrpUpdate = getObjDefinition('PermissionSetGroup');
         if(permissioSetList[0].PermissionSetGroupId != null && checkAccessLevelForPermSetGrpUpdate.get('Update')){
@@ -203,8 +194,7 @@ Public with Sharing Class PermissionAnalyzerServer {
     }
     //This method is used to edit the properties of PermissionSet
     @AuraEnabled
-    Public Static PermissionSet editPermSetProperties(String perSetId, String label, String apiName, String description) {       
-        System.debug('perSetId '+ perSetId + ' label'+ label + ' apiName' + apiName + ' Description'+ description);
+    public static PermissionSet editPermSetProperties(String perSetId, String label, String apiName, String description) {   
         PermissionSet perSetVal = new PermissionSet(Id = perSetId, Label = label,  Name = apiName?.replaceAll(' ', '_'), Description = description);
         Map<String,Boolean> checkAccessLevelForPermSetUpdate = getObjDefinition('PermissionSet');
         if(checkAccessLevelForPermSetUpdate.get('Update')){
@@ -218,7 +208,7 @@ Public with Sharing Class PermissionAnalyzerServer {
     }
     //This method is used to edit the properties of Profile
     @AuraEnabled
-    Public Static Map<String, String> editProfileProperties(String profileName,String newProfileName,String newDescription) {
+    public static Map<String, String> editProfileProperties(String profileName,String newProfileName,String newDescription) {
         Map<String, String> returnMap = new Map<String, String>();
         try {
             UserAccessManager instance = new UserAccessManager();
@@ -236,8 +226,7 @@ Public with Sharing Class PermissionAnalyzerServer {
                     });
             if (!results[0].success) {
                 throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
-            }
-            
+            }            
             returnMap.put('label', newProfileName);
             returnMap.put('description', newDescription);
             
