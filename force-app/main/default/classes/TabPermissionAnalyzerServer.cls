@@ -45,7 +45,8 @@ public with sharing class TabPermissionAnalyzerServer {
         }
         System.debug('Tab visibility settings: ' + tabVisibilityMap);
         return tabVisibilityMap;
-    }    
+    } 
+    @TestVisible
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
         System.debug(LoggingLevel.ERROR, fullMessage);
@@ -81,11 +82,6 @@ public with sharing class TabPermissionAnalyzerServer {
             this.tab = tab;
             this.visibility = visibility;
         }
-        public TabSettingsWrapper() {
-            // Initialize fields if necessary
-            this.tab = '';
-            this.visibility = '';
-        }
     }
     //This is the Method Used to Update TabVisibiltity For PermissionSet Deserialize and call an update method
     @AuraEnabled
@@ -103,28 +99,30 @@ public with sharing class TabPermissionAnalyzerServer {
     @AuraEnabled
     public static List < TabSettingsWrapper > helperUpdateClassForPermissionset(List < TabSettingsWrapper > tabSettingsResult, String persetname) {
         UserAccessManager instance = new UserAccessManager();
+        MetadataService.PermissionSet permissionSet = new MetadataService.PermissionSet();
+        Map < String, MetadataService.PermissionSetTabSetting > tabSettingsMap = new Map < String, MetadataService.PermissionSetTabSetting > ();
+        List < MetadataService.PermissionSetTabSetting > updatedTabSettings = new List < MetadataService.PermissionSetTabSetting > ();
+        
         List < MetadataService.PermissionSet > permissionSets = (List < MetadataService.PermissionSet > ) instance.service.readMetadata('PermissionSet', new List < String > {
             persetname
-                }).getRecords();
-        MetadataService.PermissionSet permissionSet = permissionSets.isEmpty() ? new MetadataService.PermissionSet() : permissionSets[0];
+                }).getRecords();        
         if (permissionSets.isEmpty()) {
             permissionSet.fullName = persetname;
         }
-        Map < String, MetadataService.PermissionSetTabSetting > tabSettingsMap = new Map < String, MetadataService.PermissionSetTabSetting > ();
+        else{
+            permissionSet = permissionSets[0];
+        }        
         if (permissionSet.tabSettings != null) {
             for (MetadataService.PermissionSetTabSetting setting: permissionSet.tabSettings) {
                 tabSettingsMap.put(setting.tab, setting);
             }
-        }
-        List < MetadataService.PermissionSetTabSetting > updatedTabSettings = new List < MetadataService.PermissionSetTabSetting > ();
+        }        
         for (TabSettingsWrapper wrapper : tabSettingsResult) {
             if (wrapper.visibility != null) {
-                MetadataService.PermissionSetTabSetting tabSetting;
+                MetadataService.PermissionSetTabSetting tabSetting = new MetadataService.PermissionSetTabSetting();
+                tabSetting.tab = wrapper.tab;                
                 if (tabSettingsMap.containsKey(wrapper.tab)) {
                     tabSetting = tabSettingsMap.get(wrapper.tab);
-                } else {
-                    tabSetting = new MetadataService.PermissionSetTabSetting();
-                    tabSetting.tab = wrapper.tab;
                 }
                 tabSetting.visibility = wrapper.visibility;
                 updatedTabSettings.add(tabSetting);
@@ -136,10 +134,7 @@ public with sharing class TabPermissionAnalyzerServer {
                 });
         for (MetadataService.SaveResult result: results) {
             if (!result.success) {
-                for (MetadataService.Error error: result.errors) {
-                    System.debug('Error: ' + error.message);
-                }
-                handleException('Failed to update PermissionSet: ' + result.errors[0].message, null);
+                handleErrorMessages(result.errors);
             }
         }
         return tabSettingsResult;
@@ -156,23 +151,10 @@ public with sharing class TabPermissionAnalyzerServer {
                     MetadataService.Profile updatedProfile = new MetadataService.Profile();
                     updatedProfile.fullName = prof.fullName;
                     updatedProfile.tabVisibilities = new List < MetadataService.ProfileTabVisibility > ();
-                    Map < String, MetadataService.ProfileTabVisibility > existingVisibilities = new Map < String, MetadataService.ProfileTabVisibility > ();
-                    if (prof.tabVisibilities != null) {
-                        for (MetadataService.ProfileTabVisibility visibility: prof.tabVisibilities) {
-                            existingVisibilities.put(visibility.tab, visibility);
-                        }
-                    }
                     for (Map<String, Object> tab : tabToUpdate) {
-                        String tabName = (String) tab.get('Name');
-                        String visibility = (String) tab.get('Visibility');
-                        MetadataService.ProfileTabVisibility tabVisibility;
-                        if (existingVisibilities.containsKey(tabName)) {
-                            tabVisibility = existingVisibilities.get(tabName);
-                        } else {
-                            tabVisibility = new MetadataService.ProfileTabVisibility();
-                            tabVisibility.tab = tabName;
-                        }
-                        tabVisibility.visibility = visibility;
+                        MetadataService.ProfileTabVisibility tabVisibility = new MetadataService.ProfileTabVisibility();
+                        tabVisibility.tab = (String) tab.get('Name');
+                        tabVisibility.visibility = (String) tab.get('Visibility');
                         updatedProfile.tabVisibilities.add(tabVisibility);
                     }
                     profilesToUpdate.add(updatedProfile);
@@ -190,17 +172,16 @@ public with sharing class TabPermissionAnalyzerServer {
     private static void handleUpsertResults(List < MetadataService.UpsertResult > results) {
         for (MetadataService.UpsertResult upsertResult: results) {
             if (!upsertResult.success) {
-                String errorMessage = 'Error updating profile: ' + upsertResult.errors[0].message;
-                for (MetadataService.Error error: upsertResult.errors) {
-                    System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
-                    if (error.fields != null) {
-                        System.debug('Error Fields: ' + String.join(error.fields, ', '));
-                    }
-                }
-                handleException(errorMessage, null);              
+                handleErrorMessages(upsertResult.errors);         
             } else {
                 System.debug('Tab Setting visibilities updated successfully for: ' + upsertResult.fullName);
             }
         }
+    }
+    private static void handleErrorMessages(List<MetadataService.Error> errors){
+        for (MetadataService.Error error: errors) {
+            System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+        }
+        handleException('Exception: ' + errors[0].message, null);        
     }
 }
