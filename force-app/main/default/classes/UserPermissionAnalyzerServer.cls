@@ -233,16 +233,19 @@ public with sharing class UserPermissionAnalyzerServer {
                 handleUpsertError(upsertResult);
             } else {
                 System.debug('Profile updated successfully for: ' + upsertResult.fullName);
-                for (MetadataService.Profile updateProf : profilesToUpdate) {
-                    if (updateProf.userPermissions != null) {
-                        for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
-                            updatedResultForProfile.put(updateProfUser.name, updateProfUser.enabled);
-                        }
-                    }
-                }
+                updatedResultForProfile = getUpdatedResultForProfile(profilesToUpdate);
             }
         }
         return updatedResultForProfile;
+    }
+    private static Map<String, Boolean> getUpdatedResultForProfile(List<MetadataService.Profile> profilesToUpdate){
+        Map<String, Boolean> resultProfile = new Map<String, Boolean>();
+        for (MetadataService.Profile updateProf : profilesToUpdate) {
+            for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
+                resultProfile.put(updateProfUser.name, updateProfUser.enabled);
+            }
+        }
+        return resultProfile;
     }
     private static void handleUpsertError(MetadataService.UpsertResult upsertResult) {
         for (MetadataService.Error error: upsertResult.errors) {
