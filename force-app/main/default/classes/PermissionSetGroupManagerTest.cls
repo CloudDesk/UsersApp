@@ -3,6 +3,12 @@
 public class PermissionSetGroupManagerTest {
     private static final String Script_Thrown_Message = 'Script-thrown exception';
     private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
+    private static final String PERMISSION_SET_DESCRIPTION = 'Updated Description';
+    private static final String PERMISSION_SET_LABEL = 'New Test Permission Set Group Four';
+    private static final String MASTER_LABEL_ASSERT_MSG = 'The MasterLabel was not updated correctly';
+    private static final String PERMISSION_SET_GROUP_DESCRIPTION = 'New Permission Set Group Description';
+    private static final String PROFILE_NAME = 'HCH Sales';
+    private static final String RESULT_NOT_NULL_MSG = 'The result should not be null.';
     
     //This method holds the test data
     @TestSetup
@@ -50,11 +56,11 @@ public class PermissionSetGroupManagerTest {
     static void testEditPermissionSetGroupSuccessGroup() {
         PermissionSetGroup perSetGrp = [Select id from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' limit 1];
         Test.startTest();
-        PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSetGrp.Id, 'New Test Permission Set Group Four', 'New_Test_Permission_Set_Group_Four', 'Updated Description', 'group');
+        PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSetGrp.Id, PERMISSION_SET_LABEL, 'New_Test_Permission_Set_Group_Four', PERMISSION_SET_DESCRIPTION, 'group');
         Test.stopTest();
-        System.assertEquals('New Test Permission Set Group Four', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
+        System.assertEquals(PERMISSION_SET_LABEL, updatedGroup.MasterLabel, MASTER_LABEL_ASSERT_MSG);
         System.assertEquals('New_Test_Permission_Set_Group_Four', updatedGroup.DeveloperName, 'The DeveloperName was not updated correctly');
-        System.assertEquals('Updated Description', updatedGroup.Description, 'The Description was not updated correctly');    
+        System.assertEquals(PERMISSION_SET_DESCRIPTION, updatedGroup.Description, 'The Description was not updated correctly');    
     }
     
     //This test method is used to check the functionality of editPermissionSetGrp method(error status) in PermissionSetGroupManager class
@@ -63,11 +69,11 @@ public class PermissionSetGroupManagerTest {
         PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_1' limit 1];
         Test.startTest();
         try{
-            PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, 'New Test Permission Set Group Four', 'New_Test_Permission_Set_Group_Four', 'Updated Description', 'permission set');
+            PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, PERMISSION_SET_LABEL, 'New_Test_Permission_Set_Group_Four', PERMISSION_SET_DESCRIPTION, 'permission set');
             System.assert(false, Error_Thrown_Message);
-            System.assertEquals('New Test Permission Set Group Four', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
+            System.assertEquals(PERMISSION_SET_LABEL, updatedGroup.MasterLabel, MASTER_LABEL_ASSERT_MSG);
             System.assertEquals('New_Test_Permission_Set_Group_Four', updatedGroup.DeveloperName, 'The DeveloperName was not updated correctly');
-            System.assertEquals('Updated Description', updatedGroup.Description, 'The Description was not updated correctly');
+            System.assertEquals(PERMISSION_SET_DESCRIPTION, updatedGroup.Description, 'The Description was not updated correctly');
         }catch (AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
@@ -80,9 +86,9 @@ public class PermissionSetGroupManagerTest {
         PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_3' limit 1];
         Test.startTest();
         try {
-            PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, 'New Test Permission Set Group Four', 'New_Test_Permission_Set_Group_Four', 'Updated Description', 'permission set');
+            PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, PERMISSION_SET_LABEL, 'New_Test_Permission_Set_Group_Four', PERMISSION_SET_DESCRIPTION, 'permission set');
             System.assert(false,Error_Thrown_Message);
-            System.assertEquals('New Test Permission Set Group Four', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
+            System.assertEquals(PERMISSION_SET_LABEL, updatedGroup.MasterLabel, MASTER_LABEL_ASSERT_MSG);
         } catch (AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
@@ -95,9 +101,9 @@ public class PermissionSetGroupManagerTest {
         PermissionSet perSet = [Select id,PermissionSetGroupId from PermissionSet where Name = 'New_Test_Permission_Set_2' limit 1];
         Test.startTest();
         try {
-            PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, 'New Test Permission Set Group One', 'New_Test_Permission_Set_Group_One', 'Updated Description', '');
+            PermissionSetGroup updatedGroup = PermissionSetGroupManager.editPermissionSetGrp(perSet.Id, 'New Test Permission Set Group One', 'New_Test_Permission_Set_Group_One', PERMISSION_SET_DESCRIPTION, '');
             System.assert(false, Error_Thrown_Message);
-            System.assertEquals('New Test Permission Set Group One', updatedGroup.MasterLabel, 'The MasterLabel was not updated correctly');
+            System.assertEquals('New Test Permission Set Group One', updatedGroup.MasterLabel, MASTER_LABEL_ASSERT_MSG);
         } catch (AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
@@ -113,7 +119,7 @@ public class PermissionSetGroupManagerTest {
         insert psgComponent;
         Test.startTest();
         try{
-            PermissionSetGroupManager.clonePermissionSetGroup(perSetGrp.MasterLabel,'NewPermissionSetGroup','NewPermissionSetGroup','New Permission Set Group Description'); 
+            PermissionSetGroupManager.clonePermissionSetGroup(perSetGrp.MasterLabel,'NewPermissionSetGroup','NewPermissionSetGroup',PERMISSION_SET_GROUP_DESCRIPTION); 
             System.assert(true, Error_Thrown_Message);
         }catch (AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
@@ -122,7 +128,7 @@ public class PermissionSetGroupManagerTest {
         PermissionSetGroup newPsg = [SELECT Id, MasterLabel, DeveloperName, Description FROM PermissionSetGroup WHERE MasterLabel = 'NewPermissionSetGroup' LIMIT 1];
         System.assertNotEquals(null, newPsg, 'New Permission Set Group should be created');
         System.assertEquals('NewPermissionSetGroup', newPsg.DeveloperName, 'DeveloperName should match the provided API name');
-        System.assertEquals('New Permission Set Group Description', newPsg.Description, 'Description should match the provided description');
+        System.assertEquals(PERMISSION_SET_GROUP_DESCRIPTION, newPsg.Description, 'Description should match the provided description');
         List<PermissionSetGroupComponent> newComponents = [SELECT PermissionSetId FROM PermissionSetGroupComponent WHERE PermissionSetGroupId = :newPsg.Id];
         System.assertEquals(2, newComponents.size(), 'There should be two Permission Set Group Components in the new Permission Set Group');
         
@@ -135,7 +141,7 @@ public class PermissionSetGroupManagerTest {
         
         Test.startTest();
         try {
-            PermissionSetGroupManager.clonePermissionSetGroup(perSetGrp.DeveloperName,'NewPermissionSetGroup','NewPermissionSetGroup','New Permission Set Group Description'); 
+            PermissionSetGroupManager.clonePermissionSetGroup(perSetGrp.DeveloperName,'NewPermissionSetGroup','NewPermissionSetGroup',PERMISSION_SET_GROUP_DESCRIPTION); 
             System.assert(false, Error_Thrown_Message);
         } catch (AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
@@ -166,7 +172,7 @@ public class PermissionSetGroupManagerTest {
     static void testGetUserPermissionSetGroup_Filters() {
         PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' Limit 1];
         Test.startTest();
-        List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup('HCH Sales', null, perSetGrp.Id);   
+        List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup(PROFILE_NAME, null, perSetGrp.Id);   
         Test.stopTest();
         System.assertEquals(0, userList.size(), 'There should be 0 user returned with the profile filter.');
     }
@@ -177,7 +183,7 @@ public class PermissionSetGroupManagerTest {
         // Get Permission Set Group
         PermissionSetGroup perSetGrp = [Select id,DeveloperName from PermissionSetGroup where DeveloperName = 'New_Test_PermSetGrp_2' Limit 1];
         Test.startTest();
-        List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup('HCH Sales', 'All', perSetGrp.Id);     
+        List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup(PROFILE_NAME, 'All', perSetGrp.Id);     
         Test.stopTest();
         System.assertEquals(0, userList.size(), 'There should be 0 user returned with the profile filter.');
     }
@@ -346,7 +352,7 @@ public class PermissionSetGroupManagerTest {
     static void testGetUnAssignedUserForPermissionSet() {
         PermissionSet perSet = [Select id from PermissionSet where Name='New_Test_Permission_Set_2' Limit 1];
         Test.startTest();
-        List<User> unassignedUsers = PermissionSetGroupManager.getUnAssignedUserForPermissionSet(perSet.id, 'HCH Sales', 'Salesforce', 'Salesforce');
+        List<User> unassignedUsers = PermissionSetGroupManager.getUnAssignedUserForPermissionSet(perSet.id, PROFILE_NAME, 'Salesforce', 'Salesforce');
         Test.stopTest();
         System.assertEquals(0, unassignedUsers.size(), 'There should be no unassigned user.');
     }
@@ -384,7 +390,7 @@ public class PermissionSetGroupManagerTest {
         String objName = 'Opportunity';
         Test.startTest();
         PermissionSetGroupManager.MutePermissionWrapper result = PermissionSetGroupManager.getMutedObjandFieldPermissions(permSetGroup.Id, objNames, objName);
-        PermissionSetGroupManager.MutePermissionWrapper result1 = PermissionSetGroupManager.getMutedObjandFieldPermissions(permSetGroupNoComponent.Id, objNames, objName);
+        PermissionSetGroupManager.getMutedObjandFieldPermissions(permSetGroupNoComponent.Id, objNames, objName);
         Test.stopTest();
         System.assertNotEquals(null, result.mutePermSetId);
         System.assertNotEquals(null, result.wrapper);
@@ -413,12 +419,12 @@ public class PermissionSetGroupManagerTest {
         String permSetId = psg.Id;
         PermissionSetGroup psgone = new PermissionSetGroup();
         psgone.DeveloperName = 'New_Test_Permission_Set_Group_Four';
-        psgone.MasterLabel = 'New Test Permission Set Group Four';
+        psgone.MasterLabel = PERMISSION_SET_LABEL;
         insert psgone;
         Test.startTest();
         PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(permSetId, 'Account', psg.MasterLabel, psg.DeveloperName);
         Test.stopTest();
-        System.assertNotEquals(null, result, 'The result should not be null.');
+        System.assertNotEquals(null, result, RESULT_NOT_NULL_MSG);
     }
 
     //This test method is used to check the functionality of getSobject method in PermissionSetGroupManager class
@@ -428,7 +434,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         PermissionSetGroupManager.PermissionSetGroupObjectDetails result = PermissionSetGroupManager.getSobject(testGroup.Id);
         Test.stopTest();
-        System.assertNotEquals(null, result, 'The result should not be null.');
+        System.assertNotEquals(null, result, RESULT_NOT_NULL_MSG);
     }
     
     //This test method is used to check the functionality of updateFieldPermissions method in PermissionSetGroupManager class
@@ -445,7 +451,7 @@ public class PermissionSetGroupManagerTest {
         fieldPermWrapperList.add(wrapper1);
         Test.startTest();
         try {
-            List<PermissionSetGroupManager.FieldPermissionUpdateWrapper> updatedPermissions = PermissionSetGroupManager.updateFieldPermissions(
+            PermissionSetGroupManager.updateFieldPermissions(
                 fieldPermWrapperList,permSet.Id,'Account','PermissionsRead');
             System.assert(false, Error_Thrown_Message);
         } catch (AuraHandledException e) {
@@ -461,13 +467,13 @@ public class PermissionSetGroupManagerTest {
         PermissionSetGroup psg = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
         permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
-        UserAccessManager manager = new UserAccessManager();
+        new UserAccessManager();
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'ProfileName'));
         Test.startTest();
         PermissionSetGroupManager.userObjAndFieldPermissionSetGroupWrapper result = 
         PermissionSetGroupManager.getCombinedPermissions(psg.Id, 'Account', 'Test_PSG');
         Test.stopTest();
-        System.assertNotEquals(null, result, 'The result should not be null.');
+        System.assertNotEquals(null, result, RESULT_NOT_NULL_MSG);
     }
     
     //This test method is used to check the functionality of mutePermissions method in PermissionSetGroupManager class
@@ -481,7 +487,7 @@ public class PermissionSetGroupManagerTest {
         insert psg;
         Test.startTest();
         try {
-            List<MutingPermissionSet> result = PermissionSetGroupManager.mutePermissions(systemPermissionsMapJson, psg.MasterLabel, psg.DeveloperName, psg.Id);
+            PermissionSetGroupManager.mutePermissions(systemPermissionsMapJson, psg.MasterLabel, psg.DeveloperName, psg.Id);
             System.assert(false, Error_Thrown_Message);
         } catch (AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
