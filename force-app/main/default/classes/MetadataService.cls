@@ -30,7 +30,8 @@
 
 public class MetadataService {
 	
-	public static String SOAP_M_URI = 'http://soap.sforce.com/2006/04/metadata';
+	public static final String SOAP_M_URI = 'http://soap.sforce.com/2006/04/metadata';
+    public static final String XSI_TYPE = 'xsi:type';
     
 	public class ReportTypeColumnTranslation {
         public String label;
@@ -77,7 +78,7 @@ public class MetadataService {
         private String[] site_type_info = new String[]{'site',SOAP_M_URI,null,'0','1','false'};
         private String[] windowTitle_type_info = new String[]{'windowTitle',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'brandingImage','connectionTimeoutDuration','connectionWarningDuration','displayQueuePosition','domainWhiteList','enablePrechatApi','enableTranscriptSave','label','mobileBrandingImage','site','windowTitle'};
     }
     public class ReportFilterItem {
@@ -121,7 +122,7 @@ public class MetadataService {
         private String[] assignToReference_type_info = new String[]{'assignToReference',SOAP_M_URI,null,'1','1','false'};
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'assignToReference','name'};
     }
     public class MacroSettings {
@@ -237,7 +238,7 @@ public class MetadataService {
         public MetadataService.SharedTo sharedFrom;
         private String[] sharedFrom_type_info = new String[]{'sharedFrom',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','accessLevel','accountSettings','description','label','sharedTo', 'sharedFrom'};
     }
     public class CustomExperienceTabSet {
@@ -325,7 +326,7 @@ public class MetadataService {
         private String[] useSystemUserAsDefaultCaseUser_type_info = new String[]{'useSystemUserAsDefaultCaseUser',SOAP_M_URI,null,'0','1','false'};
         private String[] webToCase_type_info = new String[]{'webToCase',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'caseAssignNotificationTemplate','caseCloseNotificationTemplate','caseCommentNotificationTemplate','caseCreateNotificationTemplate','caseFeedItemSettings','closeCaseThroughStatusChange','defaultCaseOwner','defaultCaseOwnerType','defaultCaseUser','emailActionDefaultsHandlerClass','emailToCase','enableCaseFeed','enableDraftEmails','enableEarlyEscalationRuleTriggers','enableEmailActionDefaultsHandler','enableSuggestedArticlesApplication','enableSuggestedArticlesCustomerPortal','enableSuggestedArticlesPartnerPortal','enableSuggestedSolutions','keepRecordTypeOnAssignmentRule','notifyContactOnCaseComment','notifyDefaultCaseOwner','notifyOwnerOnCaseComment','notifyOwnerOnCaseOwnerChange','showEmailAttachmentsInCaseAttachmentsRL','showFewerCloseActions','systemUserEmail','useSystemEmailAddress','useSystemUserAsDefaultCaseUser','webToCase'};
     }
     public class ReadMetadataResponse_element {
@@ -463,7 +464,7 @@ public class MetadataService {
         private String[] reevaluateOnChange_type_info = new String[]{'reevaluateOnChange',SOAP_M_URI,null,'0','1','false'};
         private String[] targetObject_type_info = new String[]{'targetObject',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','field','formula','literalValue','lookupValue','lookupValueType','name','notifyAssignee','operation','protected_x','reevaluateOnChange','targetObject'};
     }
     public class AssignmentRule extends Metadata {
@@ -475,7 +476,7 @@ public class MetadataService {
         private String[] active_type_info = new String[]{'active',SOAP_M_URI,null,'0','1','false'};
         private String[] ruleEntry_type_info = new String[]{'ruleEntry',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','ruleEntry'};
     }
     public class ValueSettings {
@@ -507,7 +508,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] objectUsage_type_info = new String[]{'objectUsage',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','dataCategory','description','label','objectUsage'};
     }
     public class DashboardGridComponent {
@@ -591,7 +592,7 @@ public class MetadataService {
         private String[] zeronaryColor_type_info = new String[]{'zeronaryColor',SOAP_M_URI,null,'1','1','false'};
         private String[] zeronaryComplementColor_type_info = new String[]{'zeronaryComplementColor',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'loginFooterText','loginLogo','loginLogoName','loginPrimaryColor','loginQuaternaryColor','loginRightFrameUrl','network','pageFooter','pageHeader','primaryColor','primaryComplementColor','quaternaryColor','quaternaryComplementColor','secondaryColor','staticLogoImageUrl','tertiaryColor','tertiaryComplementColor','zeronaryColor','zeronaryComplementColor'};
     }
     public class UserCriteria extends Metadata {
@@ -611,7 +612,7 @@ public class MetadataService {
         private String[] profiles_type_info = new String[]{'profiles',SOAP_M_URI,null,'0','-1','false'};
         private String[] userTypes_type_info = new String[]{'userTypes',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'creationAgeInSeconds','description','lastChatterActivityAgeInSeconds','masterLabel','profiles','userTypes'};
     }
     public class KnowledgeSitesSettings {
@@ -663,7 +664,7 @@ public class MetadataService {
         public MetadataService.AssignmentRule[] assignmentRule;
         private String[] assignmentRule_type_info = new String[]{'assignmentRule',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'assignmentRule'};
     }
     public class DeleteResult {
@@ -743,7 +744,7 @@ public class MetadataService {
         private String[] isProtected_type_info = new String[]{'isProtected',SOAP_M_URI,null,'0','1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'groups','isProtected','label'};
     }
     public class WaveXmd extends Metadata{
@@ -843,7 +844,7 @@ public class MetadataService {
         public Boolean enableLiveAgent;
         private String[] enableLiveAgent_type_info = new String[]{'enableLiveAgent',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableLiveAgent'};
     }
     public class WorkflowFlowAction {
@@ -881,7 +882,7 @@ public class MetadataService {
         private String[] templateOrigin_type_info = new String[]{'templateOrigin',SOAP_M_URI,null,'0','1','false'};
         private String[] templateVersion_type_info = new String[]{'templateVersion',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'assetIcon','description','folder','masterLabel','shares','templateOrigin','templateVersion'};
     }
     public class AllOrNoneHeader_element {
@@ -923,7 +924,7 @@ public class MetadataService {
         private String[] singleSearchResultShortcutEnabled_type_info = new String[]{'singleSearchResultShortcutEnabled',SOAP_M_URI,null,'1','1','false'};
         private String[] spellCorrectKnowledgeSearchEnabled_type_info = new String[]{'spellCorrectKnowledgeSearchEnabled',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'documentContentSearchEnabled','optimizeSearchForCJKEnabled','recentlyViewedUsersForBlankLookupEnabled','searchSettingsByObject','sidebarAutoCompleteEnabled','sidebarDropDownListEnabled','sidebarLimitToItemsIOwnCheckboxEnabled','singleSearchResultShortcutEnabled','spellCorrectKnowledgeSearchEnabled'};
     }
     public class ListMetadata_element {
@@ -967,7 +968,7 @@ public class MetadataService {
         private String[] testsuiteContent_type_info = new String[]{'testsuiteContent',SOAP_M_URI,null,'0','1','false'};
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'SVGContent','apiVersion','controllerContent','description','designContent','documentationContent','helperContent','markup','modelContent','packageVersions','rendererContent','styleContent','testsuiteContent','type_x'};
     }
     public class Queue extends Metadata {
@@ -987,7 +988,7 @@ public class MetadataService {
         private String[] queueRoutingConfig_type_info = new String[]{'queueRoutingConfig',SOAP_M_URI,null,'0','1','false'};
         private String[] queueSobject_type_info = new String[]{'queueSobject',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'doesSendEmailToMembers','email','name','queueMembers','queueRoutingConfig','queueSobject'};
     }
     public class CleanDataService {
@@ -1011,7 +1012,7 @@ public class MetadataService {
         private String[] narrowComponents_type_info = new String[]{'narrowComponents',SOAP_M_URI,null,'0','-1','false'};
         private String[] wideComponents_type_info = new String[]{'wideComponents',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'narrowComponents','wideComponents'};
     }
     public class WaveLens extends MetadataWithContent {
@@ -1033,7 +1034,7 @@ public class MetadataService {
         private String[] templateAssetSourceName_type_info = new String[]{'templateAssetSourceName',SOAP_M_URI,null,'0','1','false'};
         private String[] visualizationType_type_info = new String[]{'visualizationType',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'application','datasets','description','masterLabel','templateAssetSourceName','visualizationType'};
     }
     public class QuickActionSendEmailOptions {
@@ -1079,7 +1080,7 @@ public class MetadataService {
         public String caseSubjectOption;
         private String[] caseSubjectOption_type_info = new String[]{'caseSubjectOption',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'caseSubjectOption'};
     }
     public class MilestoneType extends Metadata {
@@ -1091,7 +1092,7 @@ public class MetadataService {
         private String[] description_type_info = new String[]{'description',SOAP_M_URI,null,'0','1','false'};
         private String[] recurrenceType_type_info = new String[]{'recurrenceType',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','recurrenceType'};
     }
     public class WeightedSourceCategory {
@@ -1147,7 +1148,7 @@ public class MetadataService {
         private String[] recordEditability_type_info = new String[]{'recordEditability',SOAP_M_URI,null,'1','1','false'};
         private String[] showApprovalHistory_type_info = new String[]{'showApprovalHistory',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','allowRecall','allowedSubmitters','approvalPageFields','approvalStep','description','emailTemplate','enableMobileDeviceAccess','entryCriteria','finalApprovalActions','finalApprovalRecordLock','finalRejectionActions','finalRejectionRecordLock','initialSubmissionActions','label','nextAutomatedApprover','postTemplate','recallActions','recordEditability','showApprovalHistory'};
     }
     public class EmbeddedServiceQuickAction {
@@ -1197,7 +1198,7 @@ public class MetadataService {
         private String[] versionNotes_type_info = new String[]{'versionNotes',SOAP_M_URI,null,'0','1','false'};
         private String[] versionNumber_type_info = new String[]{'versionNumber',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'SObjectType','active','businessHours','description','entryStartDateField','exitCriteriaBooleanFilter','exitCriteriaFilterItems','exitCriteriaFormula','isRecordTypeApplied','isVersionDefault','milestones','name','recordType','versionMaster','versionNotes','versionNumber'};
     }
     public class FlowRecordDelete extends FlowNode {
@@ -1225,7 +1226,7 @@ public class MetadataService {
         private String[] inputReference_type_info = new String[]{'inputReference',SOAP_M_URI,null,'0','1','false'};
         private String[] object_x_type_info = new String[]{'object',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'connector','faultConnector','filters','inputReference','object_x'};
     }
     public class FlowScreenFieldTranslation {
@@ -1247,7 +1248,7 @@ public class MetadataService {
         public String[] testClassName;
         private String[] testClassName_type_info = new String[]{'testClassName',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'testClassName'};
     }
     public class GlobalQuickActionTranslation {
@@ -1345,7 +1346,7 @@ public class MetadataService {
         private String[] showSubmitAndAttachButton_type_info = new String[]{'showSubmitAndAttachButton',SOAP_M_URI,null,'0','1','false'};
         private String[] summaryLayout_type_info = new String[]{'summaryLayout',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'customButtons','customConsoleComponents','emailDefault','excludeButtons','feedLayout','headers','layoutSections','miniLayout','multilineLayoutFields','platformActionList','quickActionList','relatedContent','relatedLists','relatedObjects','runAssignmentRulesDefault','showEmailCheckbox','showHighlightsPanel','showInteractionLogPanel','showKnowledgeComponent','showRunAssignmentRulesCheckbox','showSolutionSection','showSubmitAndAttachButton','summaryLayout'};
     }
     public class LiveChatButton extends Metadata {
@@ -1425,7 +1426,7 @@ public class MetadataService {
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] windowLanguage_type_info = new String[]{'windowLanguage',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'animation','autoGreeting','chasitorIdleTimeout','chasitorIdleTimeoutWarning','chatPage','customAgentName','deployments','enableQueue','inviteEndPosition','inviteImage','inviteStartPosition','isActive','label','numberOfReroutingAttempts','offlineImage','onlineImage','optionsCustomRoutingIsEnabled','optionsHasChasitorIdleTimeout','optionsHasInviteAfterAccept','optionsHasInviteAfterReject','optionsHasRerouteDeclinedRequest','optionsIsAutoAccept','optionsIsInviteAutoRemove','overallQueueLength','perAgentQueueLength','postChatPage','postChatUrl','preChatFormPage','preChatFormUrl','pushTimeOut','routingType','site','skills','timeToRemoveInvite','type_x','windowLanguage'};
     }
     public class FlowDefinitionTranslation {
@@ -1493,7 +1494,7 @@ public class MetadataService {
         private String[] showHomePageHoverLinksForEvents_type_info = new String[]{'showHomePageHoverLinksForEvents',SOAP_M_URI,null,'0','1','false'};
         private String[] showMyTasksHoverLinks_type_info = new String[]{'showMyTasksHoverLinks',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'allowUsersToRelateMultipleContactsToTasksAndEvents','autoRelateEventAttendees','enableActivityReminders','enableClickCreateEvents','enableDragAndDropScheduling','enableEmailTracking','enableGroupTasks','enableListViewScheduling','enableLogNote','enableMultidayEvents','enableRecurringEvents','enableRecurringTasks','enableSidebarCalendarShortcut','enableSimpleTaskCreateUI','enableUNSTaskDelegatedToNotifications','meetingRequestsLogo','showCustomLogoMeetingRequests','showEventDetailsMultiUserCalendar','showHomePageHoverLinksForEvents','showMyTasksHoverLinks'};
     }
     public class FlowWaitEvent extends FlowElement {
@@ -1519,7 +1520,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] outputParameters_type_info = new String[]{'outputParameters',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'conditionLogic','conditions','connector','eventType','inputParameters','label','outputParameters'};
     }
     public class ApexComponent extends MetadataWithContent {
@@ -1537,7 +1538,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] packageVersions_type_info = new String[]{'packageVersions',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'apiVersion','description','label','packageVersions'};
     }
     public class StrategyNode {
@@ -1563,7 +1564,7 @@ public class MetadataService {
         private String[] active_type_info = new String[]{'active',SOAP_M_URI,null,'0','1','false'};
         private String[] ruleEntry_type_info = new String[]{'ruleEntry',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','ruleEntry'};
     }
     public class NamedCredential extends Metadata {
@@ -1599,7 +1600,7 @@ public class MetadataService {
         private String[] protocol_type_info = new String[]{'protocol',SOAP_M_URI,null,'1','1','false'};
         private String[] username_type_info = new String[]{'username',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'allowMergeFieldsInBody','allowMergeFieldsInHeader','authProvider','certificate','endpoint','generateAuthorizationHeader','label','oauthRefreshToken','oauthScope','oauthToken','password','principalType','protocol','username'};
     }
     public class QuickAction extends Metadata {
@@ -1647,7 +1648,7 @@ public class MetadataService {
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] width_type_info = new String[]{'width',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'canvas','description','fieldOverrides','flowDefinition','height','icon','isProtected','label','lightningComponent','optionsCreateFeedItem','page_x','quickActionLayout','quickActionSendEmailOptions','standardLabel','successMessage','targetObject','targetParentField','targetRecordType','type_x','width'};
     }
     public class SharingCriteriaRule extends SharingBaseRule {
@@ -1669,7 +1670,7 @@ public class MetadataService {
         private String[] booleanFilter_type_info = new String[]{'booleanFilter',SOAP_M_URI,null,'0','1','false'};
         private String[] criteriaItems_type_info = new String[]{'criteriaItems',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','accessLevel','accountSettings','description','label','sharedTo', 'booleanFilter','criteriaItems'};
     }
     public class FlowAssignment extends FlowNode {
@@ -1691,7 +1692,7 @@ public class MetadataService {
         private String[] assignmentItems_type_info = new String[]{'assignmentItems',SOAP_M_URI,null,'0','-1','false'};
         private String[] connector_type_info = new String[]{'connector',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'assignmentItems','connector'};
     }
     public class MatchingRules extends Metadata {
@@ -1701,7 +1702,7 @@ public class MetadataService {
         public MetadataService.MatchingRule[] matchingRules;
         private String[] matchingRules_type_info = new String[]{'matchingRules',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'matchingRules'};
     }
     public class Index {
@@ -1766,7 +1767,7 @@ public class MetadataService {
         private String[] queue_type_info = new String[]{'queue',SOAP_M_URI,null,'0','1','false'};
         private String[] sharedTo_type_info = new String[]{'sharedTo',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'booleanFilter','columns','division','filterScope','filters','label','language','queue','sharedTo'};
     }
     public class CustomApplicationTranslation {
@@ -1860,7 +1861,7 @@ public class MetadataService {
         public MetadataService.FiscalYearSettings fiscalYear;
         private String[] fiscalYear_type_info = new String[]{'fiscalYear',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'fiscalYear'};
     }
     public class FlowScreenField extends FlowElement {
@@ -1900,7 +1901,7 @@ public class MetadataService {
         private String[] scale_type_info = new String[]{'scale',SOAP_M_URI,null,'0','1','false'};
         private String[] validationRule_type_info = new String[]{'validationRule',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'choiceReferences','dataType','defaultSelectedChoiceReference','defaultValue','extensionName','fieldText','fieldType','helpText','inputParameters','isRequired','isVisible','outputParameters','scale','validationRule'};
     }
     public class LookupFilterTranslation {
@@ -1934,7 +1935,7 @@ public class MetadataService {
         private String[] errorDisplayField_type_info = new String[]{'errorDisplayField',SOAP_M_URI,null,'0','1','false'};
         private String[] errorMessage_type_info = new String[]{'errorMessage',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','description','errorConditionFormula','errorDisplayField','errorMessage'};
     }
     public class ChatterAnswersReputationLevel {
@@ -2088,7 +2089,7 @@ public class MetadataService {
         private String[] reportTypes_type_info = new String[]{'reportTypes',SOAP_M_URI,null,'0','-1','false'};
         private String[] scontrols_type_info = new String[]{'scontrols',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'customApplications','customDataTypeTranslations','customLabels','customPageWebLinks','customTabs','flowDefinitions','quickActions','reportTypes','scontrols'};
     }
     public class WebToCaseSettings {
@@ -2114,7 +2115,7 @@ public class MetadataService {
         private String[] protected_x_type_info = new String[]{'protected',SOAP_M_URI,null,'0','1','false'};
         private String[] values_type_info = new String[]{'values',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','label','protected_x','values'};
     }
     public virtual class FlowNode extends FlowElement {
@@ -2163,7 +2164,7 @@ public class MetadataService {
         private String[] enableReductionOrders_type_info = new String[]{'enableReductionOrders',SOAP_M_URI,null,'0','1','false'};
         private String[] enableZeroQuantity_type_info = new String[]{'enableZeroQuantity',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableNegativeQuantity','enableOrders','enableReductionOrders','enableZeroQuantity'};
     }
     public class ReportTimeFrameFilter {
@@ -2225,7 +2226,7 @@ public class MetadataService {
         private String[] reviewed_type_info = new String[]{'reviewed',SOAP_M_URI,null,'0','1','false'};
         private String[] won_type_info = new String[]{'won',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','color','default_x','description','isActive','label', 'allowEmail','closed','converted','cssExposed','forecastCategory','groupingString','highPriority','probability','reverseRole','reviewed','won'};
     }
     public class NavigationSubMenu {
@@ -2245,7 +2246,7 @@ public class MetadataService {
         private String[] enableQuantitySchedule_type_info = new String[]{'enableQuantitySchedule',SOAP_M_URI,null,'0','1','false'};
         private String[] enableRevenueSchedule_type_info = new String[]{'enableRevenueSchedule',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableCascadeActivateToRelatedPrices','enableQuantitySchedule','enableRevenueSchedule'};
     }
     public class WorkflowTask extends WorkflowAction {
@@ -2273,7 +2274,7 @@ public class MetadataService {
         private String[] status_type_info = new String[]{'status',SOAP_M_URI,null,'1','1','false'};
         private String[] subject_type_info = new String[]{'subject',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'assignedTo','assignedToType','description','dueDateOffset','notifyAssignee','offsetFromField','priority','protected_x','status','subject'};
     }
     public class GlobalValueSetTranslation {
@@ -2355,7 +2356,7 @@ public class MetadataService {
         private String[] packageVersions_type_info = new String[]{'packageVersions',SOAP_M_URI,null,'0','-1','false'};
         private String[] status_type_info = new String[]{'status',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'apiVersion','packageVersions','status'};
     }
     public class CustomConsoleComponents {
@@ -2387,7 +2388,7 @@ public class MetadataService {
         public MetadataService.AppMenuItem[] appMenuItems;
         private String[] appMenuItems_type_info = new String[]{'appMenuItems',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'appMenuItems'};
     }
     public class DebuggingInfo_element {
@@ -2465,7 +2466,7 @@ public class MetadataService {
         private String[] timeFrameFilter_type_info = new String[]{'timeFrameFilter',SOAP_M_URI,null,'0','1','false'};
         private String[] userFilter_type_info = new String[]{'userFilter',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'aggregates','block','blockInfo','buckets','chart','colorRanges','columns','crossFilters','currency_x','dataCategoryFilters','description','division','filter','folderName','format','groupingsAcross','groupingsDown','historicalSelector','name','numSubscriptions','params','reportType','roleHierarchyFilter','rowLimit','scope','showCurrentDate','showDetails','sortColumn','sortOrder','territoryHierarchyFilter','timeFrameFilter','userFilter'};
     }
     public class KnowledgeSettings extends Metadata {
@@ -2501,7 +2502,7 @@ public class MetadataService {
         private String[] showValidationStatusField_type_info = new String[]{'showValidationStatusField',SOAP_M_URI,null,'0','1','false'};
         private String[] suggestedArticles_type_info = new String[]{'suggestedArticles',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'answers','cases','defaultLanguage','enableChatterQuestionKBDeflection','enableCreateEditOnArticlesTab','enableExternalMediaContent','enableKnowledge','enableLightningKnowledge','languages','showArticleSummariesCustomerPortal','showArticleSummariesInternalApp','showArticleSummariesPartnerPortal','showValidationStatusField','suggestedArticles'};
     }
     public class StaticResource extends MetadataWithContent {
@@ -2517,7 +2518,7 @@ public class MetadataService {
         private String[] contentType_type_info = new String[]{'contentType',SOAP_M_URI,null,'1','1','false'};
         private String[] description_type_info = new String[]{'description',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'cacheControl','contentType','description'};
     }
     public class ReportTypeColumn {
@@ -2575,7 +2576,7 @@ public class MetadataService {
         private String[] field_type_info = new String[]{'field',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'field','value'};
     }
     public class WorkflowActionReference {
@@ -2643,7 +2644,7 @@ public class MetadataService {
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'brandingSetProperty','description','masterLabel','type_x'};
     }
     public class ChatterAnswersSettings extends Metadata {
@@ -2675,7 +2676,7 @@ public class MetadataService {
         private String[] facebookAuthProvider_type_info = new String[]{'facebookAuthProvider',SOAP_M_URI,null,'0','1','false'};
         private String[] showInPortals_type_info = new String[]{'showInPortals',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'emailFollowersOnBestAnswer','emailFollowersOnReply','emailOwnerOnPrivateReply','emailOwnerOnReply','enableAnswerViaEmail','enableChatterAnswers','enableFacebookSSO','enableInlinePublisher','enableReputation','enableRichTextEditor','facebookAuthProvider','showInPortals'};
     }
     public class ConnectedAppCanvasConfig {
@@ -2707,7 +2708,7 @@ public class MetadataService {
         public MetadataService.OrganizationSettingsDetail[] preferences;
         private String[] preferences_type_info = new String[]{'preferences',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'preferences'};
     }
     public class Community extends Metadata {
@@ -2745,7 +2746,7 @@ public class MetadataService {
         private String[] showInPortal_type_info = new String[]{'showInPortal',SOAP_M_URI,null,'0','1','false'};
         private String[] site_type_info = new String[]{'site',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','chatterAnswersFacebookSsoUrl','communityFeedPage','dataCategoryName','description','emailFooterDocument','emailHeaderDocument','emailNotificationUrl','enableChatterAnswers','enablePrivateQuestions','expertsGroup','portal','reputationLevels','showInPortal','site'};
     }
     public class BusinessProcess extends Metadata {
@@ -2759,7 +2760,7 @@ public class MetadataService {
         private String[] isActive_type_info = new String[]{'isActive',SOAP_M_URI,null,'0','1','false'};
         private String[] values_type_info = new String[]{'values',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','isActive','values'};
     }
     public class EmailToCaseRoutingAddress {
@@ -2841,7 +2842,7 @@ public class MetadataService {
         private String[] sharingOwnerRules_type_info = new String[]{'sharingOwnerRules',SOAP_M_URI,null,'0','-1','false'};
         private String[] sharingTerritoryRules_type_info = new String[]{'sharingTerritoryRules',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'sharingCriteriaRules','sharingOwnerRules','sharingTerritoryRules'};
     }
     public class SharingRecalculation {
@@ -2857,7 +2858,7 @@ public class MetadataService {
         public MetadataService.CustomLabel[] labels;
         private String[] labels_type_info = new String[]{'labels',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'labels'};
     }
     public class FieldSetTranslation {
@@ -2957,7 +2958,7 @@ public class MetadataService {
         private String[] trialLicenseDuration_type_info = new String[]{'trialLicenseDuration',SOAP_M_URI,null,'1','1','false'};
         private String[] trialLicenseQuantity_type_info = new String[]{'trialLicenseQuantity',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'aggregationGroup','description','isPublished','label','licensedCustomPermissions','licensingAuthority','licensingAuthorityProvider','minPlatformVersion','origin','revision','trialLicenseDuration','trialLicenseQuantity'};
     }
     public class FlowOutputFieldAssignment extends FlowBaseElement {
@@ -2969,7 +2970,7 @@ public class MetadataService {
         private String[] assignToReference_type_info = new String[]{'assignToReference',SOAP_M_URI,null,'1','1','false'};
         private String[] field_type_info = new String[]{'field',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'assignToReference','field'};
     }
     public class FlowApexPluginCallOutputParameter extends FlowBaseElement {
@@ -2981,7 +2982,7 @@ public class MetadataService {
         private String[] assignToReference_type_info = new String[]{'assignToReference',SOAP_M_URI,null,'1','1','false'};
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'assignToReference','name'};
     }
     public class DashboardGridLayout {
@@ -3061,7 +3062,7 @@ public class MetadataService {
         private String[] template_type_info = new String[]{'template',SOAP_M_URI,null,'1','1','false'};
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','flexiPageRegions','masterLabel','parentFlexiPage','platformActionlist','quickActionList','sobjectType','template','type_x'};
     }
     public class EntitlementProcessMilestoneTimeTrigger {
@@ -3133,7 +3134,7 @@ public class MetadataService {
         private String[] sections_type_info = new String[]{'sections',SOAP_M_URI,null,'0','-1','false'};
         private String[] version_type_info = new String[]{'version',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'adapterUrl','customSettings','displayName','displayNameLabel','internalNameLabel','sections','version'};
     }
     public class LightningComponentBundle {
@@ -3151,7 +3152,7 @@ public class MetadataService {
         public Boolean enableMarketingAction;
         private String[] enableMarketingAction_type_info = new String[]{'enableMarketingAction',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableMarketingAction'};
     }
     public class AccountSharingRuleSettings {
@@ -3193,7 +3194,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'name','value'};
     }
     public class WorkflowOutboundMessage extends WorkflowAction {
@@ -3219,7 +3220,7 @@ public class MetadataService {
         private String[] protected_x_type_info = new String[]{'protected',SOAP_M_URI,null,'1','1','false'};
         private String[] useDeadLetterQueue_type_info = new String[]{'useDeadLetterQueue',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'apiVersion','description','endpointUrl','fields','includeSessionId','integrationUser','name','protected_x','useDeadLetterQueue'};
     }
     public class WaveDataset extends Metadata {
@@ -3235,7 +3236,7 @@ public class MetadataService {
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] templateAssetSourceName_type_info = new String[]{'templateAssetSourceName',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'application','description','masterLabel','templateAssetSourceName'};
     }
     public class CorsWhitelistOrigin extends Metadata {
@@ -3245,7 +3246,7 @@ public class MetadataService {
         public String urlPattern;
         private String[] urlPattern_type_info = new String[]{'urlPattern',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'urlPattern'};
     }
     public class SessionHeader_element {
@@ -3273,7 +3274,7 @@ public class MetadataService {
         private String[] sourceReport_type_info = new String[]{'sourceReport',SOAP_M_URI,null,'1','1','false'};
         private String[] targetObject_type_info = new String[]{'targetObject',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','groupColumn','mappings','name','runningUser','sourceReport','targetObject'};
     }
     public virtual class FlowElement extends FlowBaseElement {
@@ -3357,7 +3358,7 @@ public class MetadataService {
         public MetadataService.ManagedTopic[] managedTopic;
         private String[] managedTopic_type_info = new String[]{'managedTopic',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'managedTopic'};
     }
     public class FeedFilterCriterion {
@@ -3428,7 +3429,7 @@ public class MetadataService {
         private String[] userLicense_type_info = new String[]{'userLicense',SOAP_M_URI,null,'0','1','false'};
         private String[] userPermissions_type_info = new String[]{'userPermissions',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'applicationVisibilities','categoryGroupVisibilities','classAccesses','custom','customPermissions','description','externalDataSourceAccesses','fieldPermissions','layoutAssignments','loginHours','loginIpRanges','objectPermissions','pageAccesses','profileActionOverrides','recordTypeVisibilities','tabVisibilities','userLicense','userPermissions'};
     }
     public class KnowledgeLanguage {
@@ -3500,7 +3501,7 @@ public class MetadataService {
         private String[] displayedFields_type_info = new String[]{'displayedFields',SOAP_M_URI,null,'0','-1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'availableFields','description','displayedFields','label'};
     }
     public class ProfileLoginHours {
@@ -3546,7 +3547,7 @@ public class MetadataService {
         private String[] promptText_type_info = new String[]{'promptText',SOAP_M_URI,null,'0','1','false'};
         private String[] validationRule_type_info = new String[]{'validationRule',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'isRequired','promptText','validationRule'};
     }
     public class HomePageComponent extends Metadata {
@@ -3570,7 +3571,7 @@ public class MetadataService {
         private String[] showScrollbars_type_info = new String[]{'showScrollbars',SOAP_M_URI,null,'0','1','false'};
         private String[] width_type_info = new String[]{'width',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'body','height','links','page_x','pageComponentType','showLabel','showScrollbars','width'};
     }
     public class PermissionSetFieldPermissions {
@@ -3624,7 +3625,7 @@ public class MetadataService {
         private String[] fields_type_info = new String[]{'fields',SOAP_M_URI,null,'0','-1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'fields','label'};
     }
     public class VisualizationType {
@@ -3693,7 +3694,7 @@ public class MetadataService {
         private String[] tokenUrl_type_info = new String[]{'tokenUrl',SOAP_M_URI,null,'0','1','false'};
         private String[] userInfoUrl_type_info = new String[]{'userInfoUrl',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'authorizeUrl','consumerKey','consumerSecret','customMetadataTypeRecord','defaultScopes','errorUrl','executionUser','friendlyName','iconUrl','idTokenIssuer','includeOrgIdInIdentifier','logoutUrl','plugin','portal','providerType','registrationHandler','sendAccessTokenInHeader','sendClientCredentialsInHeader','tokenUrl','userInfoUrl'};
     }
     public class FlowDynamicChoiceSet extends FlowElement {
@@ -3727,7 +3728,7 @@ public class MetadataService {
         private String[] sortOrder_type_info = new String[]{'sortOrder',SOAP_M_URI,null,'0','1','false'};
         private String[] valueField_type_info = new String[]{'valueField',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'dataType','displayField','filters','limit_x','object_x','outputAssignments','picklistField','picklistObject','sortField','sortOrder','valueField'};
     }
     public class RelatedContent {
@@ -3783,7 +3784,7 @@ public class MetadataService {
         private String[] url_type_info = new String[]{'url',SOAP_M_URI,null,'0','1','false'};
         private String[] width_type_info = new String[]{'width',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'availability','description','displayType','encodingKey','hasMenubar','hasScrollbars','hasToolbar','height','isResizable','linkType','masterLabel','openType','page_x','position','protected_x','requireRowSelection','scontrol','showsLocation','showsStatus','url','width'};
     }
     public class Flow extends Metadata {
@@ -3843,7 +3844,7 @@ public class MetadataService {
         private String[] variables_type_info = new String[]{'variables',SOAP_M_URI,null,'0','-1','false'};
         private String[] waits_type_info = new String[]{'waits',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'actionCalls','apexPluginCalls','assignments','choices','constants','decisions','description','dynamicChoiceSets','formulas','interviewLabel','label','loops','processMetadataValues','processType','recordCreates','recordDeletes','recordLookups','recordUpdates','screens','stages','startElementReference','steps','subflows','textTemplates','variables','waits'};
     }
     public class CustomMetadataValue {
@@ -3891,7 +3892,7 @@ public class MetadataService {
         private String[] description_type_info = new String[]{'description',SOAP_M_URI,null,'0','1','false'};
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'dataflowType','description','masterLabel'};
     }
     public class StandardValueSet extends Metadata {
@@ -3905,7 +3906,7 @@ public class MetadataService {
         private String[] sorted_type_info = new String[]{'sorted',SOAP_M_URI,null,'1','1','false'};
         private String[] standardValue_type_info = new String[]{'standardValue',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'groupingStringEnum','sorted','standardValue'};
     }
     public class FileUploadAndDownloadSecuritySettings extends Metadata {
@@ -3917,7 +3918,7 @@ public class MetadataService {
         private String[] dispositions_type_info = new String[]{'dispositions',SOAP_M_URI,null,'0','-1','false'};
         private String[] noHtmlUploadAsAttachment_type_info = new String[]{'noHtmlUploadAsAttachment',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'dispositions','noHtmlUploadAsAttachment'};
     }
     public class LetterheadHeaderFooter {
@@ -3991,7 +3992,7 @@ public class MetadataService {
         private String[] permissionSets_type_info = new String[]{'permissionSets',SOAP_M_URI,null,'0','-1','false'};
         private String[] sharedObjects_type_info = new String[]{'sharedObjects',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'label','lockSharedObjects','permissionSets','sharedObjects'};
     }
     public class LightningBoltItems {
@@ -4017,7 +4018,7 @@ public class MetadataService {
         private String[] shortDescription_type_info = new String[]{'shortDescription',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'categories','language','protected_x','shortDescription','value'};
     }
     public class ChatterExtension {
@@ -4053,7 +4054,7 @@ public class MetadataService {
         private String[] enableMiddleName_type_info = new String[]{'enableMiddleName',SOAP_M_URI,null,'0','1','false'};
         private String[] enableNameSuffix_type_info = new String[]{'enableNameSuffix',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableMiddleName','enableNameSuffix'};
     }
     public class EventType extends Metadata {
@@ -4067,7 +4068,7 @@ public class MetadataService {
         private String[] fields_type_info = new String[]{'fields',SOAP_M_URI,null,'0','-1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','fields','label'};
     }
     public class CheckRetrieveStatusResponse_element {
@@ -4091,7 +4092,7 @@ public class MetadataService {
         private String[] defaultOpportunityAccessLevel_type_info = new String[]{'defaultOpportunityAccessLevel',SOAP_M_URI,null,'0','1','false'};
         private String[] opportunityFilterSettings_type_info = new String[]{'opportunityFilterSettings',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'defaultAccountAccessLevel','defaultCaseAccessLevel','defaultContactAccessLevel','defaultOpportunityAccessLevel','opportunityFilterSettings'};
     }
     public class PlatformCachePartition {
@@ -4153,7 +4154,7 @@ public class MetadataService {
         private String[] username_type_info = new String[]{'username',SOAP_M_URI,null,'0','1','false'};
         private String[] version_type_info = new String[]{'version',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'authProvider','certificate','customConfiguration','endpoint','isWritable','label','oauthRefreshToken','oauthScope','oauthToken','password','principalType','protocol','repository','type_x','username','version'};
     }
     public class RetrieveResponse_element {
@@ -4189,7 +4190,7 @@ public class MetadataService {
         private String[] assignToReference_type_info = new String[]{'assignToReference',SOAP_M_URI,null,'1','1','false'};
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'assignToReference','name'};
     }
     public class MarketingResourceType extends Metadata {
@@ -4205,7 +4206,7 @@ public class MetadataService {
         private String[] object_x_type_info = new String[]{'object',SOAP_M_URI,null,'1','1','false'};
         private String[] provider_type_info = new String[]{'provider',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','masterLabel','object_x','provider'};
     }
     public class ApprovalSubmitter {
@@ -4243,7 +4244,7 @@ public class MetadataService {
         private String[] inputReference_type_info = new String[]{'inputReference',SOAP_M_URI,null,'0','1','false'};
         private String[] object_x_type_info = new String[]{'object',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'assignRecordIdToReference','connector','faultConnector','inputAssignments','inputReference','object_x'};
     }
     public class UpsertMetadataResponse_element {
@@ -4265,7 +4266,7 @@ public class MetadataService {
         private String[] layoutItems_type_info = new String[]{'layoutItems',SOAP_M_URI,null,'0','-1','false'};
         private String[] recordType_type_info = new String[]{'recordType',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enabledChannels','label','layoutItems','recordType'};
     }
     public class LiveChatDeploymentDomainWhitelist {
@@ -4315,7 +4316,7 @@ public class MetadataService {
         private String[] publicFolderAccess_type_info = new String[]{'publicFolderAccess',SOAP_M_URI,null,'0','1','false'};
         private String[] sharedTo_type_info = new String[]{'sharedTo',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','accessType','folderShares','name','publicFolderAccess','sharedTo'};
     }
     public class DashboardComponentSection {
@@ -4335,7 +4336,7 @@ public class MetadataService {
         private String[] active_type_info = new String[]{'active',SOAP_M_URI,null,'0','1','false'};
         private String[] ruleEntry_type_info = new String[]{'ruleEntry',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','ruleEntry'};
     }
     public class RunTestFailure {
@@ -4429,7 +4430,7 @@ public class MetadataService {
         private String[] tabSettings_type_info = new String[]{'tabSettings',SOAP_M_URI,null,'0','-1','false'};
         private String[] userPermissions_type_info = new String[]{'userPermissions',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'applicationVisibilities','classAccesses','customPermissions','description','externalDataSourceAccesses','fieldPermissions','hasActivationRequired','label','license','objectPermissions','pageAccesses','recordTypeVisibilities','tabSettings','userPermissions'};
     }
     public class WorkflowRule extends Metadata {
@@ -4453,7 +4454,7 @@ public class MetadataService {
         private String[] triggerType_type_info = new String[]{'triggerType',SOAP_M_URI,null,'1','1','false'};
         private String[] workflowTimeTriggers_type_info = new String[]{'workflowTimeTriggers',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'actions','active','booleanFilter','criteriaItems','description','formula','triggerType','workflowTimeTriggers'};
     }
     public class FlowRule extends FlowElement {
@@ -4473,7 +4474,7 @@ public class MetadataService {
         private String[] connector_type_info = new String[]{'connector',SOAP_M_URI,null,'0','1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'conditionLogic','conditions','connector','label'};
     }
     public class NetworkPageOverride {
@@ -4517,7 +4518,7 @@ public class MetadataService {
         private String[] userCriteria_type_info = new String[]{'userCriteria',SOAP_M_URI,null,'0','-1','false'};
         private String[] userMessage_type_info = new String[]{'userMessage',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'action','actionLimit','active','description','entitiesAndFields','masterLabel','notifyLimit','timePeriod','type_x','userCriteria','userMessage'};
     }
     public class ValueTranslation {
@@ -4635,7 +4636,7 @@ public class MetadataService {
         private String[] url_type_info = new String[]{'url',SOAP_M_URI,null,'0','1','false'};
         private String[] urlEncodingKey_type_info = new String[]{'urlEncodingKey',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'actionOverrides','auraComponent','customObject','description','flexiPage','frameHeight','hasSidebar','icon','label','mobileReady','motif','page_x','scontrol','splashPageLink','url','urlEncodingKey'};
     }
     public class LiveChatAgentConfig extends Metadata {
@@ -4699,7 +4700,7 @@ public class MetadataService {
         private String[] transferableButtons_type_info = new String[]{'transferableButtons',SOAP_M_URI,null,'0','1','false'};
         private String[] transferableSkills_type_info = new String[]{'transferableSkills',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'assignments','autoGreeting','capacity','criticalWaitTime','customAgentName','enableAgentFileTransfer','enableAgentSneakPeek','enableAssistanceFlag','enableAutoAwayOnDecline','enableAutoAwayOnPushTimeout','enableChatConferencing','enableChatMonitoring','enableChatTransferToAgent','enableChatTransferToButton','enableChatTransferToSkill','enableLogoutSound','enableNotifications','enableRequestSound','enableSneakPeek','enableVisitorBlocking','enableWhisperMessage','label','supervisorDefaultAgentStatusFilter','supervisorDefaultButtonFilter','supervisorDefaultSkillFilter','supervisorSkills','transferableButtons','transferableSkills'};
     }
     public class FieldMapping {
@@ -4749,7 +4750,7 @@ public class MetadataService {
         private String[] assignToReference_type_info = new String[]{'assignToReference',SOAP_M_URI,null,'1','1','false'};
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'assignToReference','name'};
     }
     public class SecuritySettings extends Metadata {
@@ -4763,7 +4764,7 @@ public class MetadataService {
         private String[] passwordPolicies_type_info = new String[]{'passwordPolicies',SOAP_M_URI,null,'0','1','false'};
         private String[] sessionSettings_type_info = new String[]{'sessionSettings',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'networkAccess','passwordPolicies','sessionSettings'};
     }
     public class ReportChart {
@@ -4871,7 +4872,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] picklistValues_type_info = new String[]{'picklistValues',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','businessProcess','compactLayoutAssignment','description','label','picklistValues'};
     }
     public class EventSubscription extends Metadata {
@@ -4887,7 +4888,7 @@ public class MetadataService {
         private String[] eventType_type_info = new String[]{'eventType',SOAP_M_URI,null,'1','1','false'};
         private String[] referenceData_type_info = new String[]{'referenceData',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','eventParameters','eventType','referenceData'};
     }
     public class FieldOverride {
@@ -4993,7 +4994,7 @@ public class MetadataService {
         private String[] nextValueConnector_type_info = new String[]{'nextValueConnector',SOAP_M_URI,null,'0','1','false'};
         private String[] noMoreValuesConnector_type_info = new String[]{'noMoreValuesConnector',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'assignNextValueToReference','collectionReference','iterationOrder','nextValueConnector','noMoreValuesConnector'};
     }
     public class FlowDefinition {
@@ -5059,7 +5060,7 @@ public class MetadataService {
         private String[] url_type_info = new String[]{'url',SOAP_M_URI,null,'0','1','false'};
         private String[] width_type_info = new String[]{'width',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'availability','description','displayType','encodingKey','hasMenubar','hasScrollbars','hasToolbar','height','isResizable','linkType','masterLabel','openType','page_x','position','protected_x','requireRowSelection','scontrol','showsLocation','showsStatus','url','width'};
     }
     public class DashboardFlexTableComponentProperties {
@@ -5125,7 +5126,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] profiles_type_info = new String[]{'profiles',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'accessMappings','description','name','profiles'};
     }
     public class WaveTemplateBundle {
@@ -5203,7 +5204,7 @@ public class MetadataService {
         public MetadataService.FlowConnector[] connectors;
         private String[] connectors_type_info = new String[]{'connectors',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'connectors'};
     }
     public class UpdateMetadata_element {
@@ -5239,7 +5240,7 @@ public class MetadataService {
         private String[] enableAccountTeams_type_info = new String[]{'enableAccountTeams',SOAP_M_URI,null,'0','1','false'};
         private String[] showViewHierarchyLink_type_info = new String[]{'showViewHierarchyLink',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableAccountOwnerReport','enableAccountTeams','showViewHierarchyLink'};
     }
     public class ContentAssetVersion {
@@ -5311,7 +5312,7 @@ public class MetadataService {
         private String[] endpointUrl_type_info = new String[]{'endpointUrl',SOAP_M_URI,null,'1','1','false'};
         private String[] isActive_type_info = new String[]{'isActive',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','endpointUrl','isActive'};
     }
     public class FlowVariable extends FlowElement {
@@ -5337,7 +5338,7 @@ public class MetadataService {
         private String[] scale_type_info = new String[]{'scale',SOAP_M_URI,null,'0','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'dataType','isCollection','isInput','isOutput','objectType','scale','value'};
     }
     public class FlowCategory {
@@ -5365,7 +5366,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] sharedTo_type_info = new String[]{'sharedTo',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','accessLevel','accountSettings','description','label','sharedTo'};
     }
     public class WorkflowFlowActionParameter {
@@ -5439,7 +5440,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'0','1','false'};
         private String[] public_x_type_info = new String[]{'public',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'description','internalUseOnly','keywords','name','public_x'};
     }
     public class LightningBolt {
@@ -5507,7 +5508,7 @@ public class MetadataService {
         private String[] operator_type_info = new String[]{'operator',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'assignToReference','operator','value'};
     }
     public virtual class GlobalPicklistValue extends Metadata {
@@ -5531,7 +5532,7 @@ public class MetadataService {
         private String[] publicFolderAccess_type_info = new String[]{'publicFolderAccess',SOAP_M_URI,null,'0','1','false'};
         private String[] sharedTo_type_info = new String[]{'sharedTo',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','accessType','folderShares','name','publicFolderAccess','sharedTo'};
     }
     public class RenameMetadata_element {
@@ -5565,7 +5566,7 @@ public class MetadataService {
         private String[] profiles_type_info = new String[]{'profiles',SOAP_M_URI,null,'0','-1','false'};
         private String[] roles_type_info = new String[]{'roles',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'customObjects','groups','label','loginAccess','permissionSets','profiles','roles'};
     }
     public class PicklistValue extends GlobalPicklistValue {
@@ -5603,7 +5604,7 @@ public class MetadataService {
         private String[] reviewed_type_info = new String[]{'reviewed',SOAP_M_URI,null,'0','1','false'};
         private String[] won_type_info = new String[]{'won',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','color','default_x','description','isActive', 'allowEmail','closed','controllingFieldValues','converted','cssExposed','forecastCategory','highPriority','probability','reverseRole','reviewed','won'};
     }
     public class SkillProfileAssignments {
@@ -5643,7 +5644,7 @@ public class MetadataService {
         private String[] textField_type_info = new String[]{'textField',SOAP_M_URI,null,'0','1','false'};
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'index','textField','type_x'};
     }
     public class WaveXmdDimensionSalesforceAction {
@@ -5677,7 +5678,7 @@ public class MetadataService {
         private String[] send_type_info = new String[]{'send',SOAP_M_URI,null,'0','-1','false'};
         private String[] tasks_type_info = new String[]{'tasks',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'alerts','fieldUpdates','flowActions','knowledgePublishes','outboundMessages','rules','send','tasks'};
     }
     public class Roles {
@@ -5701,7 +5702,7 @@ public class MetadataService {
         private String[] language_type_info = new String[]{'language',SOAP_M_URI,null,'0','1','false'};
         private String[] protected_x_type_info = new String[]{'protected',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'action','description','label','language','protected_x'};
     }
     public class CustomFieldTranslation {
@@ -5779,7 +5780,7 @@ public class MetadataService {
         private String[] visualizationResources_type_info = new String[]{'visualizationResources',SOAP_M_URI,null,'0','-1','false'};
         private String[] visualizationTypes_type_info = new String[]{'visualizationTypes',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','developerName','icon','masterLabel','visualizationResources','visualizationTypes'};
     }
     public class DataPipeline {
@@ -5811,7 +5812,7 @@ public class MetadataService {
         private String[] packageVersions_type_info = new String[]{'packageVersions',SOAP_M_URI,null,'0','-1','false'};
         private String[] status_type_info = new String[]{'status',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'apiVersion','packageVersions','status'};
     }
     public class FieldMappingRow {
@@ -5843,7 +5844,7 @@ public class MetadataService {
         private String[] term_type_info = new String[]{'term',SOAP_M_URI,null,'0','1','false'};
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'businessHours','casesPerEntitlement','entitlementProcess','isPerIncident','term','type_x'};
     }
     public class Group_x extends Metadata {
@@ -5855,7 +5856,7 @@ public class MetadataService {
         private String[] doesIncludeBosses_type_info = new String[]{'doesIncludeBosses',SOAP_M_URI,null,'0','1','false'};
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'doesIncludeBosses','name'};
     }
     public class WaveXmdRecordDisplayLookup {
@@ -5988,7 +5989,7 @@ public class MetadataService {
         private String[] schemaUrl_type_info = new String[]{'schemaUrl',SOAP_M_URI,null,'0','1','false'};
         private String[] status_type_info = new String[]{'status',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','label','namedCredential','schema','schemaType','schemaUrl','status'};
     }
     public class FlowChoice extends FlowElement {
@@ -6008,7 +6009,7 @@ public class MetadataService {
         private String[] userInput_type_info = new String[]{'userInput',SOAP_M_URI,null,'0','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'choiceText','dataType','userInput','value'};
     }
     public class WaveXmdDimensionMember {
@@ -6060,7 +6061,7 @@ public class MetadataService {
         private String[] samlConfig_type_info = new String[]{'samlConfig',SOAP_M_URI,null,'0','1','false'};
         private String[] startUrl_type_info = new String[]{'startUrl',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'attributes','canvasConfig','contactEmail','contactPhone','description','iconUrl','infoUrl','ipRanges','label','logoUrl','mobileAppConfig','mobileStartUrl','oauthConfig','plugin','samlConfig','startUrl'};
     }
     public class DescribeMetadata_element {
@@ -6156,7 +6157,7 @@ public class MetadataService {
         private String[] stylesheetDocument_type_info = new String[]{'stylesheetDocument',SOAP_M_URI,null,'0','1','false'};
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','admin','defaultLanguage','description','emailSenderAddress','emailSenderName','enableSelfCloseCase','footerDocument','forgotPassTemplate','headerDocument','isSelfRegistrationActivated','loginHeaderDocument','logoDocument','logoutUrl','newCommentTemplate','newPassTemplate','newUserTemplate','ownerNotifyTemplate','selfRegNewUserUrl','selfRegUserDefaultProfile','selfRegUserDefaultRole','selfRegUserTemplate','showActionConfirmation','stylesheetDocument','type_x'};
     }
     public class ContentAssetVersions {
@@ -6208,7 +6209,7 @@ public class MetadataService {
         private String[] rightAligned_type_info = new String[]{'rightAligned',SOAP_M_URI,null,'0','1','false'};
         private String[] supportComponentsInReports_type_info = new String[]{'supportComponentsInReports',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'customDataTypeComponents','description','displayFormula','editComponentsOnSeparateLines','label','rightAligned','supportComponentsInReports'};
     }
     public class FlowConnector extends FlowBaseElement {
@@ -6218,7 +6219,7 @@ public class MetadataService {
         public String targetReference;
         private String[] targetReference_type_info = new String[]{'targetReference',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'targetReference'};
     }
     public class EventDelivery extends Metadata {
@@ -6234,7 +6235,7 @@ public class MetadataService {
         private String[] referenceData_type_info = new String[]{'referenceData',SOAP_M_URI,null,'0','1','false'};
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'eventParameters','eventSubscription','referenceData','type_x'};
     }
     public class LiveMessageSettings {
@@ -6360,7 +6361,7 @@ public class MetadataService {
         private String[] sortField_type_info = new String[]{'sortField',SOAP_M_URI,null,'0','1','false'};
         private String[] sortOrder_type_info = new String[]{'sortOrder',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'assignNullValuesIfNoRecordsFound','connector','faultConnector','filters','object_x','outputAssignments','outputReference','queriedFields','sortField','sortOrder'};
     }
     public class QuickActionLayoutColumn {
@@ -6448,7 +6449,7 @@ public class MetadataService {
         private String[] isPublished_type_info = new String[]{'isPublished',SOAP_M_URI,null,'1','1','false'};
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'actionLinkTemplates','category','executionsAllowed','hoursUntilExpiration','isPublished','name'};
     }
     public class ReportDataCategoryFilter {
@@ -6494,7 +6495,7 @@ public class MetadataService {
         private String[] publicFolderAccess_type_info = new String[]{'publicFolderAccess',SOAP_M_URI,null,'0','1','false'};
         private String[] sharedTo_type_info = new String[]{'sharedTo',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','accessType','folderShares','name','publicFolderAccess','sharedTo'};
     }
     public class CreateMetadataResponse_element {
@@ -6556,7 +6557,7 @@ public class MetadataService {
         private String[] titleColor_type_info = new String[]{'titleColor',SOAP_M_URI,null,'1','1','false'};
         private String[] titleSize_type_info = new String[]{'titleSize',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'backgroundEndColor','backgroundFadeDirection','backgroundStartColor','chartTheme','colorPalette','dashboardChartTheme','dashboardColorPalette','dashboardFilters','dashboardGridLayout','dashboardResultRefreshedDate','dashboardResultRunningUser','dashboardType','description','folderName','isGridLayout','leftSection','middleSection','numSubscriptions','rightSection','runningUser','textColor','title','titleColor','titleSize'};
     }
     public class PersonListSettings {
@@ -6664,7 +6665,7 @@ public class MetadataService {
         private String[] inputParameters_type_info = new String[]{'inputParameters',SOAP_M_URI,null,'0','-1','false'};
         private String[] outputParameters_type_info = new String[]{'outputParameters',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'apexClass','connector','faultConnector','inputParameters','outputParameters'};
     }
     public class Container {
@@ -6748,7 +6749,7 @@ public class MetadataService {
         private String[] halfLife_type_info = new String[]{'halfLife',SOAP_M_URI,null,'0','1','false'};
         private String[] ideasProfilePage_type_info = new String[]{'ideasProfilePage',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableChatterProfile','enableIdeaThemes','enableIdeas','enableIdeasReputation','halfLife','ideasProfilePage'};
     }
     public class EmailServicesFunction extends Metadata {
@@ -6786,7 +6787,7 @@ public class MetadataService {
         private String[] isTlsRequired_type_info = new String[]{'isTlsRequired',SOAP_M_URI,null,'0','1','false'};
         private String[] overLimitAction_type_info = new String[]{'overLimitAction',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'apexClass','attachmentOption','authenticationFailureAction','authorizationFailureAction','authorizedSenders','emailServicesAddresses','errorRoutingAddress','functionInactiveAction','functionName','isActive','isAuthenticationRequired','isErrorRoutingEnabled','isTextAttachmentsAsBinary','isTlsRequired','overLimitAction'};
     }
     public class CustomDataTypeTranslation {
@@ -6822,7 +6823,7 @@ public class MetadataService {
         private String[] fields_type_info = new String[]{'fields',SOAP_M_URI,null,'0','-1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'default_x','description','fields','label'};
     }
     public class ValueSet {
@@ -6918,7 +6919,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] siteType_type_info = new String[]{'siteType',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'label','siteType'};
     }
     public class MobileSettings extends Metadata {
@@ -6934,7 +6935,7 @@ public class MetadataService {
         private String[] salesforceMobile_type_info = new String[]{'salesforceMobile',SOAP_M_URI,null,'0','1','false'};
         private String[] touchMobile_type_info = new String[]{'touchMobile',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'chatterMobile','dashboardMobile','salesforceMobile','touchMobile'};
     }
     public class ObjectMappingField {
@@ -6986,7 +6987,7 @@ public class MetadataService {
         private String[] entitlementLookupLimitedToSameAsset_type_info = new String[]{'entitlementLookupLimitedToSameAsset',SOAP_M_URI,null,'0','1','false'};
         private String[] entitlementLookupLimitedToSameContact_type_info = new String[]{'entitlementLookupLimitedToSameContact',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'assetLookupLimitedToActiveEntitlementsOnAccount','assetLookupLimitedToActiveEntitlementsOnContact','assetLookupLimitedToSameAccount','assetLookupLimitedToSameContact','enableEntitlementVersioning','enableEntitlements','entitlementLookupLimitedToActiveStatus','entitlementLookupLimitedToSameAccount','entitlementLookupLimitedToSameAsset','entitlementLookupLimitedToSameContact'};
     }
     public class Territory2RuleAssociation {
@@ -7040,7 +7041,7 @@ public class MetadataService {
         private String[] visualforcePage_type_info = new String[]{'visualforcePage',SOAP_M_URI,null,'1','1','false'};
         private String[] width_type_info = new String[]{'width',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'buttonIconUrl','buttonStyle','buttonText','buttonWidth','height','isHeightFixed','isHidden','isWidthFixed','visualforcePage','width'};
     }
     public class ComponentInstanceProperty {
@@ -7078,7 +7079,7 @@ public class MetadataService {
         private String[] senderType_type_info = new String[]{'senderType',SOAP_M_URI,null,'0','1','false'};
         private String[] template_type_info = new String[]{'template',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'ccEmails','description','protected_x','recipients','senderAddress','senderType','template'};
     }
     public class KnowledgeCaseFieldsSettings {
@@ -7124,7 +7125,7 @@ public class MetadataService {
         private String[] type_x_type_info = new String[]{'type',SOAP_M_URI,null,'1','1','false'};
         private String[] uiType_type_info = new String[]{'uiType',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'apiVersion','attachedDocuments','attachments','available','description','encodingKey','letterhead','name','packageVersions','relatedEntityType','style','subject','textOnly','type_x','uiType'};
     }
     public class FlowTextTemplate extends FlowElement {
@@ -7138,7 +7139,7 @@ public class MetadataService {
         public String text;
         private String[] text_type_info = new String[]{'text',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'text'};
     }
     public class PushNotification {
@@ -7212,7 +7213,7 @@ public class MetadataService {
         private String[] showFooter_type_info = new String[]{'showFooter',SOAP_M_URI,null,'0','1','false'};
         private String[] showHeader_type_info = new String[]{'showHeader',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'allowBack','allowFinish','allowPause','connector','fields','helpText','pausedText','rules','showFooter','showHeader'};
     }
     public class OpportunityListFieldsSelectedSettings {
@@ -7240,7 +7241,7 @@ public class MetadataService {
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] privateKeyExportable_type_info = new String[]{'privateKeyExportable',SOAP_M_URI,null,'0','1','true'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'caSigned','encryptedWithPlatformEncryption','expirationDate','keySize','masterLabel','privateKeyExportable'};
     }
     public class WaveXmdDimensionCustomAction {
@@ -7330,7 +7331,7 @@ public class MetadataService {
         private String[] language_type_info = new String[]{'language',SOAP_M_URI,null,'0','1','false'};
         private String[] protected_x_type_info = new String[]{'protected',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'action','description','label','language','protected_x'};
     }
     public class FlowRecordFilter extends FlowBaseElement {
@@ -7344,7 +7345,7 @@ public class MetadataService {
         private String[] operator_type_info = new String[]{'operator',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'field','operator','value'};
     }
     public class DeleteMetadata_element {
@@ -7392,7 +7393,7 @@ public class MetadataService {
         private String[] inputParameters_type_info = new String[]{'inputParameters',SOAP_M_URI,null,'0','-1','false'};
         private String[] outputParameters_type_info = new String[]{'outputParameters',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'actionName','actionType','connector','faultConnector','inputParameters','outputParameters'};
     }
     public class ListViewFilter {
@@ -7446,7 +7447,7 @@ public class MetadataService {
         private String[] ruleAssociations_type_info = new String[]{'ruleAssociations',SOAP_M_URI,null,'0','-1','false'};
         private String[] territory2Type_type_info = new String[]{'territory2Type',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'accountAccessLevel','caseAccessLevel','contactAccessLevel','customFields','description','name','opportunityAccessLevel','parentTerritory','ruleAssociations','territory2Type'};
     }
     public class ListPlacement {
@@ -7540,7 +7541,7 @@ public class MetadataService {
         private String[] findSimilarOppFilter_type_info = new String[]{'findSimilarOppFilter',SOAP_M_URI,null,'0','1','false'};
         private String[] promptToAddProducts_type_info = new String[]{'promptToAddProducts',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'autoActivateNewReminders','enableFindSimilarOpportunities','enableOpportunityTeam','enableUpdateReminders','findSimilarOppFilter','promptToAddProducts'};
     }
     public class CodeCoverageWarning {
@@ -7598,7 +7599,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] topLine_type_info = new String[]{'topLine',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'available','backgroundColor','bodyColor','bottomLine','description','footer','header','middleLine','name','topLine'};
     }
     public class AddressSettings extends Metadata {
@@ -7608,7 +7609,7 @@ public class MetadataService {
         public MetadataService.CountriesAndStates countriesAndStates;
         private String[] countriesAndStates_type_info = new String[]{'countriesAndStates',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'countriesAndStates'};
     }
     public class FlowApexPluginCallInputParameter extends FlowBaseElement {
@@ -7620,7 +7621,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'name','value'};
     }
     public class PathAssistantSettings {
@@ -7666,7 +7667,7 @@ public class MetadataService {
         public Boolean enableQuote;
         private String[] enableQuote_type_info = new String[]{'enableQuote',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableQuote'};
     }
     public class CustomExperienceBranding {
@@ -7740,7 +7741,7 @@ public class MetadataService {
         private String[] wednesdayEndTime_type_info = new String[]{'wednesdayEndTime',SOAP_M_URI,null,'0','1','false'};
         private String[] wednesdayStartTime_type_info = new String[]{'wednesdayStartTime',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','default_x','fridayEndTime','fridayStartTime','mondayEndTime','mondayStartTime','name','saturdayEndTime','saturdayStartTime','sundayEndTime','sundayStartTime','thursdayEndTime','thursdayStartTime','timeZoneId','tuesdayEndTime','tuesdayStartTime','wednesdayEndTime','wednesdayStartTime'};
     }
     public class NetworkMemberGroup {
@@ -7770,7 +7771,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] packageVersions_type_info = new String[]{'packageVersions',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'apiVersion','availableInTouch','confirmationTokenRequired','description','label','packageVersions'};
     }
     public class CustomSite extends Metadata {
@@ -7870,7 +7871,7 @@ public class MetadataService {
         private String[] subdomain_type_info = new String[]{'subdomain',SOAP_M_URI,null,'0','1','false'};
         private String[] urlPathPrefix_type_info = new String[]{'urlPathPrefix',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'active','allowHomePage','allowStandardAnswersPages','allowStandardIdeasPages','allowStandardLookups','allowStandardPortalPages','allowStandardSearch','analyticsTrackingCode','authorizationRequiredPage','bandwidthExceededPage','browserXssProtection','changePasswordPage','chatterAnswersForgotPasswordConfirmPage','chatterAnswersForgotPasswordPage','chatterAnswersHelpPage','chatterAnswersLoginPage','chatterAnswersRegistrationPage','clickjackProtectionLevel','contentSniffingProtection','cspUpgradeInsecureRequests','customWebAddresses','description','favoriteIcon','fileNotFoundPage','forgotPasswordPage','genericErrorPage','guestProfile','inMaintenancePage','inactiveIndexPage','indexPage','masterLabel','myProfilePage','portal','referrerPolicyOriginWhenCrossOrigin','requireHttps','requireInsecurePortalAccess','robotsTxtPage','rootComponent','selfRegPage','serverIsDown','siteAdmin','siteRedirectMappings','siteTemplate','siteType','subdomain','urlPathPrefix'};
     }
     public class Skill extends Metadata {
@@ -7884,7 +7885,7 @@ public class MetadataService {
         private String[] description_type_info = new String[]{'description',SOAP_M_URI,null,'0','1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'assignments','description','label'};
     }
     public class RenameMetadataResponse_element {
@@ -7932,7 +7933,7 @@ public class MetadataService {
         private String[] inputAssignments_type_info = new String[]{'inputAssignments',SOAP_M_URI,null,'0','-1','false'};
         private String[] outputAssignments_type_info = new String[]{'outputAssignments',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'connector','flowName','inputAssignments','outputAssignments'};
     }
     public class MatchingRule extends Metadata {
@@ -7950,7 +7951,7 @@ public class MetadataService {
         private String[] matchingRuleItems_type_info = new String[]{'matchingRuleItems',SOAP_M_URI,null,'0','-1','false'};
         private String[] ruleStatus_type_info = new String[]{'ruleStatus',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'booleanFilter','description','label','matchingRuleItems','ruleStatus'};
     }
     public class PasswordPolicies {
@@ -8048,7 +8049,7 @@ public class MetadataService {
         public String label;
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'label'};
     }
     public class FlowDecision extends FlowNode {
@@ -8072,7 +8073,7 @@ public class MetadataService {
         private String[] defaultConnectorLabel_type_info = new String[]{'defaultConnectorLabel',SOAP_M_URI,null,'0','1','false'};
         private String[] rules_type_info = new String[]{'rules',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'defaultConnector','defaultConnectorLabel','rules'};
     }
     public class CustomFeedFilter {
@@ -10644,7 +10645,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] supportsCaching_type_info = new String[]{'supportsCaching',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'contentSource','description','encodingKey','fileContent','fileName','name','supportsCaching'};
     }
     public class Network extends Metadata {
@@ -10750,7 +10751,7 @@ public class MetadataService {
         private String[] urlPathPrefix_type_info = new String[]{'urlPathPrefix',SOAP_M_URI,null,'0','1','false'};
         private String[] welcomeTemplate_type_info = new String[]{'welcomeTemplate',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'allowInternalUserLogin','allowMembersToFlag','allowedExtensions','caseCommentEmailTemplate','changePasswordTemplate','communityRoles','description','disableReputationRecordConversations','emailFooterLogo','emailFooterText','emailSenderAddress','emailSenderName','enableCustomVFErrorPageOverrides','enableDirectMessages','enableGuestChatter','enableGuestFileAccess','enableInvitation','enableKnowledgeable','enableNicknameDisplay','enablePrivateMessages','enableReputation','enableShowAllNetworkSettings','enableSiteAsContainer','enableTalkingAboutStats','enableTopicAssignmentRules','enableTopicSuggestions','enableUpDownVote','feedChannel','forgotPasswordTemplate','gatherCustomerSentimentData','logoutUrl','maxFileSizeKb','navigationLinkSet','networkMemberGroups','networkPageOverrides','newSenderAddress','picassoSite','recommendationAudience','recommendationDefinition','reputationLevels','reputationPointsRules','selfRegProfile','selfRegistration','sendWelcomeEmail','site','status','tabs','urlPathPrefix','welcomeTemplate'};
     }
     public class ActionLinkTemplate {
@@ -10854,7 +10855,7 @@ public class MetadataService {
         private String[] description_type_info = new String[]{'description',SOAP_M_URI,null,'0','1','false'};
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'customFields','description','name'};
     }
     public class SearchSettingsByObject {
@@ -10970,7 +10971,7 @@ public class MetadataService {
         private String[] visibility_type_info = new String[]{'visibility',SOAP_M_URI,null,'0','1','false'};
         private String[] webLinks_type_info = new String[]{'webLinks',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'actionOverrides','allowInChatterGroups','articleTypeChannelDisplay','businessProcesses','compactLayoutAssignment','compactLayouts','customHelp','customHelpPage','customSettingsType','dataStewardGroup','dataStewardUser','deploymentStatus','deprecated','description','enableActivities','enableBulkApi','enableChangeDataCapture','enableDivisions','enableEnhancedLookup','enableFeeds','enableHistory','enableReports','enableSearch','enableSharing','enableStreamingApi','eventType','externalDataSource','externalName','externalRepository','externalSharingModel','fieldSets','fields','gender','historyRetentionPolicy','household','indexes','label','listViews','nameField','pluralLabel','recordTypeTrackFeedHistory','recordTypeTrackHistory','recordTypes','searchLayouts','sharingModel','sharingReasons','sharingRecalculations','startsWith','validationRules','visibility','webLinks'};
     }
     public class FlowTranslation {
@@ -11186,7 +11187,7 @@ public class MetadataService {
         private String[] sessionTimeout_type_info = new String[]{'sessionTimeout',SOAP_M_URI,null,'1','1','false'};
         private String[] sessionTimeoutWarning_type_info = new String[]{'sessionTimeoutWarning',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'externalCommunityUserIdentityVerif','forceLogout','profile','requiredSessionLevel','sessionPersistence','sessionTimeout','sessionTimeoutWarning'};
     }
     public class DashboardComponentColumn {
@@ -11234,7 +11235,7 @@ public class MetadataService {
         private String[] faultConnector_type_info = new String[]{'faultConnector',SOAP_M_URI,null,'0','1','false'};
         private String[] waitEvents_type_info = new String[]{'waitEvents',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'defaultConnector','defaultConnectorLabel','faultConnector','waitEvents'};
     }
     public class FlowStage {
@@ -11266,7 +11267,7 @@ public class MetadataService {
         private String[] password_type_info = new String[]{'password',SOAP_M_URI,null,'0','1','false'};
         private String[] versionNumber_type_info = new String[]{'versionNumber',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'password','versionNumber'};
     }
     public class NavigationMenuItem {
@@ -11348,7 +11349,7 @@ public class MetadataService {
         private String[] uninstallClass_type_info = new String[]{'uninstallClass',SOAP_M_URI,null,'0','1','false'};
         private String[] version_type_info = new String[]{'version',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'apiAccessLevel','description','namespacePrefix','objectPermissions','packageType','postInstallClass','setupWeblink','types','uninstallClass','version'};
     }
     public class SharingReasonTranslation {
@@ -11418,7 +11419,7 @@ public class MetadataService {
         private String[] operator_type_info = new String[]{'operator',SOAP_M_URI,null,'1','1','false'};
         private String[] rightValue_type_info = new String[]{'rightValue',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'leftValueReference','operator','rightValue'};
     }
     public class CallCenterSection {
@@ -11458,7 +11459,7 @@ public class MetadataService {
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] templateAssetSourceName_type_info = new String[]{'templateAssetSourceName',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'application','description','masterLabel','templateAssetSourceName'};
     }
     public class CustomApplication extends Metadata {
@@ -11502,7 +11503,7 @@ public class MetadataService {
         private String[] utilityBar_type_info = new String[]{'utilityBar',SOAP_M_URI,null,'0','1','false'};
         private String[] workspaceConfig_type_info = new String[]{'workspaceConfig',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'actionOverrides','brand','consoleConfig','defaultLandingTab','description','formFactors','isServiceCloudConsole','label','logo','navType','preferences','profileActionOverrides','setupExperience','subscriberTabs','tabs','uiType','utilityBar','workspaceConfig'};
     }
     public class DescribeMetadataResult {
@@ -11528,7 +11529,7 @@ public class MetadataService {
         private String[] objectMapping_type_info = new String[]{'objectMapping',SOAP_M_URI,null,'0','-1','false'};
         private String[] opportunityCreationOptions_type_info = new String[]{'opportunityCreationOptions',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'allowOwnerChange','objectMapping','opportunityCreationOptions'};
     }
     public class OpportunityListFieldsLabelMapping {
@@ -11560,7 +11561,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] sections_type_info = new String[]{'sections',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'autogenerated','baseObject','category','deployed','description','join_x','label','sections'};
     }
     public class DeleteMetadataResponse_element {
@@ -11636,7 +11637,7 @@ public class MetadataService {
         private String[] primaryColor_type_info = new String[]{'primaryColor',SOAP_M_URI,null,'0','1','false'};
         private String[] secondaryColor_type_info = new String[]{'secondaryColor',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'contrastInvertedColor','contrastPrimaryColor','embeddedServiceConfig','font','masterLabel','navBarColor','primaryColor','secondaryColor'};
     }
     public class ProfilePasswordPolicy extends Metadata {
@@ -11664,7 +11665,7 @@ public class MetadataService {
         private String[] passwordQuestion_type_info = new String[]{'passwordQuestion',SOAP_M_URI,null,'1','1','false'};
         private String[] profile_type_info = new String[]{'profile',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'lockoutInterval','maxLoginAttempts','minimumPasswordLength','minimumPasswordLifetime','obscure','passwordComplexity','passwordExpiration','passwordHistory','passwordQuestion','profile'};
     }
     public class RecommendationAudienceDetail {
@@ -11694,7 +11695,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] opportunityAccessLevel_type_info = new String[]{'opportunityAccessLevel',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'caseAccessLevel','contactAccessLevel','description','mayForecastManagerShare','name','opportunityAccessLevel'};
     }
     public class FlowSubflowInputAssignment extends FlowBaseElement {
@@ -11706,7 +11707,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'name','value'};
     }
     public class LiveChatButtonSkills {
@@ -11728,7 +11729,7 @@ public class MetadataService {
         private String[] isActive_type_info = new String[]{'isActive',SOAP_M_URI,null,'1','1','false'};
         private String[] url_type_info = new String[]{'url',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','disableProtocolSecurity','isActive','url'};
     }
     public class ConnectedAppOauthConfig {
@@ -11876,7 +11877,7 @@ public class MetadataService {
         private String[] expression_type_info = new String[]{'expression',SOAP_M_URI,null,'1','1','false'};
         private String[] scale_type_info = new String[]{'scale',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'dataType','expression','scale'};
     }
     public class Picklist {
@@ -11884,11 +11885,11 @@ public class MetadataService {
         public MetadataService.PicklistValue[] picklistValues;
         public Boolean restrictedPicklist;
         public Boolean sorted;
-        private String[] controllingField_type_info = new String[]{'controllingField','http://soap.sforce.com/2006/04/metadata',null,'0','1','false'};
-        private String[] picklistValues_type_info = new String[]{'picklistValues','http://soap.sforce.com/2006/04/metadata',null,'0','-1','false'};
-        private String[] restrictedPicklist_type_info = new String[]{'restrictedPicklist','http://soap.sforce.com/2006/04/metadata',null,'0','1','false'};
-        private String[] sorted_type_info = new String[]{'sorted','http://soap.sforce.com/2006/04/metadata',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/2006/04/metadata','true','false'};
+        private String[] controllingField_type_info = new String[]{'controllingField',SOAP_M_URI,null,'0','1','false'};
+        private String[] picklistValues_type_info = new String[]{'picklistValues',SOAP_M_URI,null,'0','-1','false'};
+        private String[] restrictedPicklist_type_info = new String[]{'restrictedPicklist',SOAP_M_URI,null,'0','1','false'};
+        private String[] sorted_type_info = new String[]{'sorted',SOAP_M_URI,null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'controllingField','picklistValues','restrictedPicklist','sorted'};
     }
     public class Deploy_element {
@@ -11916,7 +11917,7 @@ public class MetadataService {
         public Boolean enableExactTargetForSalesforceApps;
         private String[] enableExactTargetForSalesforceApps_type_info = new String[]{'enableExactTargetForSalesforceApps',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableExactTargetForSalesforceApps'};
     }
     public class AppProfileActionOverride {
@@ -11938,7 +11939,7 @@ public class MetadataService {
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] requiredPermission_type_info = new String[]{'requiredPermission',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'connectedApp','description','label','requiredPermission'};
     }
     public class DuplicateRule {
@@ -12056,7 +12057,7 @@ public class MetadataService {
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] site_type_info = new String[]{'site',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'masterLabel','site'};
     }
     public class WorkflowTimeTrigger {
@@ -12078,7 +12079,7 @@ public class MetadataService {
         public MetadataService.AutoResponseRule[] autoResponseRule;
         private String[] autoResponseRule_type_info = new String[]{'autoResponseRule',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'autoResponseRule'};
     }
     public class LayoutTranslation {
@@ -12106,7 +12107,7 @@ public class MetadataService {
         private String[] publicFolderAccess_type_info = new String[]{'publicFolderAccess',SOAP_M_URI,null,'0','1','false'};
         private String[] sharedTo_type_info = new String[]{'sharedTo',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','accessType','folderShares','name','publicFolderAccess','sharedTo'};
     }
     public class ForecastingSettings extends Metadata {
@@ -12124,7 +12125,7 @@ public class MetadataService {
         private String[] forecastingDisplayedFamilySettings_type_info = new String[]{'forecastingDisplayedFamilySettings',SOAP_M_URI,null,'0','-1','false'};
         private String[] forecastingTypeSettings_type_info = new String[]{'forecastingTypeSettings',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'displayCurrency','enableForecasts','forecastingCategoryMappings','forecastingDisplayedFamilySettings','forecastingTypeSettings'};
     }
     public class ReportAggregateReference {
@@ -12178,7 +12179,7 @@ public class MetadataService {
         private String[] dataType_type_info = new String[]{'dataType',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name', 'dataType','value'};
     }
     public class ConnectedAppSamlConfig {
@@ -12260,7 +12261,7 @@ public class MetadataService {
         private String[] relationships_type_info = new String[]{'relationships',SOAP_M_URI,null,'0','1','false'};
         private String[] versions_type_info = new String[]{'versions',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'format','language','masterLabel','originNetwork','relationships','versions'};
     }
     public class DuplicateRuleFilterItem {
@@ -12339,7 +12340,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] value_type_info = new String[]{'value',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues', 'name','value'};
     }
     public class SkillUserAssignments {
@@ -12381,7 +12382,7 @@ public class MetadataService {
         private String[] inputReference_type_info = new String[]{'inputReference',SOAP_M_URI,null,'0','1','false'};
         private String[] object_x_type_info = new String[]{'object',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'processMetadataValues','description','name','label','locationX','locationY', 'connector','faultConnector','filters','inputAssignments','inputReference','object_x'};
     }
     public class FlowInputValidationRuleTranslation {
@@ -12543,7 +12544,7 @@ public class MetadataService {
         private String[] maps_type_info = new String[]{'maps',SOAP_M_URI,null,'0','-1','false'};
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName','content', 'maps','masterLabel'};
     }
     public class SummaryLayout {
@@ -12575,7 +12576,7 @@ public class MetadataService {
         private String[] masterLabel_type_info = new String[]{'masterLabel',SOAP_M_URI,null,'1','1','false'};
         private String[] sorted_type_info = new String[]{'sorted',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'customValue','description','masterLabel','sorted'};
     }
     public class QuickActionLayout {
@@ -12597,7 +12598,7 @@ public class MetadataService {
         private String[] name_type_info = new String[]{'name',SOAP_M_URI,null,'1','1','false'};
         private String[] priority_type_info = new String[]{'priority',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'description','name','priority'};
     }
     public class ListMetadataResponse_element {
@@ -12673,7 +12674,7 @@ public class MetadataService {
         private String[] userProvisioning_type_info = new String[]{'userProvisioning',SOAP_M_URI,null,'0','1','false'};
         private String[] validationCert_type_info = new String[]{'validationCert',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'attributeName','attributeNameIdFormat','decryptionCertificate','errorUrl','executionUserId','identityLocation','identityMapping','issuer','loginUrl','logoutUrl','name','oauthTokenEndpoint','redirectBinding','requestSignatureMethod','requestSigningCertId','salesforceLoginUrl','samlEntityId','samlJitHandlerId','samlVersion','singleLogoutBinding','singleLogoutUrl','userProvisioning','validationCert'};
     }
     public class DescribeValueType_element {
@@ -12809,7 +12810,7 @@ public class MetadataService {
         private String[] businessHours_type_info = new String[]{'businessHours',SOAP_M_URI,null,'0','-1','false'};
         private String[] holidays_type_info = new String[]{'holidays',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'businessHours','holidays'};
     }
     public class TopicsForObjects extends Metadata {
@@ -12821,7 +12822,7 @@ public class MetadataService {
         private String[] enableTopics_type_info = new String[]{'enableTopics',SOAP_M_URI,null,'1','1','false'};
         private String[] entityApiName_type_info = new String[]{'entityApiName',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'enableTopics','entityApiName'};
     }
     public class FlowChoiceUserInputTranslation {
@@ -12901,7 +12902,7 @@ public class MetadataService {
         private String[] enableContractHistoryTracking_type_info = new String[]{'enableContractHistoryTracking',SOAP_M_URI,null,'0','1','false'};
         private String[] notifyOwnersOnContractExpiration_type_info = new String[]{'notifyOwnersOnContractExpiration',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'autoCalculateEndDate','autoExpirationDelay','autoExpirationRecipient','autoExpireContracts','enableContractHistoryTracking','notifyOwnersOnContractExpiration'};
     }
     public class EscalationRules extends Metadata {
@@ -12911,7 +12912,7 @@ public class MetadataService {
         public MetadataService.EscalationRule[] escalationRule;
         private String[] escalationRule_type_info = new String[]{'escalationRule',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'escalationRule'};
     }
     public class NetworkTabSet {
@@ -12965,7 +12966,7 @@ public class MetadataService {
         private String[] smallCompanyLogoImg_type_info = new String[]{'smallCompanyLogoImg',SOAP_M_URI,null,'0','1','false'};
         private String[] waitingStateBackgroundImg_type_info = new String[]{'waitingStateBackgroundImg',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'avatarImg','customPrechatComponent','embeddedServiceConfig','embeddedServiceQuickActions','enabled','fontSize','headerBackgroundImg','liveAgentChatUrl','liveAgentContentUrl','liveChatButton','liveChatDeployment','masterLabel','prechatBackgroundImg','prechatEnabled','prechatJson','scenario','smallCompanyLogoImg','waitingStateBackgroundImg'};
     }
     public class CustomField extends Metadata {
@@ -13083,7 +13084,7 @@ public class MetadataService {
         private String[] visibleLines_type_info = new String[]{'visibleLines',SOAP_M_URI,null,'0','1','false'};
         private String[] writeRequiresMasterRead_type_info = new String[]{'writeRequiresMasterRead',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'businessOwnerGroup','businessOwnerUser','businessStatus','caseSensitive','customDataType','defaultValue','deleteConstraint','deprecated','description','displayFormat','displayLocationInDecimal','encrypted','escapeMarkup','externalDeveloperName','externalId','fieldManageability','formula','formulaTreatBlanksAs','inlineHelpText','isConvertLeadDisabled','isFilteringDisabled','isNameField','isSortingDisabled','label','length','lookupFilter','maskChar','maskType','metadataRelationshipControllingField','populateExistingRows','precision','referenceTargetField','referenceTo','relationshipLabel','relationshipName','relationshipOrder','reparentableMasterDetail','required','restrictedAdminField','scale','securityClassification','startingNumber','stripMarkup','summarizedField','summaryFilterItems','summaryForeignKey','summaryOperation','trackFeedHistory','trackHistory','trackTrending','type_x','unique','valueSet','visibleLines','writeRequiresMasterRead'};
     }
     public class KeywordList {
@@ -13185,7 +13186,7 @@ public class MetadataService {
         private String[] webLinks_type_info = new String[]{'webLinks',SOAP_M_URI,null,'0','-1','false'};
         private String[] workflowTasks_type_info = new String[]{'workflowTasks',SOAP_M_URI,null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] type_att_info = new String[]{'xsi:type'};
+        private String[] type_att_info = new String[]{XSI_TYPE};
         private String[] field_order_type_info = new String[]{'fullName', 'caseValues','fieldSets','fields','gender','layouts','nameFieldLabel','quickActions','recordTypes','sharingReasons','standardFields','startsWith','validationRules','webLinks','workflowTasks'};
     }
     public class ForecastingTypeSettings {
@@ -13403,7 +13404,7 @@ public class MetadataService {
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public MetadataService.CancelDeployResult cancelDeploy(String String_x) {
+        public MetadataService.CancelDeployResult cancelDeploy(String string_x) {
             MetadataService.CancelDeploy_element request_x = new MetadataService.CancelDeploy_element();
             request_x.String_x = String_x;
             MetadataService.CancelDeployResponse_element response_x;
@@ -13487,10 +13488,10 @@ public class MetadataService {
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public MetadataService.AsyncResult deploy(String ZipFile,MetadataService.DeployOptions DeployOptions) {
+        public MetadataService.AsyncResult deploy(String zipFile,MetadataService.DeployOptions deployOptions) {
             MetadataService.Deploy_element request_x = new MetadataService.Deploy_element();
-            request_x.ZipFile = ZipFile;
-            request_x.DeployOptions = DeployOptions;
+            request_x.ZipFile = zipFile;
+            request_x.DeployOptions = deployOptions;
             MetadataService.DeployResponse_element response_x;
             Map<String, MetadataService.DeployResponse_element> response_map_x = new Map<String, MetadataService.DeployResponse_element>();
             response_map_x.put('response_x', response_x);

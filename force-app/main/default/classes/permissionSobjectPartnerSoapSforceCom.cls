@@ -1,5 +1,5 @@
 public class PermissionSobjectPartnerSoapSforceCom {
-    private static final String SOBJECT_PARTNER_SOAP_URN = 'urn:sobject.partner.soap.sforce.com';
+    public static final String SOBJECT_PARTNER_SOAP_URN = 'urn:sobject.partner.soap.sforce.com';
     public class SObject_x {
         public String type_x;
         public String[] fieldsToNull;

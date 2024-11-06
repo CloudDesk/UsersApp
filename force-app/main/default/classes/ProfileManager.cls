@@ -1,6 +1,6 @@
 //This class is used for edit,delete,update Profiles.
 public with Sharing class ProfileManager {
-    private static final String ERROR_MESSAGE = 'Error: ';
+    public static final String ERROR_MESSAGE = 'Error: ';
     //This method is used to fetch profile Name
     @AuraEnabled(cacheable=true)
     public static List<String> getProfileName(String profileId) {

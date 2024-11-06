@@ -1,8 +1,8 @@
 //This class is used for create,edit,delete,clone functionality for Permission Set Group.
 public with sharing class PermissionSetGroupManager {	
 
-    private static final String MUTED_LABEL = ' Muted';
-    private static final String MUTED_DEV_NAME = '_Muted';
+    public static final String MUTED_LABEL = ' Muted';
+    public static final String MUTED_DEV_NAME = '_Muted';
 
     //This method is used to fetch permission set group details.
     @AuraEnabled(cacheable=true)

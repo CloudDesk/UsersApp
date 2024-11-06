@@ -1,7 +1,7 @@
 //This Class is Used to Handle object and Field Permissions
 // Used In PermissionAnalyzerObject _LWC
 public with sharing class PermissionAnalyzerObjectServer {
-    private static final String PERM_DEP_QUERY_STRING = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency WHERE PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\' ';
+    public static final String PERM_DEP_QUERY_STRING = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency WHERE PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\' ';
     public class GetFieldWrapper {
         @AuraEnabled
         public List<Map<String, Object>> fieldLabelMap { get; set; }
