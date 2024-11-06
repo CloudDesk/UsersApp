@@ -170,7 +170,6 @@ public class PermissionSetManagerTest {
         System.assertEquals('Cloned_Permission_Set', clonedPermissionSet.Name);
         System.assertEquals(Cloned_PermSet_FIELD, clonedPermissionSet.Label);
         System.assertEquals(Cloned_PermSet_Description, clonedPermissionSet.Description);
-
     }
     
     //This test method is used to check the logics for getAssignedUserForPermissionSet method in PermissionSetManager class.
@@ -220,9 +219,7 @@ public class PermissionSetManagerTest {
         Test.startTest();
         List<Map<String, String>> permissionSetList = PermissionSetManager.getSetPermission();
         Test.stopTest();
-        
-        System.assertNotEquals(1, permissionSetList.size(), 'Two permission sets should be returned.');
-                
+        System.assertNotEquals(1, permissionSetList.size(), 'Two permission sets should be returned.'); 
     }
     
     //This test method is used to check the logics for getPermissionSetLicenseCreate method in PermissionSetManager class.
@@ -236,7 +233,6 @@ public class PermissionSetManagerTest {
         
         List<Map<String, String>> userLicenseList = result.get('UserLicense');
         System.assertNotEquals(2, userLicenseList.size(), 'There should be two UserLicense records.');
-        
     }
     
     //This test method is used to check the logics for getProfiles method in PermissionSetManager class.
@@ -283,7 +279,6 @@ public class PermissionSetManagerTest {
         Test.stopTest();
         
         System.assertNotEquals(null,result,'There Should not be Null');
-       
     }
     
     //This test method is used to check the logics for getCombinedPermissionsforProfile(objPerm) method in PermissionSetManager class.
@@ -303,11 +298,8 @@ public class PermissionSetManagerTest {
         insert objPermissions;
         Test.startTest();
         PermissionSetManager.PermissionFieldWrap result = PermissionSetManager.getCombinedPermissionsforProfile(testPermSet.Id);
-        //PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
         Test.stopTest();
-        
         System.assertNotEquals(null,result,'There Should not be Null');
-       
     }
     
     //This test method is used to check the logics for updateSystemPermissions(Success method) method in PermissionSetManager class.
@@ -324,7 +316,6 @@ public class PermissionSetManagerTest {
     //This test method is used to check the logics for updateSystemPermissions(Fail method) method in PermissionSetManager class.
     @IsTest
     Static Void testUpdateSystemPermissions_DmlException(){
-        PermissionSet testPermissionSet = [SELECT Id, Name, PermissionsApiEnabled FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         Test.startTest();
         try {
             PermissionSetManager.updateSystemPermissions('{"PermissionsApiEnabled":true}',null);
