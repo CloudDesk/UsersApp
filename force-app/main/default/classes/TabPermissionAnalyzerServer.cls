@@ -168,19 +168,7 @@ public with sharing class TabPermissionAnalyzerServer {
                             existingVisibilities.put(visibility.tab, visibility);
                         }
                     }
-                    for (Map<String, Object> tab : tabToUpdate) {
-                        String tabName = (String) tab.get('Name');
-                        String visibility = (String) tab.get('Visibility');
-                        MetadataService.ProfileTabVisibility tabVisibility;
-                        if (existingVisibilities.containsKey(tabName)) {
-                            tabVisibility = existingVisibilities.get(tabName);
-                        } else {
-                            tabVisibility = new MetadataService.ProfileTabVisibility();
-                            tabVisibility.tab = tabName;
-                        }
-                        tabVisibility.visibility = visibility;
-                        updatedProfile.tabVisibilities.add(tabVisibility);
-                    }
+                    updatedProfile.tabVisibilities = consolidatingTabVisibilitiesToUpdate(tabToUpdate, existingVisibilities);
                     profilesToUpdate.add(updatedProfile);
                 }
                 if (!profilesToUpdate.isEmpty()) {
@@ -192,6 +180,24 @@ public with sharing class TabPermissionAnalyzerServer {
             System.debug('Error updating profiles: ' + e.getMessage());
             handleException('Error updating profiles: ', e);
         }
+    }
+    // Collecting tab visibilities from input Tabs
+    private static List<MetadataService.ProfileTabVisibility> consolidatingTabVisibilitiesToUpdate(List< Map<String, Object> > tabsToUpdate, Map < String, MetadataService.ProfileTabVisibility > existingVisibilities){
+        List< MetadataService.ProfileTabVisibility > tabVisibilitiesToUpdate = new List< MetadataService.ProfileTabVisibility >();    
+        for (Map<String, Object> tab : tabsToUpdate) {
+            String tabName = (String) tab.get('Name');
+            String visibility = (String) tab.get('Visibility');
+            MetadataService.ProfileTabVisibility tabVisibility;
+            if (existingVisibilities.containsKey(tabName)) {
+                tabVisibility = existingVisibilities.get(tabName);
+            } else {
+                tabVisibility = new MetadataService.ProfileTabVisibility();
+                tabVisibility.tab = tabName;
+            }
+            tabVisibility.visibility = visibility;
+            tabVisibilitiesToUpdate.add(tabVisibility);
+        }
+        return tabVisibilitiesToUpdate;
     }
     private static void handleUpsertResults(List < MetadataService.UpsertResult > results) {
         for (MetadataService.UpsertResult upsertResult: results) {
