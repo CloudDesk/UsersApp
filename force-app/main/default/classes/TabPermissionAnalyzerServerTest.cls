@@ -78,8 +78,24 @@ private class TabPermissionAnalyzerServerTest {
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
         List<TabPermissionAnalyzerServer.TabSettingsWrapper> result = TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', 'New Test Permission Set 1');
+        handlingErrorsAndExceptionsTest();
         Test.stopTest();
         System.assertNotEquals(null, result, 'The result should not be null.');
         System.assertEquals(1, result.size(), 'The result should contain exactly 1 TabSettingsWrapper entry.');
+    }
+    static void handlingErrorsAndExceptionsTest(){
+        List<MetadataService.Error> errorList = new List<MetadataService.Error>();
+        MetadataService.Error error = new MetadataService.Error();
+        error.message = 'Error Occured';
+        error.statusCode = '400';
+        error.fields = new List<String>();
+        error.fields.add('Name');
+        errorList.add(error);
+        try{
+            TabPermissionAnalyzerServer.handleErrorMessages(errorList);
+        }
+        catch (Exception e) {
+            System.assertEquals(e.getMessage(), 'Script-thrown exception', 'Exception Occured as expected');
+        }
     }
 }

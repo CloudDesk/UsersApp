@@ -45,7 +45,8 @@ public with sharing class TabPermissionAnalyzerServer {
         }
         System.debug('Tab visibility settings: ' + tabVisibilityMap);
         return tabVisibilityMap;
-    }    
+    }
+    @TestVisible
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
         System.debug(LoggingLevel.ERROR, fullMessage);
@@ -81,11 +82,6 @@ public with sharing class TabPermissionAnalyzerServer {
             this.tab = tab;
             this.visibility = visibility;
         }
-        public TabSettingsWrapper() {
-            // Initialize fields if necessary
-            this.tab = '';
-            this.visibility = '';
-        }
     }
     //This is the Method Used to Update TabVisibiltity For PermissionSet Deserialize and call an update method
     @AuraEnabled
@@ -110,13 +106,26 @@ public with sharing class TabPermissionAnalyzerServer {
         if (permissionSets.isEmpty()) {
             permissionSet.fullName = persetname;
         }
+        permissionSet.tabSettings = buildTabSettingsList(permissionSet, tabSettingsResult);
+
+        MetadataService.SaveResult[] results = instance.service.updateMetadata(new List < MetadataService.Metadata > {
+            permissionSet
+                });
+        handleSaveResult(results);
+
+        return tabSettingsResult;
+    }
+
+    // Building Tab Settings List
+    private static List < MetadataService.PermissionSetTabSetting > buildTabSettingsList(MetadataService.PermissionSet permissionSet, List < TabSettingsWrapper > tabSettingsResult){
+        List < MetadataService.PermissionSetTabSetting > tabSettingList = new List < MetadataService.PermissionSetTabSetting > ();
         Map < String, MetadataService.PermissionSetTabSetting > tabSettingsMap = new Map < String, MetadataService.PermissionSetTabSetting > ();
+
         if (permissionSet.tabSettings != null) {
             for (MetadataService.PermissionSetTabSetting setting: permissionSet.tabSettings) {
                 tabSettingsMap.put(setting.tab, setting);
             }
         }
-        List < MetadataService.PermissionSetTabSetting > updatedTabSettings = new List < MetadataService.PermissionSetTabSetting > ();
         for (TabSettingsWrapper wrapper : tabSettingsResult) {
             if (wrapper.visibility != null) {
                 MetadataService.PermissionSetTabSetting tabSetting;
@@ -127,22 +136,19 @@ public with sharing class TabPermissionAnalyzerServer {
                     tabSetting.tab = wrapper.tab;
                 }
                 tabSetting.visibility = wrapper.visibility;
-                updatedTabSettings.add(tabSetting);
+                tabSettingList.add(tabSetting);
             }
         }
-        permissionSet.tabSettings = updatedTabSettings;
-        MetadataService.SaveResult[] results = instance.service.updateMetadata(new List < MetadataService.Metadata > {
-            permissionSet
-                });
-        for (MetadataService.SaveResult result: results) {
+
+        return tabSettingList;
+    }
+    // Handling Save Results
+    private static void handleSaveResult(List<MetadataService.SaveResult> saveResultList){
+        for (MetadataService.SaveResult result: saveResultList) {
             if (!result.success) {
-                for (MetadataService.Error error: result.errors) {
-                    System.debug('Error: ' + error.message);
-                }
-                handleException('Failed to update PermissionSet: ' + result.errors[0].message, null);
+                handleErrorMessages(result.errors);
             }
         }
-        return tabSettingsResult;
     }
     //This is Methos Used to updated TabVIsibility for Profile Using MetadataAPI
     @AuraEnabled
@@ -191,16 +197,21 @@ public with sharing class TabPermissionAnalyzerServer {
         for (MetadataService.UpsertResult upsertResult: results) {
             if (!upsertResult.success) {
                 String errorMessage = 'Error updating profile: ' + upsertResult.errors[0].message;
-                for (MetadataService.Error error: upsertResult.errors) {
-                    System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
-                    if (error.fields != null) {
-                        System.debug('Error Fields: ' + String.join(error.fields, ', '));
-                    }
-                }
-                handleException(errorMessage, null);              
+                handleErrorMessages(upsertResult.errors);         
             } else {
                 System.debug('Tab Setting visibilities updated successfully for: ' + upsertResult.fullName);
             }
         }
+    }
+    // Handling result error messages
+    @TestVisible
+    private static void handleErrorMessages(List<MetadataService.Error> errors){
+        for (MetadataService.Error error: errors) {
+            System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+            if (error.fields != null) {
+                System.debug('Error Fields: ' + String.join(error.fields, ', '));
+            }
+        }
+        handleException('Exception: ' + errors[0].message, null);
     }
 }
