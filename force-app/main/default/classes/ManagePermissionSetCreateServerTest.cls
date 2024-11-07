@@ -212,7 +212,7 @@ public class ManagePermissionSetCreateServerTest {
         List<Id> userIds = new List<Id>{ testUser.Id };
         Test.startTest();      
         try{
-            String createdPermSetId = ManagePermissionSetCreateServer.createPermissionSetWithTabsAndUsers(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+            ManagePermissionSetCreateServer.createPermissionSetWithTabsAndUsers(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
                 'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}, tabSettingsJson, userIds);
             System.assert(false, Error_Thrown_Message);
             
