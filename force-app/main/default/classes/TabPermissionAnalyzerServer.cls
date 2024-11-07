@@ -202,7 +202,6 @@ public with sharing class TabPermissionAnalyzerServer {
     private static void handleUpsertResults(List < MetadataService.UpsertResult > results) {
         for (MetadataService.UpsertResult upsertResult: results) {
             if (!upsertResult.success) {
-                String errorMessage = 'Error updating profile: ' + upsertResult.errors[0].message;
                 handleErrorMessages(upsertResult.errors);         
             } else {
                 System.debug('Tab Setting visibilities updated successfully for: ' + upsertResult.fullName);
