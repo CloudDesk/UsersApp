@@ -400,21 +400,8 @@ public with sharing class PermissionAnalyzerObjectServer {
                                           WHERE ParentId =: permissionSetId AND Field IN: fieldWrapperMap.keySet() LIMIT 50000
                                          ]) {
                                              existingPermissionsMap.put(fieldPerm.Field, fieldPerm);
-                                         }
-        for (String fieldName: fieldWrapperMap.keySet()) {
-            FieldPermissionUpdateWrapper fieldPermWrap = fieldWrapperMap.get(fieldName);
-            FieldPermissions permission = existingPermissionsMap.containsKey(fieldName) ?
-                existingPermissionsMap.get(fieldName) :
-            new FieldPermissions(SObjectType = objName, Field = fieldName, ParentId = permissionSetId);            
-            if (fieldPermType != 'MutePermissions') {
-                permission.PermissionsRead = fieldPermWrap.PermissionsRead;
-                permission.PermissionsEdit = fieldPermWrap.PermissionsEdit;
-            } else {
-                permission.PermissionsRead = fieldPermWrap.mutedPermissionsRead;
-                permission.PermissionsEdit = fieldPermWrap.mutedPermissionsEdit;
-            }            
-            permissionsToUpsert.add(permission);
-        }
+                                         }       	
+        permissionsToUpsert = updateFieldPermissionsHelper(existingPermissionsMap,objName,fieldWrapperMap,permissionSetId,fieldPermType);
         Map<String,Boolean> checkAccessLevelForFieldPermissions = PermissionAnalyzerServer.getObjDefinition('FieldPermissions');
         if (!permissionsToUpsert.isEmpty() && checkAccessLevelForFieldPermissions.get('Create') 
             && checkAccessLevelForFieldPermissions.get('Update')) {
@@ -427,5 +414,24 @@ public with sharing class PermissionAnalyzerObjectServer {
                 }
             }
         return null;
+    }  
+   //This Helper Method for updateFieldPermissions is used to handle fieldPermissions to update.
+    private static List<FieldPermissions> updateFieldPermissionsHelper(Map <String, FieldPermissions> existingPermissionsMap,String objName ,Map <String, FieldPermissionUpdateWrapper> fieldWrapperMap, String permissionSetId, String fieldPermType){
+        List<FieldPermissions> fieldPermList = new List<FieldPermissions>();
+        for (String fieldName: fieldWrapperMap.keySet()) {
+            FieldPermissionUpdateWrapper fieldPermWrap = fieldWrapperMap.get(fieldName);
+            FieldPermissions permission = existingPermissionsMap.containsKey(fieldName) ?
+                existingPermissionsMap.get(fieldName) :
+            new FieldPermissions(SObjectType = objName, Field = fieldName, ParentId = permissionSetId);            
+            if (fieldPermType != 'MutePermissions') {
+                permission.PermissionsRead = fieldPermWrap.PermissionsRead;
+                permission.PermissionsEdit = fieldPermWrap.PermissionsEdit;
+            } else {
+                permission.PermissionsRead = fieldPermWrap.mutedPermissionsRead;
+                permission.PermissionsEdit = fieldPermWrap.mutedPermissionsEdit;
+            }            
+            fieldPermList.add(permission);
+        }
+        return fieldPermList;
     }
 }
