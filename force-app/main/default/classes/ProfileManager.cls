@@ -50,26 +50,32 @@ public with Sharing class ProfileManager {
             MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List<MetadataService.Profile>{updatedProfile});            
             if (!results.isEmpty()) {
                 MetadataService.UpsertResult upsertResult = results[0];
-                if (upsertResult.success) {
-                    returnMap.put('label', upsertResult.fullName);
-                    returnMap.put('description', newDescription);
-                } else {
-                    String errorMessage = 'Error updating profile: ' + (upsertResult.errors != null && !upsertResult.errors.isEmpty() ? upsertResult.errors[0].message : 'Unknown error');
-                    for (MetadataService.Error error : upsertResult.errors) {
-                        System.debug(ERROR_MESSAGE + error.message + ' Status Code: ' + error.statusCode);
-                        if (error.fields != null) {
-                            for (String field : error.fields) {
-                                System.debug('Error Field: ' + field);
-                            }
-                        }
-                    }
-                    throw new AuraHandledException(errorMessage);
-                }
+                returnMap = updateProfileHelper(upsertResult,newDescription);
             }
         }
         System.debug('Return map: ' + returnMap);
         return returnMap;
     }    
+    //This is helper Method for updateProfile
+    private static Map<String,String> updateProfileHelper(MetadataService.UpsertResult upsertResult, String newDescription){
+        Map<String, String> returnMap = new Map<String, String>(); 
+        if (upsertResult.success) {
+            returnMap.put('label', upsertResult.fullName);
+            returnMap.put('description', newDescription);
+        } else {
+            String errorMessage = 'Error updating profile: ' + (upsertResult.errors != null && !upsertResult.errors.isEmpty() ? upsertResult.errors[0].message : 'Unknown error');
+            for (MetadataService.Error error : upsertResult.errors) {
+                System.debug(ERROR_MESSAGE + error.message + ' Status Code: ' + error.statusCode);
+                if (error.fields != null) {
+                    for (String field : error.fields) {
+                        System.debug('Error Field: ' + field);
+                    }
+                }
+            }
+            throw new AuraHandledException(errorMessage);
+        }
+        return returnMap;
+    }
     //This method is used for delete functionality in profile
     @AuraEnabled
     public static Void deleteProfile(String profileName) {
@@ -349,46 +355,7 @@ public with Sharing class ProfileManager {
     @AuraEnabled
     //This method is used to update system permissions & its dependencies in profile.
     public static Map<String, Boolean> updateSystemPermissionsProf(String profileName,Map<String, Boolean> systemPermissions) {
-        UserAccessManager instance = new UserAccessManager();
-        Map<String, Boolean> updatedResult = new Map<String, Boolean>();  
-        List<MetadataService.Profile> profiles = (List<MetadataService.Profile>) instance.service.readMetadata('Profile',new List<String>{ profileName }).getRecords();
-        List<MetadataService.Profile> profilesToUpdate = new List<MetadataService.Profile>();   
-        for (MetadataService.Profile profile : profiles) {
-            MetadataService.Profile updatedProfile = new MetadataService.Profile();
-            updatedProfile.fullName = profile.fullName;
-            updatedProfile.userPermissions = new List<MetadataService.ProfileUserPermission>();
-            for (String permissionName : systemPermissions.keySet()) {
-                MetadataService.ProfileUserPermission newPermission = new MetadataService.ProfileUserPermission();
-                newPermission.name = permissionName;
-                newPermission.enabled = systemPermissions.get(permissionName);
-                updatedProfile.userPermissions.add(newPermission);
-            }
-            profilesToUpdate.add(updatedProfile);
-        }        
-        MetadataService.UpsertResult[] results = instance.service.upsertMetadata(profilesToUpdate);  
-        for (MetadataService.UpsertResult upsertResult : results) {
-            if (!upsertResult.success) {
-                for (MetadataService.Error error : upsertResult.errors) {
-                    System.debug(ERROR_MESSAGE + error.message + ' Status Code: ' + error.statusCode);
-                    if (error.fields != null) {
-                        for (String field : error.fields) {
-                            System.debug('Error Field: ' + field);
-                        }
-                    }
-                }
-                throw new AuraHandledException('Error updating profile: ' + upsertResult.errors[0].message);
-            } else {
-                for (MetadataService.Profile updateProf : profilesToUpdate) {
-                    System.debug('updateProf: ' + updateProf);
-                    if (updateProf.userPermissions != null) {
-                        for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
-                            updatedResult.put(updateProfUser.name, updateProfUser.enabled);
-                        }
-                    }
-                }
-            }
-        }
-        System.debug('updatedResult: ' + updatedResult);
+        Map<String, Boolean> updatedResult = UserPermissionAnalyzerServer.profileUserPermissionsUpdate(new List<String>{ profileName },systemPermissions);  
         return updatedResult;
     }    
     //Wrapper class for object level permissions.
