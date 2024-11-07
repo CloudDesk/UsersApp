@@ -25,28 +25,9 @@ public class PermissionAnalyzerObjectServerTest {
         insert permSets;
         insert mutingPermSets;
         insert permSetGroups;
-        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();
-        for(Integer i = 1; i <= 4; i++)
-        {
-            String permSetGroupId;
-            if (Math.mod(i, 2) == 1) { 
-                permSetGroupId = permSetGroups[0].Id;
-            }else{
-                permSetGroupId = permSetGroups[1].Id;
-            }
-            String permSetId;
-            if(i == 1){
-                permSetId = permSets[1].Id;
-            }else if(i == 2){
-                permSetId = permSets[2].Id;
-            }else if(i == 3){
-                permSetId = mutingPermSets[0].Id;
-            }else{
-                permSetId = mutingPermSets[1].Id;
-            }
-            permSetGroupComponents.add(new PermissionSetGroupComponent(PermissionSetId = permSetId, PermissionSetGroupId = permSetGroupId));
-        }
-        insert permSetGroupComponents;
+        
+        insertPermissions(permSets, mutingPermSets, permSetGroups);
+        
         List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
         for(Integer i = 1; i <= 2; i++){
             String permSetId;
@@ -57,12 +38,27 @@ public class PermissionAnalyzerObjectServerTest {
             }
             permSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permSetId, AssigneeId = userList[0].Id));
         }
-        insert permSetAssignments;
+        insert permSetAssignments;      
+    }
+    
+    // Creating Object, Field and group Permissions;
+    static void insertPermissions(List<PermissionSet> permSets, List<MutingPermissionSet> mutingPermSets, List<PermissionSetGroup> permSetGroups){
         List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
+        List<FieldPermissions> fieldPermissions = new List<FieldPermissions>();
+        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();
+        
         for(Integer i = 1; i <= 4; i++)
         {
             String permSetId;
             Boolean permissionRead;
+            String permSetGroupId;
+            
+            if (Math.mod(i, 2) == 1) { 
+                permSetGroupId = permSetGroups[0].Id;
+            }else{
+                permSetGroupId = permSetGroups[1].Id;
+            }
+            
             if(i == 1){
                 permSetId = permSets[1].Id;
                 permissionRead = true;
@@ -79,25 +75,13 @@ public class PermissionAnalyzerObjectServerTest {
             objPermissions.add(new ObjectPermissions(SObjectType = 'Opportunity', ParentId = permSetId,
                                                      PermissionsRead = permissionRead, PermissionsCreate = true, PermissionsEdit = false,
                                                      PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
-        }
-        insert objPermissions;
-        List<FieldPermissions> fieldPermissions = new List<FieldPermissions>();
-        for(Integer i = 1; i <= 4; i++)
-        {
-            String permSetId;
-            if(i == 1){
-                permSetId = permSets[1].Id;
-            }else if(i == 2){
-                permSetId = permSets[2].Id;
-            }else if(i == 3){
-                permSetId = mutingPermSets[0].Id;
-            }else{
-                permSetId = mutingPermSets[1].Id;
-            }
             fieldPermissions.add(new FieldPermissions(SObjectType = 'Opportunity', Field = OPPORTUNITY_Amount_FIELD, ParentId = permSetId,
                                                       PermissionsRead = true, PermissionsEdit = false));
+            permSetGroupComponents.add(new PermissionSetGroupComponent(PermissionSetId = permSetId, PermissionSetGroupId = permSetGroupId));
         }
-        insert fieldPermissions;       
+        insert objPermissions;
+        insert fieldPermissions; 
+        insert permSetGroupComponents;
     }
     //This test method is used to check the functionality of checkSobjectFoundInPicklist method in PermissionAnalyzerObjectServer class
     @IsTest
