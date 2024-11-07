@@ -65,57 +65,22 @@ public with sharing class PermissionTabServer {
         Set<Id> idToFetchPermList = new Set<Id>();
         Set<Id> permissionSetIdSet = new Set<Id>();
         Set<Id> assigneeIdSet = new Set<Id>();
-        Map<Id, user> userMap = new Map<Id, User>();
-        List<String> conditions = new List<String>();
+        Map<Id, user> userMap = new Map<Id, User>();        
         try{
             if(!userPermissions.isEmpty()){
-                String permissionQuery ='Select Id, Name, Profile.Name, Type, Label From PermissionSet Where ';
-                for(String userPerm : userPermissions){
-                    conditions.add(userPerm + ' =true');
-                }
-                permissionQuery += String.join(conditions, ' And ');
-                for (permissionSet permSet : Database.query(permissionQuery)) {
-                    permissionSetList.add(permSet);
-                    if(perSetId == 'All'){
-                        permissionSetIdSet.add(permSet.Id);
-                    }
-                }  
-                if(perSetId != 'All'){
-                    permissionSetIdSet.add(perSetId);
-                }
+                Map<String,Object> userResult = getPermsandUsersOfSelectedPermsHelperForUser(userPermissions,perSetId);
+                permissionSetIdSet = (Set<Id>) userResult.get('permissionSetID');
+                permissionSetList = (List<PermissionSet>) userResult.get('permissionSetList');
             }
-            if (objName != null &&objName != '' &&objPermission != null &&objPermission != '') {
-                string objectPermissionQuery ='select id, SobjectType, ParentId,parent.Name,parent.Label, Parent.Profile.Name, parent.Type from ObjectPermissions where SobjectType =: objName and  ' +objPermission +' =true';  
-                for (
-                    ObjectPermissions objperm : Database.query(objectPermissionQuery)
-                ) {
-                    idToFetchPermList.add(objperm.ParentId);
-                    if(perSetId == 'All'){
-                        permissionSetIdSet.add(objperm.ParentId);
-                    }
-                }
-                permissionSetList = [SELECT id, name, Profile.name, Type, Label FROM PermissionSet WHERE id IN :idToFetchPermList];
-                if (perSetId != 'All') {
-                    permissionSetIdSet.add(perSetId);
-                }
+            if (objName != null && objName != '' && objPermission != null && objPermission != '') {
+                Map<String,Object> objResult = getPermsandUsersOfSelectedPermsHelperForObj(objName,objPermission,perSetId);
+                permissionSetIdSet = (Set<Id>) objResult.get('permissionSetID');
+                permissionSetList = (List<PermissionSet>) objResult.get('permissionSetList');
             } 
             if (objFieldName != null && objFieldName != '' && fieldName != null && fieldName != '' && fieldPerm != null && fieldPerm != '') {               
-                string fieldPermissionQuery =
-                    'select Id, SobjectType, ParentId, Field, parent.Label, Parent.Name, Parent.Profile.Name, parent.Type ' +
-                    'from FieldPermissions ' +
-                    'where field = \'' + objFieldName + '.' + fieldName + '\' ' +
-                    'and ' + fieldPerm + ' = true';
-                for(fieldPermissions fieldPermission : Database.query(fieldPermissionQuery))          
-                {
-                    idToFetchPermList.add(fieldPermission.ParentId);
-                    if(perSetId == 'All'){
-                        permissionSetIdSet.add(fieldPermission.ParentId);
-                    }
-                }
-                permissionSetList = [SELECT id, name, Profile.name, label, Type FROM PermissionSet WHERE id IN :idToFetchPermList];
-                if (perSetId != 'All') {
-                    permissionSetIdSet.add(perSetId);
-                }
+                Map<String,Object> fieldResult = getPermsandUsersOfSelectedPermsHelperForField(objFieldName,fieldName,fieldPerm,perSetId);
+                permissionSetIdSet = (Set<Id>) fieldResult.get('permissionSetID');
+                permissionSetList = (List<PermissionSet>) fieldResult.get('permissionSetList');
             }
             for (PermissionSetAssignment perSetAssign : [ SELECT id, AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId IN :permissionSetIdSet]) {
                 assigneeIdSet.add(perSetAssign.AssigneeId);
@@ -127,6 +92,68 @@ public with sharing class PermissionTabServer {
             new AuraHandledException('Error on getPermsandUsersOfSelectedPerms'+ e.getMessage());
         }
         return new profilePermissionsetandUserWrapper(permissionsetList, usermap.values());
+    }
+    //This is the helper Method for getPermsandUsersOfSelectedPerms for user
+    private static Map<String,Object> getPermsandUsersOfSelectedPermsHelperForUser(List<String> userPermissions,String perSetId){
+        List<String> conditions = new List<String>();
+        Set<Id> permissionSetIdSet = new Set<Id>();
+        List<permissionSet> permissionSetList = new List<permissionSet>();
+        String permissionQuery ='Select Id, Name, Profile.Name, Type, Label From PermissionSet Where ';
+        for(String userPerm : userPermissions){
+            conditions.add(userPerm + ' =true');
+        }
+        permissionQuery += String.join(conditions, ' And ');
+        for (permissionSet permSet : Database.query(permissionQuery)) {
+            permissionSetList.add(permSet);
+            if(perSetId == 'All'){
+                permissionSetIdSet.add(permSet.Id);
+            }
+        }  
+        if(perSetId != 'All'){
+            permissionSetIdSet.add(perSetId);
+        }
+        return new Map<String, Object>{'permissionSetID'=>permissionSetIdSet,'permissionSetList'=>permissionSetList};
+    }
+    //This is the helper Method for getPermsandUsersOfSelectedPerms for object
+    private static Map<String,Object> getPermsandUsersOfSelectedPermsHelperForObj(String objName, String objPermission, String perSetId){
+        Set<Id> idToFetchPermList = new Set<Id>();
+        Set<Id> permissionSetIdSet = new Set<Id>();
+        List<permissionSet> permissionSetList = new List<permissionSet>();
+        string objectPermissionQuery ='select id, SobjectType, ParentId,parent.Name,parent.Label, Parent.Profile.Name, parent.Type from ObjectPermissions where SobjectType =: objName and  ' +objPermission +' =true';  
+        for (ObjectPermissions objperm : Database.query(objectPermissionQuery) ) {
+            idToFetchPermList.add(objperm.ParentId);
+            if(perSetId == 'All'){
+                permissionSetIdSet.add(objperm.ParentId);
+            }
+        }
+        permissionSetList = [SELECT id, name, Profile.name, Type, Label FROM PermissionSet WHERE id IN :idToFetchPermList];
+        if (perSetId != 'All') {
+            permissionSetIdSet.add(perSetId);
+        }
+        return new Map<String, Object>{'permissionSetID'=>permissionSetIdSet,'permissionSetList'=>permissionSetList};
+    }
+    //This is the helper Method for getPermsandUsersOfSelectedPerms for Field
+    private static Map<String,Object> getPermsandUsersOfSelectedPermsHelperForField(String objFieldName, String fieldName, String fieldPerm, String perSetId){
+        Set<Id> idToFetchPermList = new Set<Id>();
+        Set<Id> permissionSetIdSet = new Set<Id>();
+        List<permissionSet> permissionSetList = new List<permissionSet>();
+        string fieldPermissionQuery =
+            'select Id, SobjectType, ParentId, Field, parent.Label, Parent.Name, Parent.Profile.Name, parent.Type ' +
+            'from FieldPermissions ' +
+            'where field = \'' + objFieldName + '.' + fieldName + '\' ' +
+            'and ' + fieldPerm + ' = true';
+        for(fieldPermissions fieldPermission : Database.query(fieldPermissionQuery))          
+        {
+            idToFetchPermList.add(fieldPermission.ParentId);
+            if(perSetId == 'All'){
+                permissionSetIdSet.add(fieldPermission.ParentId);
+            }
+        }
+        permissionSetList = [SELECT id, name, Profile.name, label, Type FROM PermissionSet WHERE id IN :idToFetchPermList];
+        if (perSetId != 'All') {
+            permissionSetIdSet.add(perSetId);
+        }
+        return new Map<String,Object>{'permissionSetID'=>permissionSetIdSet,'permissionSetList'=>permissionSetList};
     }
     // Uses to Fetch the Origin of Object/Field Permissions for Users
     @AuraEnabled
