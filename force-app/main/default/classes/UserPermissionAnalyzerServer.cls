@@ -104,7 +104,7 @@ public with sharing class UserPermissionAnalyzerServer {
             return psgg[0].PermissionSetId;
         }
         List< PermissionSetGroup> permSetGrp = [SELECT MasterLabel, DeveloperName FROM PermissionSetGroup WHERE Id =: groupId LIMIT 1];
-        if (!permSetGrp.isEmpty()) {
+        if (permSetGrp.isEmpty()) {
             System.debug('PermissionSetGroup not found for Id: ' + groupId);
             return null;
         }
@@ -211,20 +211,8 @@ public with sharing class UserPermissionAnalyzerServer {
     public static Map<String, Boolean> profileUserPermissionsUpdate(List<String> profileNames, Map<String, Boolean> systemPermissions) {
         UserAccessManager instance = new UserAccessManager();
         Map<String, Boolean> updatedResultForProfile = new Map<String, Boolean>();
-        List<MetadataService.Profile> profilesToUpdate = new List<MetadataService.Profile>();
-        for (MetadataService.Profile profile : (List<MetadataService.Profile>) instance.service.readMetadata('Profile', profileNames).getRecords()) {
-            MetadataService.Profile updatedProfile = new MetadataService.Profile();
-            updatedProfile.fullName = profile.fullName;
-            updatedProfile.userPermissions = new List<MetadataService.ProfileUserPermission>();
-            
-            for (String permissionName : systemPermissions.keySet()) {
-                MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
-                userPermission.name = permissionName;
-                userPermission.enabled = systemPermissions.get(permissionName);
-                updatedProfile.userPermissions.add(userPermission);
-            }
-            profilesToUpdate.add(updatedProfile);
-        }
+        List<MetadataService.Profile> profilesList = (List<MetadataService.Profile>) instance.service.readMetadata('Profile', profileNames).getRecords();
+        List<MetadataService.Profile> profilesToUpdate = fetchProfilesToUpdate(profilesList, systemPermissions);
         
         MetadataService.UpsertResult[] results = instance.service.upsertMetadata(profilesToUpdate);
         for (MetadataService.UpsertResult upsertResult : results) {
@@ -242,6 +230,24 @@ public with sharing class UserPermissionAnalyzerServer {
             }
         }
         return updatedResultForProfile;
+    }
+    // This method is called from profileUserPermissionsUpdate to extract profiles that needs to be updated
+    private static List<MetadataService.Profile> fetchProfilesToUpdate(List<MetadataService.Profile> profilesToUpdate, Map<String, Boolean> systemPermissions){
+        List<MetadataService.Profile> newProfilesList = new List<MetadataService.Profile>();
+        for (MetadataService.Profile profile : profilesToUpdate) {
+            MetadataService.Profile updatedProfile = new MetadataService.Profile();
+            updatedProfile.fullName = profile.fullName;
+            updatedProfile.userPermissions = new List<MetadataService.ProfileUserPermission>();
+            
+            for (String permissionName : systemPermissions.keySet()) {
+                MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
+                userPermission.name = permissionName;
+                userPermission.enabled = systemPermissions.get(permissionName);
+                updatedProfile.userPermissions.add(userPermission);
+            }
+            newProfilesList.add(updatedProfile);
+        }
+        return newProfilesList;
     }
     private static void handleUpsertError(MetadataService.UpsertResult upsertResult) {
         for (MetadataService.Error error: upsertResult.errors) {
