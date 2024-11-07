@@ -212,18 +212,17 @@ public with sharing class UserPermissionAnalyzerServer {
         UserAccessManager instance = new UserAccessManager();
         Map<String, Boolean> updatedResultForProfile = new Map<String, Boolean>();
         List<MetadataService.Profile> profilesToUpdate = new List<MetadataService.Profile>();
-        List<MetadataService.ProfileUserPermission> userPermissionsList = new List<MetadataService.ProfileUserPermission>();
-        for (String permissionName : systemPermissions.keySet()) {
-            MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
-            userPermission.name = permissionName;
-            userPermission.enabled = systemPermissions.get(permissionName);
-            userPermissionsList.add(userPermission);
-        }
-        
         for (MetadataService.Profile profile : (List<MetadataService.Profile>) instance.service.readMetadata('Profile', profileNames).getRecords()) {
             MetadataService.Profile updatedProfile = new MetadataService.Profile();
             updatedProfile.fullName = profile.fullName;
-            updatedProfile.userPermissions = userPermissionsList;
+            updatedProfile.userPermissions = new List<MetadataService.ProfileUserPermission>();
+            
+            for (String permissionName : systemPermissions.keySet()) {
+                MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
+                userPermission.name = permissionName;
+                userPermission.enabled = systemPermissions.get(permissionName);
+                updatedProfile.userPermissions.add(userPermission);
+            }
             profilesToUpdate.add(updatedProfile);
         }
         
@@ -233,19 +232,16 @@ public with sharing class UserPermissionAnalyzerServer {
                 handleUpsertError(upsertResult);
             } else {
                 System.debug('Profile updated successfully for: ' + upsertResult.fullName);
-                updatedResultForProfile = getUpdatedResultForProfile(profilesToUpdate);
+                for (MetadataService.Profile updateProf : profilesToUpdate) {
+                    if (updateProf.userPermissions != null) {
+                        for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
+                            updatedResultForProfile.put(updateProfUser.name, updateProfUser.enabled);
+                        }
+                    }
+                }
             }
         }
         return updatedResultForProfile;
-    }
-    private static Map<String, Boolean> getUpdatedResultForProfile(List<MetadataService.Profile> profilesToUpdate){
-        Map<String, Boolean> resultProfile = new Map<String, Boolean>();
-        for (MetadataService.Profile updateProf : profilesToUpdate) {
-            for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
-                resultProfile.put(updateProfUser.name, updateProfUser.enabled);
-            }
-        }
-        return resultProfile;
     }
     private static void handleUpsertError(MetadataService.UpsertResult upsertResult) {
         for (MetadataService.Error error: upsertResult.errors) {
