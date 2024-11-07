@@ -220,13 +220,7 @@ public with sharing class UserPermissionAnalyzerServer {
                 handleUpsertError(upsertResult);
             } else {
                 System.debug('Profile updated successfully for: ' + upsertResult.fullName);
-                for (MetadataService.Profile updateProf : profilesToUpdate) {
-                    if (updateProf.userPermissions != null) {
-                        for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
-                            updatedResultForProfile.put(updateProfUser.name, updateProfUser.enabled);
-                        }
-                    }
-                }
+                updatedResultForProfile = getProfileResult(profilesToUpdate);
             }
         }
         return updatedResultForProfile;
@@ -248,6 +242,18 @@ public with sharing class UserPermissionAnalyzerServer {
             newProfilesList.add(updatedProfile);
         }
         return newProfilesList;
+    }
+    // This method is called from profileUserPermissionsUpdate to iterate and return formatted profile result from profiles list
+    private static Map<String, Boolean> getProfileResult(List<MetadataService.Profile> profilesList){
+        Map<String, Boolean> result = new Map<String, Boolean>();
+        for (MetadataService.Profile updateProf : profilesList) {
+            if (updateProf.userPermissions != null) {
+                for (MetadataService.ProfileUserPermission updateProfUser : updateProf.userPermissions) {
+                    result.put(updateProfUser.name, updateProfUser.enabled);
+                }
+            }
+        }
+        return result;
     }
     private static void handleUpsertError(MetadataService.UpsertResult upsertResult) {
         for (MetadataService.Error error: upsertResult.errors) {
