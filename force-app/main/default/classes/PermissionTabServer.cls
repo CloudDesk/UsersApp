@@ -62,7 +62,6 @@ public with sharing class PermissionTabServer {
     @AuraEnabled
     public static profilePermissionsetandUserWrapper getPermsandUsersOfSelectedPerms(List<String> userPermissions,String objName,String objPermission,String objFieldName,String fieldName,String fieldPerm,String perSetId) {            
         List<permissionSet> permissionSetList = new List<permissionSet>();
-        Set<Id> idToFetchPermList = new Set<Id>();
         Set<Id> permissionSetIdSet = new Set<Id>();
         Set<Id> assigneeIdSet = new Set<Id>();
         Map<Id, user> userMap = new Map<Id, User>();        
