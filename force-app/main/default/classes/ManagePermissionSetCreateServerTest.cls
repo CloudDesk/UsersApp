@@ -1,3 +1,4 @@
+//This class is used to check the functionality of ManagePermissionSetCreateServer class
 @IsTest
 public class ManagePermissionSetCreateServerTest {
     private static final String OPPORTUNITY_Amount_FIELD = 'Opportunity.Amount';
@@ -6,13 +7,12 @@ public class ManagePermissionSetCreateServerTest {
     private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
     private static final String Script_Thrown_Message = 'Script-thrown exception';
     private static final String Assertion_CreateNewPermSet_Message = 'The created PermissionSet should be found in the query.';
+    //This method holds the test data
     @TestSetup
-    static void setupTestData() {
-        
+    static void setupTestData() { 
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
-    
-         List<User> userList = new List<User>();
-		User testUser1 = new User(
+        List<User> userList = new List<User>();
+        User testUser1 = new User(
             FirstName = 'TestNewOne',
             LastName = 'UserNewOne',
             Email = 'testuserone@example.com',
@@ -22,191 +22,103 @@ public class ManagePermissionSetCreateServerTest {
             TimeZoneSidKey = 'America/Los_Angeles',
             LocaleSidKey = 'en_US',
             EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US'
-        );
-        User testUser2 = new User(
-            FirstName = 'TestOne',
-            LastName = 'UserTwo',
-            Email = 'testusertwo@example.com',
-            Username = 'testusertwo@example.com',
-            Alias = 'tutwo',
-            ProfileId = testProfile.Id,
-            TimeZoneSidKey = 'America/Los_Angeles',
-            LocaleSidKey = 'en_US',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US'
-        );
-		
+            LanguageLocaleKey = 'en_US');
         userList.add(testUser1);
-         userList.add(testUser2);
-        insert userList;
-        
-        PermissionSet permSet = new PermissionSet();
-        permSet.Label = 'New Test Permission Set';
-        permSet.Name = 'New_Test_Permission_Set';
-        permSet.PermissionsApiEnabled = true;
-        insert permSet;
-        
+        insert userList; 
         PermissionSet permSet1 = new PermissionSet(Label = 'New Test Permission Set 1', Name = 'New_Test_PermSet1', PermissionsApiEnabled =true);
-        PermissionSet permSet2 = new PermissionSet(Label = 'New Test Permission Set 2', Name = 'New_Test_PermSet2',PermissionsApiEnabled=true);
-        insert new List<PermissionSet>{ permSet1, permSet2 };
-        MutingPermissionSet  permsetMute1 = new MutingPermissionSet (MasterLabel = 'New Test Mute Permission Set 1', DeveloperName = 'New_Test_MutePermSet1');
-        MutingPermissionSet  permsetMute2 = new MutingPermissionSet (MasterLabel = 'New Test Mute Permission Set 2', DeveloperName = 'New_Test_MutePermSet2');
-    	insert new List<MutingPermissionSet>{ permsetMute1, permsetMute2 };
-		PermissionSetGroup permSetGrp1 = new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group 1', DeveloperName = 'New_Test_PermSetGrp1');
-        PermissionSetGroup permSetGrp2 = new PermissionSetGroup(MasterLabel = 'New Test Permission Set Group 2', DeveloperName = 'New_Test_PermSetGrp2');
-        insert new List<PermissionSetGroup>{ permSetGrp1, permSetGrp2 };
-		PermissionSetGroupComponent permSetgGroupCompo1 = new PermissionSetGroupComponent(PermissionSetId=permSet2.Id, PermissionSetGroupId=permSetGrp2.Id);
-        PermissionSetGroupComponent permSetgGroupCompo2 = new PermissionSetGroupComponent(PermissionSetId=permSet1.Id, PermissionSetGroupId=permSetGrp1.Id);
-        PermissionSetGroupComponent permSetgGroupCompoMute1 = new PermissionSetGroupComponent(PermissionSetId=permsetMute2.Id, PermissionSetGroupId=permSetGrp2.Id);
-        PermissionSetGroupComponent permSetgGroupCompoMute2 = new PermissionSetGroupComponent(PermissionSetId=permsetMute1.Id, PermissionSetGroupId=permSetGrp1.Id);
-        insert new List<PermissionSetGroupComponent>{permSetgGroupCompo1,permSetgGroupCompo2,permSetgGroupCompoMute1,permSetgGroupCompoMute2};
-		PermissionSetAssignment permSetAssign1 = new PermissionSetAssignment(PermissionSetId = permSet1.Id, AssigneeId = testUser1.Id);        
-        PermissionSetAssignment permSetAssign2 = new PermissionSetAssignment(PermissionSetId = permSet2.Id, AssigneeId = testUser1.Id);        
-        insert new List<PermissionSetAssignment>{permSetAssign1,permSetAssign2};
+        insert new List<PermissionSet>{ permSet1};
+        PermissionSetAssignment permSetAssign1 = new PermissionSetAssignment(PermissionSetId = permSet1.Id, AssigneeId = testUser1.Id);  
+        insert new List<PermissionSetAssignment>{permSetAssign1};
         PermissionSetGroup permSetGroupForUserAssign = new PermissionSetGroup(DeveloperName = 'New_Test_Permission_Set_Group_One',MasterLabel = 'New Test Permission Set Group One',Description = 'This is a test permission set group.');
         insert permSetGroupForUserAssign;
         PermissionSetAssignment permSetGrpAssignment = new PermissionSetAssignment(AssigneeId = testUser1.Id,PermissionSetGroupId  = permSetGroupForUserAssign.Id);
         insert permSetGrpAssignment;
-
         ObjectPermissions objPerm1 = new ObjectPermissions(
-        SObjectType = 'Opportunity',
-        ParentId = permSet1.Id,
-        PermissionsRead = true,
-        PermissionsCreate = true,
-        PermissionsEdit = false,
-        PermissionsDelete = false,
-        PermissionsViewAllRecords = false,
-        PermissionsModifyAllRecords = false
-   		 );
-        ObjectPermissions objPerm2 = new ObjectPermissions(
-        SObjectType = 'Opportunity',
-        ParentId = permSet2.Id,
-        PermissionsRead = true,
-        PermissionsCreate = false,
-        PermissionsEdit = true,
-        PermissionsDelete = true,
-        PermissionsViewAllRecords = true,
-        PermissionsModifyAllRecords = false
-    );
-        ObjectPermissions objPermMute1 = new ObjectPermissions(
-        SObjectType = 'Opportunity',
-        ParentId = permsetMute1.Id,
-        PermissionsRead = false,
-        PermissionsCreate = false,
-        PermissionsEdit = false,
-        PermissionsDelete = false,
-        PermissionsViewAllRecords = false,
-        PermissionsModifyAllRecords = true
-   		 );
-        ObjectPermissions objPermMute2 = new ObjectPermissions(
-        SObjectType = 'Opportunity',
-        ParentId = permsetMute2.Id,
-        PermissionsRead = false,
-        PermissionsCreate = false,
-        PermissionsEdit = false,
-        PermissionsDelete = false,
-        PermissionsViewAllRecords = false,
-        PermissionsModifyAllRecords = true
-    );
-    insert new List<ObjectPermissions>{ objPerm1, objPerm2,objPermMute1,objPermMute2};
-
+        	SObjectType = 'Opportunity',
+            ParentId = permSet1.Id,
+            PermissionsRead = true,
+            PermissionsCreate = true,
+            PermissionsEdit = false,
+            PermissionsDelete = false,
+            PermissionsViewAllRecords = false,
+            PermissionsModifyAllRecords = false);
+        insert new List<ObjectPermissions>{ objPerm1};
         FieldPermissions fieldPerm1 = new FieldPermissions(
-        SObjectType = 'Opportunity',
-        Field = OPPORTUNITY_Amount_FIELD,
-        ParentId = permSet1.Id,
-        PermissionsRead = true,
-        PermissionsEdit = false
-    );
-       FieldPermissions fieldPerm2 = new FieldPermissions(
-        SObjectType = 'Opportunity',
-        Field = OPPORTUNITY_Amount_FIELD,
-        ParentId = permSet2.Id,
-        PermissionsRead = true,
-        PermissionsEdit = true
-    );
-        FieldPermissions fieldPermMute1 = new FieldPermissions(
-        SObjectType = 'Opportunity',
-        Field = OPPORTUNITY_Amount_FIELD,
-        ParentId = permsetMute1.Id,
-        PermissionsRead = false,
-        PermissionsEdit = false
-    );
-        FieldPermissions fieldPermMute2 = new FieldPermissions(
-        SObjectType = 'Opportunity',
-        Field = OPPORTUNITY_Amount_FIELD,
-        ParentId = permsetMute2.Id,
-        PermissionsRead = false,
-        PermissionsEdit = false
-    );
-	insert new List<FieldPermissions>{ fieldPerm1, fieldPerm2,fieldPermMute1,fieldPermMute2};
-        PermissionSet testPermissionSet = new PermissionSet(
-            Name = 'Test_Sample_PermSet',
-            Label = PermissionSet_Label
-        );
+             SObjectType = 'Opportunity',
+             Field = OPPORTUNITY_Amount_FIELD,
+             ParentId = permSet1.Id,
+             PermissionsRead = true,
+             PermissionsEdit = false);
+        insert new List<FieldPermissions>{ fieldPerm1};
+        PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = PermissionSet_Label);
         insert testPermissionSet;
     }
+    //This test method is used to check the functionality of duplicatePermissionSetCheck method in ManagePermissionSetCreateServer class
     @IsTest
-    Static Void duplicatePermissionSetCheck_Test(){
+    static void duplicatePermissionSetCheck_Test(){
         Boolean result = ManagePermissionSetCreateServer.duplicatePermissionSetCheck('test perm','test_perm');
-          System.assertNotEquals(true, result, 'it should not be false');
+        System.assertNotEquals(true, result, 'it should not be false');
     }
+    //This test method is used to check the functionality of getUserLicenseForUser method in ManagePermissionSetCreateServer class
     @IsTest
-    Static Void getUserLicenseForUser_Test(){
+    static void getUserLicenseForUser_Test(){
         Test.StartTest();
         Map<String,List<Map<String,String>>> result = ManagePermissionSetCreateServer.getUserLicenseForUser([Select Id FROM User Where UserName= 'testuserNewone@example.com'].Id);      
         Test.StopTest();
         System.assertNotEquals(null, result, 'it should Not be null');
     }
+    //This test method is used to check the functionality of getUsersBasedOnLicenseName method in ManagePermissionSetCreateServer class
     @IsTest
-    Static Void getUsersBasedOnLicenseName_Test(){
+    static void getUsersBasedOnLicenseName_Test(){
         Test.StartTest();
-         List<User> result = ManagePermissionSetCreateServer.getUsersBasedOnLicenseName('Salesforce'); 
-         ManagePermissionSetCreateServer.getUsersBasedOnLicenseName('ActionPlansPsl');
-         ManagePermissionSetCreateServer.getUsersBasedOnLicenseName('');
+        List<User> result = ManagePermissionSetCreateServer.getUsersBasedOnLicenseName('Salesforce'); 
+        ManagePermissionSetCreateServer.getUsersBasedOnLicenseName('ActionPlansPsl');
+        ManagePermissionSetCreateServer.getUsersBasedOnLicenseName('');
         Test.StopTest();
-          System.assertNotEquals(null, result, 'it should Not be null');
+        System.assertNotEquals(null, result, 'it should Not be null');
     }
-    
+    //This test method is used to check the functionality of createPermissionSetTest method with Object in ManagePermissionSetCreateServer class
     @IsTest
-    Static Void createNewPermissionSet_TestWithObj(){
+    static void createNewPermissionSet_TestWithObj(){
         Map<String,Boolean> objPerm = new Map<String,Boolean>{'PermissionsRead'=>true, 'PermissionsEdit'=>true,
             'PermissionsDelete'=>true, 'PermissionsViewAllRecords'=>true,'PermissionsCreate'=>true,'PermissionsModifyAllRecords'=>true};
-        Map<String, Map<String, Boolean>> objectPermMap = new Map<String, Map<String, Boolean>>{'Opportunity'=>objPerm};
-         PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
-       	 eligibleFieldWrapper.field = OPPORTUNITY_Amount_FIELD;
-       	 eligibleFieldWrapper.PermissionsRead = true;
-       	 eligibleFieldWrapper.PermissionsEdit = true;
-         eligibleFieldWrapper.Label = 'Amount';
-         eligibleFieldWrapper.hasEditAccess = true;
-         eligibleFieldWrapper.mutedPermissionsRead = false;
-         eligibleFieldWrapper.mutedPermissionsEdit = false;
-
+                Map<String, Map<String, Boolean>> objectPermMap = new Map<String, Map<String, Boolean>>{'Opportunity'=>objPerm};
+                    PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
+        eligibleFieldWrapper.field = OPPORTUNITY_Amount_FIELD;
+        eligibleFieldWrapper.PermissionsRead = true;
+        eligibleFieldWrapper.PermissionsEdit = true;
+        eligibleFieldWrapper.Label = 'Amount';
+        eligibleFieldWrapper.hasEditAccess = true;
+        eligibleFieldWrapper.mutedPermissionsRead = false;
+        eligibleFieldWrapper.mutedPermissionsEdit = false;
         System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
-        	createPermissionSetTest(objectPermMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper},'Obj','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+        createPermissionSetTest(objectPermMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper},'Obj','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
         Test.StopTest();
     }
+    //This test method is used to check the functionality of createPermissionSetTest method with User in ManagePermissionSetCreateServer class
     @IsTest
-    Static Void createNewPermissionSet_TestWithUser(){
+    static void createNewPermissionSet_TestWithUser(){
         System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
-        	createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'User','',new Map<String, Boolean>{'ApiEnabled'=>true,'EditTask'=>true},new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+        createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'User','',new Map<String, Boolean>{'ApiEnabled'=>true,'EditTask'=>true},new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
         Test.StopTest();
     }
+    //This test method is used to check the functionality of createPermissionSetTest method with Tab in ManagePermissionSetCreateServer class
     @IsTest
-    Static Void createNewPermissionSet_TestWithTab(){
+    static void createNewPermissionSet_TestWithTab(){
         System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
         MetadataService metaDataService = new MetadataService(); 
         
         Test.StartTest();
-        	createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'Tab','[{"standard-Account":"visible"}]',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+        createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'Tab','[{"standard-Account":"visible"}]',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
         Test.StopTest();
     }
+    //This test method is used to check the functionality of createPermissionSetTest method with Record Type in ManagePermissionSetCreateServer class
     @IsTest
-    Static Void createNewPermissionSet_TestWithRecType(){
+    static void createNewPermissionSet_TestWithRecType(){
         PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper wrapper = new PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper();
         wrapper.RecordType = 'Account.Healthplan';
         wrapper.Visible = false;
@@ -216,9 +128,10 @@ public class ManagePermissionSetCreateServerTest {
         MetadataService metaDataService = new MetadataService();  
         
         Test.StartTest();
-        	createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'RecordType','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>{wrapper});
+        createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'RecordType','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>{wrapper});
         Test.StopTest();
     }
+    //Method to Check functionality of Create Permission Set in ManagePermissionSetCreateServer class
     static void createPermissionSetTest(Map<String, Map<String, Boolean>> objectPermissionsMap, List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> fieldPerms, String updateType, String tabToUpdate, Map<String, Boolean> userToUpdate,List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> recTypeToUpdate){
         try{
             ManagePermissionSetCreateServer.createNewPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
@@ -226,15 +139,104 @@ public class ManagePermissionSetCreateServerTest {
                                                                    new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id},objectPermissionsMap, 
                                                                    fieldPerms,'Opportunity',updateType,tabToUpdate,
                                                                    userToUpdate, recTypeToUpdate);
-        	PermissionSetManager.createPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
-            						'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}
-                                                   , new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id});
+            PermissionSetManager.createPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+                'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}
+                                                     , new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id});
             System.assert(false, Error_Thrown_Message);
             
         } catch(AuraHandledException e) {
-          System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
         System.assertEquals([Select Id from PermissionSet Where Name = 'Test_Sample_PermSet'].Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
     }
+    //This test method is used to check the functionality of assignUsersToPermissionSet method with Record Type in ManagePermissionSetCreateServer class
+    @IsTest
+    static void testAssignUsersToPermissionSet() {
+        PermissionSet testPermSet = [Select Id from PermissionSet Where Name = 'Test_Sample_PermSet'];
+        List<User> testUsers = new List<User>();
+        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
+        testUsers.add(testUser);
+        List<Id> userIds = new List<Id>();
+        for (User user : testUsers) {
+            userIds.add(user.Id);
+        }
+        Test.startTest();
+        ManagePermissionSetCreateServer.assignUsersToPermissionSet(testPermSet.Id, userIds);
+        Test.stopTest();
+        List<PermissionSetAssignment> assignments = [SELECT Id, AssigneeId, PermissionSetId FROM PermissionSetAssignment WHERE PermissionSetId = :testPermSet.Id 
+                                                     AND AssigneeId IN :userIds];
+        System.assertEquals(userIds.size(), assignments.size(), 'All users should be assigned to the permission set.');
+        for (PermissionSetAssignment assignment : assignments) {
+            System.assert(userIds.contains(assignment.AssigneeId), 'Assigned user ID should be in the original list of user IDs.');
+            System.assertEquals(testPermSet.Id, assignment.PermissionSetId, 'Assigned permission set ID should match the test permission set ID.');
+        }
+    }
+    
+     //This test method is used to check the functionality of createPermissionSetWithTabsAndUsers(Success) method with Record Type in ManagePermissionSetCreateServer class
+     @IsTest
+    static void testCreatePermissionSetWithoutTabSettings() {
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+        MetadataService metaDataService = new MetadataService();  
+        String tabSettingsJson = '[]';
+        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
+        List<Id> userIds = new List<Id>{ testUser.Id };
+        Test.startTest();
+        
+        // Call the method to create the permission set without tab settings
+        String createdPermSetId = ManagePermissionSetCreateServer.createPermissionSetWithTabsAndUsers(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+                'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}, tabSettingsJson, userIds);
+
+        Test.stopTest();
+
+        // Verify the permission set creation
+        PermissionSet createdPermSet = [SELECT Id, Name, Label, Description, IsCustom FROM PermissionSet WHERE Id = :createdPermSetId];
+        System.assertNotEquals(null, createdPermSet, 'Permission Set should be created successfully.');
+        
+
+        // Verify that the permission set was assigned to the user
+        List<PermissionSetAssignment> assignments = [
+            SELECT Id, AssigneeId, PermissionSetId
+            FROM PermissionSetAssignment
+            WHERE PermissionSetId = :createdPermSetId
+            AND AssigneeId = :testUser.Id
+        ];
+        System.assertEquals(1, assignments.size(), 'Permission Set should be assigned to the test user.');
+    }
+    
+    //This test method is used to check the functionality of createPermissionSetWithTabsAndUsers(Failure) method with Record Type in ManagePermissionSetCreateServer class
+     @IsTest
+    static void testCreatePermissionSetWithoutTabSettings_DmlException() {
+        String tabSettingsJson = '[]';
+        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
+        List<Id> userIds = new List<Id>{ testUser.Id };
+        Test.startTest();      
+        try{
+            String createdPermSetId = ManagePermissionSetCreateServer.createPermissionSetWithTabsAndUsers(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+                'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}, tabSettingsJson, userIds);
+            System.assert(false, Error_Thrown_Message);
+            
+        } catch(AuraHandledException e) {
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+        }
+
+        Test.stopTest();
+    }
+    //
+    @IsTest
+    static void testGetPermSetTabSettings() {
+        TabPermissionAnalyzerServer.TabSettingsWrapper wrapper = new TabPermissionAnalyzerServer.TabSettingsWrapper('Account', 'Default On');
+        Test.startTest();
+        List<MetadataService.PermissionSetTabSetting> tabSettingList = ManagePermissionSetCreateServer.getPermSetTabSettings(new List<TabPermissionAnalyzerServer.TabSettingsWrapper> {wrapper});
+        System.assertEquals(tabSettingList.size(), 1, 'List size as expected');
+        try{
+            ManagePermissionSetCreateServer.handleException('Exception Occured', null);
+        }
+        catch(Exception e){
+            System.assertEquals(e.getMessage(), 'Script-thrown exception', 'Exception Occured as expected');
+        }
+        Test.stopTest();
+        
+    }
+    
 }

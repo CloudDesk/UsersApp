@@ -85,14 +85,7 @@ public with sharing class ManagePermissionSetCreateServer {
                 MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(persetToInsert);
                 for (MetadataService.UpsertResult upsertResult : results) {
                     persetapi = upsertResult.fullName;
-                    if (!upsertResult.success) {
-                        for (MetadataService.Error error : upsertResult.errors) {
-                            System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
-                            throw new AuraHandledException('Error inserting Permission Set createPermissionSetWithTabsAndUsers: ' + error.message);
-                        }
-                    } else {
-                        System.debug('Permission Set Inserted successfully for: ' + upsertResult.fullName);                    
-                    }
+                    handleUpsertResult(upsertResult);
                 }
             } catch (Exception e) {
                 System.debug('Error Inserting Permission Set: ' + e.getMessage());
@@ -100,80 +93,24 @@ public with sharing class ManagePermissionSetCreateServer {
             }
         }
         List<Map<String, String>> rawList = (List<Map<String, String>>) JSON.deserialize(tabSettingsJson, List<Map<String, String>>.class);
-        List<TabPermissionAnalyzerServer.TabSettingsWrapper> tabSettings = new List<TabPermissionAnalyzerServer.TabSettingsWrapper>();
-        for (Map<String, String> item : rawList) {
-            for (String tabName : item.keySet()) {
-                String visibility = item.get(tabName); 
-                TabPermissionAnalyzerServer.TabSettingsWrapper wrapper = new TabPermissionAnalyzerServer.TabSettingsWrapper();
-                wrapper.tab = tabName;
-                wrapper.visibility = visibility;
-                tabSettings.add(wrapper);
-            }
-        }
+        List<TabPermissionAnalyzerServer.TabSettingsWrapper> tabSettings = getTabSettings(rawList);
         System.debug('tabSettings: ' + tabSettings);
+
         List<MetadataService.PermissionSet> permissionSets = (List<MetadataService.PermissionSet>) instance.service.readMetadata(
             'PermissionSet', new List<String>{ persetapi }).getRecords();    
         MetadataService.PermissionSet permissionSet;
         if (permissionSets.size() > 0) {
-            permissionSet = permissionSets[0];
-            if (permissionSet.tabSettings == null) {
-                permissionSet.tabSettings = new List<MetadataService.PermissionSetTabSetting>();
-            }
-            // Collect tabs to remove
-            Set<String> tabsToRemove = new Set<String>();
-            for (TabPermissionAnalyzerServer.TabSettingsWrapper tabSettingWrapper : tabSettings) {
-                String tabName = tabSettingWrapper.tab;
-                String visibility = tabSettingWrapper.visibility;    
-                if (visibility == null) {
-                    tabsToRemove.add(tabName);
-                } else {
-                    Boolean tabFound = false;
-                    for (MetadataService.PermissionSetTabSetting existingTabSetting : permissionSet.tabSettings) {
-                        if (existingTabSetting.tab == tabName) {
-                            existingTabSetting.visibility = visibility;
-                            tabFound = true;
-                            break;
-                        }
-                    }
-                    // Add new tab setting if not found
-                    if (!tabFound) {
-                        MetadataService.PermissionSetTabSetting newTabSetting = new MetadataService.PermissionSetTabSetting();
-                        newTabSetting.tab = tabName;
-                        newTabSetting.visibility = visibility;
-                        permissionSet.tabSettings.add(newTabSetting);
-                    }
-                }
-            }
-            // Remove tabs with null visibility
-            List<MetadataService.PermissionSetTabSetting> updatedTabSettings = new List<MetadataService.PermissionSetTabSetting>();
-            for (MetadataService.PermissionSetTabSetting existingTabSetting : permissionSet.tabSettings) {
-                if (!tabsToRemove.contains(existingTabSetting.tab)) {
-                    updatedTabSettings.add(existingTabSetting);
-                }
-            }
-            permissionSet.tabSettings = updatedTabSettings;
-        } else {
+            permissionSet = buildPermissionSet(permissionSets, tabSettings);
+        } 
+        else {
             permissionSet = new MetadataService.PermissionSet();
             permissionSet.fullName = persetapi;
-            permissionSet.tabSettings = new List<MetadataService.PermissionSetTabSetting>();
-            for (TabPermissionAnalyzerServer.TabSettingsWrapper tabSettingWrapper : tabSettings) {
-                if (tabSettingWrapper.visibility != null) {
-                    MetadataService.PermissionSetTabSetting newTabSetting = new MetadataService.PermissionSetTabSetting();
-                    newTabSetting.tab = tabSettingWrapper.tab;
-                    newTabSetting.visibility = tabSettingWrapper.visibility;
-                    permissionSet.tabSettings.add(newTabSetting);
-                }
-            }
+            permissionSet.tabSettings = getPermSetTabSettings(tabSettings);
         }
         // Update the PermissionSet metadata with tab settings
         MetadataService.SaveResult[] updateResults = instance.service.updateMetadata(new List<MetadataService.Metadata>{ permissionSet });
-        for (MetadataService.SaveResult result : updateResults) {
-            if (!result.success) {
-                for (MetadataService.Error error : result.errors) {
-                    System.debug('Error: ' + error.message);
-                }
-            }
-        } 
+        handleSaveResult(updateResults);
+
         PermissionSet persetId = [SELECT Id, Name FROM PermissionSet WHERE Name = :persetapi LIMIT 1];
         List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
         for (Id userId : userids) {
@@ -191,6 +128,113 @@ public with sharing class ManagePermissionSetCreateServer {
         }
         return persetId.Id;
     }
+
+    private static MetadataService.PermissionSet buildPermissionSet(List<MetadataService.PermissionSet> permissionSets, List<TabPermissionAnalyzerServer.TabSettingsWrapper> tabSettings){
+        MetadataService.PermissionSet permissionSet = permissionSets[0];
+            if (permissionSet.tabSettings == null) {
+                permissionSet.tabSettings = new List<MetadataService.PermissionSetTabSetting>();
+            }
+            // Collect tabs to remove
+            Set<String> tabsToRemove = new Set<String>();
+            for (TabPermissionAnalyzerServer.TabSettingsWrapper tabSettingWrapper : tabSettings) {
+                String tabName = tabSettingWrapper.tab;
+                String visibility = tabSettingWrapper.visibility;    
+                if (visibility == null) {
+                    tabsToRemove.add(tabName);
+                } else {
+                    Boolean tabFound = isTabFound(permissionSet.tabSettings, tabName, visibility);
+                    // Add new tab setting if not found
+                    if (!tabFound) {
+                        MetadataService.PermissionSetTabSetting newTabSetting = new MetadataService.PermissionSetTabSetting();
+                        newTabSetting.tab = tabName;
+                        newTabSetting.visibility = visibility;
+                        permissionSet.tabSettings.add(newTabSetting);
+                    }
+                }
+            }
+            // Remove tabs with null visibility
+            permissionSet.tabSettings = getUpdatedTabSettings(permissionSet.tabSettings, tabsToRemove);
+
+        return permissionSet;
+    }
+
+    //This method is called from buildPermissionSet to check if the given tab is available in existing tab permissions list
+    private static Boolean isTabFound(List<MetadataService.PermissionSetTabSetting> psTabSettings, String tabName, String visibility){
+        Boolean tabFound = false;
+        for (MetadataService.PermissionSetTabSetting existingTabSetting : psTabSettings) {
+            if (existingTabSetting.tab == tabName) {
+                existingTabSetting.visibility = visibility;
+                tabFound = true;
+                break;
+            }
+        }
+        return tabFound;
+    }
+
+    //This method is called from createPermissionSetWithTabsAndUsers to get updated tab settings of a permission set
+    private static List<MetadataService.PermissionSetTabSetting> getUpdatedTabSettings(List<MetadataService.PermissionSetTabSetting> permissionSetTbSettings, Set<String> tabsToRemove){
+        List<MetadataService.PermissionSetTabSetting> updatedTbSettings = new List<MetadataService.PermissionSetTabSetting>();
+        for (MetadataService.PermissionSetTabSetting existingTabSetting : permissionSetTbSettings) {
+                if (!tabsToRemove.contains(existingTabSetting.tab)) {
+                    updatedTbSettings.add(existingTabSetting);
+                }
+            }
+        return updatedTbSettings;
+    }
+
+    @TestVisible
+    //This method is called from createPermissionSetWithTabsAndUsers to get tab settings of a permission set
+    private static List<MetadataService.PermissionSetTabSetting> getPermSetTabSettings(List<TabPermissionAnalyzerServer.TabSettingsWrapper> tabSettings){
+        List<MetadataService.PermissionSetTabSetting> tbSetting = new List<MetadataService.PermissionSetTabSetting>();
+
+        for (TabPermissionAnalyzerServer.TabSettingsWrapper tabSettingWrapper : tabSettings) {
+            if (tabSettingWrapper.visibility != null) {
+                MetadataService.PermissionSetTabSetting newTabSetting = new MetadataService.PermissionSetTabSetting();
+                newTabSetting.tab = tabSettingWrapper.tab;
+                newTabSetting.visibility = tabSettingWrapper.visibility;
+                tbSetting.add(newTabSetting);
+            }
+        }
+        return tbSetting;
+    }
+
+    //Handling Save Results
+    private static void handleSaveResult(List<MetadataService.SaveResult> saveResults){
+        for (MetadataService.SaveResult result : saveResults) {
+            if (!result.success) {
+                for (MetadataService.Error error : result.errors) {
+                    System.debug('Error: ' + error.message);
+                }
+            }
+        } 
+    }
+
+    //Handling upsert errors
+    private static void handleUpsertResult(MetadataService.UpsertResult result) {
+        if (!result.success) {
+            for (MetadataService.Error error : result.errors) {
+                System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+                throw new AuraHandledException('Error inserting Permission Set createPermissionSetWithTabsAndUsers: ' + error.message);
+            }
+        } else {
+            System.debug('Permission Set Inserted successfully for: ' + result.fullName);                    
+        }
+    }
+
+    //This method is called from createPermissionSetWithTabsAndUsers to get Tab Settings
+    private static List<TabPermissionAnalyzerServer.TabSettingsWrapper> getTabSettings(List<Map<String, String>> rawList){
+        List<TabPermissionAnalyzerServer.TabSettingsWrapper> tabSetting = new List<TabPermissionAnalyzerServer.TabSettingsWrapper>();
+        for (Map<String, String> item : rawList) {
+            for (String tabName : item.keySet()) {
+                String visibility = item.get(tabName); 
+                TabPermissionAnalyzerServer.TabSettingsWrapper wrapper = new TabPermissionAnalyzerServer.TabSettingsWrapper(tabName,visibility);
+                tabSetting.add(wrapper);
+            }
+        }
+        return tabSetting;
+    }    
+
+    // Handling Upsert Results
     private static void handleUpsertResults(MetadataService.UpsertResult[] results) {
         for (MetadataService.UpsertResult result: results) {
             if (!result.success) {
@@ -198,9 +242,11 @@ public with sharing class ManagePermissionSetCreateServer {
             }
         }
     }    
+    @TestVisible
     private static void handleException(String message, Exception e) {
-        System.debug(message + ': ' + e.getMessage());
-        throw new AuraHandledException(message + ': ' + e.getMessage());
+        String errorMessage = e == null ? message : message + ': ' + e.getMessage();
+        System.debug('ERROR : '+ errorMessage);
+        throw new AuraHandledException(errorMessage);
     }
     //This Method is the helper method to deal create PermissionSet with RecordType
     public static String createPermissionSetWithRecordTypeAndUsers(Map<String, Object> newPermSet,
