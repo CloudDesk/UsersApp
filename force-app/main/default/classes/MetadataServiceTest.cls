@@ -33,7 +33,7 @@ private class MetadataServiceTest
     /**
      * Dummy Metadata API web service mock class (see MetadataCreateJobTest.cls for a better example)
      **/   
-		
+	private static final String SERVICE_NULL_MESSAGE = 'MetadataService should not be null';	
 	@IsTest
 	private static void coverGeneratedCodeCRUDOperations()
 	{	
@@ -46,7 +46,7 @@ private class MetadataServiceTest
         MetadataService.MetadataPort metaDataPort = new MetadataService.MetadataPort();
         Test.stopTest();
         System.assertNotEquals(null, metaDataPort, 'MetadataPort should not be null');
-        System.assertNotEquals(null, metaDataService, 'MetadataService should not be null');
+        System.assertNotEquals(null, metaDataService, SERVICE_NULL_MESSAGE);
 	}
 	
 	@IsTest
@@ -949,8 +949,8 @@ private class MetadataServiceTest
         new MetadataService.CustomExperienceTabSet();
         new MetadataService.KnowledgeSuggestedArticlesSettings();
         Test.stopTest();
-        System.assertNotEquals(null, metaDataService, 'MetadataService should not be null');
-        System.assertNotEquals(null, listMetaRes, 'MetadataService should not be null');
+        System.assertNotEquals(null, metaDataService, SERVICE_NULL_MESSAGE);
+        System.assertNotEquals(null, listMetaRes, SERVICE_NULL_MESSAGE);
     }
 
     @IsTest
@@ -1134,8 +1134,8 @@ private class MetadataServiceTest
 		new MetadataService.ReadUserCriteriaResult().getRecords();
 		MetadataService.Metadata[] readWavexmdResult = new MetadataService.ReadWavexmdResult().getRecords();
         Test.stopTest();
-        System.assertEquals(null, metaReadFlow, 'MetadataService should not be null');
-        System.assertEquals(null, readWavexmdResult, 'MetadataService should not be null');
+        System.assertEquals(null, metaReadFlow, SERVICE_NULL_MESSAGE);
+        System.assertEquals(null, readWavexmdResult, SERVICE_NULL_MESSAGE);
     }
 
     @IsTest

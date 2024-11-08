@@ -25,7 +25,7 @@ public class PermissionPartnerSoapSforceComTest {
         System.assert(groupResponseList.size() == 1, true);
         
         PermissionPartnerSoapSforceComMock.indicatorVar =  'FindDuplicates';        
-        list<PermissionPartnerSoapSforceCom.FindDuplicatesResult> findDuplicatesList = soapObj.findDuplicates(sObjects);
+        soapObj.findDuplicates(sObjects);
         
         PermissionPartnerSoapSforceComMock.indicatorVar =  'Process';
         list<PermissionPartnerSoapSforceCom.ProcessRequest> processReq = new list<PermissionPartnerSoapSforceCom.ProcessRequest>();
