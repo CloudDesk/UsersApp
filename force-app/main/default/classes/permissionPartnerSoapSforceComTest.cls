@@ -1,9 +1,10 @@
+//This class is used to check the functionality of PermissionPartnerSoapSforceCom class
 @isTest
 public class PermissionPartnerSoapSforceComTest {
-	@isTest
+    @isTest
     public static void describeAllTabsTest()
     {
-       Test.setMock(WebServiceMock.class , new PermissionPartnerSoapSforceComMock());
+        Test.setMock(WebServiceMock.class , new PermissionPartnerSoapSforceComMock());
         permissionPartnerSoapSforceCom.soap soapObj = new permissionPartnerSoapSforceCom.soap();  
         list<string> stringArr = new list<string>();
         DateTime startTime = DateTime.newInstance(2023, 11, 10, 14, 30, 0); 
@@ -14,7 +15,7 @@ public class PermissionPartnerSoapSforceComTest {
         
         permissionPartnerSoapSforceComMock.indicatorVar =  'GroupStructureRes';
         list<permissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair> groupSobjectTypePair = new list<permissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair>();
-		soapObj.describeDataCategoryGroupStructures(groupSobjectTypePair, true);
+        soapObj.describeDataCategoryGroupStructures(groupSobjectTypePair, true);
         permissionPartnerSoapSforceComMock.indicatorVar =  'GroupResponse';        
         soapObj.describeDataCategoryGroups(stringArr);
         permissionPartnerSoapSforceComMock.indicatorVar =  'FindDuplicates';        
@@ -31,7 +32,7 @@ public class PermissionPartnerSoapSforceComTest {
         permissionPartnerSoapSforceComMock.indicatorVar =  'ApprovalLayout';        
         soapObj.describeApprovalLayout('sObject',stringArr);
         permissionPartnerSoapSforceComMock.indicatorVar =  'CompactLayout';
-		soapObj.describePrimaryCompactLayouts(stringArr);
+        soapObj.describePrimaryCompactLayouts(stringArr);
         permissionPartnerSoapSforceComMock.indicatorVar =  'QueryResult';       
         soapObj.queryMore('test');
         permissionPartnerSoapSforceComMock.indicatorVar =  'EntityResult';       
@@ -44,7 +45,7 @@ public class PermissionPartnerSoapSforceComTest {
         list<permissionPartnerSoapSforceCom.LeadConvert> leadConvertList = new list<permissionPartnerSoapSforceCom.LeadConvert>();
         soapObj.convertLead(leadConvertList);
         permissionPartnerSoapSforceComMock.indicatorVar =  'SobjectListView';       
-       	soapObj.describeSObjectListViews('testSobjectType',true, 'testisCompatible',1,1);
+        soapObj.describeSObjectListViews('testSobjectType',true, 'testisCompatible',1,1);
         permissionPartnerSoapSforceComMock.indicatorVar =  'DeleteResult'; 
         soapObj.delete_x(stringArr);
         permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult';  
@@ -72,7 +73,7 @@ public class PermissionPartnerSoapSforceComTest {
         permissionPartnerSoapSforceComMock.indicatorVar =  'QuickActionTemplateResult';
         soapObj.retrieveMassQuickActionTemplates('testQuickAction', stringArr);
         permissionPartnerSoapSforceComMock.indicatorVar =  'SearchResult';
-       	soapObj.search_x('testSearch');
+        soapObj.search_x('testSearch');
         permissionPartnerSoapSforceComMock.indicatorVar =  'SendEmail';
         list<permissionPartnerSoapSforceCom.Email> sendEmailList = new list<permissionPartnerSoapSforceCom.Email>();
         soapObj.sendEmail(sendEmailList);
@@ -131,8 +132,8 @@ public class PermissionPartnerSoapSforceComTest {
         soapObj.describeSoftphoneLayout();
         permissionPartnerSoapSforceComMock.indicatorVar  = 'Create';        
         soapObj.create(sObjects);
-         permissionPartnerSoapSforceComMock.indicatorVar  = 'DescribeSearchLayouts';
-         soapObj.describeSearchLayouts(stringArr);
+        permissionPartnerSoapSforceComMock.indicatorVar  = 'DescribeSearchLayouts';
+        soapObj.describeSearchLayouts(stringArr);
         permissionPartnerSoapSforceComMock.indicatorVar  = 'Merge';
         list<permissionPartnerSoapSforceCom.MergeRequest> mergeResultList = new list<permissionPartnerSoapSforceCom.MergeRequest>();
         soapObj.merge_x(mergeResultList);
@@ -144,7 +145,7 @@ public class PermissionPartnerSoapSforceComTest {
         soapObj.logout();
         permissionPartnerSoapSforceComMock.indicatorVar = 'DescribeSearchScopeOrder';
         soapObj.describeSearchScopeOrder(true);
-            
+        
         new permissionPartnerSoapSforceCom.InvalidateSessionsResult();
         new permissionPartnerSoapSforceCom.DescribeColor();
         new permissionPartnerSoapSforceCom.MergeResult();
@@ -312,6 +313,6 @@ public class PermissionPartnerSoapSforceComTest {
         new permissionPartnerSoapSforceCom.DescribeLayoutComponent();
         new permissionPartnerSoapSforceCom.FieldLayoutComponent();
         new permissionPartnerSoapSforceCom.ListViewRecord();
-		
+        
     }
 }

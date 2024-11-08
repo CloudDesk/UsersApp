@@ -7,7 +7,7 @@ public class ProfileManagerTest {
     static void setupTestData() {
 		PermissionAnalyzerObjectServerTest.testsetupMethod();
     }
-	//This test Method Used to Check the getProfileName Method
+	//This test Method Used to Check the getProfileName Method in ProfileManager Class
     @IsTest
     static void testGetProfileName() {
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
@@ -21,7 +21,7 @@ public class ProfileManagerTest {
         
         System.assertEquals('Standard User', profileNames[0], 'The profile name should match the expected value.');
     }
-    //This test Method Used to Check the getProfileusers Method
+    //This test Method Used to Check the getProfileusers Method in ProfileManager Class
     @IsTest
     static void testGetProfileUsers() {
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
@@ -35,7 +35,7 @@ public class ProfileManagerTest {
 
         System.assertEquals(2, result.userList.size(), 'Expected two users in the result');
     }
-    //This test Method Used to Check the getProfileDetails Method
+    //This test Method Used to Check the getProfileDetails Method in ProfileManager Class
     @IsTest
     static void testGetProfileDetails() {
         Test.startTest();
@@ -45,7 +45,7 @@ public class ProfileManagerTest {
         System.assertNotEquals(null,result,Error_Null_Result_Message);
 
     }
-    //This test Method Used to Check the updateProfile Method
+    //This test Method Used to Check the updateProfile Method in ProfileManager Class
     @IsTest
     static void testEditProfileProperties_Success() {
         Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1];
@@ -58,7 +58,7 @@ public class ProfileManagerTest {
         
         System.assertEquals('Updated Description', result.get('description'), 'Expected updated profile description');
     }
-    //This test Method Used to Check the deleteProfile Method
+    //This test Method Used to Check the deleteProfile Method in ProfileManager Class
     @IsTest
     static void testDeleteProfile() {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
@@ -70,7 +70,7 @@ public class ProfileManagerTest {
         
         System.assert(true, 'Expected to complete successfully without exceptions');
     }
-    //This test Method Used to Check the updateSystemPermissionsProf Method
+    //This test Method Used to Check the updateSystemPermissionsProf Method in ProfileManager Class
     @IsTest
     static void updateSystemPermissionsProf_Test() {
         
@@ -84,7 +84,7 @@ public class ProfileManagerTest {
         
         System.assertNotEquals(null, updatedResult, Error_Null_Result_Message);
     }
-    //This test Method Used to Check the getSobjectPermissionsForProfile Method
+    //This test Method Used to Check the getSobjectPermissionsForProfile Method in ProfileManager Class
     @IsTest
     static void testGetSobjectPermissionsForProfile() {
         PermissionSet perSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_2' LIMIT 1];
@@ -93,15 +93,15 @@ public class ProfileManagerTest {
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
 
         Test.startTest();
-        ProfileManager.ProfileObjectPermissionsWrapper result = ProfileManager.getSobjectPermissionsForProfile(perSet.Id,'Account');
+        ProfileManager.ProfileObjectPermissionsWrapper result = ProfileManager.getSobjectPermissionsForProfile(perSet.Id,'Opportunity');
         Test.stopTest();
         System.assertNotEquals(null, result, 'Expected non-null ProfileObjectPermissionsWrapper result');   
         System.assertEquals(true, result.hasObjAccess, 'Expected hasObjAccess to be true');
     }
-    //This test Method Used to Check the getCombinedPermissionsforProfile Method
+    //This test Method Used to Check the getCombinedPermissionsforProfile Method in ProfileManager Class
     @IsTest
     static void testGetCombinedPermissionsforProfile() {
-        PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_2' LIMIT 1];
         
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
 		permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
@@ -115,7 +115,7 @@ public class ProfileManagerTest {
         System.assert(result.userPermissions.size() > 0, 'Expected user permissions to be populated');
         System.assertNotEquals(null, result.systemDependencies);
     }
-    //This test Method Used to Check the getProfileTabSetting Method
+    //This test Method Used to Check the getProfileTabSetting Method in ProfileManager Class
     @IsTest
     static void testGetProfileTabSetting() {
         
@@ -132,7 +132,7 @@ public class ProfileManagerTest {
         Map<String, Object> tabSetting1 = result.get(0);
         System.assert(tabSetting1.containsKey('Visibility'), 'Expected Visibility key in tab settings');
     }
-    //This test Method Used to Check the getTabPermissions Method
+    //This test Method Used to Check the getTabPermissions Method in ProfileManager Class
     @IsTest
     static void getTabPermissions_test()
     {
@@ -147,7 +147,7 @@ public class ProfileManagerTest {
         System.assertNotEquals(null, result, Error_Null_Result_Message);
         System.assert(result.containsKey('standard-Account'), 'Expected key standard-Account to be present in the result');
     }
-    //This test Method Used to Check the getTabPermissions Method is Failed
+    //This test Method Used to Check the getTabPermissions Method is Failed in ProfileManager Class
     @IsTest
     static void getTabPermissions_testFail()
     {
@@ -161,7 +161,7 @@ public class ProfileManagerTest {
         System.assertNotEquals(null, result, Error_Null_Result_Message);  
         System.assertEquals('DefaultOn', result.get('standard-Account'), 'Expected value for standard-Account to be DefaultOn');
     }
-    //This test Method Used to Check the getProfileObjectDetails Method
+    //This test Method Used to Check the getProfileObjectDetails Method in ProfileManager Class
     @IsTest
     static void getProfileObjectDetails_Test()
     {
@@ -170,7 +170,63 @@ public class ProfileManagerTest {
         ProfileManager.ProfileObjectDetails result = ProfileManager.getProfileObjectDetails(testPermSet.id);
         Test.stopTest();
         System.debug(result);
-        
         System.assertNotEquals(null, result, Error_Null_Result_Message);  
     }
+    //This test Method Used to Check the extractDependentObjects Method in ProfileManager Class 
+    @IsTest
+    static void testExtractDependentObjects() {
+        List<Object> dependSystemPermissions = new List<Object>();
+        Map<String, Object> record1 = new Map<String, Object>();
+        record1.put('RequiredPermissionType', 'Object Permission');
+        record1.put('RequiredPermission', 'Account<Read>');
+        dependSystemPermissions.add(record1);
+        Map<String, Object> record2 = new Map<String, Object>();
+        record2.put('RequiredPermissionType', 'Object Permission');
+        record2.put('RequiredPermission', 'Contact<Edit>');
+        dependSystemPermissions.add(record2);
+        Test.startTest();
+        Set<String> result = ProfileManager.extractDependentObjects(dependSystemPermissions);
+        Test.stopTest();
+        Set<String> expected = new Set<String>{'Account', 'Contact'};
+        System.assertEquals(expected, result, 'The dependent objects should match the expected values.');
+    }
+    //This test Method Used to Check the getObjectPermissions Method in ProfileManager Class 
+    @IsTest
+    static void testGetObjectPermissions() {
+        PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        Set<String> dependentObjects = new Set<String>{'Account', 'Contact'};
+        List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
+        objPermissions.add(new ObjectPermissions(SObjectType = 'Account', ParentId = testPermSet.Id,
+                                                 PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = false,
+                                                 PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
+        objPermissions.add(new ObjectPermissions(SObjectType = 'Contact', ParentId = testPermSet.Id,
+                                                 PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = false,
+                                                 PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
+        insert objPermissions;
+        Test.startTest();
+        Map<String, Map<String, Object>> result = ProfileManager.getObjectPermissions(testPermSet.Id, dependentObjects);
+        Test.stopTest();
+        System.assert(result.containsKey('Account'), 'Result should contain Account permissions.');
+        System.assert(result.containsKey('Contact'), 'Result should contain Contact permissions.');
+    }
+    //This test Method Used to Check the getProfileObjectDetails Method in ProfileManager Class 
+    @IsTest
+    static void testGetProfileObjectDetails() {
+        PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
+        objPermissions.add(new ObjectPermissions(SObjectType = 'Account', ParentId = testPermSet.Id,
+                                                 PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = false,
+                                                 PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
+        objPermissions.add(new ObjectPermissions(SObjectType = 'Contact', ParentId = testPermSet.Id,
+                                                 PermissionsRead = true, PermissionsCreate = true, PermissionsEdit = false,
+                                                 PermissionsDelete = false, PermissionsViewAllRecords = false, PermissionsModifyAllRecords = false));
+        insert objPermissions;
+        Test.startTest();
+        ProfileManager.ProfileObjectDetails result = ProfileManager.getProfileObjectDetails(testPermSet.Id);
+        Test.stopTest();
+        System.assertNotEquals(null, result, 'Result should not be null');
+        System.assert(result.objectPermissions.containsKey('Account'), 'Result should contain Account permissions.');
+        System.assert(result.objectPermissions.containsKey('Contact'), 'Result should contain Contact permissions.');
+    }
+    
 }

@@ -13,7 +13,7 @@ public class PermissionSetManagerTest {
        PermissionAnalyzerObjectServerTest.testsetupMethod();       
     }
     
-	//This test method is used to check the logics for createPermissionSet method in PermissionSetManager class.
+	//This test method is used to check the logics for createPermissionSet(Success) method in PermissionSetManager class.
     @IsTest
     static void testCreatePermissionSet() {
         PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
@@ -32,7 +32,27 @@ public class PermissionSetManagerTest {
         System.assertNotEquals(null, permissionSetId, 'There Should be not Null.');
     }
     
-    //This test method is used to check the logics for insertUsertoPermissionSet method in PermissionSetManager class.
+    //This test method is used to check the logics for createPermissionSet(Failure) method in PermissionSetManager class.
+    @IsTest
+    static void testCreatePermissionSet_DmlException() {
+        PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
+        insert testPermissionSet;
+        User u = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
+        Map < String, Object > permSetToCreate = new Map < String, Object > {'Name' => 'Test_Test_Permission_Set','Label' => 'Test Test Permission Set Label',
+            										'Description' => 'Test Permission Set Description','License' => null,'hasActivationRequired' => false};
+        List < Id > userIds = new List < Id > {u.Id};
+    
+        Test.startTest();
+        try {
+            String permissionSetId = PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
+            System.assert(true, Error_Thrown_Message);
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+        }
+        Test.stopTest();
+    }
+    
+    //This test method is used to check the logics for insertUsertoPermissionSet(Success) method in PermissionSetManager class.
     @IsTest
     static void testInsertUsertoPermissionSet() {
         User testUser = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
@@ -45,6 +65,24 @@ public class PermissionSetManagerTest {
     
         List < PermissionSetAssignment > assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: testUser.Id AND PermissionSetId =: testPermissionSet.Id];
         System.assertEquals(1, assignments.size(), 'PermissionSetAssignment should be inserted successfully.');
+    }
+    
+    //This test method is used to check the logics for insertUsertoPermissionSet(Failure) method in PermissionSetManager class.
+    @IsTest
+    static void testInsertUsertoPermissionSet_ExceptionHandling() {
+        User testUser = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
+        PermissionSet testPermissionSet = new PermissionSet(name = 'Test_for_Insert_user_to_Perm_Set', label = 'Test for Insert user to Perm Set');
+        insert testPermissionSet;
+        delete testPermissionSet;
+        List < String > userIds = new List < String > {testUser.Id};
+        Test.startTest();
+        try {
+            PermissionSetManager.insertUsertoPermissionSet(userIds, testPermissionSet.Id);
+            System.assert(true, Error_Thrown_Message);
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
+        }
+        Test.stopTest();
     }
     
     //This test method is used to check the logics for deleteUserfromPermissionSet(Success) method in PermissionSetManager class.
@@ -68,6 +106,7 @@ public class PermissionSetManagerTest {
     static void testDeleteUserFromPermissionSet_DmlException() {
         PermissionSet testPermissionSet = new PermissionSet(Name = 'New_Test_Permission_Set_4',Label='New Test Permission Set 4');
         insert testPermissionSet;
+        delete testPermissionSet;
         List<User> testUsers = [SELECT id FROM User WHERE userName = 'testuseraccess1@example.com' limit 1];
 
         List<String> userIds = new List<String>{testUsers[0].id};

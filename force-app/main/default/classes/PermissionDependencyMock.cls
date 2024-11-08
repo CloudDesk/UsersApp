@@ -1,24 +1,18 @@
 public class PermissionDependencyMock implements HttpCalloutMock {
     private Map<String, String> queryToResponseMap;    
-    private static final String PermDependency_Query = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency ';
-    private static final String permDependency_Where_Query = 'AND PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\'';
+    private static final String PermDependency_Query = 'SELECT Id, Permission, RequiredPermission FROM PermissionDependency WHERE PermissionType = \'Object Permission\' AND RequiredPermissionType = \'Object Permission\' ';
     private static final String Null_Response = '{"size": 0, "totalSize": 0, "done": true, "queryLocator": null, ' +
                 '"entityTypeName": "PermissionDependency", "records": []}';
     public PermissionDependencyMock() {
         queryToResponseMap = new Map<String, String>();
         setupDefaultMockResponses();
     }
-    
-    // Method to add custom responses for specific test scenarios
     public void addCustomResponse(String query, String response) {
         queryToResponseMap.put(normalizeQuery(query), response);
     }
-    
     private void setupDefaultMockResponses() {
-        // Account initial query response
         String accountQuery = PermDependency_Query +
-            'WHERE (Permission LIKE \'%Account%\' OR RequiredPermission LIKE \'%Account%\') ' +
-            permDependency_Where_Query;
+            'AND (Permission LIKE \'%Account%\' OR RequiredPermission LIKE \'%Account%\')';
             
         String accountResponse = '{"size": 3, "totalSize": 3, "done": true, "queryLocator": null, ' +
             '"entityTypeName": "PermissionDependency", "records": [' +
@@ -30,16 +24,12 @@ public class PermissionDependencyMock implements HttpCalloutMock {
             '"Id": "003", "Permission": "Plan_History__C<read>", "RequiredPermission": "Account<read>"}' +
             ']}';
         
-        // Contact parent query response (empty)
         String contactParentQuery = PermDependency_Query +
-            'WHERE Permission IN (\'Contact<read>\') ' +
-            permDependency_Where_Query;
+            'AND Permission IN (\'Contact<read>\')';
             
         String contactResponse = Null_Response;
 		String planHistoryQuery = PermDependency_Query+
-            'WHERE RequiredPermission IN (\'Plan_History__c<read>\') ' +
-            permDependency_Where_Query;
-            
+            'AND RequiredPermission IN (\'Plan_History__c<read>\')';
         String planHistoryResponse = Null_Response;
 
 		    
