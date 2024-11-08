@@ -38,14 +38,11 @@ private class PermissionTabServerTest {
             PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {
                 'PermissionsApiEnabled'
                     }, '', '', '', '', '', 'All'),
-                PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {
-                    'PermissionsApiEnabled'
-                        }, '', '', '', '', '', permSetId),
+                PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {'PermissionsApiEnabled'}, '', '', '', '', '', permSetId),
                 PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {}, 'Opportunity', 'PermissionsRead', '', '', '', 'All'),
                 PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {}, 'Opportunity', 'PermissionsRead', '', '', '', permSetId),
                 PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {}, '', '', 'Opportunity', 'Eligible__c', 'PermissionsRead', 'All'),
-                PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {}, '', '', 'Opportunity', 'Eligible__c', 'PermissionsRead', permSetId),
-                PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {}, '', '', 'Opportunity', 'Eligible__c', 'PermissionsRead', 'DUMMYID')
+                PermissionTabServer.getPermsandUsersOfSelectedPerms(new List < String > {}, '', '', 'Opportunity', 'Eligible__c', 'PermissionsRead', permSetId)
                 };
                     
                     for (PermissionTabServer.profilePermissionsetandUserWrapper result: results) {

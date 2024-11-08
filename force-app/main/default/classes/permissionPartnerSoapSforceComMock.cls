@@ -41,7 +41,13 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             when 'DescribeTab' 
             {
                 PermissionPartnerSoapSforceCom.describeAllTabsResponse_element response_x  = new PermissionPartnerSoapSforceCom.describeAllTabsResponse_element();
+                
                 List<PermissionPartnerSoapSforceCom.DescribeTab> testDescribeTab = new list<PermissionPartnerSoapSforceCom.DescribeTab>();
+                PermissionPartnerSoapSforceCom.DescribeTab descTabRecord = new PermissionPartnerSoapSforceCom.DescribeTab();
+                descTabRecord.colors = new List<PermissionPartnerSoapSforceCom.DescribeColor>();
+                descTabRecord.icons = new List<PermissionPartnerSoapSforceCom.DescribeIcon>();
+                testDescribeTab.add(descTabRecord);
+                
                 response_x.result = testDescribeTab;
                 response.put('response_x', response_x);
             }
@@ -49,6 +55,10 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.describeDataCategoryGroupStructuresResponse_element response_x = new PermissionPartnerSoapSforceCom.describeDataCategoryGroupStructuresResponse_element();
                 List<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult> testGroupStructureRes = new List<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult>();
+                PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult testGroupStructureRec = new PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult();
+                testGroupStructureRec.description = 'Test description';
+                testGroupStructureRec.label = 'Test label';
+                testGroupStructureRes.add(testGroupStructureRec);
                 response_x.result= testGroupStructureRes;
                 response.put('response_x', response_x);
             }
@@ -56,6 +66,10 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element();
                 list<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult> testCategoryGroupResult = new list<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult>();
+                PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult testCategoryGroupRec = new PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult();
+                testCategoryGroupRec.description = 'Test description';
+                testCategoryGroupRec.label = 'Test label';
+                testCategoryGroupResult.add(testCategoryGroupRec);
                 response_x.result = testCategoryGroupResult;
                 response.put('response_x', response_x);
             }
@@ -63,6 +77,9 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.findDuplicatesResponse_element response_x = new PermissionPartnerSoapSforceCom.findDuplicatesResponse_element();
                 list<PermissionPartnerSoapSforceCom.FindDuplicatesResult> testFindDuplicates = new list<PermissionPartnerSoapSforceCom.FindDuplicatesResult>();
+                PermissionPartnerSoapSforceCom.FindDuplicatesResult testFindDuplicatesRec = new PermissionPartnerSoapSforceCom.FindDuplicatesResult();
+                testFindDuplicatesRec.success = true;
+                testFindDuplicatesRec.duplicateResults = new List<PermissionPartnerSoapSforceCom.DuplicateResult>();
                 response_x.result = testFindDuplicates;
                 response.put('response_x', response_x);
             }
@@ -70,6 +87,11 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.processResponse_element response_x = new PermissionPartnerSoapSforceCom.processResponse_element();
                 list<PermissionPartnerSoapSforceCom.ProcessResult> testProcessResult = new list<PermissionPartnerSoapSforceCom.ProcessResult>();
+                PermissionPartnerSoapSforceCom.ProcessResult testProcessRec = new PermissionPartnerSoapSforceCom.ProcessResult();
+                testProcessRec.instanceStatus = 'Test pass';
+                testProcessRec.entityId = 'q64w66e';
+                testProcessRec.instanceId = '286373';
+                testProcessResult.add(testProcessRec);
                 response_x.result = testProcessResult;
                 response.put('response_x', response_x);
             }
@@ -77,6 +99,8 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.describeGlobalResponse_element response_x = new PermissionPartnerSoapSforceCom.describeGlobalResponse_element();
                 PermissionPartnerSoapSforceCom.DescribeGlobalResult  testDescribeGlobal = new PermissionPartnerSoapSforceCom.DescribeGlobalResult();
+                testDescribeGlobal.encoding = '67q36r26h';
+                testDescribeGlobal.maxBatchSize = 12;
                 response_x.result = testDescribeGlobal;
                 response.put('response_x', response_x);
             }
@@ -84,6 +108,9 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.getUserInfoResponse_element response_x = new PermissionPartnerSoapSforceCom.getUserInfoResponse_element();
                 PermissionPartnerSoapSforceCom.GetUserInfoResult  testUserInfo = new PermissionPartnerSoapSforceCom.GetUserInfoResult();
+                testUserInfo.accessibilityMode = true;
+                testUserInfo.chatterExternal = true;
+                testUserInfo.currencySymbol = '$';
                 response_x.result = testUserInfo;
                 response.put('response_x', response_x);
             }
@@ -98,6 +125,7 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.describeApprovalLayoutResponse_element response_x = new PermissionPartnerSoapSforceCom.describeApprovalLayoutResponse_element();
                 PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResult  testApprovalLayout = new PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResult();
+                testApprovalLayout.approvalLayouts = new List<PermissionPartnerSoapSforceCom.DescribeApprovalLayout>();
                 response_x.result = testApprovalLayout;
                 response.put('response_x', response_x);
             }
@@ -112,6 +140,8 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.queryMoreResponse_element response_x = new PermissionPartnerSoapSforceCom.queryMoreResponse_element();
                 PermissionPartnerSoapSforceCom.QueryResult  testQueryResult = new PermissionPartnerSoapSforceCom.QueryResult();
+                testQueryResult.done = true;
+                testQueryResult.queryLocator = 'Test';
                 response_x.result = testQueryResult;
                 response.put('response_x', response_x);
             }
@@ -126,6 +156,8 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.describeLayoutResponse_element response_x = new PermissionPartnerSoapSforceCom.describeLayoutResponse_element();
                 PermissionPartnerSoapSforceCom.DescribeLayoutResult  testLayoutResult = new PermissionPartnerSoapSforceCom.DescribeLayoutResult();
+                testLayoutResult.layouts = new list<PermissionPartnerSoapSforceCom.DescribeLayout>();
+                testLayoutResult.recordTypeMappings = new list<PermissionPartnerSoapSforceCom.RecordTypeMapping>();
                 response_x.result = testLayoutResult;
                 response.put('response_x', response_x);
             }
@@ -133,6 +165,7 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
             {
                 PermissionPartnerSoapSforceCom.describeAppMenuResponse_element response_x = new PermissionPartnerSoapSforceCom.describeAppMenuResponse_element();
                 PermissionPartnerSoapSforceCom.DescribeAppMenuResult  testAppMenu = new PermissionPartnerSoapSforceCom.DescribeAppMenuResult();
+                testAppMenu.appMenuItems = new list<PermissionPartnerSoapSforceCom.DescribeAppMenuItem>();
                 response_x.result = testAppMenu;
                 response.put('response_x', response_x);
             }

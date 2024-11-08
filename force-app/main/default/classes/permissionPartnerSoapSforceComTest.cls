@@ -17,32 +17,54 @@ public class PermissionPartnerSoapSforceComTest {
         
         PermissionPartnerSoapSforceComMock.indicatorVar =  'GroupStructureRes';
         list<PermissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair> groupSobjectTypePair = new list<PermissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair>();
-        soapObj.describeDataCategoryGroupStructures(groupSobjectTypePair, true);
+        List<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult> groupStructureRestList = soapObj.describeDataCategoryGroupStructures(groupSobjectTypePair, true);
+        System.assert(groupStructureRestList.size() == 1, true);
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'GroupResponse';        
-        soapObj.describeDataCategoryGroups(stringArr);
+        List<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult> groupResponseList = soapObj.describeDataCategoryGroups(stringArr);
+        System.assert(groupResponseList.size() == 1, true);
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'FindDuplicates';        
-        soapObj.findDuplicates(sObjects);
+        list<PermissionPartnerSoapSforceCom.FindDuplicatesResult> findDuplicatesList = soapObj.findDuplicates(sObjects);
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'Process';
         list<PermissionPartnerSoapSforceCom.ProcessRequest> processReq = new list<PermissionPartnerSoapSforceCom.ProcessRequest>();
-        soapObj.Process(processReq);
+        list<PermissionPartnerSoapSforceCom.ProcessResult> processList = soapObj.Process(processReq);
+        System.assert(processList.size() == 1, true);
+        
         PermissionPartnerSoapSforceComMock.indicatorVar = 'DescribeGlobal';            
-        soapObj.describeGlobal();
+        PermissionPartnerSoapSforceCom.DescribeGlobalResult describeGlobal = soapObj.describeGlobal();
+        System.assert(describeGlobal != null, 'Expected the first record in describeGlobal to be non-null.');
+        
         PermissionPartnerSoapSforceComMock.indicatorVar = 'UserInfo';            
-        soapObj.getUserInfo();
+        PermissionPartnerSoapSforceCom.GetUserInfoResult userInfoTest = soapObj.getUserInfo();
+        System.assert(userInfoTest != null, 'Expected the first record in UserInfo to be non-null.');
+        
         PermissionPartnerSoapSforceComMock.indicatorVar = 'GlobalTheme';            
         soapObj.describeGlobalTheme();
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'ApprovalLayout';        
-        soapObj.describeApprovalLayout('sObject',stringArr);
+        PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResult approvalLayoutTest = soapObj.describeApprovalLayout('sObject',stringArr);
+        System.assert(approvalLayoutTest != null, 'Expected the first record in ApprovalLayout to be non-null.');
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'CompactLayout';
         soapObj.describePrimaryCompactLayouts(stringArr);
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'QueryResult';       
-        soapObj.queryMore('test');
+        PermissionPartnerSoapSforceCom.QueryResult queryResultTest = soapObj.queryMore('test');
+        System.assert(queryResultTest != null, 'Expected the first record in QueryResult to be non-null.');
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'EntityResult';       
         soapObj.describeSearchableEntities(true);
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'LayoutResult';  
-        soapObj.describeLayout('testObject','testLayout', stringArr);
+        PermissionPartnerSoapSforceCom.DescribeLayoutResult layoutResultTest = soapObj.describeLayout('testObject','testLayout', stringArr);
+        System.assert(layoutResultTest != null, 'Expected the first record in LayoutResult to be non-null.');
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'AppMenu';       
-        soapObj.describeAppMenu('testMenu', 'testNetworkId');
+        PermissionPartnerSoapSforceCom.DescribeAppMenuResult appMenuTest = soapObj.describeAppMenu('testMenu', 'testNetworkId');
+        System.assert(appMenuTest != null, 'Expected the first record in LayoutResult to be non-null.');
+        
         PermissionPartnerSoapSforceComMock.indicatorVar =  'LeadConvert';
         list<PermissionPartnerSoapSforceCom.LeadConvert> leadConvertList = new list<PermissionPartnerSoapSforceCom.LeadConvert>();
         soapObj.convertLead(leadConvertList);

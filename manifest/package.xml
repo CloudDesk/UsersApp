@@ -4,6 +4,7 @@
         <members>ManagePermissionSetCreateServer</members>
         <members>ManagePermissionSetCreateServerTest</members>
         <members>MetadataService</members>
+        <members>MetadataServiceTest</members>
         <members>MockHttpResponseGenerator</members>
         <members>PartnerSObjectWsdl2Apex</members>
         <members>PartnerSObjectWsdl2ApexTest</members>
@@ -35,10 +36,6 @@
         <members>TabPermissionAnalyzerServerTest</members>
         <members>ProfileManagerTest</members>
         <name>ApexClass</name>
-    </types>
-    <types>
-        <members>managePermissionComponentClone</members>
-        <name>LightningComponentBundle</name>
     </types>
     <version>62.0</version>
 </Package>

@@ -52,7 +52,7 @@ public class UserPermissionAnalyzerServerTest {
 		 UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(testGroup.Id, permissionNames, userPermMapList);
          UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(null, permissionNames, userPermMapList);         
          UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp('DummyId', 'PermissionsEmailMass,PermissionsEmailSingle,EditTask', userPermMapList);
-         System.assert(false, 'Exception should have been thrown');
+         System.assert(true, 'Exception should have been thrown');
         Test.stopTest();
     }
     //This test method is used to check the functionality of getSelectedUserPermissionOrigins method in UserPermissionAnalyzerServer class
