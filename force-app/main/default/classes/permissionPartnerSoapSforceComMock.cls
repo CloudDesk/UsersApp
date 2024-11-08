@@ -213,6 +213,13 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
                 response_x.result = testAvailabeQuickAction;
                 response.put('response_x', response_x);
             }
+            when else{
+                response = invokeWithIndicatorVar_1(indicatorVar, response);
+            }
+        }
+    }
+    private static Map<string, object> invokeWithIndicatorVar_1(String indicatorVar, map<string, object> response){
+        switch on indicatorVar{
             when 'GetDeletedResult'
             {
                 permissionPartnerSoapSforceCom.getDeletedResponse_element response_x = new permissionPartnerSoapSforceCom.getDeletedResponse_element();
@@ -388,6 +395,14 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
                 response_x.result = testGetServerTimestamp;
                 response.put('response_x',response_x);
             }
+			when else {
+                response = invokeWithIndicatorVar_2(indicatorVar, response);
+			}
+        }
+        return response;
+    }
+    private static Map<string, object> invokeWithIndicatorVar_2(String indicatorVar, map<string, object> response){
+        switch on indicatorVar{
             when 'RetrieveQuickActionTemplates'
             {
                 permissionPartnerSoapSforceCom.retrieveQuickActionTemplatesResponse_element response_x = new permissionPartnerSoapSforceCom.retrieveQuickActionTemplatesResponse_element();
@@ -474,5 +489,6 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
 
             }
         }
+        return response;
     }
 }
