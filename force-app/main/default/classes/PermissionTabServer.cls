@@ -2,6 +2,7 @@
 // through Profile,PermissionSet and PermissionSetGroup.
 //This CLass Used IN PermissionAnalyzer  && ManagePermissionComponentClone LWC Component
 public with sharing class PermissionTabServer {
+    private static final String TRUE_CONSTANT = ' = true';
     //Used to fetch User Permissions
     @AuraEnabled
     public static Map<String, String> getUserDefinitions() {  
@@ -62,7 +63,6 @@ public with sharing class PermissionTabServer {
     @AuraEnabled
     public static profilePermissionsetandUserWrapper getPermsandUsersOfSelectedPerms(List<String> userPermissions,String objName,String objPermission,String objFieldName,String fieldName,String fieldPerm,String perSetId) {            
         List<permissionSet> permissionSetList = new List<permissionSet>();
-        Set<Id> idToFetchPermList = new Set<Id>();
         Set<Id> permissionSetIdSet = new Set<Id>();
         Set<Id> assigneeIdSet = new Set<Id>();
         Map<Id, user> userMap = new Map<Id, User>();        
@@ -119,7 +119,7 @@ public with sharing class PermissionTabServer {
         Set<Id> idToFetchPermList = new Set<Id>();
         Set<Id> permissionSetIdSet = new Set<Id>();
         List<permissionSet> permissionSetList = new List<permissionSet>();
-       	String objectPermissionQuery ='Select Id, SobjectType, ParentId, Parent.Name, Parent.Label, Parent.Profile.Name, Parent.Type from ObjectPermissions where SobjectType = \'' + objName + '\' and ' +objPermission +' = true';  
+       	String objectPermissionQuery ='Select Id, SobjectType, ParentId, Parent.Name, Parent.Label, Parent.Profile.Name, Parent.Type from ObjectPermissions where SobjectType = \'' + objName + '\' and ' +objPermission + TRUE_CONSTANT;  
         for (ObjectPermissions objperm : Database.query(objectPermissionQuery) ) {
             idToFetchPermList.add(objperm.ParentId);
             if(perSetId == 'All'){
@@ -141,7 +141,7 @@ public with sharing class PermissionTabServer {
             'select Id, SobjectType, ParentId, Field, parent.Label, Parent.Name, Parent.Profile.Name, parent.Type ' +
             'from FieldPermissions ' +
             'where field = \'' + objFieldName + '.' + fieldName + '\' ' +
-            'and ' + fieldPerm + ' = true';
+            'and ' + fieldPerm + TRUE_CONSTANT;
         for(fieldPermissions fieldPermission : Database.query(fieldPermissionQuery))          
         {
             idToFetchPermList.add(fieldPermission.ParentId);
@@ -212,7 +212,7 @@ public with sharing class PermissionTabServer {
                         String permSetAssignQuery = 'SELECT PermissionSet.Profile.Name, PermissionSet.Type, PermissionSet.Label ' +
                             'FROM PermissionSetAssignment WHERE AssigneeId = :userId';  
                         if (!perms.isEmpty()) {
-                            permSetAssignQuery += ' AND PermissionSet.' + String.join(perms, ' = true AND PermissionSet.') + ' = true';
+                            permSetAssignQuery += ' AND PermissionSet.' + String.join(perms, ' = true AND PermissionSet.') + TRUE_CONSTANT;
                         }
                         for (PermissionSetAssignment permSetAssign: Database.query(permSetAssignQuery)) {
                             String type = permSetAssign.PermissionSet.Type;
