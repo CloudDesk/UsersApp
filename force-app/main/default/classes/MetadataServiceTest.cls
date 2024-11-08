@@ -101,7 +101,7 @@ private class MetadataServiceTest
         System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
         Test.startTest();
         MetadataService metaDataService = new MetadataService();
-        MetadataService.ListMetadataResponse_element listMetaRes = new MetadataService.listMetadataResponse_element();
+        new MetadataService.listMetadataResponse_element();
         new MetadataService.WorkflowRule();
         new MetadataService.RecordTypeTranslation();
         new MetadataService.checkDeployStatus_element();
