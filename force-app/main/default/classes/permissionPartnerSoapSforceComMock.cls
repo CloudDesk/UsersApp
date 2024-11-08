@@ -485,9 +485,6 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
                 response_x.result = testRetrieve;
                 response.put('response_x',response_x);
             }
-            when else {
-
-            }
         }
         return response;
     }
