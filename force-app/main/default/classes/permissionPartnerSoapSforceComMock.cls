@@ -417,7 +417,7 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
                 response_x.result = testSetPassword;
                 response.put('response_x',response_x);
             }
-            when 'resetPassword'
+            when 'ResetPassword'
             {
                 permissionPartnerSoapSforceCom.resetPasswordResponse_element response_x = new permissionPartnerSoapSforceCom.resetPasswordResponse_element();
                 permissionPartnerSoapSforceCom.ResetPasswordResult testResetPassword = new permissionPartnerSoapSforceCom.ResetPasswordResult();
