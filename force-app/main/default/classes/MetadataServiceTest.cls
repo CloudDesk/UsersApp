@@ -98,7 +98,7 @@ private class MetadataServiceTest
 	@IsTest
     private static void coverGeneratedCodeTypes()
     {    	       
-        // Reference types
+        System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
         Test.startTest();
         MetadataService metaDataService = new MetadataService();
         MetadataService.ListMetadataResponse_element listMetaRes = new MetadataService.listMetadataResponse_element();
@@ -932,7 +932,6 @@ private class MetadataServiceTest
         new MetadataService.ModeratedEntityField();
         new MetadataService.ObjectMapping();
         new MetadataService.TabLimitConfig();
-        new MetadataService.FieldMapping();
         new MetadataService.ValueTranslation();
         new MetadataService.StandardValueSet();
         new MetadataService.FlowScreenRule();
@@ -949,8 +948,16 @@ private class MetadataServiceTest
         new MetadataService.CustomExperienceTabSet();
         new MetadataService.KnowledgeSuggestedArticlesSettings();
         Test.stopTest();
-        System.assertNotEquals(null, metaDataService, SERVICE_NULL_MESSAGE);
-        System.assertNotEquals(null, listMetaRes, SERVICE_NULL_MESSAGE);
+        
+        MetadataService.FieldMapping fieldMappingWrapper = new MetadataService.FieldMapping();
+        fieldMappingWrapper.fieldMappingRows = new List<MetadataService.FieldMappingRow>();
+        MetadataService.FieldMappingRow row = new MetadataService.FieldMappingRow();
+        row.fieldMappingFields = new List<MetadataService.FieldMappingField>();
+        fieldMappingWrapper.fieldMappingRows.add(row);
+        
+        System.assert(fieldMappingWrapper.fieldMappingRows.size() == 1, true);
+        System.assert(fieldMappingWrapper.fieldMappingRows[0].fieldMappingFields.size() == 0, true);
+        System.assert(fieldMappingWrapper.fieldMappingRows[0].SObjectType == null, true);
     }
 
     @IsTest
@@ -987,7 +994,6 @@ private class MetadataServiceTest
         new MetadataService.ReadContractSettingsResult().getRecords();
         new MetadataService.ReadOrderSettingsResult().getRecords();
         new MetadataService.ReadOpportunitySettingsResult().getRecords();
-        new MetadataService.ReadProductSettingsResult().getRecords();
         new MetadataService.ReadQuoteSettingsResult().getRecords();
         new MetadataService.ReadCallCenterResult().getRecords();
         new MetadataService.ReadEntitlementProcessResult().getRecords();
@@ -1320,5 +1326,16 @@ private class MetadataServiceTest
         new MetadataService.readUserCriteriaResponse_element().getResult();
         new MetadataService.readWavexmdResponse_element().getResult();
         Test.stopTest();
+        
+        MetadataService.ReadProductSettingsResult productSettingResult = new MetadataService.ReadProductSettingsResult();
+        System.assert(productSettingResult.getRecords() == null, true);
+        
+        productSettingResult.records = new List<MetadataService.ProductSettings>();
+        MetadataService.ProductSettings setting = new MetadataService.ProductSettings();
+        productSettingResult.records.add(setting);
+        
+        System.assert(productSettingResult.records.size() == 1, true);
+        System.assert(productSettingResult.records[0].type == 'ProductSettings', true);
+        System.assert(productSettingResult.records[0].enableQuantitySchedule == null, true);        
     }    
 }
