@@ -73,8 +73,6 @@ public class WebServiceMockImpl implements WebServiceMock
                 response.put('response_x', new MetadataService.DeployRecentValidationResponse_element());
             else if(request instanceof MetadataService.describeValueType_element)
                 response.put('response_x', new MetadataService.describeValueTypeResponse_element());
-            else if(request instanceof MetadataService.checkRetrieveStatus_element)
-                response.put('response_x', new MetadataService.checkRetrieveStatusResponse_element());
 			return;
 		}
 	}
