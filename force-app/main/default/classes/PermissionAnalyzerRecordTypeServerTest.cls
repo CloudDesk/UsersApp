@@ -3,6 +3,7 @@
 public class PermissionAnalyzerRecordTypeServerTest {
     private static final String Script_Thrown_Message = 'Script-thrown exception';
     private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
+    private static final String PROFILE_NAME = 'HCH Sales User';
     //This method holds the test data
     @testsetup
     static void testsetupMethod() {
@@ -38,7 +39,7 @@ public class PermissionAnalyzerRecordTypeServerTest {
         wrapper.RecordType = 'test';
         Test.startTest();
         try {
-            List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> result=PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibilityForPermSet(
+            PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibilityForPermSet(
             permissionSetNames, 
             new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> {wrapper});
             System.assert(true, Error_Thrown_Message);
@@ -51,7 +52,7 @@ public class PermissionAnalyzerRecordTypeServerTest {
 	//This test method is used to check the functionality of getRecordTypeVisibilityForProfile method in PermissionAnalyzerRecordTypeServer class
     @IsTest
     static void testGetAndUpdateRecordTypeVisibilityForProfile() {
-        String profileName = 'HCH Sales User';
+        String profileName = PROFILE_NAME;
         String objectName = 'Account';
         String recordTypeName = 'Account.Healthplan'; 
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
@@ -65,9 +66,9 @@ public class PermissionAnalyzerRecordTypeServerTest {
         updateWrapper.RecordType = recordTypeName;
         List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> updateResult = PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibility(
             new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> {updateWrapper},new List<String> {profileName},'Profile');
-        List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> updateResultNullProfile = PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibility(
+        PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibility(
             new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> {updateWrapper},null,'Profile');
-        List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> updateResultNullProfile1 = PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibility(
+        PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibility(
             new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> {updateWrapper},new List<String> {'Test Permission set'},'Permission Set');
         Test.stopTest();
         System.assertNotEquals(null, getResult, 'getResult should not be null');
@@ -80,16 +81,16 @@ public class PermissionAnalyzerRecordTypeServerTest {
     //This test method is used to check the functionality of getRecTypeVisibilityForProfileAndPermSet method in PermissionAnalyzerRecordTypeServer class
     @IsTest
     static void testGetRecTypeVisibilityForProfileAndPermSet() {
-        String profileName = 'HCH Sales User';
+        String profileName = PROFILE_NAME;
         String objectName = 'Account';  
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Test.startTest();
         PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityResutlWrapper result =PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
             objectName,null,'Profile',new List<String>{profileName});
-        PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityResutlWrapper result1 =PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
+        PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
             objectName,testPermissionSet.Id,'Profile',new List<String>{profileName});
-        PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityResutlWrapper result2 =PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
+        PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
             objectName,testPermissionSet.Id,'Permission Set',new List<String>{profileName});
         Test.stopTest();  
         System.assertNotEquals(1, result.recordTypeList.size(), 'Expected more than one record types to be returned');
@@ -99,12 +100,11 @@ public class PermissionAnalyzerRecordTypeServerTest {
     @IsTest
     static void testGetRecTypeVisibilityForProfileAndPermSet_ExceptionHandling() {
         String invalidObjectName  = 'Invalid_Object';
-        String profileName = 'HCH Sales User';  
-        PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        String profileName = PROFILE_NAME;
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Test.startTest();
         try {
-            PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityResutlWrapper result =PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
+            PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
             invalidObjectName,null,'Profile',new List<String>{profileName});
             System.assert(true, Error_Thrown_Message);
         } catch (AuraHandledException e) {

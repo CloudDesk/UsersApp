@@ -44,7 +44,7 @@ public class PermissionSetManagerTest {
     
         Test.startTest();
         try {
-            String permissionSetId = PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
+            PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
             System.assert(true, Error_Thrown_Message);
         } catch (AuraHandledException e) {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
