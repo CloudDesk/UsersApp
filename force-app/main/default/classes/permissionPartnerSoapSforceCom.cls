@@ -2,7 +2,7 @@
 public class PermissionPartnerSoapSforceCom {
     public static final String PARTNER_SOAP_URN = 'urn:partner.soap.sforce.com';
     public class InvalidateSessionsResult {
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] success_type_info = new String[]{'success',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -10,7 +10,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'errors','success'};
                         }
     public class DescribePrimaryCompactLayoutsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeCompactLayout[] result;
+        public PermissionPartnerSoapSforceCom.DescribeCompactLayout[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -24,7 +24,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'oldPassword','newPassword'};
                         }
     public class DescribeAppMenuResult {
-        public permissionPartnerSoapSforceCom.DescribeAppMenuItem[] appMenuItems;
+        public PermissionPartnerSoapSforceCom.DescribeAppMenuItem[] appMenuItems;
         private String[] appMenuItems_type_info = new String[]{'appMenuItems',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'appMenuItems'};
@@ -40,7 +40,7 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'color','context','theme'};
                             }
     public class MergeResult {
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String id;
         public String[] mergedRecordIds;
         public Boolean success;
@@ -54,7 +54,7 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'errors','id','mergedRecordIds','success','updatedRelatedIds'};
                                     }
     public class DescribeDataCategoryGroupStructures_element {
-        public permissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair[] pairs;
+        public PermissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair[] pairs;
         public Boolean topCategoriesOnly;
         private String[] pairs_type_info = new String[]{'pairs',PARTNER_SOAP_URN,null,'0','100','false'};
             private String[] topCategoriesOnly_type_info = new String[]{'topCategoriesOnly',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -62,7 +62,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'pairs','topCategoriesOnly'};
                         }
     public class QueryResponse_element {
-        public permissionPartnerSoapSforceCom.QueryResult result;
+        public PermissionPartnerSoapSforceCom.QueryResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -76,7 +76,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'client','defaultNamespace'};
                         }
     public class SaveResult {
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String id;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -106,13 +106,13 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'externalIDFieldName','sObjects'};
                         }
     public class UpdateResponse_element {
-        public permissionPartnerSoapSforceCom.SaveResult[] result;
+        public PermissionPartnerSoapSforceCom.SaveResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class MergeRequest {
-        public permissionPartnerSoapSforceCom.AdditionalInformationMap[] additionalInformationMap;
+        public PermissionPartnerSoapSforceCom.AdditionalInformationMap[] additionalInformationMap;
         public permissionSobjectPartnerSoapSforceCom.sObject_x masterRecord;
         public String[] recordToMergeIds;
         private String[] additionalInformationMap_type_info = new String[]{'additionalInformationMap',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -140,19 +140,19 @@ public class PermissionPartnerSoapSforceCom {
                                         private String[] field_order_type_info = new String[]{'active','available','defaultRecordTypeMapping','developerName','master','name','recordTypeId'};
                                             }
     public class SendEmailResponse_element {
-        public permissionPartnerSoapSforceCom.SendEmailResult[] result;
+        public PermissionPartnerSoapSforceCom.SendEmailResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','10','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeRelatedContentItem {
-        public permissionPartnerSoapSforceCom.DescribeLayoutItem describeLayoutItem;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutItem describeLayoutItem;
         private String[] describeLayoutItem_type_info = new String[]{'describeLayoutItem',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'describeLayoutItem'};
                     }
     public class DescribeSObjectsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSObjectResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeSObjectResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','100','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -162,17 +162,17 @@ public class PermissionPartnerSoapSforceCom {
         public String actionEnumOrId;
         public String canvasApplicationId;
         public String canvasApplicationName;
-        public permissionPartnerSoapSforceCom.DescribeColor[] colors;
+        public PermissionPartnerSoapSforceCom.DescribeColor[] colors;
         public String contextSobjectType;
-        public permissionPartnerSoapSforceCom.DescribeQuickActionDefaultValue[] defaultValues;
+        public PermissionPartnerSoapSforceCom.DescribeQuickActionDefaultValue[] defaultValues;
         public String flowDevName;
         public String flowRecordIdVar;
         public Integer height;
         public String iconName;
         public String iconUrl;
-        public permissionPartnerSoapSforceCom.DescribeIcon[] icons;
+        public PermissionPartnerSoapSforceCom.DescribeIcon[] icons;
         public String label;
-        public permissionPartnerSoapSforceCom.DescribeLayoutSection layout;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutSection layout;
         public String lightningComponentBundleId;
         public String lightningComponentBundleName;
         public String lightningComponentQualifiedName;
@@ -235,7 +235,7 @@ public class PermissionPartnerSoapSforceCom {
                     }
     public class UpsertResult {
         public Boolean created;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String id;
         public Boolean success;
         private String[] created_type_info = new String[]{'created',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -246,13 +246,13 @@ public class PermissionPartnerSoapSforceCom {
                             private String[] field_order_type_info = new String[]{'created','errors','id','success'};
                                 }
     public class DeleteByExampleResponse_element {
-        public permissionPartnerSoapSforceCom.DeleteByExampleResult[] result;
+        public PermissionPartnerSoapSforceCom.DeleteByExampleResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeQuickActionsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeQuickActionResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeQuickActionResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -320,7 +320,7 @@ public class PermissionPartnerSoapSforceCom {
                             private String[] field_order_type_info = new String[]{'actionEnumOrId','label','name','type_x'};
                                 }
     public class EmptyRecycleBinResult {
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String id;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -349,7 +349,7 @@ public class PermissionPartnerSoapSforceCom {
         public String charset;
         public String[] documentAttachments;
         public String[] entityAttachments;
-        public permissionPartnerSoapSforceCom.EmailFileAttachment[] fileAttachments;
+        public PermissionPartnerSoapSforceCom.EmailFileAttachment[] fileAttachments;
         public String htmlBody;
         public String inReplyTo;
         public String optOutPolicy;
@@ -416,13 +416,13 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'sObjects'};
                     }
     public class LimitInfoHeader_element {
-        public permissionPartnerSoapSforceCom.LimitInfo[] limitInfo;
+        public PermissionPartnerSoapSforceCom.LimitInfo[] limitInfo;
         private String[] limitInfo_type_info = new String[]{'limitInfo',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'limitInfo'};
                     }
     public class DescribeDataCategoryMappingsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','10','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -440,7 +440,7 @@ public class PermissionPartnerSoapSforceCom {
                             private String[] field_order_type_info = new String[]{'description','targetObjectIds','templateId','whatIds'};
                                 }
     public class RenderStoredEmailTemplateResponse_element {
-        public permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult result;
+        public PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -490,7 +490,7 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'fieldList','sObjectType','ids'};
                             }
     public class DeleteResult {
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String id;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','true'};
@@ -524,7 +524,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'sObjectTypes'};
                     }
     public class DescribeGlobalThemeResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeGlobalTheme result;
+        public PermissionPartnerSoapSforceCom.DescribeGlobalTheme result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -556,7 +556,7 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'sObjectType','layoutName','recordTypeIds'};
                             }
     public class DescribeSObjectListViewsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSoqlListViewResult result;
+        public PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -574,7 +574,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'name'};
                     }
     public class DebuggingHeader_element {
-        public permissionPartnerSoapSforceCom.LogInfo[] categories;
+        public PermissionPartnerSoapSforceCom.LogInfo[] categories;
         public String debugLevel;
         private String[] categories_type_info = new String[]{'categories',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] debugLevel_type_info = new String[]{'debugLevel',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -601,8 +601,8 @@ public class PermissionPartnerSoapSforceCom {
                         }
     public class SearchRecord {
         public permissionSobjectPartnerSoapSforceCom.sObject_x record;
-        public permissionPartnerSoapSforceCom.SearchRecordMetadata searchRecordMetadata;
-        public permissionPartnerSoapSforceCom.SearchSnippet snippet;
+        public PermissionPartnerSoapSforceCom.SearchRecordMetadata searchRecordMetadata;
+        public PermissionPartnerSoapSforceCom.SearchSnippet snippet;
         private String[] record_type_info = new String[]{'record',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] searchRecordMetadata_type_info = new String[]{'searchRecordMetadata',PARTNER_SOAP_URN,null,'0','1','false'};
                 private String[] snippet_type_info = new String[]{'snippet',PARTNER_SOAP_URN,null,'0','1','true'};
@@ -618,7 +618,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'errorCode','message'};
                         }
     public class DescribeLayoutButtonSection {
-        public permissionPartnerSoapSforceCom.DescribeLayoutButton[] detailButtons;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutButton[] detailButtons;
         private String[] detailButtons_type_info = new String[]{'detailButtons',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'detailButtons'};
@@ -630,7 +630,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'allOrNone'};
                     }
     public class DescribeSoftphoneLayoutResult {
-        public permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutCallType[] callTypes;
+        public PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutCallType[] callTypes;
         public String id;
         public String name;
         private String[] callTypes_type_info = new String[]{'callTypes',PARTNER_SOAP_URN,null,'1','-1','false'};
@@ -690,7 +690,7 @@ public class PermissionPartnerSoapSforceCom {
                                     private String[] field_order_type_info = new String[]{'defaultValue','isDisplayed','label','name','restHeaderName','soapHeaderName'};
                                         }
     public class DescribeSearchLayoutsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSearchLayoutResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeSearchLayoutResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -702,8 +702,8 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'transferToUserId'};
                     }
     public class FindDuplicatesResult {
-        public permissionPartnerSoapSforceCom.DuplicateResult[] duplicateResults;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.DuplicateResult[] duplicateResults;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public Boolean success;
         private String[] duplicateResults_type_info = new String[]{'duplicateResults',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -754,7 +754,7 @@ public class PermissionPartnerSoapSforceCom {
                                             private String[] field_order_type_info = new String[]{'city','country','countryCode','geocodeAccuracy','postalCode','state','stateCode','street'};
                                                 }
     public class SendEmail_element {
-        public permissionPartnerSoapSforceCom.Email[] messages;
+        public PermissionPartnerSoapSforceCom.Email[] messages;
         private String[] messages_type_info = new String[]{'messages',PARTNER_SOAP_URN,null,'0','10','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'messages'};
@@ -783,8 +783,8 @@ public class PermissionPartnerSoapSforceCom {
                     }
     public class SearchResult {
         public String queryId;
-        public permissionPartnerSoapSforceCom.SearchRecord[] searchRecords;
-        public permissionPartnerSoapSforceCom.SearchResultsMetadata searchResultsMetadata;
+        public PermissionPartnerSoapSforceCom.SearchRecord[] searchRecords;
+        public PermissionPartnerSoapSforceCom.SearchResultsMetadata searchResultsMetadata;
         private String[] queryId_type_info = new String[]{'queryId',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] searchRecords_type_info = new String[]{'searchRecords',PARTNER_SOAP_URN,null,'0','-1','false'};
                 private String[] searchResultsMetadata_type_info = new String[]{'searchResultsMetadata',PARTNER_SOAP_URN,null,'0','1','true'};
@@ -804,7 +804,7 @@ public class PermissionPartnerSoapSforceCom {
                             private String[] field_order_type_info = new String[]{'field','format','label','name'};
                                 }
     public class DescribeLayoutResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeLayoutResult result;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -828,9 +828,9 @@ public class PermissionPartnerSoapSforceCom {
             private String[] field_order_type_info = new String[]{};
                 }
     public class DescribeCompactLayoutsResult {
-        public permissionPartnerSoapSforceCom.DescribeCompactLayout[] compactLayouts;
+        public PermissionPartnerSoapSforceCom.DescribeCompactLayout[] compactLayouts;
         public String defaultCompactLayoutId;
-        public permissionPartnerSoapSforceCom.RecordTypeCompactLayoutMapping[] recordTypeCompactLayoutMappings;
+        public PermissionPartnerSoapSforceCom.RecordTypeCompactLayoutMapping[] recordTypeCompactLayoutMappings;
         private String[] compactLayouts_type_info = new String[]{'compactLayouts',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] defaultCompactLayoutId_type_info = new String[]{'defaultCompactLayoutId',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] recordTypeCompactLayoutMappings_type_info = new String[]{'recordTypeCompactLayoutMappings',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -842,7 +842,7 @@ public class PermissionPartnerSoapSforceCom {
         public String label;
         public String name;
         public String sobject_x;
-        public permissionPartnerSoapSforceCom.DataCategory[] topCategories;
+        public PermissionPartnerSoapSforceCom.DataCategory[] topCategories;
         private String[] description_type_info = new String[]{'description',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] label_type_info = new String[]{'label',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] name_type_info = new String[]{'name',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -918,7 +918,7 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'body','contentType','fileName','id','inline'};
                                     }
     public class SendEmailMessageResponse_element {
-        public permissionPartnerSoapSforceCom.SendEmailResult[] result;
+        public PermissionPartnerSoapSforceCom.SendEmailResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','10','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -966,7 +966,7 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'contentType','height','theme','url','width'};
                                     }
     public class ExecuteListView_element {
-        public permissionPartnerSoapSforceCom.ExecuteListViewRequest request;
+        public PermissionPartnerSoapSforceCom.ExecuteListViewRequest request;
         private String[] request_type_info = new String[]{'request',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'request'};
@@ -978,7 +978,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'sObjects'};
                     }
     public class LoginResponse_element {
-        public permissionPartnerSoapSforceCom.LoginResult result;
+        public PermissionPartnerSoapSforceCom.LoginResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -990,13 +990,13 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'batchSize'};
                     }
     public class DescribeGlobalResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeGlobalResult result;
+        public PermissionPartnerSoapSforceCom.DescribeGlobalResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class RenderEmailTemplateBodyResult {
-        public permissionPartnerSoapSforceCom.RenderEmailTemplateError[] errors;
+        public PermissionPartnerSoapSforceCom.RenderEmailTemplateError[] errors;
         public String mergedBody;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -1016,13 +1016,13 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'triggerAutoResponseEmail','triggerOtherEmail','triggerUserEmail'};
                             }
     public class GetServerTimestampResponse_element {
-        public permissionPartnerSoapSforceCom.GetServerTimestampResult result;
+        public PermissionPartnerSoapSforceCom.GetServerTimestampResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class FindDuplicatesByIdsResponse_element {
-        public permissionPartnerSoapSforceCom.FindDuplicatesResult[] result;
+        public PermissionPartnerSoapSforceCom.FindDuplicatesResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1047,9 +1047,9 @@ public class PermissionPartnerSoapSforceCom {
                                             }
     public class DescribeQuickActionListItemResult {
         public String accessLevelRequired;
-        public permissionPartnerSoapSforceCom.DescribeColor[] colors;
+        public PermissionPartnerSoapSforceCom.DescribeColor[] colors;
         public String iconUrl;
-        public permissionPartnerSoapSforceCom.DescribeIcon[] icons;
+        public PermissionPartnerSoapSforceCom.DescribeIcon[] icons;
         public String label;
         public String miniIconUrl;
         public String quickActionName;
@@ -1068,7 +1068,7 @@ public class PermissionPartnerSoapSforceCom {
                                                 private String[] field_order_type_info = new String[]{'accessLevelRequired','colors','iconUrl','icons','label','miniIconUrl','quickActionName','targetSobjectType','type_x'};
                                                     }
     public class DescribeAvailableQuickActionsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1080,19 +1080,19 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'sObjectType'};
                     }
     public class UndeleteResponse_element {
-        public permissionPartnerSoapSforceCom.UndeleteResult[] result;
+        public PermissionPartnerSoapSforceCom.UndeleteResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribePathAssistantsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribePathAssistantsResult result;
+        public PermissionPartnerSoapSforceCom.DescribePathAssistantsResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class OwnerChangeOptions_element {
-        public permissionPartnerSoapSforceCom.OwnerChangeOption[] options;
+        public PermissionPartnerSoapSforceCom.OwnerChangeOption[] options;
         private String[] options_type_info = new String[]{'options',PARTNER_SOAP_URN,null,'0','-1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'options'};
@@ -1101,7 +1101,7 @@ public class PermissionPartnerSoapSforceCom {
         public Boolean editableForNew;
         public Boolean editableForUpdate;
         public String label;
-        public permissionPartnerSoapSforceCom.DescribeLayoutComponent[] layoutComponents;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutComponent[] layoutComponents;
         public Boolean placeholder;
         public Boolean required;
         private String[] editableForNew_type_info = new String[]{'editableForNew',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -1114,13 +1114,13 @@ public class PermissionPartnerSoapSforceCom {
                                     private String[] field_order_type_info = new String[]{'editableForNew','editableForUpdate','label','layoutComponents','placeholder','required'};
                                         }
     public class DescribeAppMenuResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeAppMenuResult result;
+        public PermissionPartnerSoapSforceCom.DescribeAppMenuResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class ResetPasswordResponse_element {
-        public permissionPartnerSoapSforceCom.ResetPasswordResult result;
+        public PermissionPartnerSoapSforceCom.ResetPasswordResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1144,7 +1144,7 @@ public class PermissionPartnerSoapSforceCom {
     public class ProcessResult {
         public String[] actorIds;
         public String entityId;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String instanceId;
         public String instanceStatus;
         public String[] newWorkitemIds;
@@ -1178,13 +1178,13 @@ public class PermissionPartnerSoapSforceCom {
                                         private String[] field_order_type_info = new String[]{'field','fieldApiName','format','label','lookupId','name','sortable'};
                                             }
     public class FindDuplicatesResponse_element {
-        public permissionPartnerSoapSforceCom.FindDuplicatesResult[] result;
+        public PermissionPartnerSoapSforceCom.FindDuplicatesResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class QueryMoreResponse_element {
-        public permissionPartnerSoapSforceCom.QueryResult result;
+        public PermissionPartnerSoapSforceCom.QueryResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1200,8 +1200,8 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'label','name','type_x'};
                             }
     public class MatchRecord {
-        public permissionPartnerSoapSforceCom.AdditionalInformationMap[] additionalInformation;
-        public permissionPartnerSoapSforceCom.FieldDiff[] fieldDiffs;
+        public PermissionPartnerSoapSforceCom.AdditionalInformationMap[] additionalInformation;
+        public PermissionPartnerSoapSforceCom.FieldDiff[] fieldDiffs;
         public Double matchConfidence;
         public permissionSobjectPartnerSoapSforceCom.sObject_x record;
         private String[] additionalInformation_type_info = new String[]{'additionalInformation',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -1226,13 +1226,13 @@ public class PermissionPartnerSoapSforceCom {
             private String[] field_order_type_info = new String[]{};
                 }
     public class DescribeApprovalLayoutResult {
-        public permissionPartnerSoapSforceCom.DescribeApprovalLayout[] approvalLayouts;
+        public PermissionPartnerSoapSforceCom.DescribeApprovalLayout[] approvalLayouts;
         private String[] approvalLayouts_type_info = new String[]{'approvalLayouts',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'approvalLayouts'};
                     }
     public class DescribeApprovalLayoutResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeApprovalLayoutResult result;
+        public PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1241,7 +1241,7 @@ public class PermissionPartnerSoapSforceCom {
         public Boolean collapsed;
         public Integer columns;
         public String heading;
-        public permissionPartnerSoapSforceCom.DescribeLayoutRow[] layoutRows;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutRow[] layoutRows;
         public String layoutSectionId;
         public String parentLayoutId;
         public Integer rows;
@@ -1262,7 +1262,7 @@ public class PermissionPartnerSoapSforceCom {
                                                     private String[] field_order_type_info = new String[]{'collapsed','columns','heading','layoutRows','layoutSectionId','parentLayoutId','rows','tabOrder','useCollapsibleSection','useHeading'};
                                                         }
     public class SetPasswordResponse_element {
-        public permissionPartnerSoapSforceCom.SetPasswordResult result;
+        public PermissionPartnerSoapSforceCom.SetPasswordResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1282,7 +1282,7 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'formFactor','isAvailableInTouch','name','pageId','url'};
                                     }
     public class ProcessResponse_element {
-        public permissionPartnerSoapSforceCom.ProcessResult[] result;
+        public PermissionPartnerSoapSforceCom.ProcessResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1290,7 +1290,7 @@ public class PermissionPartnerSoapSforceCom {
     public class DescribeGlobalResult {
         public String encoding;
         public Integer maxBatchSize;
-        public permissionPartnerSoapSforceCom.DescribeGlobalSObjectResult[] sobjects;
+        public PermissionPartnerSoapSforceCom.DescribeGlobalSObjectResult[] sobjects;
         private String[] encoding_type_info = new String[]{'encoding',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] maxBatchSize_type_info = new String[]{'maxBatchSize',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] sobjects_type_info = new String[]{'sobjects',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -1304,14 +1304,14 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'ids'};
                     }
     public class SearchResponse_element {
-        public permissionPartnerSoapSforceCom.SearchResult result;
+        public PermissionPartnerSoapSforceCom.SearchResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeLayoutResult {
-        public permissionPartnerSoapSforceCom.DescribeLayout[] layouts;
-        public permissionPartnerSoapSforceCom.RecordTypeMapping[] recordTypeMappings;
+        public PermissionPartnerSoapSforceCom.DescribeLayout[] layouts;
+        public PermissionPartnerSoapSforceCom.RecordTypeMapping[] recordTypeMappings;
         public Boolean recordTypeSelectorRequired;
         private String[] layouts_type_info = new String[]{'layouts',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] recordTypeMappings_type_info = new String[]{'recordTypeMappings',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -1320,20 +1320,20 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'layouts','recordTypeMappings','recordTypeSelectorRequired'};
                             }
     public class ChangeOwnPasswordResponse_element {
-        public permissionPartnerSoapSforceCom.ChangeOwnPasswordResult result;
+        public PermissionPartnerSoapSforceCom.ChangeOwnPasswordResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribePathAssistant {
         public Boolean active;
-        public permissionPartnerSoapSforceCom.DescribeAnimationRule[] animationRule;
+        public PermissionPartnerSoapSforceCom.DescribeAnimationRule[] animationRule;
         public String apiName;
         public String label;
         public String pathPicklistField;
-        public permissionPartnerSoapSforceCom.PicklistForRecordType[] picklistsForRecordType;
+        public PermissionPartnerSoapSforceCom.PicklistForRecordType[] picklistsForRecordType;
         public String recordTypeId;
-        public permissionPartnerSoapSforceCom.DescribePathAssistantStep[] steps;
+        public PermissionPartnerSoapSforceCom.DescribePathAssistantStep[] steps;
         private String[] active_type_info = new String[]{'active',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] animationRule_type_info = new String[]{'animationRule',PARTNER_SOAP_URN,null,'0','-1','true'};
                 private String[] apiName_type_info = new String[]{'apiName',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -1365,9 +1365,9 @@ public class PermissionPartnerSoapSforceCom {
                             }
     public class MatchResult {
         public String entityType;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String matchEngine;
-        public permissionPartnerSoapSforceCom.MatchRecord[] matchRecords;
+        public PermissionPartnerSoapSforceCom.MatchRecord[] matchRecords;
         public String rule;
         public Integer size;
         public Boolean success;
@@ -1382,10 +1382,10 @@ public class PermissionPartnerSoapSforceCom {
                                         private String[] field_order_type_info = new String[]{'entityType','errors','matchEngine','matchRecords','rule','size','success'};
                                             }
     public class DescribeCompactLayout {
-        public permissionPartnerSoapSforceCom.DescribeLayoutButton[] actions;
-        public permissionPartnerSoapSforceCom.DescribeLayoutItem[] fieldItems;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutButton[] actions;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutItem[] fieldItems;
         public String id;
-        public permissionPartnerSoapSforceCom.DescribeLayoutItem[] imageItems;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutItem[] imageItems;
         public String label;
         public String name;
         public String objectType;
@@ -1430,7 +1430,7 @@ public class PermissionPartnerSoapSforceCom {
         public Boolean externalId;
         public String extraTypeInfo;
         public Boolean filterable;
-        public permissionPartnerSoapSforceCom.FilteredLookupInfo filteredLookupInfo;
+        public PermissionPartnerSoapSforceCom.FilteredLookupInfo filteredLookupInfo;
         public Boolean formulaTreatNullNumberAsZero;
         public Boolean groupable;
         public Boolean highScaleNumber;
@@ -1446,7 +1446,7 @@ public class PermissionPartnerSoapSforceCom {
         public Boolean namePointing;
         public Boolean nillable;
         public Boolean permissionable;
-        public permissionPartnerSoapSforceCom.PicklistEntry[] picklistValues;
+        public PermissionPartnerSoapSforceCom.PicklistEntry[] picklistValues;
         public Boolean polymorphicForeignKey;
         public Integer precision;
         public Boolean queryByDistance;
@@ -1526,13 +1526,13 @@ public class PermissionPartnerSoapSforceCom {
                                                                                                                                                                                                                                                     private String[] field_order_type_info = new String[]{'aggregatable','aiPredictionField','autoNumber','byteLength','calculated','calculatedFormula','cascadeDelete','caseSensitive','compoundFieldName','controllerName','createable','custom','dataTranslationEnabled','defaultValue','defaultValueFormula','defaultedOnCreate','dependentPicklist','deprecatedAndHidden','digits','displayLocationInDecimal','encrypted','externalId','extraTypeInfo','filterable','filteredLookupInfo','formulaTreatNullNumberAsZero','groupable','highScaleNumber','htmlFormatted','idLookup','inlineHelpText','label','length','mask','maskType','name','nameField','namePointing','nillable','permissionable','picklistValues','polymorphicForeignKey','precision','queryByDistance','referenceTargetField','referenceTo','relationshipName','relationshipOrder','restrictedDelete','restrictedPicklist','scale','searchPrefilterable','soapType','sortable','type_x','unique','updateable','writeRequiresMasterRead'};
                                                                                                                                                                                                                                                         }
     public class InvalidateSessionsResponse_element {
-        public permissionPartnerSoapSforceCom.InvalidateSessionsResult[] result;
+        public PermissionPartnerSoapSforceCom.InvalidateSessionsResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeSoftphoneLayoutResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult result;
+        public PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1556,7 +1556,7 @@ public class PermissionPartnerSoapSforceCom {
         public String label;
         public Integer limitRows;
         public String objectType;
-        public permissionPartnerSoapSforceCom.DescribeColumn[] searchColumns;
+        public PermissionPartnerSoapSforceCom.DescribeColumn[] searchColumns;
         private String[] errorMsg_type_info = new String[]{'errorMsg',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] label_type_info = new String[]{'label',PARTNER_SOAP_URN,null,'1','1','true'};
                 private String[] limitRows_type_info = new String[]{'limitRows',PARTNER_SOAP_URN,null,'1','1','true'};
@@ -1572,7 +1572,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'allowFieldTruncation'};
                     }
     public class MergeResponse_element {
-        public permissionPartnerSoapSforceCom.MergeResult[] result;
+        public PermissionPartnerSoapSforceCom.MergeResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1589,7 +1589,7 @@ public class PermissionPartnerSoapSforceCom {
         public String developerNameOrId;
         public Integer limit_x;
         public Integer offset;
-        public permissionPartnerSoapSforceCom.ListViewOrderBy[] orderBy;
+        public PermissionPartnerSoapSforceCom.ListViewOrderBy[] orderBy;
         public String sobjectType;
         private String[] developerNameOrId_type_info = new String[]{'developerNameOrId',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] limit_x_type_info = new String[]{'limit',PARTNER_SOAP_URN,null,'1','1','true'};
@@ -1626,8 +1626,8 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'categoryCount','description','label','name','sobject_x'};
                                     }
     public class DescribeThemeItem {
-        public permissionPartnerSoapSforceCom.DescribeColor[] colors;
-        public permissionPartnerSoapSforceCom.DescribeIcon[] icons;
+        public PermissionPartnerSoapSforceCom.DescribeColor[] colors;
+        public PermissionPartnerSoapSforceCom.DescribeIcon[] icons;
         public String name;
         private String[] colors_type_info = new String[]{'colors',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] icons_type_info = new String[]{'icons',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -1636,8 +1636,8 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'colors','icons','name'};
                             }
     public class RenderStoredEmailTemplateResult {
-        public permissionPartnerSoapSforceCom.Error[] errors;
-        public permissionPartnerSoapSforceCom.SingleEmailMessage renderedEmail;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.SingleEmailMessage renderedEmail;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] renderedEmail_type_info = new String[]{'renderedEmail',PARTNER_SOAP_URN,null,'1','1','true'};
@@ -1652,17 +1652,17 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'debugLog'};
                     }
     public class DescribeAllTabsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeTab[] result;
+        public PermissionPartnerSoapSforceCom.DescribeTab[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeSObjectResult {
-        public permissionPartnerSoapSforceCom.ActionOverride[] actionOverrides;
+        public PermissionPartnerSoapSforceCom.ActionOverride[] actionOverrides;
         public Boolean activateable;
         public String associateEntityType;
         public String associateParentEntity;
-        public permissionPartnerSoapSforceCom.ChildRelationship[] childRelationships;
+        public PermissionPartnerSoapSforceCom.ChildRelationship[] childRelationships;
         public Boolean compactLayoutable;
         public Boolean createable;
         public Boolean custom;
@@ -1673,7 +1673,7 @@ public class PermissionPartnerSoapSforceCom {
         public Boolean deletable;
         public Boolean deprecatedAndHidden;
         public Boolean feedEnabled;
-        public permissionPartnerSoapSforceCom.Field[] fields;
+        public PermissionPartnerSoapSforceCom.Field[] fields;
         public Boolean hasSubtypes;
         public Boolean idEnabled;
         public String implementedBy;
@@ -1687,15 +1687,15 @@ public class PermissionPartnerSoapSforceCom {
         public Boolean mergeable;
         public Boolean mruEnabled;
         public String name;
-        public permissionPartnerSoapSforceCom.NamedLayoutInfo[] namedLayoutInfos;
+        public PermissionPartnerSoapSforceCom.NamedLayoutInfo[] namedLayoutInfos;
         public String networkScopeFieldName;
         public Boolean queryable;
-        public permissionPartnerSoapSforceCom.RecordTypeInfo[] recordTypeInfos;
+        public PermissionPartnerSoapSforceCom.RecordTypeInfo[] recordTypeInfos;
         public Boolean replicateable;
         public Boolean retrieveable;
         public Boolean searchLayoutable;
         public Boolean searchable;
-        public permissionPartnerSoapSforceCom.ScopeInfo[] supportedScopes;
+        public PermissionPartnerSoapSforceCom.ScopeInfo[] supportedScopes;
         public Boolean triggerable;
         public Boolean undeletable;
         public Boolean updateable;
@@ -1750,7 +1750,7 @@ public class PermissionPartnerSoapSforceCom {
                                                                                                                                                                                             private String[] field_order_type_info = new String[]{'actionOverrides','activateable','associateEntityType','associateParentEntity','childRelationships','compactLayoutable','createable','custom','customSetting','dataTranslationEnabled','deepCloneable','defaultImplementation','deletable','deprecatedAndHidden','feedEnabled','fields','hasSubtypes','idEnabled','implementedBy','implementsInterfaces','isInterface','isSubtype','keyPrefix','label','labelPlural','layoutable','mergeable','mruEnabled','name','namedLayoutInfos','networkScopeFieldName','queryable','recordTypeInfos','replicateable','retrieveable','searchLayoutable','searchable','supportedScopes','triggerable','undeletable','updateable','urlDetail','urlEdit','urlNew'};
                                                                                                                                                                                                 }
     public class DeleteResponse_element {
-        public permissionPartnerSoapSforceCom.DeleteResult[] result;
+        public PermissionPartnerSoapSforceCom.DeleteResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -1758,7 +1758,7 @@ public class PermissionPartnerSoapSforceCom {
     public class LeadConvertResult {
         public String accountId;
         public String contactId;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String leadId;
         public String opportunityId;
         public String relatedPersonAccountId;
@@ -1776,7 +1776,7 @@ public class PermissionPartnerSoapSforceCom {
     public class KnowledgeSettings {
         public String defaultLanguage;
         public Boolean knowledgeEnabled;
-        public permissionPartnerSoapSforceCom.KnowledgeLanguageItem[] languages;
+        public PermissionPartnerSoapSforceCom.KnowledgeLanguageItem[] languages;
         private String[] defaultLanguage_type_info = new String[]{'defaultLanguage',PARTNER_SOAP_URN,null,'0','1','false'};
             private String[] knowledgeEnabled_type_info = new String[]{'knowledgeEnabled',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] languages_type_info = new String[]{'languages',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -1819,15 +1819,15 @@ public class PermissionPartnerSoapSforceCom {
                                                 }
     public class RelatedList {
         public String accessLevelRequiredForCreate;
-        public permissionPartnerSoapSforceCom.DescribeLayoutButton[] buttons;
-        public permissionPartnerSoapSforceCom.RelatedListColumn[] columns;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutButton[] buttons;
+        public PermissionPartnerSoapSforceCom.RelatedListColumn[] columns;
         public Boolean custom;
         public String field;
         public String label;
         public Integer limitRows;
         public String name;
         public String sobject_x;
-        public permissionPartnerSoapSforceCom.RelatedListSort[] sort_x;
+        public PermissionPartnerSoapSforceCom.RelatedListSort[] sort_x;
         private String[] accessLevelRequiredForCreate_type_info = new String[]{'accessLevelRequiredForCreate',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] buttons_type_info = new String[]{'buttons',PARTNER_SOAP_URN,null,'0','-1','true'};
                 private String[] columns_type_info = new String[]{'columns',PARTNER_SOAP_URN,null,'1','-1','false'};
@@ -1888,7 +1888,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'latitude','longitude'};
                         }
     public class RenderEmailTemplate_element {
-        public permissionPartnerSoapSforceCom.RenderEmailTemplateRequest[] renderRequests;
+        public PermissionPartnerSoapSforceCom.RenderEmailTemplateRequest[] renderRequests;
         private String[] renderRequests_type_info = new String[]{'renderRequests',PARTNER_SOAP_URN,null,'0','10','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'renderRequests'};
@@ -1905,14 +1905,14 @@ public class PermissionPartnerSoapSforceCom {
                             }
     public class SearchSnippet {
         public String text;
-        public permissionPartnerSoapSforceCom.NameValuePair[] wholeFields;
+        public PermissionPartnerSoapSforceCom.NameValuePair[] wholeFields;
         private String[] text_type_info = new String[]{'text',PARTNER_SOAP_URN,null,'0','1','true'};
             private String[] wholeFields_type_info = new String[]{'wholeFields',PARTNER_SOAP_URN,null,'0','-1','false'};
                 private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                     private String[] field_order_type_info = new String[]{'text','wholeFields'};
                         }
     public class DataCategory {
-        public permissionPartnerSoapSforceCom.DataCategory[] childCategories;
+        public PermissionPartnerSoapSforceCom.DataCategory[] childCategories;
         public String label;
         public String name;
         private String[] childCategories_type_info = new String[]{'childCategories',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -1922,9 +1922,9 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'childCategories','label','name'};
                             }
     public class DescribeAppMenuItem {
-        public permissionPartnerSoapSforceCom.DescribeColor[] colors;
+        public PermissionPartnerSoapSforceCom.DescribeColor[] colors;
         public String content;
-        public permissionPartnerSoapSforceCom.DescribeIcon[] icons;
+        public PermissionPartnerSoapSforceCom.DescribeIcon[] icons;
         public String label;
         public String name;
         public String type_x;
@@ -1952,14 +1952,14 @@ public class PermissionPartnerSoapSforceCom {
                             private String[] field_order_type_info = new String[]{'objectId','submitterId','processDefinitionNameOrId','skipEntryCriteria'};
                                 }
     public class DescribeNounsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeNounResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeNounResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DeleteByExampleResult {
         public permissionSobjectPartnerSoapSforceCom.sObject_x entity;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public Long rowCount;
         public Boolean success;
         private String[] entity_type_info = new String[]{'entity',PARTNER_SOAP_URN,null,'1','1','true'};
@@ -1970,7 +1970,7 @@ public class PermissionPartnerSoapSforceCom {
                             private String[] field_order_type_info = new String[]{'entity','errors','rowCount','success'};
                                 }
     public class SoqlConditionGroup {
-        public permissionPartnerSoapSforceCom.SoqlWhereCondition[] conditions;
+        public PermissionPartnerSoapSforceCom.SoqlWhereCondition[] conditions;
         public String conjunction;
         private String[] conditions_type_info = new String[]{'conditions',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] conjunction_type_info = new String[]{'conjunction',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -1992,16 +1992,16 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'sObjectType','recentsOnly','isSoqlCompatible','limit_x','offset'};
                                     }
     public class DescribeLayout {
-        public permissionPartnerSoapSforceCom.DescribeLayoutButtonSection buttonLayoutSection;
-        public permissionPartnerSoapSforceCom.DescribeLayoutSection[] detailLayoutSections;
-        public permissionPartnerSoapSforceCom.DescribeLayoutSection[] editLayoutSections;
-        public permissionPartnerSoapSforceCom.DescribeLayoutFeedView feedView;
-        public permissionPartnerSoapSforceCom.DescribeLayoutSection highlightsPanelLayoutSection;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutButtonSection buttonLayoutSection;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutSection[] detailLayoutSections;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutSection[] editLayoutSections;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutFeedView feedView;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutSection highlightsPanelLayoutSection;
         public String id;
-        public permissionPartnerSoapSforceCom.DescribeQuickActionListResult quickActionList;
-        public permissionPartnerSoapSforceCom.RelatedContent relatedContent;
-        public permissionPartnerSoapSforceCom.RelatedList[] relatedLists;
-        public permissionPartnerSoapSforceCom.DescribeLayoutSaveOption[] saveOptions;
+        public PermissionPartnerSoapSforceCom.DescribeQuickActionListResult quickActionList;
+        public PermissionPartnerSoapSforceCom.RelatedContent relatedContent;
+        public PermissionPartnerSoapSforceCom.RelatedList[] relatedLists;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutSaveOption[] saveOptions;
         private String[] buttonLayoutSection_type_info = new String[]{'buttonLayoutSection',PARTNER_SOAP_URN,null,'0','1','false'};
             private String[] detailLayoutSections_type_info = new String[]{'detailLayoutSections',PARTNER_SOAP_URN,null,'0','-1','false'};
                 private String[] editLayoutSections_type_info = new String[]{'editLayoutSections',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -2026,8 +2026,8 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'fieldNameOrPath','nullsPosition','sortDirection'};
                             }
     public class SearchResultsMetadata {
-        public permissionPartnerSoapSforceCom.LabelsSearchMetadata[] entityLabelMetadata;
-        public permissionPartnerSoapSforceCom.EntitySearchMetadata[] entityMetadata;
+        public PermissionPartnerSoapSforceCom.LabelsSearchMetadata[] entityLabelMetadata;
+        public PermissionPartnerSoapSforceCom.EntitySearchMetadata[] entityMetadata;
         private String[] entityLabelMetadata_type_info = new String[]{'entityLabelMetadata',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] entityMetadata_type_info = new String[]{'entityMetadata',PARTNER_SOAP_URN,null,'0','-1','false'};
                 private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
@@ -2056,8 +2056,8 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'sObjectType','startDate','endDate'};
                             }
     public class RenderEmailTemplateResult {
-        public permissionPartnerSoapSforceCom.RenderEmailTemplateBodyResult[] bodyResults;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.RenderEmailTemplateBodyResult[] bodyResults;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public Boolean success;
         private String[] bodyResults_type_info = new String[]{'bodyResults',PARTNER_SOAP_URN,null,'0','10','false'};
             private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -2066,7 +2066,7 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'bodyResults','errors','success'};
                             }
     public class DescribeSoqlListViews_element {
-        public permissionPartnerSoapSforceCom.DescribeSoqlListViewsRequest request;
+        public PermissionPartnerSoapSforceCom.DescribeSoqlListViewsRequest request;
         private String[] request_type_info = new String[]{'request',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'request'};
@@ -2094,7 +2094,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'difference','name'};
                         }
     public class DescribeSoqlListViewsRequest {
-        public permissionPartnerSoapSforceCom.DescribeSoqlListViewParams[] listViewParams;
+        public PermissionPartnerSoapSforceCom.DescribeSoqlListViewParams[] listViewParams;
         private String[] listViewParams_type_info = new String[]{'listViewParams',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'listViewParams'};
@@ -2116,7 +2116,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'quickActions','recordTypeId'};
                         }
     public class DescribeDataCategoryGroupsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','100','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2128,7 +2128,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'sessionId'};
                     }
     public class RetrieveMassQuickActionTemplatesResponse_element {
-        public permissionPartnerSoapSforceCom.QuickActionTemplateResult[] result;
+        public PermissionPartnerSoapSforceCom.QuickActionTemplateResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2142,9 +2142,9 @@ public class PermissionPartnerSoapSforceCom {
     public class DescribePathAssistantStep {
         public Boolean closed;
         public Boolean converted;
-        public permissionPartnerSoapSforceCom.DescribePathAssistantField[] fields;
+        public PermissionPartnerSoapSforceCom.DescribePathAssistantField[] fields;
         public String info;
-        public permissionPartnerSoapSforceCom.DescribeLayoutSection layoutSection;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutSection layoutSection;
         public String picklistLabel;
         public String picklistValue;
         public Boolean won;
@@ -2168,7 +2168,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'userId','password'};
                         }
     public class DescribeQuickActionListResult {
-        public permissionPartnerSoapSforceCom.DescribeQuickActionListItemResult[] quickActionListItems;
+        public PermissionPartnerSoapSforceCom.DescribeQuickActionListItemResult[] quickActionListItems;
         private String[] quickActionListItems_type_info = new String[]{'quickActionListItems',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'quickActionListItems'};
@@ -2182,12 +2182,12 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'ids','latestDateCovered'};
                         }
     public class ExecuteListViewResult {
-        public permissionPartnerSoapSforceCom.ListViewColumn[] columns;
+        public PermissionPartnerSoapSforceCom.ListViewColumn[] columns;
         public String developerName;
         public Boolean done;
         public String id;
         public String label;
-        public permissionPartnerSoapSforceCom.ListViewRecord[] records;
+        public PermissionPartnerSoapSforceCom.ListViewRecord[] records;
         public Integer size;
         private String[] columns_type_info = new String[]{'columns',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] developerName_type_info = new String[]{'developerName',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -2200,7 +2200,7 @@ public class PermissionPartnerSoapSforceCom {
                                         private String[] field_order_type_info = new String[]{'columns','developerName','done','id','label','records','size'};
                                             }
     public class Merge_element {
-        public permissionPartnerSoapSforceCom.MergeRequest[] request;
+        public PermissionPartnerSoapSforceCom.MergeRequest[] request;
         private String[] request_type_info = new String[]{'request',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'request'};
@@ -2220,19 +2220,19 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'searchString'};
                     }
     public class DuplicateError {
-        public permissionPartnerSoapSforceCom.DuplicateResult duplicateResult;
+        public PermissionPartnerSoapSforceCom.DuplicateResult duplicateResult;
         private String[] duplicateResult_type_info = new String[]{'duplicateResult',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'duplicateResult'};
                     }
     public class DescribeTabsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeTabSetResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeTabSetResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class SendEmailResult {
-        public permissionPartnerSoapSforceCom.SendEmailError[] errors;
+        public PermissionPartnerSoapSforceCom.SendEmailError[] errors;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] success_type_info = new String[]{'success',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -2246,13 +2246,13 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'updateMru'};
                     }
     public class CreateResponse_element {
-        public permissionPartnerSoapSforceCom.SaveResult[] result;
+        public PermissionPartnerSoapSforceCom.SaveResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeVisualForceResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeVisualForceResult result;
+        public PermissionPartnerSoapSforceCom.DescribeVisualForceResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2268,7 +2268,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'timestamp'};
                     }
     public class RetrieveQuickActionTemplatesResponse_element {
-        public permissionPartnerSoapSforceCom.QuickActionTemplateResult[] result;
+        public PermissionPartnerSoapSforceCom.QuickActionTemplateResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2292,13 +2292,13 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'ids'};
                     }
     public class DescribeSoqlListViewResult {
-        public permissionPartnerSoapSforceCom.DescribeSoqlListView[] describeSoqlListViews;
+        public PermissionPartnerSoapSforceCom.DescribeSoqlListView[] describeSoqlListViews;
         private String[] describeSoqlListViews_type_info = new String[]{'describeSoqlListViews',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'describeSoqlListViews'};
                     }
     public class GetDeletedResult {
-        public permissionPartnerSoapSforceCom.DeletedRecord[] deletedRecords;
+        public PermissionPartnerSoapSforceCom.DeletedRecord[] deletedRecords;
         public DateTime earliestDateAvailable;
         public DateTime latestDateCovered;
         private String[] deletedRecords_type_info = new String[]{'deletedRecords',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -2308,7 +2308,7 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'deletedRecords','earliestDateAvailable','latestDateCovered'};
                             }
     public class DescribeNounResult {
-        public permissionPartnerSoapSforceCom.NameCaseValue[] caseValues;
+        public PermissionPartnerSoapSforceCom.NameCaseValue[] caseValues;
         public String developerName;
         public String gender;
         public String name;
@@ -2339,34 +2339,34 @@ public class PermissionPartnerSoapSforceCom {
                     }
     public class SearchLayoutFieldsDisplayed {
         public Boolean applicable;
-        public permissionPartnerSoapSforceCom.SearchLayoutField[] fields;
+        public PermissionPartnerSoapSforceCom.SearchLayoutField[] fields;
         private String[] applicable_type_info = new String[]{'applicable',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] fields_type_info = new String[]{'fields',PARTNER_SOAP_URN,null,'0','-1','false'};
                 private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                     private String[] field_order_type_info = new String[]{'applicable','fields'};
                         }
     public class EmptyRecycleBinResponse_element {
-        public permissionPartnerSoapSforceCom.EmptyRecycleBinResult[] result;
+        public PermissionPartnerSoapSforceCom.EmptyRecycleBinResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class PicklistForRecordType {
         public String picklistName;
-        public permissionPartnerSoapSforceCom.PicklistEntry[] picklistValues;
+        public PermissionPartnerSoapSforceCom.PicklistEntry[] picklistValues;
         private String[] picklistName_type_info = new String[]{'picklistName',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] picklistValues_type_info = new String[]{'picklistValues',PARTNER_SOAP_URN,null,'0','-1','true'};
                 private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                     private String[] field_order_type_info = new String[]{'picklistName','picklistValues'};
                         }
     public class DescribeLayoutFeedView {
-        public permissionPartnerSoapSforceCom.DescribeLayoutFeedFilter[] feedFilters;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutFeedFilter[] feedFilters;
         private String[] feedFilters_type_info = new String[]{'feedFilters',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'feedFilters'};
                     }
     public class DescribeCompactLayoutsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeCompactLayoutsResult result;
+        public PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2385,7 +2385,7 @@ public class PermissionPartnerSoapSforceCom {
         public String layoutId;
         public Boolean master;
         public String name;
-        public permissionPartnerSoapSforceCom.PicklistForRecordType[] picklistsForRecordType;
+        public PermissionPartnerSoapSforceCom.PicklistForRecordType[] picklistsForRecordType;
         public String recordTypeId;
         private String[] active_type_info = new String[]{'active',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] available_type_info = new String[]{'available',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -2400,7 +2400,7 @@ public class PermissionPartnerSoapSforceCom {
                                                 private String[] field_order_type_info = new String[]{'active','available','defaultRecordTypeMapping','developerName','layoutId','master','name','picklistsForRecordType','recordTypeId'};
                                                     }
     public class ConvertLead_element {
-        public permissionPartnerSoapSforceCom.LeadConvert[] leadConverts;
+        public PermissionPartnerSoapSforceCom.LeadConvert[] leadConverts;
         private String[] leadConverts_type_info = new String[]{'leadConverts',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'leadConverts'};
@@ -2430,7 +2430,7 @@ public class PermissionPartnerSoapSforceCom {
                                         private String[] field_order_type_info = new String[]{'error','filter','height','hideOnError','showSharing','showTitle','width'};
                                             }
     public class RelatedContent {
-        public permissionPartnerSoapSforceCom.DescribeRelatedContentItem[] relatedContentItems;
+        public PermissionPartnerSoapSforceCom.DescribeRelatedContentItem[] relatedContentItems;
         private String[] relatedContentItems_type_info = new String[]{'relatedContentItems',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'relatedContentItems'};
@@ -2458,7 +2458,7 @@ public class PermissionPartnerSoapSforceCom {
         public String duplicateRule;
         public String duplicateRuleEntityType;
         public String errorMessage;
-        public permissionPartnerSoapSforceCom.MatchResult[] matchResults;
+        public PermissionPartnerSoapSforceCom.MatchResult[] matchResults;
         private String[] allowSave_type_info = new String[]{'allowSave',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] duplicateRule_type_info = new String[]{'duplicateRule',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] duplicateRuleEntityType_type_info = new String[]{'duplicateRuleEntityType',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -2472,10 +2472,10 @@ public class PermissionPartnerSoapSforceCom {
             private String[] field_order_type_info = new String[]{};
                 }
     public class DescribeTab {
-        public permissionPartnerSoapSforceCom.DescribeColor[] colors;
+        public PermissionPartnerSoapSforceCom.DescribeColor[] colors;
         public Boolean custom;
         public String iconUrl;
-        public permissionPartnerSoapSforceCom.DescribeIcon[] icons;
+        public PermissionPartnerSoapSforceCom.DescribeIcon[] icons;
         public String label;
         public String miniIconUrl;
         public String name;
@@ -2494,7 +2494,7 @@ public class PermissionPartnerSoapSforceCom {
                                                 private String[] field_order_type_info = new String[]{'colors','custom','iconUrl','icons','label','miniIconUrl','name','sobjectName','url'};
                                                     }
     public class LabelsSearchMetadata {
-        public permissionPartnerSoapSforceCom.NameValuePair[] entityFieldLabels;
+        public PermissionPartnerSoapSforceCom.NameValuePair[] entityFieldLabels;
         public String entityName;
         private String[] entityFieldLabels_type_info = new String[]{'entityFieldLabels',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] entityName_type_info = new String[]{'entityName',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -2502,7 +2502,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'entityFieldLabels','entityName'};
                         }
     public class DescribeQuickActionsForRecordTypeResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeQuickActionResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeQuickActionResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2514,7 +2514,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'promotedResultCount'};
                     }
     public class Process_element {
-        public permissionPartnerSoapSforceCom.ProcessRequest[] actions;
+        public PermissionPartnerSoapSforceCom.ProcessRequest[] actions;
         private String[] actions_type_info = new String[]{'actions',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'actions'};
@@ -2526,7 +2526,7 @@ public class PermissionPartnerSoapSforceCom {
         public String namespace;
         public Boolean selected;
         public String tabSetId;
-        public permissionPartnerSoapSforceCom.DescribeTab[] tabs;
+        public PermissionPartnerSoapSforceCom.DescribeTab[] tabs;
         private String[] description_type_info = new String[]{'description',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] label_type_info = new String[]{'label',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] logoUrl_type_info = new String[]{'logoUrl',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -2554,7 +2554,7 @@ public class PermissionPartnerSoapSforceCom {
         public String serverUrl;
         public String sessionId;
         public String userId;
-        public permissionPartnerSoapSforceCom.GetUserInfoResult userInfo;
+        public PermissionPartnerSoapSforceCom.GetUserInfoResult userInfo;
         private String[] metadataServerUrl_type_info = new String[]{'metadataServerUrl',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] passwordExpired_type_info = new String[]{'passwordExpired',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] sandbox_type_info = new String[]{'sandbox',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -2592,19 +2592,19 @@ public class PermissionPartnerSoapSforceCom {
             private String[] field_order_type_info = new String[]{};
                 }
     public class RenderStoredEmailTemplate_element {
-        public permissionPartnerSoapSforceCom.RenderStoredEmailTemplateRequest request;
+        public PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateRequest request;
         private String[] request_type_info = new String[]{'request',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'request'};
                     }
     public class DescribeThemeResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeThemeResult result;
+        public PermissionPartnerSoapSforceCom.DescribeThemeResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class PerformQuickActionsResponse_element {
-        public permissionPartnerSoapSforceCom.PerformQuickActionResult[] result;
+        public PermissionPartnerSoapSforceCom.PerformQuickActionResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2613,7 +2613,7 @@ public class PermissionPartnerSoapSforceCom {
         public String contextId;
         public permissionSobjectPartnerSoapSforceCom.sObject_x defaultValueFormulas;
         public permissionSobjectPartnerSoapSforceCom.sObject_x defaultValues;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public Boolean success;
         private String[] contextId_type_info = new String[]{'contextId',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] defaultValueFormulas_type_info = new String[]{'defaultValueFormulas',PARTNER_SOAP_URN,null,'1','1','true'};
@@ -2624,15 +2624,15 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'contextId','defaultValueFormulas','defaultValues','errors','success'};
                                     }
     public class DescribeSoqlListView {
-        public permissionPartnerSoapSforceCom.ListViewColumn[] columns;
+        public PermissionPartnerSoapSforceCom.ListViewColumn[] columns;
         public String id;
-        public permissionPartnerSoapSforceCom.ListViewOrderBy[] orderBy;
+        public PermissionPartnerSoapSforceCom.ListViewOrderBy[] orderBy;
         public String query;
         public String relatedEntityId;
         public String scope;
         public String scopeEntityId;
         public String sobjectType;
-        public permissionPartnerSoapSforceCom.SoqlWhereCondition whereCondition;
+        public PermissionPartnerSoapSforceCom.SoqlWhereCondition whereCondition;
         private String[] columns_type_info = new String[]{'columns',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] id_type_info = new String[]{'id',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] orderBy_type_info = new String[]{'orderBy',PARTNER_SOAP_URN,null,'1','-1','false'};
@@ -2646,13 +2646,13 @@ public class PermissionPartnerSoapSforceCom {
                                                 private String[] field_order_type_info = new String[]{'columns','id','orderBy','query','relatedEntityId','scope','scopeEntityId','sobjectType','whereCondition'};
                                                     }
     public class UpsertResponse_element {
-        public permissionPartnerSoapSforceCom.UpsertResult[] result;
+        public PermissionPartnerSoapSforceCom.UpsertResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeDataCategoryGroupStructuresResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','100','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2664,13 +2664,13 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class ConvertLeadResponse_element {
-        public permissionPartnerSoapSforceCom.LeadConvertResult[] result;
+        public PermissionPartnerSoapSforceCom.LeadConvertResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class GetDeletedResponse_element {
-        public permissionPartnerSoapSforceCom.GetDeletedResult result;
+        public PermissionPartnerSoapSforceCom.GetDeletedResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2702,13 +2702,13 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'sObjectType','recordTypeIds'};
                         }
     public class GetUserInfoResponse_element {
-        public permissionPartnerSoapSforceCom.GetUserInfoResult result;
+        public PermissionPartnerSoapSforceCom.GetUserInfoResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class DescribeKnowledgeSettingsResponse_element {
-        public permissionPartnerSoapSforceCom.KnowledgeSettings result;
+        public PermissionPartnerSoapSforceCom.KnowledgeSettings result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2720,7 +2720,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'ids'};
                     }
     public class RenderEmailTemplateResponse_element {
-        public permissionPartnerSoapSforceCom.RenderEmailTemplateResult[] result;
+        public PermissionPartnerSoapSforceCom.RenderEmailTemplateResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','10','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -2740,13 +2740,13 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'searchPromoted','spellCorrected'};
                         }
     public class ExecuteListViewResponse_element {
-        public permissionPartnerSoapSforceCom.ExecuteListViewResult result;
+        public PermissionPartnerSoapSforceCom.ExecuteListViewResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class RecordTypesSupported {
-        public permissionPartnerSoapSforceCom.RecordTypeInfo[] recordTypeInfos;
+        public PermissionPartnerSoapSforceCom.RecordTypeInfo[] recordTypeInfos;
         private String[] recordTypeInfos_type_info = new String[]{'recordTypeInfos',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'recordTypeInfos'};
@@ -2770,21 +2770,21 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'quickActionName','contextIds'};
                         }
     public class PackageVersionHeader_element {
-        public permissionPartnerSoapSforceCom.PackageVersion[] packageVersions;
+        public PermissionPartnerSoapSforceCom.PackageVersion[] packageVersions;
         private String[] packageVersions_type_info = new String[]{'packageVersions',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'packageVersions'};
                     }
     public class DescribeSoftphoneLayoutSection {
         public String entityApiName;
-        public permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutItem[] items;
+        public PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutItem[] items;
         private String[] entityApiName_type_info = new String[]{'entityApiName',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] items_type_info = new String[]{'items',PARTNER_SOAP_URN,null,'1','-1','false'};
                 private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                     private String[] field_order_type_info = new String[]{'entityApiName','items'};
                         }
     public class PerformQuickActions_element {
-        public permissionPartnerSoapSforceCom.PerformQuickActionRequest[] quickActions;
+        public PermissionPartnerSoapSforceCom.PerformQuickActionRequest[] quickActions;
         private String[] quickActions_type_info = new String[]{'quickActions',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'quickActions'};
@@ -2816,18 +2816,18 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'label','name','type_x'};
                             }
     public class DescribeSearchableEntitiesResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSearchableEntityResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeSearchableEntityResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
                     }
     public class EntitySearchMetadata {
         public String entityName;
-        public permissionPartnerSoapSforceCom.EntityErrorMetadata errorMetadata;
-        public permissionPartnerSoapSforceCom.FieldLevelSearchMetadata[] fieldMetadata;
-        public permissionPartnerSoapSforceCom.EntityIntentQueryMetadata intentQueryMetadata;
-        public permissionPartnerSoapSforceCom.EntitySearchPromotionMetadata searchPromotionMetadata;
-        public permissionPartnerSoapSforceCom.EntitySpellCorrectionMetadata spellCorrectionMetadata;
+        public PermissionPartnerSoapSforceCom.EntityErrorMetadata errorMetadata;
+        public PermissionPartnerSoapSforceCom.FieldLevelSearchMetadata[] fieldMetadata;
+        public PermissionPartnerSoapSforceCom.EntityIntentQueryMetadata intentQueryMetadata;
+        public PermissionPartnerSoapSforceCom.EntitySearchPromotionMetadata searchPromotionMetadata;
+        public PermissionPartnerSoapSforceCom.EntitySpellCorrectionMetadata spellCorrectionMetadata;
         private String[] entityName_type_info = new String[]{'entityName',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] errorMetadata_type_info = new String[]{'errorMetadata',PARTNER_SOAP_URN,null,'0','1','false'};
                 private String[] fieldMetadata_type_info = new String[]{'fieldMetadata',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -2839,13 +2839,13 @@ public class PermissionPartnerSoapSforceCom {
                                         }
     public class DescribeLayoutButton {
         public String behavior;
-        public permissionPartnerSoapSforceCom.DescribeColor[] colors;
+        public PermissionPartnerSoapSforceCom.DescribeColor[] colors;
         public String content;
         public String contentSource;
         public Boolean custom;
         public String encoding;
         public Integer height;
-        public permissionPartnerSoapSforceCom.DescribeIcon[] icons;
+        public PermissionPartnerSoapSforceCom.DescribeIcon[] icons;
         public String label;
         public Boolean menubar;
         public String name;
@@ -2990,7 +2990,7 @@ public class PermissionPartnerSoapSforceCom {
                 private String[] field_order_type_info = new String[]{'quickActions'};
                     }
     public class DescribePathAssistantsResult {
-        public permissionPartnerSoapSforceCom.DescribePathAssistant[] pathAssistants;
+        public PermissionPartnerSoapSforceCom.DescribePathAssistant[] pathAssistants;
         private String[] pathAssistants_type_info = new String[]{'pathAssistants',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'pathAssistants'};
@@ -3014,7 +3014,7 @@ public class PermissionPartnerSoapSforceCom {
     public class DescribeApprovalLayout {
         public String id;
         public String label;
-        public permissionPartnerSoapSforceCom.DescribeLayoutItem[] layoutItems;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutItem[] layoutItems;
         public String name;
         private String[] id_type_info = new String[]{'id',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] label_type_info = new String[]{'label',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -3029,7 +3029,7 @@ public class PermissionPartnerSoapSforceCom {
                 }
     public class SearchLayoutButtonsDisplayed {
         public Boolean applicable;
-        public permissionPartnerSoapSforceCom.SearchLayoutButton[] buttons;
+        public PermissionPartnerSoapSforceCom.SearchLayoutButton[] buttons;
         private String[] applicable_type_info = new String[]{'applicable',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] buttons_type_info = new String[]{'buttons',PARTNER_SOAP_URN,null,'0','-1','false'};
                 private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
@@ -3070,7 +3070,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'action','workitemId'};
                         }
     public class DescribeSearchScopeOrderResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult[] result;
+        public PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult[] result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -3096,7 +3096,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'name','value'};
                         }
     public class DescribeSoqlListViewsResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSoqlListViewResult result;
+        public PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -3110,19 +3110,19 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'type_x','execute'};
                         }
     public class FieldComponent {
-        public permissionPartnerSoapSforceCom.Field field;
+        public PermissionPartnerSoapSforceCom.Field field;
         private String[] field_type_info = new String[]{'field',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'field'};
                     }
     public class DescribeThemeResult {
-        public permissionPartnerSoapSforceCom.DescribeThemeItem[] themeItems;
+        public PermissionPartnerSoapSforceCom.DescribeThemeItem[] themeItems;
         private String[] themeItems_type_info = new String[]{'themeItems',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'themeItems'};
                     }
     public class DescribeLayoutRow {
-        public permissionPartnerSoapSforceCom.DescribeLayoutItem[] layoutItems;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutItem[] layoutItems;
         public Integer numItems;
         private String[] layoutItems_type_info = new String[]{'layoutItems',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] numItems_type_info = new String[]{'numItems',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -3130,11 +3130,11 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'layoutItems','numItems'};
                         }
     public class DescribeSoftphoneLayoutCallType {
-        public permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutInfoField[] infoFields;
+        public PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutInfoField[] infoFields;
         public String name;
-        public permissionPartnerSoapSforceCom.DescribeSoftphoneScreenPopOption[] screenPopOptions;
+        public PermissionPartnerSoapSforceCom.DescribeSoftphoneScreenPopOption[] screenPopOptions;
         public String screenPopsOpenWithin;
-        public permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutSection[] sections;
+        public PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutSection[] sections;
         private String[] infoFields_type_info = new String[]{'infoFields',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] name_type_info = new String[]{'name',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] screenPopOptions_type_info = new String[]{'screenPopOptions',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -3144,7 +3144,7 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'infoFields','name','screenPopOptions','screenPopsOpenWithin','sections'};
                                     }
     public class Error {
-        public permissionPartnerSoapSforceCom.ExtendedErrorDetails[] extendedErrorDetails;
+        public PermissionPartnerSoapSforceCom.ExtendedErrorDetails[] extendedErrorDetails;
         public String[] fields;
         public String message;
         public String statusCode;
@@ -3178,14 +3178,14 @@ public class PermissionPartnerSoapSforceCom {
                                 private String[] field_order_type_info = new String[]{'available','compactLayoutId','compactLayoutName','recordTypeId','recordTypeName'};
                                     }
     public class CustomLinkComponent {
-        public permissionPartnerSoapSforceCom.DescribeLayoutButton customLink;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutButton customLink;
         private String[] customLink_type_info = new String[]{'customLink',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'customLink'};
                     }
     public class DescribeGlobalTheme {
-        public permissionPartnerSoapSforceCom.DescribeGlobalResult global_x;
-        public permissionPartnerSoapSforceCom.DescribeThemeResult theme;
+        public PermissionPartnerSoapSforceCom.DescribeGlobalResult global_x;
+        public PermissionPartnerSoapSforceCom.DescribeThemeResult theme;
         private String[] global_x_type_info = new String[]{'global',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] theme_type_info = new String[]{'theme',PARTNER_SOAP_URN,null,'1','1','false'};
                 private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
@@ -3198,7 +3198,7 @@ public class PermissionPartnerSoapSforceCom {
     public class PerformQuickActionResult {
         public String contextId;
         public Boolean created;
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String[] feedItemIds;
         public String[] ids;
         public Boolean success;
@@ -3238,7 +3238,7 @@ public class PermissionPartnerSoapSforceCom {
             private String[] field_order_type_info = new String[]{};
                 }
     public class GetUpdatedResponse_element {
-        public permissionPartnerSoapSforceCom.GetUpdatedResult result;
+        public PermissionPartnerSoapSforceCom.GetUpdatedResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -3270,7 +3270,7 @@ public class PermissionPartnerSoapSforceCom {
                                                         private String[] field_order_type_info = new String[]{'ascendingLabel','descendingLabel','fieldNameOrPath','hidden','label','searchable','selectListItem','sortDirection','sortIndex','sortable','type_x'};
                                                             }
     public class SoqlNotCondition {
-        public permissionPartnerSoapSforceCom.SoqlWhereCondition condition;
+        public PermissionPartnerSoapSforceCom.SoqlWhereCondition condition;
         private String[] condition_type_info = new String[]{'condition',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'condition'};
@@ -3284,7 +3284,7 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'name','value'};
                         }
     public class UndeleteResult {
-        public permissionPartnerSoapSforceCom.Error[] errors;
+        public PermissionPartnerSoapSforceCom.Error[] errors;
         public String id;
         public Boolean success;
         private String[] errors_type_info = new String[]{'errors',PARTNER_SOAP_URN,null,'0','-1','false'};
@@ -3294,7 +3294,7 @@ public class PermissionPartnerSoapSforceCom {
                         private String[] field_order_type_info = new String[]{'errors','id','success'};
                             }
     public class DescribeSObjectResponse_element {
-        public permissionPartnerSoapSforceCom.DescribeSObjectResult result;
+        public PermissionPartnerSoapSforceCom.DescribeSObjectResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','true'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -3312,7 +3312,7 @@ public class PermissionPartnerSoapSforceCom {
                             private String[] field_order_type_info = new String[]{'displayLines','tabOrder','type_x','value'};
                                 }
     public class FieldLayoutComponent {
-        public permissionPartnerSoapSforceCom.DescribeLayoutComponent[] components;
+        public PermissionPartnerSoapSforceCom.DescribeLayoutComponent[] components;
         public String fieldType;
         private String[] components_type_info = new String[]{'components',PARTNER_SOAP_URN,null,'0','-1','false'};
             private String[] fieldType_type_info = new String[]{'fieldType',PARTNER_SOAP_URN,null,'1','1','false'};
@@ -3320,13 +3320,13 @@ public class PermissionPartnerSoapSforceCom {
                     private String[] field_order_type_info = new String[]{'components','fieldType'};
                         }
     public class ListViewRecord {
-        public permissionPartnerSoapSforceCom.ListViewRecordColumn[] columns;
+        public PermissionPartnerSoapSforceCom.ListViewRecordColumn[] columns;
         private String[] columns_type_info = new String[]{'columns',PARTNER_SOAP_URN,null,'1','-1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'columns'};
                     }
     public class QueryAllResponse_element {
-        public permissionPartnerSoapSforceCom.QueryResult result;
+        public PermissionPartnerSoapSforceCom.QueryResult result;
         private String[] result_type_info = new String[]{'result',PARTNER_SOAP_URN,null,'1','1','false'};
             private String[] apex_schema_type_info = new String[]{PARTNER_SOAP_URN,'true','false'};
                 private String[] field_order_type_info = new String[]{'result'};
@@ -3343,25 +3343,25 @@ public class PermissionPartnerSoapSforceCom {
         public String clientCert_x;
         public String clientCertPasswd_x;
         public Integer timeout_x;
-        public permissionPartnerSoapSforceCom.QueryOptions_element QueryOptions;
-        public permissionPartnerSoapSforceCom.AssignmentRuleHeader_element AssignmentRuleHeader;
-        public permissionPartnerSoapSforceCom.DisableFeedTrackingHeader_element DisableFeedTrackingHeader;
-        public permissionPartnerSoapSforceCom.EmailHeader_element EmailHeader;
-        public permissionPartnerSoapSforceCom.LocaleOptions_element LocaleOptions;
-        public permissionPartnerSoapSforceCom.DebuggingHeader_element DebuggingHeader;
-        public permissionPartnerSoapSforceCom.OwnerChangeOptions_element OwnerChangeOptions;
-        public permissionPartnerSoapSforceCom.AllowFieldTruncationHeader_element AllowFieldTruncationHeader;
-        public permissionPartnerSoapSforceCom.LimitInfoHeader_element LimitInfoHeader;
-        public permissionPartnerSoapSforceCom.DebuggingInfo_element DebuggingInfo;
-        public permissionPartnerSoapSforceCom.PackageVersionHeader_element PackageVersionHeader;
-        public permissionPartnerSoapSforceCom.AllOrNoneHeader_element AllOrNoneHeader;
-        public permissionPartnerSoapSforceCom.MruHeader_element MruHeader;
-        public permissionPartnerSoapSforceCom.SessionHeader_element SessionHeader;
-        public permissionPartnerSoapSforceCom.CallOptions_element CallOptions;
-        public permissionPartnerSoapSforceCom.StreamingEnabledHeader_element StreamingEnabledHeader;
-        public permissionPartnerSoapSforceCom.LoginScopeHeader_element LoginScopeHeader;
-        public permissionPartnerSoapSforceCom.UserTerritoryDeleteHeader_element UserTerritoryDeleteHeader;
-        public permissionPartnerSoapSforceCom.DuplicateRuleHeader_element DuplicateRuleHeader;
+        public PermissionPartnerSoapSforceCom.QueryOptions_element QueryOptions;
+        public PermissionPartnerSoapSforceCom.AssignmentRuleHeader_element AssignmentRuleHeader;
+        public PermissionPartnerSoapSforceCom.DisableFeedTrackingHeader_element DisableFeedTrackingHeader;
+        public PermissionPartnerSoapSforceCom.EmailHeader_element EmailHeader;
+        public PermissionPartnerSoapSforceCom.LocaleOptions_element LocaleOptions;
+        public PermissionPartnerSoapSforceCom.DebuggingHeader_element DebuggingHeader;
+        public PermissionPartnerSoapSforceCom.OwnerChangeOptions_element OwnerChangeOptions;
+        public PermissionPartnerSoapSforceCom.AllowFieldTruncationHeader_element AllowFieldTruncationHeader;
+        public PermissionPartnerSoapSforceCom.LimitInfoHeader_element LimitInfoHeader;
+        public PermissionPartnerSoapSforceCom.DebuggingInfo_element DebuggingInfo;
+        public PermissionPartnerSoapSforceCom.PackageVersionHeader_element PackageVersionHeader;
+        public PermissionPartnerSoapSforceCom.AllOrNoneHeader_element AllOrNoneHeader;
+        public PermissionPartnerSoapSforceCom.MruHeader_element MruHeader;
+        public PermissionPartnerSoapSforceCom.SessionHeader_element SessionHeader;
+        public PermissionPartnerSoapSforceCom.CallOptions_element CallOptions;
+        public PermissionPartnerSoapSforceCom.StreamingEnabledHeader_element StreamingEnabledHeader;
+        public PermissionPartnerSoapSforceCom.LoginScopeHeader_element LoginScopeHeader;
+        public PermissionPartnerSoapSforceCom.UserTerritoryDeleteHeader_element UserTerritoryDeleteHeader;
+        public PermissionPartnerSoapSforceCom.DuplicateRuleHeader_element DuplicateRuleHeader;
         private String QueryOptions_hns = 'QueryOptions=urn:partner.soap.sforce.com';
         private String AssignmentRuleHeader_hns = 'AssignmentRuleHeader=urn:partner.soap.sforce.com';
         private String DisableFeedTrackingHeader_hns = 'DisableFeedTrackingHeader=urn:partner.soap.sforce.com';
@@ -3382,10 +3382,10 @@ public class PermissionPartnerSoapSforceCom {
         private String UserTerritoryDeleteHeader_hns = 'UserTerritoryDeleteHeader=urn:partner.soap.sforce.com';
         private String DuplicateRuleHeader_hns = 'DuplicateRuleHeader=urn:partner.soap.sforce.com';
         private String[] ns_map_type_info = new String[]{'urn:fault.partner.soap.sforce.com', 'permissionFaultPartnerSoapSforceCom', 'urn:sobject.partner.soap.sforce.com', 'permissionSobjectPartnerSoapSforceCom', PARTNER_SOAP_URN, 'permissionPartnerSoapSforceCom'};
-            public permissionPartnerSoapSforceCom.DescribeTab[] describeAllTabs() {
-                permissionPartnerSoapSforceCom.DescribeAllTabs_element request_x = new permissionPartnerSoapSforceCom.DescribeAllTabs_element();
-                permissionPartnerSoapSforceCom.DescribeAllTabsResponse_element response_x;
-                Map<String, permissionPartnerSoapSforceCom.DescribeAllTabsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeAllTabsResponse_element>();
+            public PermissionPartnerSoapSforceCom.DescribeTab[] describeAllTabs() {
+                PermissionPartnerSoapSforceCom.DescribeAllTabs_element request_x = new PermissionPartnerSoapSforceCom.DescribeAllTabs_element();
+                PermissionPartnerSoapSforceCom.DescribeAllTabsResponse_element response_x;
+                Map<String, PermissionPartnerSoapSforceCom.DescribeAllTabsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeAllTabsResponse_element>();
                 response_map_x.put('response_x', response_x);
                 WebServiceCallout.invoke(
                     this,
@@ -3397,17 +3397,17 @@ public class PermissionPartnerSoapSforceCom {
                         'describeAllTabs',
                         PARTNER_SOAP_URN,
                         'describeAllTabsResponse',
-                        'permissionPartnerSoapSforceCom.DescribeAllTabsResponse_element'}
+                        'PermissionPartnerSoapSforceCom.DescribeAllTabsResponse_element'}
                 );
                 response_x = response_map_x.get('response_x');
                 return response_x.result;
             }
-        public permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult[] describeDataCategoryGroupStructures(permissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair[] pairs,Boolean topCategoriesOnly) {
-            permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructures_element request_x = new permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructures_element();
+        public PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult[] describeDataCategoryGroupStructures(PermissionPartnerSoapSforceCom.DataCategoryGroupSobjectTypePair[] pairs,Boolean topCategoriesOnly) {
+            PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructures_element request_x = new PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructures_element();
             request_x.pairs = pairs;
             request_x.topCategoriesOnly = topCategoriesOnly;
-            permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3419,16 +3419,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeDataCategoryGroupStructures',
                     PARTNER_SOAP_URN,
                     'describeDataCategoryGroupStructuresResponse',
-                    'permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructuresResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult[] describeDataCategoryGroups(String[] sObjectType) {
-            permissionPartnerSoapSforceCom.DescribeDataCategoryGroups_element request_x = new permissionPartnerSoapSforceCom.DescribeDataCategoryGroups_element();
+        public PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult[] describeDataCategoryGroups(String[] sObjectType) {
+            PermissionPartnerSoapSforceCom.DescribeDataCategoryGroups_element request_x = new PermissionPartnerSoapSforceCom.DescribeDataCategoryGroups_element();
             request_x.sObjectType = sObjectType;
-            permissionPartnerSoapSforceCom.DescribeDataCategoryGroupsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3440,16 +3440,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeDataCategoryGroups',
                     PARTNER_SOAP_URN,
                     'describeDataCategoryGroupsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeDataCategoryGroupsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.FindDuplicatesResult[] findDuplicates(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
-            permissionPartnerSoapSforceCom.FindDuplicates_element request_x = new permissionPartnerSoapSforceCom.FindDuplicates_element();
+        public PermissionPartnerSoapSforceCom.FindDuplicatesResult[] findDuplicates(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
+            PermissionPartnerSoapSforceCom.FindDuplicates_element request_x = new PermissionPartnerSoapSforceCom.FindDuplicates_element();
             request_x.sObjects = sObjects;
-            permissionPartnerSoapSforceCom.FindDuplicatesResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.FindDuplicatesResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.FindDuplicatesResponse_element>();
+            PermissionPartnerSoapSforceCom.FindDuplicatesResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.FindDuplicatesResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.FindDuplicatesResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3461,16 +3461,16 @@ public class PermissionPartnerSoapSforceCom {
                     'findDuplicates',
                     PARTNER_SOAP_URN,
                     'findDuplicatesResponse',
-                    'permissionPartnerSoapSforceCom.FindDuplicatesResponse_element'}
+                    'PermissionPartnerSoapSforceCom.FindDuplicatesResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.ProcessResult[] process(permissionPartnerSoapSforceCom.ProcessRequest[] actions) {
-            permissionPartnerSoapSforceCom.Process_element request_x = new permissionPartnerSoapSforceCom.Process_element();
+        public PermissionPartnerSoapSforceCom.ProcessResult[] process(PermissionPartnerSoapSforceCom.ProcessRequest[] actions) {
+            PermissionPartnerSoapSforceCom.Process_element request_x = new PermissionPartnerSoapSforceCom.Process_element();
             request_x.actions = actions;
-            permissionPartnerSoapSforceCom.ProcessResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.ProcessResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.ProcessResponse_element>();
+            PermissionPartnerSoapSforceCom.ProcessResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.ProcessResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.ProcessResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3482,15 +3482,15 @@ public class PermissionPartnerSoapSforceCom {
                     'process',
                     PARTNER_SOAP_URN,
                     'processResponse',
-                    'permissionPartnerSoapSforceCom.ProcessResponse_element'}
+                    'PermissionPartnerSoapSforceCom.ProcessResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeGlobalResult describeGlobal() {
-            permissionPartnerSoapSforceCom.DescribeGlobal_element request_x = new permissionPartnerSoapSforceCom.DescribeGlobal_element();
-            permissionPartnerSoapSforceCom.DescribeGlobalResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeGlobalResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeGlobalResponse_element>();
+        public PermissionPartnerSoapSforceCom.DescribeGlobalResult describeGlobal() {
+            PermissionPartnerSoapSforceCom.DescribeGlobal_element request_x = new PermissionPartnerSoapSforceCom.DescribeGlobal_element();
+            PermissionPartnerSoapSforceCom.DescribeGlobalResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeGlobalResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeGlobalResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3502,15 +3502,15 @@ public class PermissionPartnerSoapSforceCom {
                     'describeGlobal',
                     PARTNER_SOAP_URN,
                     'describeGlobalResponse',
-                    'permissionPartnerSoapSforceCom.DescribeGlobalResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeGlobalResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.GetUserInfoResult getUserInfo() {
-            permissionPartnerSoapSforceCom.GetUserInfo_element request_x = new permissionPartnerSoapSforceCom.GetUserInfo_element();
-            permissionPartnerSoapSforceCom.GetUserInfoResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.GetUserInfoResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.GetUserInfoResponse_element>();
+        public PermissionPartnerSoapSforceCom.GetUserInfoResult getUserInfo() {
+            PermissionPartnerSoapSforceCom.GetUserInfo_element request_x = new PermissionPartnerSoapSforceCom.GetUserInfo_element();
+            PermissionPartnerSoapSforceCom.GetUserInfoResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.GetUserInfoResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.GetUserInfoResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3522,15 +3522,15 @@ public class PermissionPartnerSoapSforceCom {
                     'getUserInfo',
                     PARTNER_SOAP_URN,
                     'getUserInfoResponse',
-                    'permissionPartnerSoapSforceCom.GetUserInfoResponse_element'}
+                    'PermissionPartnerSoapSforceCom.GetUserInfoResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeGlobalTheme describeGlobalTheme() {
-            permissionPartnerSoapSforceCom.DescribeGlobalTheme_element request_x = new permissionPartnerSoapSforceCom.DescribeGlobalTheme_element();
-            permissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element>();
+        public PermissionPartnerSoapSforceCom.DescribeGlobalTheme describeGlobalTheme() {
+            PermissionPartnerSoapSforceCom.DescribeGlobalTheme_element request_x = new PermissionPartnerSoapSforceCom.DescribeGlobalTheme_element();
+            PermissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3542,17 +3542,17 @@ public class PermissionPartnerSoapSforceCom {
                     'describeGlobalTheme',
                     PARTNER_SOAP_URN,
                     'describeGlobalThemeResponse',
-                    'permissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeGlobalThemeResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeApprovalLayoutResult describeApprovalLayout(String sObjectType,String[] approvalProcessNames) {
-            permissionPartnerSoapSforceCom.DescribeApprovalLayout_element request_x = new permissionPartnerSoapSforceCom.DescribeApprovalLayout_element();
+        public PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResult describeApprovalLayout(String sObjectType,String[] approvalProcessNames) {
+            PermissionPartnerSoapSforceCom.DescribeApprovalLayout_element request_x = new PermissionPartnerSoapSforceCom.DescribeApprovalLayout_element();
             request_x.sObjectType = sObjectType;
             request_x.approvalProcessNames = approvalProcessNames;
-            permissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3564,16 +3564,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeApprovalLayout',
                     PARTNER_SOAP_URN,
                     'describeApprovalLayoutResponse',
-                    'permissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeCompactLayout[] describePrimaryCompactLayouts(String[] sObjectTypes) {
-            permissionPartnerSoapSforceCom.DescribePrimaryCompactLayouts_element request_x = new permissionPartnerSoapSforceCom.DescribePrimaryCompactLayouts_element();
+        public PermissionPartnerSoapSforceCom.DescribeCompactLayout[] describePrimaryCompactLayouts(String[] sObjectTypes) {
+            PermissionPartnerSoapSforceCom.DescribePrimaryCompactLayouts_element request_x = new PermissionPartnerSoapSforceCom.DescribePrimaryCompactLayouts_element();
             request_x.sObjectTypes = sObjectTypes;
-            permissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3585,16 +3585,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describePrimaryCompactLayouts',
                     PARTNER_SOAP_URN,
                     'describePrimaryCompactLayoutsResponse',
-                    'permissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribePrimaryCompactLayoutsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.QueryResult queryMore(String queryLocator) {
-            permissionPartnerSoapSforceCom.QueryMore_element request_x = new permissionPartnerSoapSforceCom.QueryMore_element();
+        public PermissionPartnerSoapSforceCom.QueryResult queryMore(String queryLocator) {
+            PermissionPartnerSoapSforceCom.QueryMore_element request_x = new PermissionPartnerSoapSforceCom.QueryMore_element();
             request_x.queryLocator = queryLocator;
-            permissionPartnerSoapSforceCom.QueryMoreResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.QueryMoreResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.QueryMoreResponse_element>();
+            PermissionPartnerSoapSforceCom.QueryMoreResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.QueryMoreResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.QueryMoreResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3606,16 +3606,16 @@ public class PermissionPartnerSoapSforceCom {
                     'queryMore',
                     PARTNER_SOAP_URN,
                     'queryMoreResponse',
-                    'permissionPartnerSoapSforceCom.QueryMoreResponse_element'}
+                    'PermissionPartnerSoapSforceCom.QueryMoreResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeSearchableEntityResult[] describeSearchableEntities(Boolean includeOnlyEntitiesWithTabs) {
-            permissionPartnerSoapSforceCom.DescribeSearchableEntities_element request_x = new permissionPartnerSoapSforceCom.DescribeSearchableEntities_element();
+        public PermissionPartnerSoapSforceCom.DescribeSearchableEntityResult[] describeSearchableEntities(Boolean includeOnlyEntitiesWithTabs) {
+            PermissionPartnerSoapSforceCom.DescribeSearchableEntities_element request_x = new PermissionPartnerSoapSforceCom.DescribeSearchableEntities_element();
             request_x.includeOnlyEntitiesWithTabs = includeOnlyEntitiesWithTabs;
-            permissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3627,18 +3627,18 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSearchableEntities',
                     PARTNER_SOAP_URN,
                     'describeSearchableEntitiesResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSearchableEntitiesResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeLayoutResult describeLayout(String sObjectType,String layoutName,String[] recordTypeIds) {
-            permissionPartnerSoapSforceCom.DescribeLayout_element request_x = new permissionPartnerSoapSforceCom.DescribeLayout_element();
+        public PermissionPartnerSoapSforceCom.DescribeLayoutResult describeLayout(String sObjectType,String layoutName,String[] recordTypeIds) {
+            PermissionPartnerSoapSforceCom.DescribeLayout_element request_x = new PermissionPartnerSoapSforceCom.DescribeLayout_element();
             request_x.sObjectType = sObjectType;
             request_x.layoutName = layoutName;
             request_x.recordTypeIds = recordTypeIds;
-            permissionPartnerSoapSforceCom.DescribeLayoutResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeLayoutResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeLayoutResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeLayoutResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeLayoutResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeLayoutResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3650,17 +3650,17 @@ public class PermissionPartnerSoapSforceCom {
                     'describeLayout',
                     PARTNER_SOAP_URN,
                     'describeLayoutResponse',
-                    'permissionPartnerSoapSforceCom.DescribeLayoutResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeLayoutResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeAppMenuResult describeAppMenu(String appMenuType,String networkId) {
-            permissionPartnerSoapSforceCom.DescribeAppMenu_element request_x = new permissionPartnerSoapSforceCom.DescribeAppMenu_element();
+        public PermissionPartnerSoapSforceCom.DescribeAppMenuResult describeAppMenu(String appMenuType,String networkId) {
+            PermissionPartnerSoapSforceCom.DescribeAppMenu_element request_x = new PermissionPartnerSoapSforceCom.DescribeAppMenu_element();
             request_x.appMenuType = appMenuType;
             request_x.networkId = networkId;
-            permissionPartnerSoapSforceCom.DescribeAppMenuResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeAppMenuResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeAppMenuResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeAppMenuResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeAppMenuResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeAppMenuResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3672,16 +3672,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeAppMenu',
                     PARTNER_SOAP_URN,
                     'describeAppMenuResponse',
-                    'permissionPartnerSoapSforceCom.DescribeAppMenuResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeAppMenuResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.LeadConvertResult[] convertLead(permissionPartnerSoapSforceCom.LeadConvert[] leadConverts) {
-            permissionPartnerSoapSforceCom.ConvertLead_element request_x = new permissionPartnerSoapSforceCom.ConvertLead_element();
+        public PermissionPartnerSoapSforceCom.LeadConvertResult[] convertLead(PermissionPartnerSoapSforceCom.LeadConvert[] leadConverts) {
+            PermissionPartnerSoapSforceCom.ConvertLead_element request_x = new PermissionPartnerSoapSforceCom.ConvertLead_element();
             request_x.leadConverts = leadConverts;
-            permissionPartnerSoapSforceCom.ConvertLeadResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.ConvertLeadResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.ConvertLeadResponse_element>();
+            PermissionPartnerSoapSforceCom.ConvertLeadResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.ConvertLeadResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.ConvertLeadResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3693,20 +3693,20 @@ public class PermissionPartnerSoapSforceCom {
                     'convertLead',
                     PARTNER_SOAP_URN,
                     'convertLeadResponse',
-                    'permissionPartnerSoapSforceCom.ConvertLeadResponse_element'}
+                    'PermissionPartnerSoapSforceCom.ConvertLeadResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeSoqlListViewResult describeSObjectListViews(String sObjectType,Boolean recentsOnly,String isSoqlCompatible,Integer limit_x,Integer offset) {
-            permissionPartnerSoapSforceCom.DescribeSObjectListViews_element request_x = new permissionPartnerSoapSforceCom.DescribeSObjectListViews_element();
+        public PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult describeSObjectListViews(String sObjectType,Boolean recentsOnly,String isSoqlCompatible,Integer limit_x,Integer offset) {
+            PermissionPartnerSoapSforceCom.DescribeSObjectListViews_element request_x = new PermissionPartnerSoapSforceCom.DescribeSObjectListViews_element();
             request_x.sObjectType = sObjectType;
             request_x.recentsOnly = recentsOnly;
             request_x.isSoqlCompatible = isSoqlCompatible;
             request_x.limit_x = limit_x;
             request_x.offset = offset;
-            permissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3718,16 +3718,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSObjectListViews',
                     PARTNER_SOAP_URN,
                     'describeSObjectListViewsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSObjectListViewsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DeleteResult[] delete_x(String[] ids) {
-            permissionPartnerSoapSforceCom.Delete_element request_x = new permissionPartnerSoapSforceCom.Delete_element();
+        public PermissionPartnerSoapSforceCom.DeleteResult[] delete_x(String[] ids) {
+            PermissionPartnerSoapSforceCom.Delete_element request_x = new PermissionPartnerSoapSforceCom.Delete_element();
             request_x.ids = ids;
-            permissionPartnerSoapSforceCom.DeleteResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DeleteResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DeleteResponse_element>();
+            PermissionPartnerSoapSforceCom.DeleteResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DeleteResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DeleteResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3739,17 +3739,17 @@ public class PermissionPartnerSoapSforceCom {
                     'delete',
                     PARTNER_SOAP_URN,
                     'deleteResponse',
-                    'permissionPartnerSoapSforceCom.DeleteResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DeleteResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.LoginResult login(String username,String password) {
-            permissionPartnerSoapSforceCom.Login_element request_x = new permissionPartnerSoapSforceCom.Login_element();
+        public PermissionPartnerSoapSforceCom.LoginResult login(String username,String password) {
+            PermissionPartnerSoapSforceCom.Login_element request_x = new PermissionPartnerSoapSforceCom.Login_element();
             request_x.username = username;
             request_x.password = password;
-            permissionPartnerSoapSforceCom.LoginResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.LoginResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.LoginResponse_element>();
+            PermissionPartnerSoapSforceCom.LoginResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.LoginResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.LoginResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3761,16 +3761,16 @@ public class PermissionPartnerSoapSforceCom {
                     'login',
                     PARTNER_SOAP_URN,
                     'loginResponse',
-                    'permissionPartnerSoapSforceCom.LoginResponse_element'}
+                    'PermissionPartnerSoapSforceCom.LoginResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.QueryResult queryAll(String queryString) {
-            permissionPartnerSoapSforceCom.QueryAll_element request_x = new permissionPartnerSoapSforceCom.QueryAll_element();
+        public PermissionPartnerSoapSforceCom.QueryResult queryAll(String queryString) {
+            PermissionPartnerSoapSforceCom.QueryAll_element request_x = new PermissionPartnerSoapSforceCom.QueryAll_element();
             request_x.queryString = queryString;
-            permissionPartnerSoapSforceCom.QueryAllResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.QueryAllResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.QueryAllResponse_element>();
+            PermissionPartnerSoapSforceCom.QueryAllResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.QueryAllResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.QueryAllResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3782,17 +3782,17 @@ public class PermissionPartnerSoapSforceCom {
                     'queryAll',
                     PARTNER_SOAP_URN,
                     'queryAllResponse',
-                    'permissionPartnerSoapSforceCom.QueryAllResponse_element'}
+                    'PermissionPartnerSoapSforceCom.QueryAllResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.SaveResult[] update_x(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
-            permissionPartnerSoapSforceCom.Update_element request_x = new permissionPartnerSoapSforceCom.Update_element();
+        public PermissionPartnerSoapSforceCom.SaveResult[] update_x(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
+            PermissionPartnerSoapSforceCom.Update_element request_x = new PermissionPartnerSoapSforceCom.Update_element();
             request_x.sObjects = sObjects;
             system.debug('check sobject'+ sObjects[0].Name);
-            permissionPartnerSoapSforceCom.UpdateResponse_element response_x = new permissionPartnerSoapSforceCom.UpdateResponse_element();
-            Map<String, permissionPartnerSoapSforceCom.UpdateResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.UpdateResponse_element>();
+            PermissionPartnerSoapSforceCom.UpdateResponse_element response_x = new PermissionPartnerSoapSforceCom.UpdateResponse_element();
+            Map<String, PermissionPartnerSoapSforceCom.UpdateResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.UpdateResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3804,16 +3804,16 @@ public class PermissionPartnerSoapSforceCom {
                     'update',
                     PARTNER_SOAP_URN,
                     'updateResponse',
-                    'permissionPartnerSoapSforceCom.UpdateResponse_element'}
+                    'PermissionPartnerSoapSforceCom.UpdateResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.EmptyRecycleBinResult[] emptyRecycleBin(String[] ids) {
-            permissionPartnerSoapSforceCom.EmptyRecycleBin_element request_x = new permissionPartnerSoapSforceCom.EmptyRecycleBin_element();
+        public PermissionPartnerSoapSforceCom.EmptyRecycleBinResult[] emptyRecycleBin(String[] ids) {
+            PermissionPartnerSoapSforceCom.EmptyRecycleBin_element request_x = new PermissionPartnerSoapSforceCom.EmptyRecycleBin_element();
             request_x.ids = ids;
-            permissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element>();
+            PermissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3825,17 +3825,17 @@ public class PermissionPartnerSoapSforceCom {
                     'emptyRecycleBin',
                     PARTNER_SOAP_URN,
                     'emptyRecycleBinResponse',
-                    'permissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element'}
+                    'PermissionPartnerSoapSforceCom.EmptyRecycleBinResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeCompactLayoutsResult describeCompactLayouts(String sObjectType,String[] recordTypeIds) {
-            permissionPartnerSoapSforceCom.DescribeCompactLayouts_element request_x = new permissionPartnerSoapSforceCom.DescribeCompactLayouts_element();
+        public PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResult describeCompactLayouts(String sObjectType,String[] recordTypeIds) {
+            PermissionPartnerSoapSforceCom.DescribeCompactLayouts_element request_x = new PermissionPartnerSoapSforceCom.DescribeCompactLayouts_element();
             request_x.sObjectType = sObjectType;
             request_x.recordTypeIds = recordTypeIds;
-            permissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3847,17 +3847,17 @@ public class PermissionPartnerSoapSforceCom {
                     'describeCompactLayouts',
                     PARTNER_SOAP_URN,
                     'describeCompactLayoutsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.ChangeOwnPasswordResult changeOwnPassword(String oldPassword,String newPassword) {
-            permissionPartnerSoapSforceCom.ChangeOwnPassword_element request_x = new permissionPartnerSoapSforceCom.ChangeOwnPassword_element();
+        public PermissionPartnerSoapSforceCom.ChangeOwnPasswordResult changeOwnPassword(String oldPassword,String newPassword) {
+            PermissionPartnerSoapSforceCom.ChangeOwnPassword_element request_x = new PermissionPartnerSoapSforceCom.ChangeOwnPassword_element();
             request_x.oldPassword = oldPassword;
             request_x.newPassword = newPassword;
-            permissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element>();
+            PermissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3869,16 +3869,16 @@ public class PermissionPartnerSoapSforceCom {
                     'changeOwnPassword',
                     PARTNER_SOAP_URN,
                     'changeOwnPasswordResponse',
-                    'permissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element'}
+                    'PermissionPartnerSoapSforceCom.ChangeOwnPasswordResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeSoqlListViewResult describeSoqlListViews(permissionPartnerSoapSforceCom.DescribeSoqlListViewsRequest request) {
-            permissionPartnerSoapSforceCom.DescribeSoqlListViews_element request_x = new permissionPartnerSoapSforceCom.DescribeSoqlListViews_element();
+        public PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult describeSoqlListViews(PermissionPartnerSoapSforceCom.DescribeSoqlListViewsRequest request) {
+            PermissionPartnerSoapSforceCom.DescribeSoqlListViews_element request_x = new PermissionPartnerSoapSforceCom.DescribeSoqlListViews_element();
             request_x.request = request;
-            permissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3890,18 +3890,18 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSoqlListViews',
                     PARTNER_SOAP_URN,
                     'describeSoqlListViewsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSoqlListViewsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribePathAssistantsResult describePathAssistants(String sObjectType,String picklistValue,String[] recordTypeIds) {
-            permissionPartnerSoapSforceCom.DescribePathAssistants_element request_x = new permissionPartnerSoapSforceCom.DescribePathAssistants_element();
+        public PermissionPartnerSoapSforceCom.DescribePathAssistantsResult describePathAssistants(String sObjectType,String picklistValue,String[] recordTypeIds) {
+            PermissionPartnerSoapSforceCom.DescribePathAssistants_element request_x = new PermissionPartnerSoapSforceCom.DescribePathAssistants_element();
             request_x.sObjectType = sObjectType;
             request_x.picklistValue = picklistValue;
             request_x.recordTypeIds = recordTypeIds;
-            permissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3913,16 +3913,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describePathAssistants',
                     PARTNER_SOAP_URN,
                     'describePathAssistantsResponse',
-                    'permissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribePathAssistantsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult[] describeAvailableQuickActions(String contextType) {
-            permissionPartnerSoapSforceCom.DescribeAvailableQuickActions_element request_x = new permissionPartnerSoapSforceCom.DescribeAvailableQuickActions_element();
+        public PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult[] describeAvailableQuickActions(String contextType) {
+            PermissionPartnerSoapSforceCom.DescribeAvailableQuickActions_element request_x = new PermissionPartnerSoapSforceCom.DescribeAvailableQuickActions_element();
             request_x.contextType = contextType;
-            permissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3934,18 +3934,18 @@ public class PermissionPartnerSoapSforceCom {
                     'describeAvailableQuickActions',
                     PARTNER_SOAP_URN,
                     'describeAvailableQuickActionsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.GetDeletedResult getDeleted(String sObjectType,DateTime startDate,DateTime endDate) {
-            permissionPartnerSoapSforceCom.GetDeleted_element request_x = new permissionPartnerSoapSforceCom.GetDeleted_element();
+        public PermissionPartnerSoapSforceCom.GetDeletedResult getDeleted(String sObjectType,DateTime startDate,DateTime endDate) {
+            PermissionPartnerSoapSforceCom.GetDeleted_element request_x = new PermissionPartnerSoapSforceCom.GetDeleted_element();
             request_x.sObjectType = sObjectType;
             request_x.startDate = startDate;
             request_x.endDate = endDate;
-            permissionPartnerSoapSforceCom.GetDeletedResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.GetDeletedResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.GetDeletedResponse_element>();
+            PermissionPartnerSoapSforceCom.GetDeletedResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.GetDeletedResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.GetDeletedResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3957,15 +3957,15 @@ public class PermissionPartnerSoapSforceCom {
                     'getDeleted',
                     PARTNER_SOAP_URN,
                     'getDeletedResponse',
-                    'permissionPartnerSoapSforceCom.GetDeletedResponse_element'}
+                    'PermissionPartnerSoapSforceCom.GetDeletedResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeTabSetResult[] describeTabs() {
-            permissionPartnerSoapSforceCom.DescribeTabs_element request_x = new permissionPartnerSoapSforceCom.DescribeTabs_element();
-            permissionPartnerSoapSforceCom.DescribeTabsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeTabsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeTabsResponse_element>();
+        public PermissionPartnerSoapSforceCom.DescribeTabSetResult[] describeTabs() {
+            PermissionPartnerSoapSforceCom.DescribeTabs_element request_x = new PermissionPartnerSoapSforceCom.DescribeTabs_element();
+            PermissionPartnerSoapSforceCom.DescribeTabsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeTabsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeTabsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3977,17 +3977,17 @@ public class PermissionPartnerSoapSforceCom {
                     'describeTabs',
                     PARTNER_SOAP_URN,
                     'describeTabsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeTabsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeTabsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.QuickActionTemplateResult[] retrieveMassQuickActionTemplates(String quickActionName,String[] contextIds) {
-            permissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplates_element request_x = new permissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplates_element();
+        public PermissionPartnerSoapSforceCom.QuickActionTemplateResult[] retrieveMassQuickActionTemplates(String quickActionName,String[] contextIds) {
+            PermissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplates_element request_x = new PermissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplates_element();
             request_x.quickActionName = quickActionName;
             request_x.contextIds = contextIds;
-            permissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element>();
+            PermissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -3999,16 +3999,16 @@ public class PermissionPartnerSoapSforceCom {
                     'retrieveMassQuickActionTemplates',
                     PARTNER_SOAP_URN,
                     'retrieveMassQuickActionTemplatesResponse',
-                    'permissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element'}
+                    'PermissionPartnerSoapSforceCom.RetrieveMassQuickActionTemplatesResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.SearchResult search_x(String searchString) {
-            permissionPartnerSoapSforceCom.Search_element request_x = new permissionPartnerSoapSforceCom.Search_element();
+        public PermissionPartnerSoapSforceCom.SearchResult search_x(String searchString) {
+            PermissionPartnerSoapSforceCom.Search_element request_x = new PermissionPartnerSoapSforceCom.Search_element();
             request_x.searchString = searchString;
-            permissionPartnerSoapSforceCom.SearchResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.SearchResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.SearchResponse_element>();
+            PermissionPartnerSoapSforceCom.SearchResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.SearchResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.SearchResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4020,16 +4020,16 @@ public class PermissionPartnerSoapSforceCom {
                     'search',
                     PARTNER_SOAP_URN,
                     'searchResponse',
-                    'permissionPartnerSoapSforceCom.SearchResponse_element'}
+                    'PermissionPartnerSoapSforceCom.SearchResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.SendEmailResult[] sendEmail(permissionPartnerSoapSforceCom.Email[] messages) {
-            permissionPartnerSoapSforceCom.SendEmail_element request_x = new permissionPartnerSoapSforceCom.SendEmail_element();
+        public PermissionPartnerSoapSforceCom.SendEmailResult[] sendEmail(PermissionPartnerSoapSforceCom.Email[] messages) {
+            PermissionPartnerSoapSforceCom.SendEmail_element request_x = new PermissionPartnerSoapSforceCom.SendEmail_element();
             request_x.messages = messages;
-            permissionPartnerSoapSforceCom.SendEmailResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.SendEmailResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.SendEmailResponse_element>();
+            PermissionPartnerSoapSforceCom.SendEmailResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.SendEmailResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.SendEmailResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4041,18 +4041,18 @@ public class PermissionPartnerSoapSforceCom {
                     'sendEmail',
                     PARTNER_SOAP_URN,
                     'sendEmailResponse',
-                    'permissionPartnerSoapSforceCom.SendEmailResponse_element'}
+                    'PermissionPartnerSoapSforceCom.SendEmailResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.GetUpdatedResult getUpdated(String sObjectType,DateTime startDate,DateTime endDate) {
-            permissionPartnerSoapSforceCom.GetUpdated_element request_x = new permissionPartnerSoapSforceCom.GetUpdated_element();
+        public PermissionPartnerSoapSforceCom.GetUpdatedResult getUpdated(String sObjectType,DateTime startDate,DateTime endDate) {
+            PermissionPartnerSoapSforceCom.GetUpdated_element request_x = new PermissionPartnerSoapSforceCom.GetUpdated_element();
             request_x.sObjectType = sObjectType;
             request_x.startDate = startDate;
             request_x.endDate = endDate;
-            permissionPartnerSoapSforceCom.GetUpdatedResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.GetUpdatedResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.GetUpdatedResponse_element>();
+            PermissionPartnerSoapSforceCom.GetUpdatedResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.GetUpdatedResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.GetUpdatedResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4064,16 +4064,16 @@ public class PermissionPartnerSoapSforceCom {
                     'getUpdated',
                     PARTNER_SOAP_URN,
                     'getUpdatedResponse',
-                    'permissionPartnerSoapSforceCom.GetUpdatedResponse_element'}
+                    'PermissionPartnerSoapSforceCom.GetUpdatedResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.SendEmailResult[] sendEmailMessage(String[] ids) {
-            permissionPartnerSoapSforceCom.SendEmailMessage_element request_x = new permissionPartnerSoapSforceCom.SendEmailMessage_element();
+        public PermissionPartnerSoapSforceCom.SendEmailResult[] sendEmailMessage(String[] ids) {
+            PermissionPartnerSoapSforceCom.SendEmailMessage_element request_x = new PermissionPartnerSoapSforceCom.SendEmailMessage_element();
             request_x.ids = ids;
-            permissionPartnerSoapSforceCom.SendEmailMessageResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.SendEmailMessageResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.SendEmailMessageResponse_element>();
+            PermissionPartnerSoapSforceCom.SendEmailMessageResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.SendEmailMessageResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.SendEmailMessageResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4085,17 +4085,17 @@ public class PermissionPartnerSoapSforceCom {
                     'sendEmailMessage',
                     PARTNER_SOAP_URN,
                     'sendEmailMessageResponse',
-                    'permissionPartnerSoapSforceCom.SendEmailMessageResponse_element'}
+                    'PermissionPartnerSoapSforceCom.SendEmailMessageResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeQuickActionResult[] describeQuickActionsForRecordType(String[] quickActions,String recordTypeId) {
-            permissionPartnerSoapSforceCom.DescribeQuickActionsForRecordType_element request_x = new permissionPartnerSoapSforceCom.DescribeQuickActionsForRecordType_element();
+        public PermissionPartnerSoapSforceCom.DescribeQuickActionResult[] describeQuickActionsForRecordType(String[] quickActions,String recordTypeId) {
+            PermissionPartnerSoapSforceCom.DescribeQuickActionsForRecordType_element request_x = new PermissionPartnerSoapSforceCom.DescribeQuickActionsForRecordType_element();
             request_x.quickActions = quickActions;
             request_x.recordTypeId = recordTypeId;
-            permissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4107,16 +4107,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeQuickActionsForRecordType',
                     PARTNER_SOAP_URN,
                     'describeQuickActionsForRecordTypeResponse',
-                    'permissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeQuickActionsForRecordTypeResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.RenderEmailTemplateResult[] renderEmailTemplate(permissionPartnerSoapSforceCom.RenderEmailTemplateRequest[] renderRequests) {
-            permissionPartnerSoapSforceCom.RenderEmailTemplate_element request_x = new permissionPartnerSoapSforceCom.RenderEmailTemplate_element();
+        public PermissionPartnerSoapSforceCom.RenderEmailTemplateResult[] renderEmailTemplate(PermissionPartnerSoapSforceCom.RenderEmailTemplateRequest[] renderRequests) {
+            PermissionPartnerSoapSforceCom.RenderEmailTemplate_element request_x = new PermissionPartnerSoapSforceCom.RenderEmailTemplate_element();
             request_x.renderRequests = renderRequests;
-            permissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element>();
+            PermissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4128,17 +4128,17 @@ public class PermissionPartnerSoapSforceCom {
                     'renderEmailTemplate',
                     PARTNER_SOAP_URN,
                     'renderEmailTemplateResponse',
-                    'permissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element'}
+                    'PermissionPartnerSoapSforceCom.RenderEmailTemplateResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.UpsertResult[] upsert_x(String externalIDFieldName,permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
-            permissionPartnerSoapSforceCom.Upsert_element request_x = new permissionPartnerSoapSforceCom.Upsert_element();
+        public PermissionPartnerSoapSforceCom.UpsertResult[] upsert_x(String externalIDFieldName,permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
+            PermissionPartnerSoapSforceCom.Upsert_element request_x = new PermissionPartnerSoapSforceCom.Upsert_element();
             request_x.externalIDFieldName = externalIDFieldName;
             request_x.sObjects = sObjects;
-            permissionPartnerSoapSforceCom.UpsertResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.UpsertResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.UpsertResponse_element>();
+            PermissionPartnerSoapSforceCom.UpsertResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.UpsertResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.UpsertResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4150,16 +4150,16 @@ public class PermissionPartnerSoapSforceCom {
                     'upsert',
                     PARTNER_SOAP_URN,
                     'upsertResponse',
-                    'permissionPartnerSoapSforceCom.UpsertResponse_element'}
+                    'PermissionPartnerSoapSforceCom.UpsertResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.QueryResult query(String queryString) {
-            permissionPartnerSoapSforceCom.Query_element request_x = new permissionPartnerSoapSforceCom.Query_element();
+        public PermissionPartnerSoapSforceCom.QueryResult query(String queryString) {
+            PermissionPartnerSoapSforceCom.Query_element request_x = new PermissionPartnerSoapSforceCom.Query_element();
             request_x.queryString = queryString;
-            permissionPartnerSoapSforceCom.QueryResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.QueryResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.QueryResponse_element>();
+            PermissionPartnerSoapSforceCom.QueryResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.QueryResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.QueryResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4171,16 +4171,16 @@ public class PermissionPartnerSoapSforceCom {
                     'query',
                     PARTNER_SOAP_URN,
                     'queryResponse',
-                    'permissionPartnerSoapSforceCom.QueryResponse_element'}
+                    'PermissionPartnerSoapSforceCom.QueryResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeQuickActionResult[] describeQuickActions(String[] quickActions) {
-            permissionPartnerSoapSforceCom.DescribeQuickActions_element request_x = new permissionPartnerSoapSforceCom.DescribeQuickActions_element();
+        public PermissionPartnerSoapSforceCom.DescribeQuickActionResult[] describeQuickActions(String[] quickActions) {
+            PermissionPartnerSoapSforceCom.DescribeQuickActions_element request_x = new PermissionPartnerSoapSforceCom.DescribeQuickActions_element();
             request_x.quickActions = quickActions;
-            permissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4192,16 +4192,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeQuickActions',
                     PARTNER_SOAP_URN,
                     'describeQuickActionsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeQuickActionsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.PerformQuickActionResult[] performQuickActions(permissionPartnerSoapSforceCom.PerformQuickActionRequest[] quickActions) {
-            permissionPartnerSoapSforceCom.PerformQuickActions_element request_x = new permissionPartnerSoapSforceCom.PerformQuickActions_element();
+        public PermissionPartnerSoapSforceCom.PerformQuickActionResult[] performQuickActions(PermissionPartnerSoapSforceCom.PerformQuickActionRequest[] quickActions) {
+            PermissionPartnerSoapSforceCom.PerformQuickActions_element request_x = new PermissionPartnerSoapSforceCom.PerformQuickActions_element();
             request_x.quickActions = quickActions;
-            permissionPartnerSoapSforceCom.PerformQuickActionsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.PerformQuickActionsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.PerformQuickActionsResponse_element>();
+            PermissionPartnerSoapSforceCom.PerformQuickActionsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.PerformQuickActionsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.PerformQuickActionsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4213,16 +4213,16 @@ public class PermissionPartnerSoapSforceCom {
                     'performQuickActions',
                     PARTNER_SOAP_URN,
                     'performQuickActionsResponse',
-                    'permissionPartnerSoapSforceCom.PerformQuickActionsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.PerformQuickActionsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeSObjectResult[] describeSObjects(String[] sObjectType) {
-            permissionPartnerSoapSforceCom.DescribeSObjects_element request_x = new permissionPartnerSoapSforceCom.DescribeSObjects_element();
+        public PermissionPartnerSoapSforceCom.DescribeSObjectResult[] describeSObjects(String[] sObjectType) {
+            PermissionPartnerSoapSforceCom.DescribeSObjects_element request_x = new PermissionPartnerSoapSforceCom.DescribeSObjects_element();
             request_x.sObjectType = sObjectType;
-            permissionPartnerSoapSforceCom.DescribeSObjectsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSObjectsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSObjectsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeSObjectsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSObjectsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSObjectsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4234,15 +4234,15 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSObjects',
                     PARTNER_SOAP_URN,
                     'describeSObjectsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSObjectsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSObjectsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.KnowledgeSettings describeKnowledgeSettings() {
-            permissionPartnerSoapSforceCom.DescribeKnowledgeSettings_element request_x = new permissionPartnerSoapSforceCom.DescribeKnowledgeSettings_element();
-            permissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element>();
+        public PermissionPartnerSoapSforceCom.KnowledgeSettings describeKnowledgeSettings() {
+            PermissionPartnerSoapSforceCom.DescribeKnowledgeSettings_element request_x = new PermissionPartnerSoapSforceCom.DescribeKnowledgeSettings_element();
+            PermissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4254,16 +4254,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeKnowledgeSettings',
                     PARTNER_SOAP_URN,
                     'describeKnowledgeSettingsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeKnowledgeSettingsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.UndeleteResult[] undelete_x(String[] ids) {
-            permissionPartnerSoapSforceCom.Undelete_element request_x = new permissionPartnerSoapSforceCom.Undelete_element();
+        public PermissionPartnerSoapSforceCom.UndeleteResult[] undelete_x(String[] ids) {
+            PermissionPartnerSoapSforceCom.Undelete_element request_x = new PermissionPartnerSoapSforceCom.Undelete_element();
             request_x.ids = ids;
-            permissionPartnerSoapSforceCom.UndeleteResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.UndeleteResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.UndeleteResponse_element>();
+            PermissionPartnerSoapSforceCom.UndeleteResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.UndeleteResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.UndeleteResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4275,18 +4275,18 @@ public class PermissionPartnerSoapSforceCom {
                     'undelete',
                     PARTNER_SOAP_URN,
                     'undeleteResponse',
-                    'permissionPartnerSoapSforceCom.UndeleteResponse_element'}
+                    'PermissionPartnerSoapSforceCom.UndeleteResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public permissionSobjectPartnerSoapSforceCom.sObject_x[] retrieve_x(String fieldList,String sObjectType,String[] ids) {
-            permissionPartnerSoapSforceCom.Retrieve_element request_x = new permissionPartnerSoapSforceCom.Retrieve_element();
+            PermissionPartnerSoapSforceCom.Retrieve_element request_x = new PermissionPartnerSoapSforceCom.Retrieve_element();
             request_x.fieldList = fieldList;
             request_x.sObjectType = sObjectType;
             request_x.ids = ids;
-            permissionPartnerSoapSforceCom.RetrieveResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.RetrieveResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.RetrieveResponse_element>();
+            PermissionPartnerSoapSforceCom.RetrieveResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.RetrieveResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.RetrieveResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4298,16 +4298,16 @@ public class PermissionPartnerSoapSforceCom {
                     'retrieve',
                     PARTNER_SOAP_URN,
                     'retrieveResponse',
-                    'permissionPartnerSoapSforceCom.RetrieveResponse_element'}
+                    'PermissionPartnerSoapSforceCom.RetrieveResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeThemeResult describeTheme(String[] sobjectType) {
-            permissionPartnerSoapSforceCom.DescribeTheme_element request_x = new permissionPartnerSoapSforceCom.DescribeTheme_element();
+        public PermissionPartnerSoapSforceCom.DescribeThemeResult describeTheme(String[] sobjectType) {
+            PermissionPartnerSoapSforceCom.DescribeTheme_element request_x = new PermissionPartnerSoapSforceCom.DescribeTheme_element();
             request_x.sobjectType = sobjectType;
-            permissionPartnerSoapSforceCom.DescribeThemeResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeThemeResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeThemeResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeThemeResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeThemeResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeThemeResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4319,16 +4319,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeTheme',
                     PARTNER_SOAP_URN,
                     'describeThemeResponse',
-                    'permissionPartnerSoapSforceCom.DescribeThemeResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeThemeResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DeleteByExampleResult[] deleteByExample(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
-            permissionPartnerSoapSforceCom.DeleteByExample_element request_x = new permissionPartnerSoapSforceCom.DeleteByExample_element();
+        public PermissionPartnerSoapSforceCom.DeleteByExampleResult[] deleteByExample(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
+            PermissionPartnerSoapSforceCom.DeleteByExample_element request_x = new PermissionPartnerSoapSforceCom.DeleteByExample_element();
             request_x.sObjects = sObjects;
-            permissionPartnerSoapSforceCom.DeleteByExampleResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DeleteByExampleResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DeleteByExampleResponse_element>();
+            PermissionPartnerSoapSforceCom.DeleteByExampleResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DeleteByExampleResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DeleteByExampleResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4340,18 +4340,18 @@ public class PermissionPartnerSoapSforceCom {
                     'deleteByExample',
                     PARTNER_SOAP_URN,
                     'deleteByExampleResponse',
-                    'permissionPartnerSoapSforceCom.DeleteByExampleResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DeleteByExampleResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeNounResult[] describeNouns(String[] nouns,Boolean onlyRenamed,Boolean includeFields) {
-            permissionPartnerSoapSforceCom.DescribeNouns_element request_x = new permissionPartnerSoapSforceCom.DescribeNouns_element();
+        public PermissionPartnerSoapSforceCom.DescribeNounResult[] describeNouns(String[] nouns,Boolean onlyRenamed,Boolean includeFields) {
+            PermissionPartnerSoapSforceCom.DescribeNouns_element request_x = new PermissionPartnerSoapSforceCom.DescribeNouns_element();
             request_x.nouns = nouns;
             request_x.onlyRenamed = onlyRenamed;
             request_x.includeFields = includeFields;
-            permissionPartnerSoapSforceCom.DescribeNounsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeNounsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeNounsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeNounsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeNounsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeNounsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4363,16 +4363,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeNouns',
                     PARTNER_SOAP_URN,
                     'describeNounsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeNounsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeNounsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.FindDuplicatesResult[] findDuplicatesByIds(String[] ids) {
-            permissionPartnerSoapSforceCom.FindDuplicatesByIds_element request_x = new permissionPartnerSoapSforceCom.FindDuplicatesByIds_element();
+        public PermissionPartnerSoapSforceCom.FindDuplicatesResult[] findDuplicatesByIds(String[] ids) {
+            PermissionPartnerSoapSforceCom.FindDuplicatesByIds_element request_x = new PermissionPartnerSoapSforceCom.FindDuplicatesByIds_element();
             request_x.ids = ids;
-            permissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element>();
+            PermissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4384,16 +4384,16 @@ public class PermissionPartnerSoapSforceCom {
                     'findDuplicatesByIds',
                     PARTNER_SOAP_URN,
                     'findDuplicatesByIdsResponse',
-                    'permissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.FindDuplicatesByIdsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.ExecuteListViewResult executeListView(permissionPartnerSoapSforceCom.ExecuteListViewRequest request) {
-            permissionPartnerSoapSforceCom.ExecuteListView_element request_x = new permissionPartnerSoapSforceCom.ExecuteListView_element();
+        public PermissionPartnerSoapSforceCom.ExecuteListViewResult executeListView(PermissionPartnerSoapSforceCom.ExecuteListViewRequest request) {
+            PermissionPartnerSoapSforceCom.ExecuteListView_element request_x = new PermissionPartnerSoapSforceCom.ExecuteListView_element();
             request_x.request = request;
-            permissionPartnerSoapSforceCom.ExecuteListViewResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.ExecuteListViewResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.ExecuteListViewResponse_element>();
+            PermissionPartnerSoapSforceCom.ExecuteListViewResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.ExecuteListViewResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.ExecuteListViewResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4405,16 +4405,16 @@ public class PermissionPartnerSoapSforceCom {
                     'executeListView',
                     PARTNER_SOAP_URN,
                     'executeListViewResponse',
-                    'permissionPartnerSoapSforceCom.ExecuteListViewResponse_element'}
+                    'PermissionPartnerSoapSforceCom.ExecuteListViewResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult renderStoredEmailTemplate(permissionPartnerSoapSforceCom.RenderStoredEmailTemplateRequest request) {
-            permissionPartnerSoapSforceCom.RenderStoredEmailTemplate_element request_x = new permissionPartnerSoapSforceCom.RenderStoredEmailTemplate_element();
+        public PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult renderStoredEmailTemplate(PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateRequest request) {
+            PermissionPartnerSoapSforceCom.RenderStoredEmailTemplate_element request_x = new PermissionPartnerSoapSforceCom.RenderStoredEmailTemplate_element();
             request_x.request = request;
-            permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element>();
+            PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4426,17 +4426,17 @@ public class PermissionPartnerSoapSforceCom {
                     'renderStoredEmailTemplate',
                     PARTNER_SOAP_URN,
                     'renderStoredEmailTemplateResponse',
-                    'permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element'}
+                    'PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeVisualForceResult describeVisualForce(Boolean includeAllDetails,String namespacePrefix) {
-            permissionPartnerSoapSforceCom.DescribeVisualForce_element request_x = new permissionPartnerSoapSforceCom.DescribeVisualForce_element();
+        public PermissionPartnerSoapSforceCom.DescribeVisualForceResult describeVisualForce(Boolean includeAllDetails,String namespacePrefix) {
+            PermissionPartnerSoapSforceCom.DescribeVisualForce_element request_x = new PermissionPartnerSoapSforceCom.DescribeVisualForce_element();
             request_x.includeAllDetails = includeAllDetails;
             request_x.namespacePrefix = namespacePrefix;
-            permissionPartnerSoapSforceCom.DescribeVisualForceResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeVisualForceResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeVisualForceResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeVisualForceResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeVisualForceResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeVisualForceResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4448,16 +4448,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeVisualForce',
                     PARTNER_SOAP_URN,
                     'describeVisualForceResponse',
-                    'permissionPartnerSoapSforceCom.DescribeVisualForceResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeVisualForceResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeSObjectResult describeSObject(String sObjectType) {
-            permissionPartnerSoapSforceCom.DescribeSObject_element request_x = new permissionPartnerSoapSforceCom.DescribeSObject_element();
+        public PermissionPartnerSoapSforceCom.DescribeSObjectResult describeSObject(String sObjectType) {
+            PermissionPartnerSoapSforceCom.DescribeSObject_element request_x = new PermissionPartnerSoapSforceCom.DescribeSObject_element();
             request_x.sObjectType = sObjectType;
-            permissionPartnerSoapSforceCom.DescribeSObjectResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSObjectResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSObjectResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeSObjectResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSObjectResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSObjectResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4469,15 +4469,15 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSObject',
                     PARTNER_SOAP_URN,
                     'describeSObjectResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSObjectResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSObjectResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.GetServerTimestampResult getServerTimestamp() {
-            permissionPartnerSoapSforceCom.GetServerTimestamp_element request_x = new permissionPartnerSoapSforceCom.getServerTimestamp_element();
-            permissionPartnerSoapSforceCom.GetServerTimestampResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.GetServerTimestampResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.GetServerTimestampResponse_element>();
+        public PermissionPartnerSoapSforceCom.GetServerTimestampResult getServerTimestamp() {
+            PermissionPartnerSoapSforceCom.GetServerTimestamp_element request_x = new PermissionPartnerSoapSforceCom.getServerTimestamp_element();
+            PermissionPartnerSoapSforceCom.GetServerTimestampResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.GetServerTimestampResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.GetServerTimestampResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4489,17 +4489,17 @@ public class PermissionPartnerSoapSforceCom {
                     'getServerTimestamp',
                     PARTNER_SOAP_URN,
                     'getServerTimestampResponse',
-                    'permissionPartnerSoapSforceCom.GetServerTimestampResponse_element'}
+                    'PermissionPartnerSoapSforceCom.GetServerTimestampResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.QuickActionTemplateResult[] retrieveQuickActionTemplates(String[] quickActionNames,String contextId) {
-            permissionPartnerSoapSforceCom.RetrieveQuickActionTemplates_element request_x = new permissionPartnerSoapSforceCom.RetrieveQuickActionTemplates_element();
+        public PermissionPartnerSoapSforceCom.QuickActionTemplateResult[] retrieveQuickActionTemplates(String[] quickActionNames,String contextId) {
+            PermissionPartnerSoapSforceCom.RetrieveQuickActionTemplates_element request_x = new PermissionPartnerSoapSforceCom.RetrieveQuickActionTemplates_element();
             request_x.quickActionNames = quickActionNames;
             request_x.contextId = contextId;
-            permissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element>();
+            PermissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4511,17 +4511,17 @@ public class PermissionPartnerSoapSforceCom {
                     'retrieveQuickActionTemplates',
                     PARTNER_SOAP_URN,
                     'retrieveQuickActionTemplatesResponse',
-                    'permissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element'}
+                    'PermissionPartnerSoapSforceCom.RetrieveQuickActionTemplatesResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.SetPasswordResult setPassword(String userId,String password) {
-            permissionPartnerSoapSforceCom.SetPassword_element request_x = new permissionPartnerSoapSforceCom.SetPassword_element();
+        public PermissionPartnerSoapSforceCom.SetPasswordResult setPassword(String userId,String password) {
+            PermissionPartnerSoapSforceCom.SetPassword_element request_x = new PermissionPartnerSoapSforceCom.SetPassword_element();
             request_x.userId = userId;
             request_x.password = password;
-            permissionPartnerSoapSforceCom.SetPasswordResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.SetPasswordResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.SetPasswordResponse_element>();
+            PermissionPartnerSoapSforceCom.SetPasswordResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.SetPasswordResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.SetPasswordResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4533,16 +4533,16 @@ public class PermissionPartnerSoapSforceCom {
                     'setPassword',
                     PARTNER_SOAP_URN,
                     'setPasswordResponse',
-                    'permissionPartnerSoapSforceCom.SetPasswordResponse_element'}
+                    'PermissionPartnerSoapSforceCom.SetPasswordResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.ResetPasswordResult resetPassword(String userId) {
-            permissionPartnerSoapSforceCom.ResetPassword_element request_x = new permissionPartnerSoapSforceCom.ResetPassword_element();
+        public PermissionPartnerSoapSforceCom.ResetPasswordResult resetPassword(String userId) {
+            PermissionPartnerSoapSforceCom.ResetPassword_element request_x = new PermissionPartnerSoapSforceCom.ResetPassword_element();
             request_x.userId = userId;
-            permissionPartnerSoapSforceCom.ResetPasswordResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.ResetPasswordResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.ResetPasswordResponse_element>();
+            PermissionPartnerSoapSforceCom.ResetPasswordResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.ResetPasswordResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.ResetPasswordResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4554,15 +4554,15 @@ public class PermissionPartnerSoapSforceCom {
                     'resetPassword',
                     PARTNER_SOAP_URN,
                     'resetPasswordResponse',
-                    'permissionPartnerSoapSforceCom.ResetPasswordResponse_element'}
+                    'PermissionPartnerSoapSforceCom.ResetPasswordResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult describeSoftphoneLayout() {
-            permissionPartnerSoapSforceCom.DescribeSoftphoneLayout_element request_x = new permissionPartnerSoapSforceCom.describeSoftphoneLayout_element();
-            permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element>();
+        public PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult describeSoftphoneLayout() {
+            PermissionPartnerSoapSforceCom.DescribeSoftphoneLayout_element request_x = new PermissionPartnerSoapSforceCom.describeSoftphoneLayout_element();
+            PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4574,16 +4574,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSoftphoneLayout',
                     PARTNER_SOAP_URN,
                     'describeSoftphoneLayoutResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.SaveResult[] create(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
-            permissionPartnerSoapSforceCom.Create_element request_x = new permissionPartnerSoapSforceCom.Create_element();
+        public PermissionPartnerSoapSforceCom.SaveResult[] create(permissionSobjectPartnerSoapSforceCom.sObject_x[] sObjects) {
+            PermissionPartnerSoapSforceCom.Create_element request_x = new PermissionPartnerSoapSforceCom.Create_element();
             request_x.sObjects = sObjects;
-            permissionPartnerSoapSforceCom.CreateResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.CreateResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.CreateResponse_element>();
+            PermissionPartnerSoapSforceCom.CreateResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.CreateResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.CreateResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4595,16 +4595,16 @@ public class PermissionPartnerSoapSforceCom {
                     'create',
                     PARTNER_SOAP_URN,
                     'createResponse',
-                    'permissionPartnerSoapSforceCom.CreateResponse_element'}
+                    'PermissionPartnerSoapSforceCom.CreateResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeSearchLayoutResult[] describeSearchLayouts(String[] sObjectType) {
-            permissionPartnerSoapSforceCom.DescribeSearchLayouts_element request_x = new permissionPartnerSoapSforceCom.DescribeSearchLayouts_element();
+        public PermissionPartnerSoapSforceCom.DescribeSearchLayoutResult[] describeSearchLayouts(String[] sObjectType) {
+            PermissionPartnerSoapSforceCom.DescribeSearchLayouts_element request_x = new PermissionPartnerSoapSforceCom.DescribeSearchLayouts_element();
             request_x.sObjectType = sObjectType;
-            permissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4616,16 +4616,16 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSearchLayouts',
                     PARTNER_SOAP_URN,
                     'describeSearchLayoutsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSearchLayoutsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.MergeResult[] merge_x(permissionPartnerSoapSforceCom.MergeRequest[] request) {
-            permissionPartnerSoapSforceCom.Merge_element request_x = new permissionPartnerSoapSforceCom.Merge_element();
+        public PermissionPartnerSoapSforceCom.MergeResult[] merge_x(PermissionPartnerSoapSforceCom.MergeRequest[] request) {
+            PermissionPartnerSoapSforceCom.Merge_element request_x = new PermissionPartnerSoapSforceCom.Merge_element();
             request_x.request = request;
-            permissionPartnerSoapSforceCom.MergeResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.MergeResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.MergeResponse_element>();
+            PermissionPartnerSoapSforceCom.MergeResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.MergeResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.MergeResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4637,16 +4637,16 @@ public class PermissionPartnerSoapSforceCom {
                     'merge',
                     PARTNER_SOAP_URN,
                     'mergeResponse',
-                    'permissionPartnerSoapSforceCom.MergeResponse_element'}
+                    'PermissionPartnerSoapSforceCom.MergeResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.InvalidateSessionsResult[] invalidateSessions(String[] sessionIds) {
-            permissionPartnerSoapSforceCom.InvalidateSessions_element request_x = new permissionPartnerSoapSforceCom.InvalidateSessions_element();
+        public PermissionPartnerSoapSforceCom.InvalidateSessionsResult[] invalidateSessions(String[] sessionIds) {
+            PermissionPartnerSoapSforceCom.InvalidateSessions_element request_x = new PermissionPartnerSoapSforceCom.InvalidateSessions_element();
             request_x.sessionIds = sessionIds;
-            permissionPartnerSoapSforceCom.InvalidateSessionsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.InvalidateSessionsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.InvalidateSessionsResponse_element>();
+            PermissionPartnerSoapSforceCom.InvalidateSessionsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.InvalidateSessionsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.InvalidateSessionsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4658,15 +4658,15 @@ public class PermissionPartnerSoapSforceCom {
                     'invalidateSessions',
                     PARTNER_SOAP_URN,
                     'invalidateSessionsResponse',
-                    'permissionPartnerSoapSforceCom.InvalidateSessionsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.InvalidateSessionsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
-        public permissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult[] describeDataCategoryMappings() {
-            permissionPartnerSoapSforceCom.DescribeDataCategoryMappings_element request_x = new permissionPartnerSoapSforceCom.DescribeDataCategoryMappings_element();
-            permissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element>();
+        public PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult[] describeDataCategoryMappings() {
+            PermissionPartnerSoapSforceCom.DescribeDataCategoryMappings_element request_x = new PermissionPartnerSoapSforceCom.DescribeDataCategoryMappings_element();
+            PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4678,15 +4678,15 @@ public class PermissionPartnerSoapSforceCom {
                     'describeDataCategoryMappings',
                     PARTNER_SOAP_URN,
                     'describeDataCategoryMappingsResponse',
-                    'permissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingsResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;
         }
         public void logout() {
-            permissionPartnerSoapSforceCom.Logout_element request_x = new permissionPartnerSoapSforceCom.Logout_element();
-            permissionPartnerSoapSforceCom.LogoutResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.LogoutResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.LogoutResponse_element>();
+            PermissionPartnerSoapSforceCom.Logout_element request_x = new PermissionPartnerSoapSforceCom.Logout_element();
+            PermissionPartnerSoapSforceCom.LogoutResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.LogoutResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.LogoutResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4698,15 +4698,15 @@ public class PermissionPartnerSoapSforceCom {
                     'logout',
                     PARTNER_SOAP_URN,
                     'logoutResponse',
-                    'permissionPartnerSoapSforceCom.LogoutResponse_element'}
+                    'PermissionPartnerSoapSforceCom.LogoutResponse_element'}
             );
             response_x = response_map_x.get('response_x');
         }
-        public permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult[] describeSearchScopeOrder(Boolean includeRealTimeEntities) {
-            permissionPartnerSoapSforceCom.DescribeSearchScopeOrder_element request_x = new permissionPartnerSoapSforceCom.DescribeSearchScopeOrder_element();
+        public PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult[] describeSearchScopeOrder(Boolean includeRealTimeEntities) {
+            PermissionPartnerSoapSforceCom.DescribeSearchScopeOrder_element request_x = new PermissionPartnerSoapSforceCom.DescribeSearchScopeOrder_element();
             request_x.includeRealTimeEntities = includeRealTimeEntities;
-            permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element response_x;
-            Map<String, permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element> response_map_x = new Map<String, permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element>();
+            PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element response_x;
+            Map<String, PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element> response_map_x = new Map<String, PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
                 this,
@@ -4718,7 +4718,7 @@ public class PermissionPartnerSoapSforceCom {
                     'describeSearchScopeOrder',
                     PARTNER_SOAP_URN,
                     'describeSearchScopeOrderResponse',
-                    'permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element'}
+                    'PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResponse_element'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.result;

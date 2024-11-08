@@ -12,15 +12,15 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
         string responseName,
         string responseType
     ){
-        if(indicatorVar == 'LoginResult' && request instanceof permissionPartnerSoapSforceCom.login_element)
+        if(indicatorVar == 'LoginResult' && request instanceof PermissionPartnerSoapSforceCom.login_element)
         {
             // Create a successful login response
-            permissionPartnerSoapSforceCom.loginResponse_element loginResponse = 
-                new permissionPartnerSoapSforceCom.loginResponse_element();
+            PermissionPartnerSoapSforceCom.loginResponse_element loginResponse = 
+                new PermissionPartnerSoapSforceCom.loginResponse_element();
             
             // Create the login result
-            permissionPartnerSoapSforceCom.LoginResult loginResult = 
-                new permissionPartnerSoapSforceCom.LoginResult();
+            PermissionPartnerSoapSforceCom.LoginResult loginResult = 
+                new PermissionPartnerSoapSforceCom.LoginResult();
             
             // Set the required fields
             loginResult.sessionId = 'dummy-session-id-' + System.currentTimeMillis();
@@ -40,176 +40,176 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
         switch on indicatorVar{
             when 'DescribeTab' 
             {
-                permissionPartnerSoapSforceCom.describeAllTabsResponse_element response_x  = new permissionPartnerSoapSforceCom.describeAllTabsResponse_element();
-                List<permissionPartnerSoapSforceCom.DescribeTab> testDescribeTab = new list<permissionPartnerSoapSforceCom.DescribeTab>();
+                PermissionPartnerSoapSforceCom.describeAllTabsResponse_element response_x  = new PermissionPartnerSoapSforceCom.describeAllTabsResponse_element();
+                List<PermissionPartnerSoapSforceCom.DescribeTab> testDescribeTab = new list<PermissionPartnerSoapSforceCom.DescribeTab>();
                 response_x.result = testDescribeTab;
                 response.put('response_x', response_x);
             }
             when 'GroupStructureRes' 
             {
-                permissionPartnerSoapSforceCom.describeDataCategoryGroupStructuresResponse_element response_x = new permissionPartnerSoapSforceCom.describeDataCategoryGroupStructuresResponse_element();
-                List<permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult> testGroupStructureRes = new List<permissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult>();
+                PermissionPartnerSoapSforceCom.describeDataCategoryGroupStructuresResponse_element response_x = new PermissionPartnerSoapSforceCom.describeDataCategoryGroupStructuresResponse_element();
+                List<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult> testGroupStructureRes = new List<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupStructureResult>();
                 response_x.result= testGroupStructureRes;
                 response.put('response_x', response_x);
             }
             when 'GroupResponse' 
             {
-                permissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element response_x = new permissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult> testCategoryGroupResult = new list<permissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult>();
+                PermissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeDataCategoryGroupsResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult> testCategoryGroupResult = new list<PermissionPartnerSoapSforceCom.DescribeDataCategoryGroupResult>();
                 response_x.result = testCategoryGroupResult;
                 response.put('response_x', response_x);
             }
             when 'FindDuplicates' 
             {
-                permissionPartnerSoapSforceCom.findDuplicatesResponse_element response_x = new permissionPartnerSoapSforceCom.findDuplicatesResponse_element();
-                list<permissionPartnerSoapSforceCom.FindDuplicatesResult> testFindDuplicates = new list<permissionPartnerSoapSforceCom.FindDuplicatesResult>();
+                PermissionPartnerSoapSforceCom.findDuplicatesResponse_element response_x = new PermissionPartnerSoapSforceCom.findDuplicatesResponse_element();
+                list<PermissionPartnerSoapSforceCom.FindDuplicatesResult> testFindDuplicates = new list<PermissionPartnerSoapSforceCom.FindDuplicatesResult>();
                 response_x.result = testFindDuplicates;
                 response.put('response_x', response_x);
             }
             when 'Process' 
             {
-                permissionPartnerSoapSforceCom.processResponse_element response_x = new permissionPartnerSoapSforceCom.processResponse_element();
-                list<permissionPartnerSoapSforceCom.ProcessResult> testProcessResult = new list<permissionPartnerSoapSforceCom.ProcessResult>();
+                PermissionPartnerSoapSforceCom.processResponse_element response_x = new PermissionPartnerSoapSforceCom.processResponse_element();
+                list<PermissionPartnerSoapSforceCom.ProcessResult> testProcessResult = new list<PermissionPartnerSoapSforceCom.ProcessResult>();
                 response_x.result = testProcessResult;
                 response.put('response_x', response_x);
             }
             when 'DescribeGlobal' 
             {
-                permissionPartnerSoapSforceCom.describeGlobalResponse_element response_x = new permissionPartnerSoapSforceCom.describeGlobalResponse_element();
-                permissionPartnerSoapSforceCom.DescribeGlobalResult  testDescribeGlobal = new permissionPartnerSoapSforceCom.DescribeGlobalResult();
+                PermissionPartnerSoapSforceCom.describeGlobalResponse_element response_x = new PermissionPartnerSoapSforceCom.describeGlobalResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeGlobalResult  testDescribeGlobal = new PermissionPartnerSoapSforceCom.DescribeGlobalResult();
                 response_x.result = testDescribeGlobal;
                 response.put('response_x', response_x);
             }
             when 'UserInfo'
             {
-                permissionPartnerSoapSforceCom.getUserInfoResponse_element response_x = new permissionPartnerSoapSforceCom.getUserInfoResponse_element();
-                permissionPartnerSoapSforceCom.GetUserInfoResult  testUserInfo = new permissionPartnerSoapSforceCom.GetUserInfoResult();
+                PermissionPartnerSoapSforceCom.getUserInfoResponse_element response_x = new PermissionPartnerSoapSforceCom.getUserInfoResponse_element();
+                PermissionPartnerSoapSforceCom.GetUserInfoResult  testUserInfo = new PermissionPartnerSoapSforceCom.GetUserInfoResult();
                 response_x.result = testUserInfo;
                 response.put('response_x', response_x);
             }
             when 'GlobalTheme'
             {
-                permissionPartnerSoapSforceCom.describeGlobalThemeResponse_element response_x = new permissionPartnerSoapSforceCom.describeGlobalThemeResponse_element();
-                permissionPartnerSoapSforceCom.DescribeGlobalTheme  testGlobalTheme = new permissionPartnerSoapSforceCom.DescribeGlobalTheme();
+                PermissionPartnerSoapSforceCom.describeGlobalThemeResponse_element response_x = new PermissionPartnerSoapSforceCom.describeGlobalThemeResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeGlobalTheme  testGlobalTheme = new PermissionPartnerSoapSforceCom.DescribeGlobalTheme();
                 response_x.result = testGlobalTheme;
                 response.put('response_x', response_x);
             }
             when 'ApprovalLayout'
             {
-                permissionPartnerSoapSforceCom.describeApprovalLayoutResponse_element response_x = new permissionPartnerSoapSforceCom.describeApprovalLayoutResponse_element();
-                permissionPartnerSoapSforceCom.DescribeApprovalLayoutResult  testApprovalLayout = new permissionPartnerSoapSforceCom.DescribeApprovalLayoutResult();
+                PermissionPartnerSoapSforceCom.describeApprovalLayoutResponse_element response_x = new PermissionPartnerSoapSforceCom.describeApprovalLayoutResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResult  testApprovalLayout = new PermissionPartnerSoapSforceCom.DescribeApprovalLayoutResult();
                 response_x.result = testApprovalLayout;
                 response.put('response_x', response_x);
             }
             when 'CompactLayout'
             {
-                permissionPartnerSoapSforceCom.describePrimaryCompactLayoutsResponse_element response_x = new permissionPartnerSoapSforceCom.describePrimaryCompactLayoutsResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeCompactLayout> testCompactLayout = new list<permissionPartnerSoapSforceCom.DescribeCompactLayout>();
+                PermissionPartnerSoapSforceCom.describePrimaryCompactLayoutsResponse_element response_x = new PermissionPartnerSoapSforceCom.describePrimaryCompactLayoutsResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeCompactLayout> testCompactLayout = new list<PermissionPartnerSoapSforceCom.DescribeCompactLayout>();
                 response_x.result = testCompactLayout;
                 response.put('response_x', response_x);
             }
             when 'QueryResult'
             {
-                permissionPartnerSoapSforceCom.queryMoreResponse_element response_x = new permissionPartnerSoapSforceCom.queryMoreResponse_element();
-                permissionPartnerSoapSforceCom.QueryResult  testQueryResult = new permissionPartnerSoapSforceCom.QueryResult();
+                PermissionPartnerSoapSforceCom.queryMoreResponse_element response_x = new PermissionPartnerSoapSforceCom.queryMoreResponse_element();
+                PermissionPartnerSoapSforceCom.QueryResult  testQueryResult = new PermissionPartnerSoapSforceCom.QueryResult();
                 response_x.result = testQueryResult;
                 response.put('response_x', response_x);
             }
             when 'EntityResult'
             {
-                permissionPartnerSoapSforceCom.describeSearchableEntitiesResponse_element response_x = new permissionPartnerSoapSforceCom.describeSearchableEntitiesResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeSearchableEntityResult> testEntityResult = new list<permissionPartnerSoapSforceCom.DescribeSearchableEntityResult>();
+                PermissionPartnerSoapSforceCom.describeSearchableEntitiesResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSearchableEntitiesResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeSearchableEntityResult> testEntityResult = new list<PermissionPartnerSoapSforceCom.DescribeSearchableEntityResult>();
                 response_x.result = testEntityResult;
                 response.put('response_x', response_x);
             }
             when 'LayoutResult'
             {
-                permissionPartnerSoapSforceCom.describeLayoutResponse_element response_x = new permissionPartnerSoapSforceCom.describeLayoutResponse_element();
-                permissionPartnerSoapSforceCom.DescribeLayoutResult  testLayoutResult = new permissionPartnerSoapSforceCom.DescribeLayoutResult();
+                PermissionPartnerSoapSforceCom.describeLayoutResponse_element response_x = new PermissionPartnerSoapSforceCom.describeLayoutResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeLayoutResult  testLayoutResult = new PermissionPartnerSoapSforceCom.DescribeLayoutResult();
                 response_x.result = testLayoutResult;
                 response.put('response_x', response_x);
             }
             when 'AppMenu'
             {
-                permissionPartnerSoapSforceCom.describeAppMenuResponse_element response_x = new permissionPartnerSoapSforceCom.describeAppMenuResponse_element();
-                permissionPartnerSoapSforceCom.DescribeAppMenuResult  testAppMenu = new permissionPartnerSoapSforceCom.DescribeAppMenuResult();
+                PermissionPartnerSoapSforceCom.describeAppMenuResponse_element response_x = new PermissionPartnerSoapSforceCom.describeAppMenuResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeAppMenuResult  testAppMenu = new PermissionPartnerSoapSforceCom.DescribeAppMenuResult();
                 response_x.result = testAppMenu;
                 response.put('response_x', response_x);
             }
             when 'LeadConvert'
             {
-                permissionPartnerSoapSforceCom.convertLeadResponse_element response_x = new permissionPartnerSoapSforceCom.convertLeadResponse_element();
-                list<permissionPartnerSoapSforceCom.LeadConvertResult>  testLeadConvert = new list<permissionPartnerSoapSforceCom.LeadConvertResult>();
+                PermissionPartnerSoapSforceCom.convertLeadResponse_element response_x = new PermissionPartnerSoapSforceCom.convertLeadResponse_element();
+                list<PermissionPartnerSoapSforceCom.LeadConvertResult>  testLeadConvert = new list<PermissionPartnerSoapSforceCom.LeadConvertResult>();
                 response_x.result = testLeadConvert;
                 response.put('response_x', response_x);
             }
             when 'SobjectListView'
             {
-                permissionPartnerSoapSforceCom.describeSObjectListViewsResponse_element response_x = new permissionPartnerSoapSforceCom.describeSObjectListViewsResponse_element();
-                permissionPartnerSoapSforceCom.DescribeSoqlListViewResult  testSobjectListView = new permissionPartnerSoapSforceCom.DescribeSoqlListViewResult();
+                PermissionPartnerSoapSforceCom.describeSObjectListViewsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSObjectListViewsResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult  testSobjectListView = new PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult();
                 response_x.result = testSobjectListView;
                 response.put('response_x', response_x);
             }
             when 'DeleteResult'
             {
-                permissionPartnerSoapSforceCom.deleteResponse_element response_x = new permissionPartnerSoapSforceCom.deleteResponse_element();
-                list<permissionPartnerSoapSforceCom.DeleteResult>  testDeleteResult = new list<permissionPartnerSoapSforceCom.DeleteResult>();
+                PermissionPartnerSoapSforceCom.deleteResponse_element response_x = new PermissionPartnerSoapSforceCom.deleteResponse_element();
+                list<PermissionPartnerSoapSforceCom.DeleteResult>  testDeleteResult = new list<PermissionPartnerSoapSforceCom.DeleteResult>();
                 response_x.result = testDeleteResult;
                 response.put('response_x', response_x);
             }
             when 'QueryAllResult'
             {
-                permissionPartnerSoapSforceCom.queryAllResponse_element response_x = new permissionPartnerSoapSforceCom.queryAllResponse_element();
-                permissionPartnerSoapSforceCom.QueryResult  testQueryResult = new permissionPartnerSoapSforceCom.QueryResult();
+                PermissionPartnerSoapSforceCom.queryAllResponse_element response_x = new PermissionPartnerSoapSforceCom.queryAllResponse_element();
+                PermissionPartnerSoapSforceCom.QueryResult  testQueryResult = new PermissionPartnerSoapSforceCom.QueryResult();
                 response_x.result = testQueryResult;
                 response.put('response_x', response_x);
             }
             when 'SaveResult'
             {
-                permissionPartnerSoapSforceCom.updateResponse_element response_x = new permissionPartnerSoapSforceCom.updateResponse_element();
-                list<permissionPartnerSoapSforceCom.SaveResult>  testSaveResult = new list<permissionPartnerSoapSforceCom.SaveResult>();
+                PermissionPartnerSoapSforceCom.updateResponse_element response_x = new PermissionPartnerSoapSforceCom.updateResponse_element();
+                list<PermissionPartnerSoapSforceCom.SaveResult>  testSaveResult = new list<PermissionPartnerSoapSforceCom.SaveResult>();
                 response_x.result = testSaveResult;
                 response.put('response_x', response_x);
             }
             when 'EmptyRecycleBinResult'
             {
-                permissionPartnerSoapSforceCom.emptyRecycleBinResponse_element response_x = new permissionPartnerSoapSforceCom.emptyRecycleBinResponse_element();
-                list<permissionPartnerSoapSforceCom.EmptyRecycleBinResult>  testRecycleResult = new list<permissionPartnerSoapSforceCom.EmptyRecycleBinResult>();
+                PermissionPartnerSoapSforceCom.emptyRecycleBinResponse_element response_x = new PermissionPartnerSoapSforceCom.emptyRecycleBinResponse_element();
+                list<PermissionPartnerSoapSforceCom.EmptyRecycleBinResult>  testRecycleResult = new list<PermissionPartnerSoapSforceCom.EmptyRecycleBinResult>();
                 response_x.result = testRecycleResult;
                 response.put('response_x', response_x);
             }        
             when 'DescribeCompactLayoutsResult'
             {
-                permissionPartnerSoapSforceCom.describeCompactLayoutsResponse_element response_x = new permissionPartnerSoapSforceCom.describeCompactLayoutsResponse_element();
-                permissionPartnerSoapSforceCom.DescribeCompactLayoutsResult  testDescribeCompactLayoutsResult = new permissionPartnerSoapSforceCom.DescribeCompactLayoutsResult();
+                PermissionPartnerSoapSforceCom.describeCompactLayoutsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeCompactLayoutsResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResult  testDescribeCompactLayoutsResult = new PermissionPartnerSoapSforceCom.DescribeCompactLayoutsResult();
                 response_x.result = testDescribeCompactLayoutsResult;
                 response.put('response_x', response_x);
             }
             when 'ChangeOwnPasswordResult'
             {
-                permissionPartnerSoapSforceCom.changeOwnPasswordResponse_element response_x = new permissionPartnerSoapSforceCom.changeOwnPasswordResponse_element();
-                permissionPartnerSoapSforceCom.ChangeOwnPasswordResult  testRecycleResult = new permissionPartnerSoapSforceCom.ChangeOwnPasswordResult();
+                PermissionPartnerSoapSforceCom.changeOwnPasswordResponse_element response_x = new PermissionPartnerSoapSforceCom.changeOwnPasswordResponse_element();
+                PermissionPartnerSoapSforceCom.ChangeOwnPasswordResult  testRecycleResult = new PermissionPartnerSoapSforceCom.ChangeOwnPasswordResult();
                 response_x.result = testRecycleResult;
                 response.put('response_x', response_x);
             }
             when 'SoqlListViews'
             {
-                permissionPartnerSoapSforceCom.describeSoqlListViewsResponse_element response_x = new permissionPartnerSoapSforceCom.describeSoqlListViewsResponse_element();
-                permissionPartnerSoapSforceCom.DescribeSoqlListViewResult  testSoqlListViews = new permissionPartnerSoapSforceCom.DescribeSoqlListViewResult();
+                PermissionPartnerSoapSforceCom.describeSoqlListViewsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSoqlListViewsResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult  testSoqlListViews = new PermissionPartnerSoapSforceCom.DescribeSoqlListViewResult();
                 response_x.result = testSoqlListViews;
                 response.put('response_x', response_x);
             }
             when 'PathAssitantResult'
             {
-                permissionPartnerSoapSforceCom.describePathAssistantsResponse_element response_x = new permissionPartnerSoapSforceCom.describePathAssistantsResponse_element();
-                permissionPartnerSoapSforceCom.DescribePathAssistantsResult  testPathAssitantResult = new permissionPartnerSoapSforceCom.DescribePathAssistantsResult();
+                PermissionPartnerSoapSforceCom.describePathAssistantsResponse_element response_x = new PermissionPartnerSoapSforceCom.describePathAssistantsResponse_element();
+                PermissionPartnerSoapSforceCom.DescribePathAssistantsResult  testPathAssitantResult = new PermissionPartnerSoapSforceCom.DescribePathAssistantsResult();
                 response_x.result = testPathAssitantResult;
                 response.put('response_x', response_x);
             }
             when 'AvailabeQuickAction'
             {
-                permissionPartnerSoapSforceCom.describeAvailableQuickActionsResponse_element response_x = new permissionPartnerSoapSforceCom.describeAvailableQuickActionsResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult>  testAvailabeQuickAction = new list<permissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult>();
+                PermissionPartnerSoapSforceCom.describeAvailableQuickActionsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeAvailableQuickActionsResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult>  testAvailabeQuickAction = new list<PermissionPartnerSoapSforceCom.DescribeAvailableQuickActionResult>();
                 response_x.result = testAvailabeQuickAction;
                 response.put('response_x', response_x);
             }
@@ -222,176 +222,176 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
         switch on indicatorVar{
             when 'GetDeletedResult'
             {
-                permissionPartnerSoapSforceCom.getDeletedResponse_element response_x = new permissionPartnerSoapSforceCom.getDeletedResponse_element();
-                permissionPartnerSoapSforceCom.GetDeletedResult  testGetDeletedResult = new permissionPartnerSoapSforceCom.GetDeletedResult();
+                PermissionPartnerSoapSforceCom.getDeletedResponse_element response_x = new PermissionPartnerSoapSforceCom.getDeletedResponse_element();
+                PermissionPartnerSoapSforceCom.GetDeletedResult  testGetDeletedResult = new PermissionPartnerSoapSforceCom.GetDeletedResult();
                 response_x.result = testGetDeletedResult;
                 response.put('response_x', response_x);
             }
             when 'DescribeTabSetResult'
             {
-                permissionPartnerSoapSforceCom.describeTabsResponse_element response_x = new permissionPartnerSoapSforceCom.describeTabsResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeTabSetResult>  testDescribeTabSetResult = new list<permissionPartnerSoapSforceCom.DescribeTabSetResult>();
+                PermissionPartnerSoapSforceCom.describeTabsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeTabsResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeTabSetResult>  testDescribeTabSetResult = new list<PermissionPartnerSoapSforceCom.DescribeTabSetResult>();
                 response_x.result = testDescribeTabSetResult;
                 response.put('response_x', response_x);
             }
             when 'QuickActionTemplateResult'
             {
-                permissionPartnerSoapSforceCom.retrieveMassQuickActionTemplatesResponse_element response_x = new permissionPartnerSoapSforceCom.retrieveMassQuickActionTemplatesResponse_element();
-                list<permissionPartnerSoapSforceCom.QuickActionTemplateResult>  testQuickActionTemplateResult = new list<permissionPartnerSoapSforceCom.QuickActionTemplateResult>();
+                PermissionPartnerSoapSforceCom.retrieveMassQuickActionTemplatesResponse_element response_x = new PermissionPartnerSoapSforceCom.retrieveMassQuickActionTemplatesResponse_element();
+                list<PermissionPartnerSoapSforceCom.QuickActionTemplateResult>  testQuickActionTemplateResult = new list<PermissionPartnerSoapSforceCom.QuickActionTemplateResult>();
                 response_x.result = testQuickActionTemplateResult;
                 response.put('response_x', response_x);
             }
             when 'SearchResult'
             {
-                permissionPartnerSoapSforceCom.searchResponse_element response_x = new permissionPartnerSoapSforceCom.searchResponse_element();
-                permissionPartnerSoapSforceCom.SearchResult  testSearchResult = new permissionPartnerSoapSforceCom.SearchResult();
+                PermissionPartnerSoapSforceCom.searchResponse_element response_x = new PermissionPartnerSoapSforceCom.searchResponse_element();
+                PermissionPartnerSoapSforceCom.SearchResult  testSearchResult = new PermissionPartnerSoapSforceCom.SearchResult();
                 response_x.result = testSearchResult;
                 response.put('response_x', response_x);
             }
             when 'SendEmail'
             {
-                permissionPartnerSoapSforceCom.sendEmailResponse_element response_x = new permissionPartnerSoapSforceCom.sendEmailResponse_element();
-                list<permissionPartnerSoapSforceCom.SendEmailResult>  testSendEmail = new list<permissionPartnerSoapSforceCom.SendEmailResult>();
+                PermissionPartnerSoapSforceCom.sendEmailResponse_element response_x = new PermissionPartnerSoapSforceCom.sendEmailResponse_element();
+                list<PermissionPartnerSoapSforceCom.SendEmailResult>  testSendEmail = new list<PermissionPartnerSoapSforceCom.SendEmailResult>();
                 response_x.result = testSendEmail;
                 response.put('response_x', response_x);
             }
             when 'GetUpdatedResult'
             {
-                permissionPartnerSoapSforceCom.getUpdatedResponse_element response_x = new permissionPartnerSoapSforceCom.getUpdatedResponse_element();
-                permissionPartnerSoapSforceCom.GetUpdatedResult  testUpdatedResult = new permissionPartnerSoapSforceCom.GetUpdatedResult();
+                PermissionPartnerSoapSforceCom.getUpdatedResponse_element response_x = new PermissionPartnerSoapSforceCom.getUpdatedResponse_element();
+                PermissionPartnerSoapSforceCom.GetUpdatedResult  testUpdatedResult = new PermissionPartnerSoapSforceCom.GetUpdatedResult();
                 response_x.result = testUpdatedResult;
                 response.put('response_x', response_x);
             }
             when 'SendEmailMessage'
             {
-                permissionPartnerSoapSforceCom.sendEmailMessageResponse_element response_x = new permissionPartnerSoapSforceCom.sendEmailMessageResponse_element();
-                list<permissionPartnerSoapSforceCom.SendEmailResult>  testSendEmailMessage = new list<permissionPartnerSoapSforceCom.SendEmailResult>();
+                PermissionPartnerSoapSforceCom.sendEmailMessageResponse_element response_x = new PermissionPartnerSoapSforceCom.sendEmailMessageResponse_element();
+                list<PermissionPartnerSoapSforceCom.SendEmailResult>  testSendEmailMessage = new list<PermissionPartnerSoapSforceCom.SendEmailResult>();
                 response_x.result = testSendEmailMessage;
                 response.put('response_x', response_x);
             }
             when 'QuickActionsForRecordType'
             {
-                permissionPartnerSoapSforceCom.describeQuickActionsForRecordTypeResponse_element response_x = new permissionPartnerSoapSforceCom.describeQuickActionsForRecordTypeResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeQuickActionResult> testQuickActionResult = new list<permissionPartnerSoapSforceCom.DescribeQuickActionResult>();
+                PermissionPartnerSoapSforceCom.describeQuickActionsForRecordTypeResponse_element response_x = new PermissionPartnerSoapSforceCom.describeQuickActionsForRecordTypeResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeQuickActionResult> testQuickActionResult = new list<PermissionPartnerSoapSforceCom.DescribeQuickActionResult>();
                 response_x.result = testQuickActionResult;
                 response.put('response_x',response_x);
             }
             when 'RenderEmailTemplate'
             {
-                permissionPartnerSoapSforceCom.renderEmailTemplateResponse_element response_x = new permissionPartnerSoapSforceCom.renderEmailTemplateResponse_element();
-                list<permissionPartnerSoapSforceCom.RenderEmailTemplateResult> testRenderEmailTemplate = new list<permissionPartnerSoapSforceCom.RenderEmailTemplateResult>();
+                PermissionPartnerSoapSforceCom.renderEmailTemplateResponse_element response_x = new PermissionPartnerSoapSforceCom.renderEmailTemplateResponse_element();
+                list<PermissionPartnerSoapSforceCom.RenderEmailTemplateResult> testRenderEmailTemplate = new list<PermissionPartnerSoapSforceCom.RenderEmailTemplateResult>();
                 response_x.result = testRenderEmailTemplate;
                 response.put('response_x',response_x);
             }
             when 'UpsertResult'
             {
-                permissionPartnerSoapSforceCom.upsertResponse_element response_x = new permissionPartnerSoapSforceCom.upsertResponse_element();
-                list<permissionPartnerSoapSforceCom.UpsertResult> testUpsertResult = new list<permissionPartnerSoapSforceCom.UpsertResult>();
+                PermissionPartnerSoapSforceCom.upsertResponse_element response_x = new PermissionPartnerSoapSforceCom.upsertResponse_element();
+                list<PermissionPartnerSoapSforceCom.UpsertResult> testUpsertResult = new list<PermissionPartnerSoapSforceCom.UpsertResult>();
                 response_x.result = testUpsertResult;
                 response.put('response_x',response_x);
             }
             when 'QueryResultInt'
             {
-                permissionPartnerSoapSforceCom.queryResponse_element response_x = new permissionPartnerSoapSforceCom.queryResponse_element();
-                permissionPartnerSoapSforceCom.QueryResult testQueryResultInt = new permissionPartnerSoapSforceCom.QueryResult();
+                PermissionPartnerSoapSforceCom.queryResponse_element response_x = new PermissionPartnerSoapSforceCom.queryResponse_element();
+                PermissionPartnerSoapSforceCom.QueryResult testQueryResultInt = new PermissionPartnerSoapSforceCom.QueryResult();
                 response_x.result = testQueryResultInt;
                 response.put('response_x',response_x);
             }
             when 'DescribeQuickActionResult'
             {
-                permissionPartnerSoapSforceCom.describeQuickActionsResponse_element response_x = new permissionPartnerSoapSforceCom.describeQuickActionsResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeQuickActionResult> testQuickActionResult = new list<permissionPartnerSoapSforceCom.DescribeQuickActionResult>();
+                PermissionPartnerSoapSforceCom.describeQuickActionsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeQuickActionsResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeQuickActionResult> testQuickActionResult = new list<PermissionPartnerSoapSforceCom.DescribeQuickActionResult>();
                 response_x.result = testQuickActionResult;
                 response.put('response_x',response_x);
             }
             when 'PerformQuickActions'
             {
-                permissionPartnerSoapSforceCom.performQuickActionsResponse_element response_x = new permissionPartnerSoapSforceCom.performQuickActionsResponse_element();
-                list<permissionPartnerSoapSforceCom.PerformQuickActionResult> testPerformQuickAction = new list<permissionPartnerSoapSforceCom.PerformQuickActionResult>();
+                PermissionPartnerSoapSforceCom.performQuickActionsResponse_element response_x = new PermissionPartnerSoapSforceCom.performQuickActionsResponse_element();
+                list<PermissionPartnerSoapSforceCom.PerformQuickActionResult> testPerformQuickAction = new list<PermissionPartnerSoapSforceCom.PerformQuickActionResult>();
                 response_x.result = testPerformQuickAction;
                 response.put('response_x',response_x);
             }
             when 'DescribeSobjectResult'
             {
-                permissionPartnerSoapSforceCom.describeSObjectsResponse_element response_x = new permissionPartnerSoapSforceCom.describeSObjectsResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeSObjectResult> testDescribeSObjectResult = new list<permissionPartnerSoapSforceCom.DescribeSObjectResult>();
+                PermissionPartnerSoapSforceCom.describeSObjectsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSObjectsResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeSObjectResult> testDescribeSObjectResult = new list<PermissionPartnerSoapSforceCom.DescribeSObjectResult>();
                 response_x.result = testDescribeSObjectResult;
                 response.put('response_x',response_x);
             }
             when 'KnowledgeSettings'
             {
-                permissionPartnerSoapSforceCom.describeKnowledgeSettingsResponse_element response_x = new permissionPartnerSoapSforceCom.describeKnowledgeSettingsResponse_element();
-                permissionPartnerSoapSforceCom.KnowledgeSettings testKnowledgeSettings = new permissionPartnerSoapSforceCom.KnowledgeSettings();
+                PermissionPartnerSoapSforceCom.describeKnowledgeSettingsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeKnowledgeSettingsResponse_element();
+                PermissionPartnerSoapSforceCom.KnowledgeSettings testKnowledgeSettings = new PermissionPartnerSoapSforceCom.KnowledgeSettings();
                 response_x.result = testKnowledgeSettings;
                 response.put('response_x',response_x);
             }
             when 'UndeleteResult'
             {
-                permissionPartnerSoapSforceCom.undeleteResponse_element response_x = new permissionPartnerSoapSforceCom.undeleteResponse_element();
-                list<permissionPartnerSoapSforceCom.UndeleteResult> testUndeleteResult = new list<permissionPartnerSoapSforceCom.UndeleteResult>();
+                PermissionPartnerSoapSforceCom.undeleteResponse_element response_x = new PermissionPartnerSoapSforceCom.undeleteResponse_element();
+                list<PermissionPartnerSoapSforceCom.UndeleteResult> testUndeleteResult = new list<PermissionPartnerSoapSforceCom.UndeleteResult>();
                 response_x.result = testUndeleteResult;
                 response.put('response_x',response_x);
             }
             when 'DescribeTheme'
             {
-                permissionPartnerSoapSforceCom.describeThemeResponse_element response_x = new permissionPartnerSoapSforceCom.describeThemeResponse_element();
-                permissionPartnerSoapSforceCom.DescribeThemeResult testDescribeTheme = new permissionPartnerSoapSforceCom.DescribeThemeResult();
+                PermissionPartnerSoapSforceCom.describeThemeResponse_element response_x = new PermissionPartnerSoapSforceCom.describeThemeResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeThemeResult testDescribeTheme = new PermissionPartnerSoapSforceCom.DescribeThemeResult();
                 response_x.result = testDescribeTheme;
                 response.put('response_x',response_x);
             }
             when 'DeleteByExample'
             {
-                permissionPartnerSoapSforceCom.deleteByExampleResponse_element response_x = new permissionPartnerSoapSforceCom.deleteByExampleResponse_element();
-                list<permissionPartnerSoapSforceCom.DeleteByExampleResult> testDeleteByExample = new list<permissionPartnerSoapSforceCom.DeleteByExampleResult>();
+                PermissionPartnerSoapSforceCom.deleteByExampleResponse_element response_x = new PermissionPartnerSoapSforceCom.deleteByExampleResponse_element();
+                list<PermissionPartnerSoapSforceCom.DeleteByExampleResult> testDeleteByExample = new list<PermissionPartnerSoapSforceCom.DeleteByExampleResult>();
                 response_x.result = testDeleteByExample;
                 response.put('response_x',response_x);
             }
             when 'DescribeNounResult'
             {
-                permissionPartnerSoapSforceCom.describeNounsResponse_element response_x = new permissionPartnerSoapSforceCom.describeNounsResponse_element();
-                list<permissionPartnerSoapSforceCom.DescribeNounResult> testDescribeNounResult = new list<permissionPartnerSoapSforceCom.DescribeNounResult>();
+                PermissionPartnerSoapSforceCom.describeNounsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeNounsResponse_element();
+                list<PermissionPartnerSoapSforceCom.DescribeNounResult> testDescribeNounResult = new list<PermissionPartnerSoapSforceCom.DescribeNounResult>();
                 response_x.result = testDescribeNounResult;
                 response.put('response_x',response_x);
             }
             when 'FindDuplicatesResult'
             {
-                permissionPartnerSoapSforceCom.findDuplicatesByIdsResponse_element response_x = new permissionPartnerSoapSforceCom.findDuplicatesByIdsResponse_element();
-                list<permissionPartnerSoapSforceCom.FindDuplicatesResult> testDuplicatesResult = new list<permissionPartnerSoapSforceCom.FindDuplicatesResult>();
+                PermissionPartnerSoapSforceCom.findDuplicatesByIdsResponse_element response_x = new PermissionPartnerSoapSforceCom.findDuplicatesByIdsResponse_element();
+                list<PermissionPartnerSoapSforceCom.FindDuplicatesResult> testDuplicatesResult = new list<PermissionPartnerSoapSforceCom.FindDuplicatesResult>();
                 response_x.result = testDuplicatesResult;
                 response.put('response_x',response_x);
             }
             when 'ExecuteListView'
             {
-                permissionPartnerSoapSforceCom.executeListViewResponse_element response_x = new permissionPartnerSoapSforceCom.executeListViewResponse_element();
-                permissionPartnerSoapSforceCom.ExecuteListViewResult testExecuteListView = new permissionPartnerSoapSforceCom.ExecuteListViewResult();
+                PermissionPartnerSoapSforceCom.executeListViewResponse_element response_x = new PermissionPartnerSoapSforceCom.executeListViewResponse_element();
+                PermissionPartnerSoapSforceCom.ExecuteListViewResult testExecuteListView = new PermissionPartnerSoapSforceCom.ExecuteListViewResult();
                 response_x.result = testExecuteListView;
                 response.put('response_x',response_x);
             }
             when 'RenderStoredEmailTemplate'
             {
-                permissionPartnerSoapSforceCom.renderStoredEmailTemplateResponse_element response_x = new permissionPartnerSoapSforceCom.renderStoredEmailTemplateResponse_element();
-                permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult testRenderStoredEmailTemplate = new permissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult();
+                PermissionPartnerSoapSforceCom.renderStoredEmailTemplateResponse_element response_x = new PermissionPartnerSoapSforceCom.renderStoredEmailTemplateResponse_element();
+                PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult testRenderStoredEmailTemplate = new PermissionPartnerSoapSforceCom.RenderStoredEmailTemplateResult();
                 response_x.result = testRenderStoredEmailTemplate;
                 response.put('response_x',response_x);
             }
             when 'DescribeVisualForce'
             {
-                permissionPartnerSoapSforceCom.describeVisualForceResponse_element response_x = new permissionPartnerSoapSforceCom.describeVisualForceResponse_element();
-                permissionPartnerSoapSforceCom.DescribeVisualForceResult testDescribeVisualForce = new permissionPartnerSoapSforceCom.DescribeVisualForceResult();
+                PermissionPartnerSoapSforceCom.describeVisualForceResponse_element response_x = new PermissionPartnerSoapSforceCom.describeVisualForceResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeVisualForceResult testDescribeVisualForce = new PermissionPartnerSoapSforceCom.DescribeVisualForceResult();
                 response_x.result = testDescribeVisualForce;
                 response.put('response_x',response_x);
             }
             when 'DescribeSObject'
             {
-                permissionPartnerSoapSforceCom.describeSObjectResponse_element response_x = new permissionPartnerSoapSforceCom.describeSObjectResponse_element();
-                permissionPartnerSoapSforceCom.DescribeSObjectResult testDescribeSObject = new permissionPartnerSoapSforceCom.DescribeSObjectResult();
+                PermissionPartnerSoapSforceCom.describeSObjectResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSObjectResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeSObjectResult testDescribeSObject = new PermissionPartnerSoapSforceCom.DescribeSObjectResult();
                 response_x.result = testDescribeSObject;
                 response.put('response_x',response_x);
             }
             when 'GetServerTimestamp'
             {
-                permissionPartnerSoapSforceCom.getServerTimestampResponse_element response_x = new permissionPartnerSoapSforceCom.getServerTimestampResponse_element();
-                permissionPartnerSoapSforceCom.GetServerTimestampResult testGetServerTimestamp = new permissionPartnerSoapSforceCom.GetServerTimestampResult();
+                PermissionPartnerSoapSforceCom.getServerTimestampResponse_element response_x = new PermissionPartnerSoapSforceCom.getServerTimestampResponse_element();
+                PermissionPartnerSoapSforceCom.GetServerTimestampResult testGetServerTimestamp = new PermissionPartnerSoapSforceCom.GetServerTimestampResult();
                 response_x.result = testGetServerTimestamp;
                 response.put('response_x',response_x);
             }
@@ -405,83 +405,83 @@ public class PermissionPartnerSoapSforceComMock implements WebServiceMock  {
         switch on indicatorVar{
             when 'RetrieveQuickActionTemplates'
             {
-                permissionPartnerSoapSforceCom.retrieveQuickActionTemplatesResponse_element response_x = new permissionPartnerSoapSforceCom.retrieveQuickActionTemplatesResponse_element();
-                list<permissionPartnerSoapSforceCom.QuickActionTemplateResult> testRetrieveQuickActionTemplates = new list<permissionPartnerSoapSforceCom.QuickActionTemplateResult>();
+                PermissionPartnerSoapSforceCom.retrieveQuickActionTemplatesResponse_element response_x = new PermissionPartnerSoapSforceCom.retrieveQuickActionTemplatesResponse_element();
+                list<PermissionPartnerSoapSforceCom.QuickActionTemplateResult> testRetrieveQuickActionTemplates = new list<PermissionPartnerSoapSforceCom.QuickActionTemplateResult>();
                 response_x.result = testRetrieveQuickActionTemplates;
                 response.put('response_x',response_x);
             }
             when 'SetPassword'
             {
-                permissionPartnerSoapSforceCom.setPasswordResponse_element response_x = new permissionPartnerSoapSforceCom.setPasswordResponse_element();
-                permissionPartnerSoapSforceCom.SetPasswordResult testSetPassword = new permissionPartnerSoapSforceCom.SetPasswordResult();
+                PermissionPartnerSoapSforceCom.setPasswordResponse_element response_x = new PermissionPartnerSoapSforceCom.setPasswordResponse_element();
+                PermissionPartnerSoapSforceCom.SetPasswordResult testSetPassword = new PermissionPartnerSoapSforceCom.SetPasswordResult();
                 response_x.result = testSetPassword;
                 response.put('response_x',response_x);
             }
             when 'ResetPassword'
             {
-                permissionPartnerSoapSforceCom.resetPasswordResponse_element response_x = new permissionPartnerSoapSforceCom.resetPasswordResponse_element();
-                permissionPartnerSoapSforceCom.ResetPasswordResult testResetPassword = new permissionPartnerSoapSforceCom.ResetPasswordResult();
+                PermissionPartnerSoapSforceCom.resetPasswordResponse_element response_x = new PermissionPartnerSoapSforceCom.resetPasswordResponse_element();
+                PermissionPartnerSoapSforceCom.ResetPasswordResult testResetPassword = new PermissionPartnerSoapSforceCom.ResetPasswordResult();
                 response_x.result = testResetPassword;
                 response.put('response_x',response_x);
             }
             when 'DescribeSoftphoneLayout'
             {
-                permissionPartnerSoapSforceCom.describeSoftphoneLayoutResponse_element response_x = new permissionPartnerSoapSforceCom.describeSoftphoneLayoutResponse_element();
-                permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult testDescribeSoftphoneLayout = new permissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult();
+                PermissionPartnerSoapSforceCom.describeSoftphoneLayoutResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSoftphoneLayoutResponse_element();
+                PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult testDescribeSoftphoneLayout = new PermissionPartnerSoapSforceCom.DescribeSoftphoneLayoutResult();
                 response_x.result = testDescribeSoftphoneLayout;
                 response.put('response_x',response_x);
             }
             when 'Create'
             {
-                permissionPartnerSoapSforceCom.createResponse_element response_x = new permissionPartnerSoapSforceCom.createResponse_element();
-                list<permissionPartnerSoapSforceCom.SaveResult> testCreate = new list<permissionPartnerSoapSforceCom.SaveResult>();
+                PermissionPartnerSoapSforceCom.createResponse_element response_x = new PermissionPartnerSoapSforceCom.createResponse_element();
+                list<PermissionPartnerSoapSforceCom.SaveResult> testCreate = new list<PermissionPartnerSoapSforceCom.SaveResult>();
                 response_x.result = testCreate;
                 response.put('response_x',response_x);
             }
             when 'DescribeSearchLayouts'
             {
-            permissionPartnerSoapSforceCom.describeSearchLayoutsResponse_element response_x = new permissionPartnerSoapSforceCom.describeSearchLayoutsResponse_element();
-            list<permissionPartnerSoapSforceCom.DescribeSearchLayoutResult> testCreate = new list<permissionPartnerSoapSforceCom.DescribeSearchLayoutResult>();
+            PermissionPartnerSoapSforceCom.describeSearchLayoutsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSearchLayoutsResponse_element();
+            list<PermissionPartnerSoapSforceCom.DescribeSearchLayoutResult> testCreate = new list<PermissionPartnerSoapSforceCom.DescribeSearchLayoutResult>();
             response_x.result = testCreate;
             response.put('response_x',response_x);
             }
             when 'Merge'
             {
-            permissionPartnerSoapSforceCom.mergeResponse_element response_x = new permissionPartnerSoapSforceCom.mergeResponse_element();
-            list<permissionPartnerSoapSforceCom.MergeResult> testMerge = new list<permissionPartnerSoapSforceCom.MergeResult>();
+            PermissionPartnerSoapSforceCom.mergeResponse_element response_x = new PermissionPartnerSoapSforceCom.mergeResponse_element();
+            list<PermissionPartnerSoapSforceCom.MergeResult> testMerge = new list<PermissionPartnerSoapSforceCom.MergeResult>();
             response_x.result = testMerge;
             response.put('response_x',response_x);
             }
             when 'InvalidateSessions'
             {
-            permissionPartnerSoapSforceCom.invalidateSessionsResponse_element response_x = new permissionPartnerSoapSforceCom.invalidateSessionsResponse_element();
-            list<permissionPartnerSoapSforceCom.InvalidateSessionsResult> testInvalidateSessions = new list<permissionPartnerSoapSforceCom.InvalidateSessionsResult>();
+            PermissionPartnerSoapSforceCom.invalidateSessionsResponse_element response_x = new PermissionPartnerSoapSforceCom.invalidateSessionsResponse_element();
+            list<PermissionPartnerSoapSforceCom.InvalidateSessionsResult> testInvalidateSessions = new list<PermissionPartnerSoapSforceCom.InvalidateSessionsResult>();
             response_x.result = testInvalidateSessions;
             response.put('response_x',response_x);
             }
             when 'DescribeDataCategoryMappings'
             {
-            permissionPartnerSoapSforceCom.describeDataCategoryMappingsResponse_element response_x = new permissionPartnerSoapSforceCom.describeDataCategoryMappingsResponse_element();
-            list<permissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult> testDescribeDataCategoryMappings = new list<permissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult>();
+            PermissionPartnerSoapSforceCom.describeDataCategoryMappingsResponse_element response_x = new PermissionPartnerSoapSforceCom.describeDataCategoryMappingsResponse_element();
+            list<PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult> testDescribeDataCategoryMappings = new list<PermissionPartnerSoapSforceCom.DescribeDataCategoryMappingResult>();
             response_x.result = testDescribeDataCategoryMappings;
             response.put('response_x',response_x);
             }
             when 'Logout'
             {
-            permissionPartnerSoapSforceCom.logoutResponse_element response_x = new permissionPartnerSoapSforceCom.logoutResponse_element();
+            PermissionPartnerSoapSforceCom.logoutResponse_element response_x = new PermissionPartnerSoapSforceCom.logoutResponse_element();
             response.put('response_x',response_x);
             }
             when 'DescribeSearchScopeOrder'
             {
-            permissionPartnerSoapSforceCom.describeSearchScopeOrderResponse_element response_x = new permissionPartnerSoapSforceCom.describeSearchScopeOrderResponse_element();
-            list<permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult> testDescribeSearchScopeOrder = new list<permissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult>();
+            PermissionPartnerSoapSforceCom.describeSearchScopeOrderResponse_element response_x = new PermissionPartnerSoapSforceCom.describeSearchScopeOrderResponse_element();
+            list<PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult> testDescribeSearchScopeOrder = new list<PermissionPartnerSoapSforceCom.DescribeSearchScopeOrderResult>();
             response_x.result = testDescribeSearchScopeOrder;
             response.put('response_x',response_x);
             }
             when 'Retrieve'
             {
-                permissionPartnerSoapSforceCom.retrieveResponse_element response_x = new permissionPartnerSoapSforceCom.retrieveResponse_element();
-                list<permissionSobjectPartnerSoapSforceCom.sObject_x> testRetrieve = new list<permissionSobjectPartnerSoapSforceCom.sObject_x>();
+                PermissionPartnerSoapSforceCom.retrieveResponse_element response_x = new PermissionPartnerSoapSforceCom.retrieveResponse_element();
+                list<PermissionSobjectPartnerSoapSforceCom.sObject_x> testRetrieve = new list<PermissionSobjectPartnerSoapSforceCom.sObject_x>();
                 response_x.result = testRetrieve;
                 response.put('response_x',response_x);
             }
