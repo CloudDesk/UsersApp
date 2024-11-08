@@ -62,6 +62,7 @@ public with sharing class PermissionTabServer {
     @AuraEnabled
     public static profilePermissionsetandUserWrapper getPermsandUsersOfSelectedPerms(List<String> userPermissions,String objName,String objPermission,String objFieldName,String fieldName,String fieldPerm,String perSetId) {            
         List<permissionSet> permissionSetList = new List<permissionSet>();
+        Set<Id> idToFetchPermList = new Set<Id>();
         Set<Id> permissionSetIdSet = new Set<Id>();
         Set<Id> assigneeIdSet = new Set<Id>();
         Map<Id, user> userMap = new Map<Id, User>();        
@@ -118,7 +119,7 @@ public with sharing class PermissionTabServer {
         Set<Id> idToFetchPermList = new Set<Id>();
         Set<Id> permissionSetIdSet = new Set<Id>();
         List<permissionSet> permissionSetList = new List<permissionSet>();
-        string objectPermissionQuery ='select id, SobjectType, ParentId,parent.Name,parent.Label, Parent.Profile.Name, parent.Type from ObjectPermissions where SobjectType =: objName and  ' +objPermission +' =true';  
+       	String objectPermissionQuery ='Select Id, SobjectType, ParentId, Parent.Name, Parent.Label, Parent.Profile.Name, Parent.Type from ObjectPermissions where SobjectType = \'' + objName + '\' and ' +objPermission +' = true';  
         for (ObjectPermissions objperm : Database.query(objectPermissionQuery) ) {
             idToFetchPermList.add(objperm.ParentId);
             if(perSetId == 'All'){

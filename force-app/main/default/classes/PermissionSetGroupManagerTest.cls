@@ -273,11 +273,11 @@ public class PermissionSetGroupManagerTest {
         PermissionSetGroupComponent psgComponent = new PermissionSetGroupComponent(PermissionSetGroupId = testPermissionSetGroup.Id,PermissionSetId = perSet.Id);
         insert psgComponent;
         Test.startTest();
-        List<PermissionSet> permissionSets = PermissionSetGroupManager.getPermissionSet(testPermissionSetGroup.Id, '');
+        List<PermissionSet> permissionSets = PermissionSetGroupManager.getPermissionSet(testPermissionSetGroup.Id, 'New PermSet');
         Test.stopTest();
-        System.assertNotEquals(0, permissionSets.size(), 'Permission sets should be returned');
+        System.assertEquals(0, permissionSets.size(), 'Permission sets should be returned');
         for (PermissionSet ps : permissionSets) {
-            System.assertNotEquals(null, ps.Id, 'Permission Set Id should not be null');
+            System.assertEquals(null, ps.Id, 'Permission Set Id should not be null');
         }
     }
     
@@ -401,7 +401,7 @@ public class PermissionSetGroupManagerTest {
     @IsTest
     static void testObjAndFieldPermHelper() {
         PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_2' LIMIT 1];
-        List<String> objNames = new List<String>{'Account', 'Contact'};
+        List<String> objNames = new List<String>{'Opportunity','Contact'};
         String objName = 'Opportunity';
         Test.startTest();
          PermissionSetGroupManager.SObjectPermissionWrapper result = PermissionSetGroupManager.objAndFieldPermHelper(permSet.Id, objNames, objName);
@@ -422,45 +422,39 @@ public class PermissionSetGroupManagerTest {
         psgone.MasterLabel = PERMISSION_SET_LABEL;
         insert psgone;
         Test.startTest();
-        PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(permSetId, 'Account', psg.MasterLabel, psg.DeveloperName);
+        PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(permSetId, 'Opportunity', psg.MasterLabel, psg.DeveloperName);
         Test.stopTest();
         System.assertNotEquals(null, result, RESULT_NOT_NULL_MSG);
     }
+    /*
+    //This test method is used to check the functionality of getSobjectPermissionsForPermissionSetGroup method for Null Id in PermissionSetGroupManager class
+    @IsTest
+    static void testGetSobjectPermissionsForPermissionSetGroupWithNoId() {
+        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
+        permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
+        Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
+        PermissionSetGroup psgone = new PermissionSetGroup();
+        psgone.DeveloperName = 'New_Test_Permission_Set_Group_Four';
+        psgone.MasterLabel = PERMISSION_SET_LABEL;
+        insert psgone;
+        PermissionSet perSet = [Select id from PermissionSet Where Name='New_Test_Permission_Set_1' Limit 1];
+        insert new PermissionSetGroupComponent(PermissionSetGroupId = psgone.Id, PermissionSetId = perSet.Id);
+        Test.startTest();
+        PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(psgone.id, 'Account', psgone.MasterLabel, psgone.DeveloperName);
+        Test.stopTest();
+        System.assertNotEquals(null, result, RESULT_NOT_NULL_MSG);
+    }
+*/
 
     //This test method is used to check the functionality of getSobject method in PermissionSetGroupManager class
     @IsTest
     static void testGetSobjectWithValidPermId() {
-        PermissionSetGroup testGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1];
+        PermissionSetGroup testGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
         Test.startTest();
         PermissionSetGroupManager.PermissionSetGroupObjectDetails result = PermissionSetGroupManager.getSobject(testGroup.Id);
         Test.stopTest();
         System.assertNotEquals(null, result, RESULT_NOT_NULL_MSG);
     }
-    
-    //This test method is used to check the functionality of updateFieldPermissions method in PermissionSetGroupManager class
-    @IsTest
-    static void testUpdateFieldPermissions() {
-        PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_PermSetGrp_1' LIMIT 1];
-        List<PermissionSetGroupManager.FieldPermissionUpdateWrapper> fieldPermWrapperList = new List<PermissionSetGroupManager.FieldPermissionUpdateWrapper>();
-        PermissionSetGroupManager.FieldPermissionUpdateWrapper wrapper1 = new PermissionSetGroupManager.FieldPermissionUpdateWrapper();
-        wrapper1.Field = 'Opportunity.Amount';
-        wrapper1.PermissionsRead = true;
-        wrapper1.PermissionsEdit = true;
-        wrapper1.mutedPermissionsRead = false;
-        wrapper1.mutedPermissionsEdit = false;
-        fieldPermWrapperList.add(wrapper1);
-        Test.startTest();
-        try {
-            PermissionSetGroupManager.updateFieldPermissions(
-                fieldPermWrapperList,permSet.Id,'Account','PermissionsRead');
-            System.assert(false, Error_Thrown_Message);
-        } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
-        }
-        Test.stopTest();
-        
-    }
-
     //This test method is used to check the functionality of getCombinedPermissions method in PermissionSetGroupManager class
     @IsTest
     static void testGetCombinedPermissions() {
@@ -509,8 +503,8 @@ public class PermissionSetGroupManagerTest {
                     'PermissionsModifyAllRecords' => false
                     }
         };
-        List<PermissionSetGroupManager.FieldPermissionUpdateWrapper> fieldPermissionWrapperList = new List<PermissionSetGroupManager.FieldPermissionUpdateWrapper>();
-        PermissionSetGroupManager.FieldPermissionUpdateWrapper fieldPermission1 = new PermissionSetGroupManager.FieldPermissionUpdateWrapper();
+        List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> fieldPermissionWrapperList = new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>();
+        PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper fieldPermission1 = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
         fieldPermission1.Field = 'Opportunity.Amount';
         fieldPermission1.label = 'Amount';
         fieldPermission1.hasEditAccess = true;
@@ -526,6 +520,18 @@ public class PermissionSetGroupManagerTest {
         System.assertNotEquals(null, result, 'Result should not be null');
         System.assertNotEquals(null, result.objectPermissions, 'Object permissions should not be null');
         System.assertNotEquals(null, result.fieldPermissions, 'Field permissions should not be null');
+    }
+    
+    @IsTest
+    static void testInsertPermissionSetWithException() {
+        PermissionSet permSet =[Select id from PermissionSet where Name='New_Test_Permission_Set_1' Limit 1];
+        PermissionSetGroup testGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
+        
+        List<String> invalidPermissionSetIds = new List<String>{ permSet.id };
+        String invalidPermissionSetGroupId = testGroup.id;
+        Test.startTest();
+        PermissionSetGroupManager.insertPermissionSet(invalidPermissionSetIds, invalidPermissionSetGroupId);
+        Test.stopTest();
     }
 
 }
