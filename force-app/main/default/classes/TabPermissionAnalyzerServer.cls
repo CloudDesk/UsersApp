@@ -83,65 +83,88 @@ public with sharing class TabPermissionAnalyzerServer {
             this.visibility = visibility;
         }
     }
-    //This is the Method Used to Update TabVisibiltity For PermissionSet Deserialize and call an update method
     @AuraEnabled
-    public static List < TabSettingsWrapper > updatePermissionSetTabVisibilities(String tabSettingsJson, String persetname) {
-        List < Map < String, String >> tabSettingRawList = (List < Map < String, String >> ) JSON.deserialize(tabSettingsJson, List < Map < String, String >> .class);
-        List < TabSettingsWrapper > tabVisibilityWrapper = new List < TabSettingsWrapper > ();
-        for (Map < String, String > item: tabSettingRawList) {
-            for (String tabName: item.keySet()) {
+    Public Static List<TabSettingsWrapper> updatePermissionSetTabVisibilities(String tabSettingsJson, String persetname) {
+        List<Map<String, String>> tabSettingRawList = (List<Map<String, String>>) JSON.deserialize(tabSettingsJson, List<Map<String, String>>.class);
+        List<TabSettingsWrapper> tabVisibilityWrapper = new List<TabSettingsWrapper>();    
+        // Convert the raw list into TabSettingsWrapper list
+        for (Map<String, String> item : tabSettingRawList) {
+            for (String tabName : item.keySet()) {
+                String visibility = item.get(tabName);    
+                // Create the wrapper object
                 tabVisibilityWrapper.add(new TabSettingsWrapper(tabName, item.get(tabName)));
             }
-        }
+        }    
         System.debug('tabSettings: ' + tabVisibilityWrapper);
         return helperUpdateClassForPermissionset(tabVisibilityWrapper, persetname);
     }
     @AuraEnabled
-    public static List < TabSettingsWrapper > helperUpdateClassForPermissionset(List < TabSettingsWrapper > tabSettingsResult, String persetname) {
-        UserAccessManager instance = new UserAccessManager();
-        List < MetadataService.PermissionSet > permissionSets = (List < MetadataService.PermissionSet > ) instance.service.readMetadata('PermissionSet', new List < String > {
-            persetname
-                }).getRecords();
-        MetadataService.PermissionSet permissionSet = permissionSets.isEmpty() ? new MetadataService.PermissionSet() : permissionSets[0];
-        if (permissionSets.isEmpty()) {
+	Public Static List<TabSettingsWrapper> helperUpdateClassForPermissionset(List<TabSettingsWrapper> tabSettingsResult,String persetname) {
+   		 UserAccessManager instance = new UserAccessManager();
+        List<MetadataService.PermissionSet> permissionSets = (List<MetadataService.PermissionSet>) instance.service.readMetadata('PermissionSet',new List<String>{ persetname }).getRecords();    
+        MetadataService.PermissionSet permissionSet;
+        if (permissionSets.size() > 0) {
+            permissionSet = permissionSets[0]; 
+            permissionSet.tabSettings = updateExistingHelper(permissionSet,permissionSets,tabSettingsResult);
+        } else {
+            permissionSet = new MetadataService.PermissionSet();
             permissionSet.fullName = persetname;
-        }
-        permissionSet.tabSettings = buildTabSettingsList(permissionSet, tabSettingsResult);
-
-        MetadataService.SaveResult[] results = instance.service.updateMetadata(new List < MetadataService.Metadata > {
-            permissionSet
-                });
+            permissionSet.tabSettings = new List<MetadataService.PermissionSetTabSetting>();    
+            for (TabSettingsWrapper tabSettingWrapper : tabSettingsResult) {
+                if (tabSettingWrapper.visibility != null) {
+                    MetadataService.PermissionSetTabSetting newTabSetting = new MetadataService.PermissionSetTabSetting();
+                    newTabSetting.tab = tabSettingWrapper.tab;
+                    newTabSetting.visibility = tabSettingWrapper.visibility;
+                    permissionSet.tabSettings.add(newTabSetting);
+                }
+            }
+        }    
+        // Update the PermissionSet metadata
+        MetadataService.SaveResult[] results = instance.service.updateMetadata(new List<MetadataService.Metadata>{ permissionSet });
         handleSaveResult(results);
-
         return tabSettingsResult;
     }
-
-    // Building Tab Settings List
-    private static List < MetadataService.PermissionSetTabSetting > buildTabSettingsList(MetadataService.PermissionSet permissionSet, List < TabSettingsWrapper > tabSettingsResult){
-        List < MetadataService.PermissionSetTabSetting > tabSettingList = new List < MetadataService.PermissionSetTabSetting > ();
-        Map < String, MetadataService.PermissionSetTabSetting > tabSettingsMap = new Map < String, MetadataService.PermissionSetTabSetting > ();
-
-        if (permissionSet.tabSettings != null) {
-            for (MetadataService.PermissionSetTabSetting setting: permissionSet.tabSettings) {
-                tabSettingsMap.put(setting.tab, setting);
-            }
-        }
-        for (TabSettingsWrapper wrapper : tabSettingsResult) {
-            if (wrapper.visibility != null) {
-                MetadataService.PermissionSetTabSetting tabSetting;
-                if (tabSettingsMap.containsKey(wrapper.tab)) {
-                    tabSetting = tabSettingsMap.get(wrapper.tab);
-                } else {
-                    tabSetting = new MetadataService.PermissionSetTabSetting();
-                    tabSetting.tab = wrapper.tab;
+    
+    //Helper Method for updating Exisiting tab Permissions
+    private static List<MetadataService.PermissionSetTabSetting> updateExistingHelper(MetadataService.PermissionSet permissionSet, List<MetadataService.PermissionSet> permissionSets, List<TabSettingsWrapper> tabSettingsResult){
+        if (permissionSet.tabSettings == null) {
+            permissionSet.tabSettings = new List<MetadataService.PermissionSetTabSetting>();
+        }    
+        Set<String> tabsToRemove = new Set<String>();
+        for (TabSettingsWrapper tabSettingWrapper : tabSettingsResult) {
+            String tabName = tabSettingWrapper.tab;
+            String visibility = tabSettingWrapper.visibility;
+            
+            if (visibility == null) {
+                // If visibility is null, mark the tab for removal
+                tabsToRemove.add(tabName);
+            } else {
+                Boolean tabFound = false;
+                for (MetadataService.PermissionSetTabSetting existingTabSetting : permissionSet.tabSettings) {
+                    if (existingTabSetting.tab == tabName) {
+                        existingTabSetting.visibility = visibility;
+                        tabFound = true;
+                        break;
+                    }
+                }    
+                // Add new tab setting if not found
+                if (!tabFound) {
+                    MetadataService.PermissionSetTabSetting newTabSetting = new MetadataService.PermissionSetTabSetting();
+                    newTabSetting.tab = tabName;
+                    newTabSetting.visibility = visibility;
+                    permissionSet.tabSettings.add(newTabSetting);
                 }
-                tabSetting.visibility = wrapper.visibility;
-                tabSettingList.add(tabSetting);
+            }
+        }  
+        List<MetadataService.PermissionSetTabSetting> updatedTabSettings = new List<MetadataService.PermissionSetTabSetting>();
+        for (MetadataService.PermissionSetTabSetting existingTabSetting : permissionSet.tabSettings) {
+            if (!tabsToRemove.contains(existingTabSetting.tab)) {
+                updatedTabSettings.add(existingTabSetting);
             }
         }
-
-        return tabSettingList;
+        return updatedTabSettings;
     }
+    
     // Handling Save Results
     private static void handleSaveResult(List<MetadataService.SaveResult> saveResultList){
         for (MetadataService.SaveResult result: saveResultList) {

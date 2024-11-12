@@ -39,43 +39,8 @@ public with Sharing class ProfileManager {
     // This method is used to update profile properties
     @AuraEnabled
     public static Map<String, String> updateProfile(String profileName, String newProfileName, String newDescription) {
-        UserAccessManager instance = new UserAccessManager();
-        Map<String, String> returnMap = new Map<String, String>();        
-        // Retrieve the existing profile metadata
-        List<MetadataService.Profile> profiles = (List<MetadataService.Profile>) instance.service.readMetadata('Profile', new List<String>{profileName}).getRecords();        
-        if (profiles[0].fullName != null) {
-            MetadataService.Profile updatedProfile = new MetadataService.Profile();
-            updatedProfile.fullName = newProfileName;
-            updatedProfile.description = newDescription;
-            MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List<MetadataService.Profile>{updatedProfile});            
-            if (!results.isEmpty()) {
-                MetadataService.UpsertResult upsertResult = results[0];
-                returnMap = updateProfileHelper(upsertResult,newDescription);
-            }
-        }
-        System.debug('Return map: ' + returnMap);
-        return returnMap;
-    }    
-    //This is helper Method for updateProfile
-    private static Map<String,String> updateProfileHelper(MetadataService.UpsertResult upsertResult, String newDescription){
-        Map<String, String> returnMap = new Map<String, String>(); 
-        if (upsertResult.success) {
-            returnMap.put('label', upsertResult.fullName);
-            returnMap.put('description', newDescription);
-        } else {
-            String errorMessage = 'Error updating profile: ' + (upsertResult.errors != null && !upsertResult.errors.isEmpty() ? upsertResult.errors[0].message : 'Unknown error');
-            for (MetadataService.Error error : upsertResult.errors) {
-                System.debug(ERROR_MESSAGE + error.message + ' Status Code: ' + error.statusCode);
-                if (error.fields != null) {
-                    for (String field : error.fields) {
-                        System.debug('Error Field: ' + field);
-                    }
-                }
-            }
-            throw new AuraHandledException(errorMessage);
-        }
-        return returnMap;
-    }
+       return PermissionAnalyzerServer.editProfileProperties(profileName,newProfileName,newDescription);
+    }  
     //This method is used for delete functionality in profile
     @AuraEnabled
     public static Void deleteProfile(String profileName) {
@@ -227,28 +192,7 @@ public with Sharing class ProfileManager {
             fieldDefMapByName.put(fieldNameKey, fieldDefMap);
         }
         return fieldDefMapByName;
-    }
-    // Method to send a SOQL query request to Salesforce's Tooling API and return the query results as a list of records
-    public static List<Object> sendQueryRequest(String query, String sessionId, String serverUrl) {
-        String endpoint = serverUrl + '/services/data/v58.0/tooling/query?q=' + EncodingUtil.urlEncode(query, 'UTF-8');
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint(endpoint);
-        req.setMethod('GET');
-        req.setHeader('Authorization', 'Bearer ' + sessionId);
-        req.setHeader('Content-Type', 'application/json');        
-        try {
-            HttpResponse res = new Http().send(req);            
-            if (res.getStatusCode() == 200) {
-                Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
-                return (List<Object>) responseMap.get('records') ?? new List<Object>();
-            } else {
-                System.debug(ERROR_MESSAGE + res.getStatus() + ' - ' + res.getBody());
-            }
-        } catch (Exception e) {
-            System.debug('Exception occurred: ' + e.getMessage());
-        }        
-        return new List<Object>();
-    }    
+    }      
     //Helper to get valid sobject.
     @AuraEnabled
     public static Boolean checkSObjType(String sObjName) {
@@ -273,10 +217,9 @@ public with Sharing class ProfileManager {
     //This method is used to retrieve system permissions & its dependencies of profile.
     @AuraEnabled(cacheable = true)
     public static PermissionFieldWrap getCombinedPermissionsforProfile(String permissionSetIds) {
-        PermissionFieldWrap permissionWrap = new PermissionFieldWrap();     
-        List < Map < String, Object >> userPermissionsList = getUserPermissions(permissionSetIds);
-        permissionWrap.userPermissions = userPermissionsList;
-        List < Object > dependSystemPermissions = ProfileManager.checkDependencyforSystemPermissions();
+        PermissionFieldWrap permissionWrap = new PermissionFieldWrap();  
+        permissionWrap.userPermissions = getUserPermissions(permissionSetIds);
+        List < Object > dependSystemPermissions = UserPermissionAnalyzerServer.getUserPermissionUserDependency();
         permissionWrap.systemDependencies = dependSystemPermissions;  
         Set < String > dependentObjects = extractDependentObjects(dependSystemPermissions); 
         Map < String, Map < String, Object >> objectPermissionsMap = getObjectPermissions(permissionSetIds, dependentObjects);
@@ -341,17 +284,7 @@ public with Sharing class ProfileManager {
                                         }
         return objectPermissionsMap;
     }    
-    //Helper method to get dependent user permissions.
-    @AuraEnabled(cacheable = true)
-    public static List < Object > checkDependencyforSystemPermissions() {
-        String query = 'SELECT Id, Permission, RequiredPermission, PermissionType, RequiredPermissionType ' +
-            'FROM PermissionDependency ' +
-            'WHERE PermissionType = \'User Permission\'';        
-        UserAccessManager instance = new UserAccessManager();
-        String sessionId = instance.partnerConnection.SessionHeader.sessionId;
-        String baseUrl = URL.getSalesforceBaseUrl().toExternalForm();        
-        return sendQueryRequest(query, sessionId, baseUrl);
-    }    
+   
     @AuraEnabled
     //This method is used to update system permissions & its dependencies in profile.
     public static Map<String, Boolean> updateSystemPermissionsProf(String profileName,Map<String, Boolean> systemPermissions) {

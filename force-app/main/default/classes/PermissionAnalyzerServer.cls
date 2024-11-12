@@ -234,7 +234,7 @@ public with sharing class PermissionAnalyzerServer {
             handleException('Error processing profile update: ', e);
         }
         return returnMap;
-    }    
+    }  
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
         System.debug(LoggingLevel.ERROR, fullMessage);
@@ -258,6 +258,5 @@ public with sharing class PermissionAnalyzerServer {
         permissionsMap.put('Accessible', describeResult.isAccessible()); // Checks if the object is readable
         System.debug('permissionsMap'+permissionsMap);
         return permissionsMap;        
-    }
-    
+    }    
 }

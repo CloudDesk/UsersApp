@@ -354,7 +354,7 @@ public with sharing class PermissionSetManager {
         );
 
         permissionWrap.userPermissions = buildUserPermissionsList(basePermissionSets, baseFields);
-        permissionWrap.systemDependencies = PermissionSetManager.checkDependencyforSystemPermissions();
+        permissionWrap.systemDependencies = UserPermissionAnalyzerServer.getUserPermissionUserDependency();
 
         Set<String> dependentObjects = buildDependentObjectsList(permissionWrap.systemDependencies);
         Map<String, Map<String, Object>> objectPermissionsMap = getObjectPermissionsMap(permissionSetIds, dependentObjects);
@@ -383,8 +383,6 @@ public with sharing class PermissionSetManager {
         }
         return userPermsList;
     }
-
-
     //This method is called from getCombinedPermissionsforProfile. This is used to build Dependent Objects
     private static Set<String> buildDependentObjectsList(List<Object> dependSystemPermissions){
         Set<String> dependentObjs = new Set<String>();
@@ -398,7 +396,6 @@ public with sharing class PermissionSetManager {
         }
         return dependentObjs;  
     }
-
     //This method is called from getCombinedPermissionsforProfile. This is used to fetch Object Permissions
     private static Map<String, Map<String, Object>> getObjectPermissionsMap(String permissionSetIds, Set<String> dependentObjects){
         Map<String, Map<String, Object>> permissionsMap = new Map<String, Map<String, Object>>();
@@ -430,36 +427,7 @@ public with sharing class PermissionSetManager {
             this.systemDependencies = new List<Object>();
             this.objectPermissions = new Map<String, Object>();
         }
-    }
-    //Helper method to get user/system dependencies
-    @AuraEnabled
-    public static List<Object> checkDependencyforSystemPermissions() {
-        UserAccessManager instance = new UserAccessManager();
-        String sessionId = instance.partnerConnection.SessionHeader.sessionId;
-        String serverUrl = URL.getSalesforceBaseUrl().toExternalForm();        
-        String query = 'SELECT Id, Permission, RequiredPermission, PermissionType, RequiredPermissionType ' +
-            'FROM PermissionDependency ' +
-            'WHERE PermissionType = \'User Permission\'';        
-        return sendQueryRequest(query, sessionId, serverUrl);
-    }    
-    private static List < Object > sendQueryRequest(String query, String sessionId, String serverUrl) {
-        String endpoint = serverUrl + '/services/data/v58.0/tooling/query?q=' +
-        EncodingUtil.urlEncode(query, 'UTF-8');        
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint(endpoint);
-        req.setMethod('GET');
-        req.setHeader('Authorization', 'Bearer ' + sessionId);
-        req.setHeader('Content-Type', 'application/json');        
-        Http http = new Http();
-        HttpResponse res = http.send(req);        
-        if (res.getStatusCode() == 200) {
-            Map < String, Object > responseMap = (Map < String, Object > ) JSON.deserializeUntyped(res.getBody());
-            return (List < Object > ) responseMap.get('records');
-        } else {
-            System.debug('Error: ' + res.getStatus());
-            return new List < Object > ();
-        }
-    }  
+    }   
     //This method is used for updating user/system permissions.
     @AuraEnabled
     public static List<PermissionSet> updateSystemPermissions(String systemPermissionsMap, String psid) {

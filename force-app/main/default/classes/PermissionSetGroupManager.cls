@@ -392,18 +392,21 @@ public with sharing class PermissionSetGroupManager {
           @AuraEnabled public Map<String, ObjectPermissions> mutingobjectPermissions { get; set; }
           @AuraEnabled public Map<String, List<fieldPermissions>> fieldPermissions { get; set; }
           @AuraEnabled public Map<String, List<fieldPermissions>> mutingfieldPermissions { get;set; }
+          @AuraEnabled public List<Object> systemDependencies { get; private set; }
           public UserObjAndFieldPermissionSetGroupWrapper(
               List<CombinedPermissionsWrapper> combinedPermissions,
               Map<String, ObjectPermissions> objectPermissions,
               Map<String, ObjectPermissions> mutingobjectPermissions,
               Map<String, List<fieldPermissions>> fieldPermissions,
-              Map<String, List<fieldPermissions>> mutingfieldPermissions
+              Map<String, List<fieldPermissions>> mutingfieldPermissions,
+              List<Object> systemDependencies
           ) {
               this.combinedPermissions = combinedPermissions;
               this.objectPermissions = objectPermissions;
               this.mutingobjectPermissions = mutingobjectPermissions;
               this.fieldPermissions = fieldPermissions;
               this.mutingfieldPermissions = mutingfieldPermissions;
+              this.systemDependencies = systemDependencies;
           }
       }  
     public class CombinedPermissionsWrapper {
@@ -503,7 +506,7 @@ public with sharing class PermissionSetGroupManager {
     }
     //This method is used to get user permissions/system permissions for permission set.
     @AuraEnabled(cacheable=false) 
-    public static UserObjAndFieldPermissionSetGroupWrapper getCombinedPermissions(String permissionSetGroupId,string persetapi,string persetname) {        
+    public static UserObjAndFieldPermissionSetGroupWrapper getCombinedPermissions(String permissionSetGroupId,string persetapi,string persetname) {     
         List<CombinedPermissionsWrapper> combinedPermissions = new List<CombinedPermissionsWrapper>();
         String baseQueryString = 'SELECT Id, Name';
         Map<String, Schema.SObjectField> baseFields = Schema.SObjectType.PermissionSet.fields.getMap();        
@@ -567,24 +570,26 @@ public with sharing class PermissionSetGroupManager {
                 seenPermissions.add(wrapper.fieldName);
             }
         }
-        System.debug('Retrieved Tab Permissions: ' + truePermissions);
         Map<string, ObjectPermissions> objectPermissions = PermissionSetGroupManager.getObjectPermissionsforPSG(permissionSetGroupId);
         Map<string, ObjectPermissions> mutingobjectPermissions = PermissionSetGroupManager.getmutingObjectPermissionsforPSG(permissionSetGroupId,persetapi,persetname);
         Map<String, List<fieldPermissions>> fieldPermissions = PermissionSetGroupManager.getFieldPermissionspsg(permissionSetGroupId);
         Map<String, List<fieldPermissions>> mutingfieldPermissions = PermissionSetGroupManager.getmutingFieldPermissionspsg(permissionSetGroupId);
-        return new userObjAndFieldPermissionSetGroupWrapper(truePermissions,objectPermissions,mutingobjectPermissions,fieldPermissions,mutingfieldPermissions);
+        List<Object> systemDependency= UserPermissionAnalyzerServer.getUserPermissionUserDependency();
+        return new userObjAndFieldPermissionSetGroupWrapper(truePermissions,objectPermissions,mutingobjectPermissions,fieldPermissions,mutingfieldPermissions,systemDependency);
     }
 
     //This method is called from getCombinedPermissions to set Combined Permissions field value
     private static List<CombinedPermissionsWrapper> setCombinedPermissionsFieldValue(List<PermissionSet> basePermissionSets, List<CombinedPermissionsWrapper> combinedPermissions){
         for (PermissionSet basePermissionSet : basePermissionSets) {
-            for (CombinedPermissionsWrapper wrapper : combinedPermissions) {
-                String fieldName = wrapper.fieldName;
-                Object fieldValue = basePermissionSet.get(fieldName);
+        for (CombinedPermissionsWrapper wrapper : combinedPermissions) {
+            String fieldName = wrapper.fieldName;
+            Object fieldValue = basePermissionSet.get(fieldName);
+            if (fieldValue == true || wrapper.fieldValue == null || wrapper.fieldValue == false) {
                 wrapper.fieldValue = fieldValue;
             }
         }
-        return combinedPermissions;
+    }
+    return combinedPermissions;
     }
 
     //This method is called from getCombinedPermissions to set Combined Permissions mute value
@@ -884,7 +889,7 @@ public with sharing class PermissionSetGroupManager {
      }
     //This Method Used to retrieve fieldDefinition, valid Sobjects for Obj Permissions, Valid field for field Permissions and also fetch Object Permissons Dependencies
     @AuraEnabled
-    public static PermissionSetGroupObjectPermissionsWrapper getSobjectPermissionsForPermissionSetGroup(String permSetId,String objName,String psgname,String psgapiname) {
+    public static PermissionSetGroupObjectPermissionsWrapper getSobjectPermissionsForPermissionSetGroup(String permSetId,String objName) {
           Map<String, Boolean> fieldAccess = PermissionSetManager.checkFieldType(objName);
           string nullValue = '%_%';
           list<PermissionSetGroupComponent> per = [SELECT id,PermissionSetId,PermissionSet.Name,PermissionSetGroupId,PermissionSetGroup.DeveloperName FROM PermissionSetGroupComponent
@@ -901,18 +906,6 @@ public with sharing class PermissionSetGroupManager {
           if (!mpsList.isEmpty()) {
               mutingPermissionSet = mpsList[0];
               muteId = mutingPermissionSet.Id;
-          } else {
-              mutingPermissionSet = new MutingPermissionSet();
-              mutingPermissionSet.MasterLabel = psgname + MUTED_LABEL;
-              mutingPermissionSet.DeveloperName = psgapiname + MUTED_DEV_NAME;
-              insert mutingPermissionSet;
-              muteId = mutingPermissionSet.Id;
-              PermissionSetGroup psGroup = [SELECT Id FROM PermissionSetGroup WHERE Id = : permSetId LIMIT 1];
-              PermissionSetGroupComponent component = new PermissionSetGroupComponent(
-                  PermissionSetGroupId = psGroup.Id,
-                  PermissionSetId = mutingPermissionSet.Id
-              );
-              insert component;
           }
           List<Map<String, Object>> fieldPermissionsMapList = new List<Map<String, Object>>();
           Map<String, Map<String, Object>> fieldDefMapByName = PermissionSetManager.getFieldDefinitionProfile(objName);
