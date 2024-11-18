@@ -38,9 +38,38 @@ public with Sharing class ProfileManager {
     }
     // This method is used to update profile properties
     @AuraEnabled
-    public static Map<String, String> updateProfile(String profileName, String newProfileName, String newDescription) {
-       return PermissionAnalyzerServer.editProfileProperties(profileName,newProfileName,newDescription);
+    public static String updateProfile(String profileName, String newDescription) {
+       return PermissionAnalyzerServer.editProfileProperties(profileName,newDescription);
     }  
+    //This method is used to clone Profile
+    @AuraEnabled
+    public static PermissionSet cloneProfile(String profileName,String newProfileName, String newDescription){
+        List<PermissionSet> clonedProfile = new List<PermissionSet>();
+        try {
+            UserAccessManager instance = new UserAccessManager();
+            List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
+                profileName}).getRecords();
+            if (profiles.isEmpty() || profiles[0].fullName == null) {
+                throw new AuraHandledException('Profile not found');
+            }
+            MetadataService.Profile updatedProfile = new MetadataService.Profile();
+            updatedProfile.fullName = newProfileName;
+            updatedProfile.description = newDescription;
+            MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List < MetadataService.Profile > {
+                updatedProfile });
+            if (!results[0].success) {
+                System.debug('Error Message'+results[0].errors[0].message);
+                throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
+            }else{
+                clonedProfile = [Select Id,ProfileId, Profile.Name, IsCustom, Profile.Description, Profile.UserType, Profile.UserLicense.Name from PermissionSet where Profile.Name =: results[0].fullName];
+            } 
+        } catch (Exception e) {
+            System.debug('Error'+e);
+            handleException('Error processing profile update: ',  e);
+            throw new AuraHandledException('Error updating profile: ' + e.getMessage());
+        }
+        return clonedProfile.isEmpty() ? null : clonedProfile[0];
+    }
     //This method is used for delete functionality in profile
     @AuraEnabled
     public static Void deleteProfile(String profileName) {
@@ -331,5 +360,10 @@ public with Sharing class ProfileManager {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
         System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
+    }
+	//This is a method to check duplicate label before creating Profile.
+    @AuraEnabled(cacheable=true)
+    public static Boolean checkDuplicateProfile(String label) {
+        return [SELECT COUNT() FROM Profile WHERE Name = :label] > 0;
     }    
 }

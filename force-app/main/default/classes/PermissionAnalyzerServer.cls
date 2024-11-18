@@ -5,7 +5,7 @@ public with sharing class PermissionAnalyzerServer {
     public static List<User> getUser(String searchUserName) 
     {
         if (String.isNotBlank(searchUserName)) {
-            List<User> userList = [SELECT Id, Name, ProfileId, Email FROM User WHERE Name LIKE :'%' + String.escapeSingleQuotes(searchUserName) + '%' LIMIT 1000];
+            List<User> userList = [SELECT Id, Name, ProfileId, Email,profile.UserLicense.Name,IsActive  FROM User WHERE Name LIKE :'%' + String.escapeSingleQuotes(searchUserName) + '%' LIMIT 1000];
             return userList;
         } else {
             return new List<User>();
@@ -208,8 +208,7 @@ public with sharing class PermissionAnalyzerServer {
     }
     //This method is used to edit the properties of Profile
     @AuraEnabled
-    public static Map<String, String> editProfileProperties(String profileName,String newProfileName,String newDescription) {
-        Map<String, String> returnMap = new Map<String, String>();
+    public static String editProfileProperties(String profileName,String newDescription) {
         try {
             UserAccessManager instance = new UserAccessManager();
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
@@ -219,7 +218,7 @@ public with sharing class PermissionAnalyzerServer {
                 throw new AuraHandledException('Profile not found');
             }
             MetadataService.Profile updatedProfile = new MetadataService.Profile();
-            updatedProfile.fullName = newProfileName;
+            updatedProfile.fullName = profileName;
             updatedProfile.description = newDescription;
             MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List < MetadataService.Profile > {
                 updatedProfile
@@ -227,13 +226,12 @@ public with sharing class PermissionAnalyzerServer {
             if (!results[0].success) {
                 throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
             }            
-            returnMap.put('label', newProfileName);
-            returnMap.put('description', newDescription);
+            return newDescription;
             
         } catch (Exception e) {
             handleException('Error processing profile update: ', e);
         }
-        return returnMap;
+        return null;
     }  
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();

@@ -89,8 +89,7 @@ public with sharing class TabPermissionAnalyzerServer {
         List<TabSettingsWrapper> tabVisibilityWrapper = new List<TabSettingsWrapper>();    
         // Convert the raw list into TabSettingsWrapper list
         for (Map<String, String> item : tabSettingRawList) {
-            for (String tabName : item.keySet()) {
-                String visibility = item.get(tabName);    
+            for (String tabName : item.keySet()) {   
                 // Create the wrapper object
                 tabVisibilityWrapper.add(new TabSettingsWrapper(tabName, item.get(tabName)));
             }
@@ -105,7 +104,10 @@ public with sharing class TabPermissionAnalyzerServer {
         MetadataService.PermissionSet permissionSet;
         if (permissionSets.size() > 0) {
             permissionSet = permissionSets[0]; 
-            permissionSet.tabSettings = updateExistingHelper(permissionSet,permissionSets,tabSettingsResult);
+            if (permissionSet.tabSettings == null) {
+                permissionSet.tabSettings = new List<MetadataService.PermissionSetTabSetting>();
+            } 
+            permissionSet.tabSettings = updateExistingHelper(permissionSet,tabSettingsResult);
         } else {
             permissionSet = new MetadataService.PermissionSet();
             permissionSet.fullName = persetname;
@@ -123,20 +125,15 @@ public with sharing class TabPermissionAnalyzerServer {
         MetadataService.SaveResult[] results = instance.service.updateMetadata(new List<MetadataService.Metadata>{ permissionSet });
         handleSaveResult(results);
         return tabSettingsResult;
-    }
-    
+    }    
     //Helper Method for updating Exisiting tab Permissions
-    private static List<MetadataService.PermissionSetTabSetting> updateExistingHelper(MetadataService.PermissionSet permissionSet, List<MetadataService.PermissionSet> permissionSets, List<TabSettingsWrapper> tabSettingsResult){
-        if (permissionSet.tabSettings == null) {
-            permissionSet.tabSettings = new List<MetadataService.PermissionSetTabSetting>();
-        }    
+    private static List<MetadataService.PermissionSetTabSetting> updateExistingHelper(MetadataService.PermissionSet permissionSet, List<TabSettingsWrapper> tabSettingsResult){
+           
         Set<String> tabsToRemove = new Set<String>();
         for (TabSettingsWrapper tabSettingWrapper : tabSettingsResult) {
             String tabName = tabSettingWrapper.tab;
             String visibility = tabSettingWrapper.visibility;
-            
             if (visibility == null) {
-                // If visibility is null, mark the tab for removal
                 tabsToRemove.add(tabName);
             } else {
                 Boolean tabFound = false;
@@ -156,6 +153,11 @@ public with sharing class TabPermissionAnalyzerServer {
                 }
             }
         }  
+        
+        return updateExistingHelper1(permissionSet,tabsToRemove);
+    }
+    //Helper Method for updating Exisiting 1 tab Permissions
+    private static List<MetadataService.PermissionSetTabSetting> updateExistingHelper1(MetadataService.PermissionSet permissionSet, Set<String> tabsToRemove){
         List<MetadataService.PermissionSetTabSetting> updatedTabSettings = new List<MetadataService.PermissionSetTabSetting>();
         for (MetadataService.PermissionSetTabSetting existingTabSetting : permissionSet.tabSettings) {
             if (!tabsToRemove.contains(existingTabSetting.tab)) {

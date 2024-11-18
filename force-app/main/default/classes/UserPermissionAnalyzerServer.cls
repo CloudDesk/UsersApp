@@ -20,7 +20,7 @@ public with sharing class UserPermissionAnalyzerServer {
         }
     }
     //Get the Selected User's Profile, PermissionSet, PermissioSetGroup Userpermissions
-    @AuraEnabled(cacheable = true)
+    @AuraEnabled
     public static UserPermissionsWrapper getCombinedUserPermissionsForUser(List < String > permissionSetIds) {
         List < FormattedUserPermissions > permissionFields = new List < FormattedUserPermissions > ();
         Set < String > permissionFieldNames = new Set < String > ();

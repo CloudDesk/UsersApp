@@ -203,7 +203,7 @@ public with sharing class PermissionSetManager {
         for (PermissionSetAssignment psa : [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSet.Id = :permissionSetId AND AssigneeId != null]) {
             assigneeIds.add(psa.AssigneeId);
         }
-        String query = 'SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name ' +
+        String query = 'SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name,IsActive ' +
             'FROM User ' +
             'WHERE IsActive = true AND Id NOT IN :assigneeIds';        
         if (String.isNotBlank(profileName) && profileName != 'All') {
@@ -232,11 +232,11 @@ public with sharing class PermissionSetManager {
                     }
                 }
                 if(assigneeId.size()>0){
-                    userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND Id IN :assigneeId];
+                    userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND ProfileId != NULL AND Id IN :assigneeId];
                 }
             }            
         } else {
-            userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE];
+            userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND ProfileId != NULL];
         }
         return userList;
     }  

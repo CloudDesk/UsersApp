@@ -6,6 +6,7 @@ public class PermissionAnalyzerObjectServerTest {
     //This method holds the test data
     @testsetup
     public static void testsetupMethod() {
+       
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         List<User> userList = new List<User>();
         List<PermissionSet> permSets = new List<PermissionSet>();

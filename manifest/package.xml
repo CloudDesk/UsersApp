@@ -6,8 +6,6 @@
         <members>MetadataService</members>
         <members>MetadataServiceTest</members>
         <members>MockHttpResponseGenerator</members>
-        <members>PartnerSObjectWsdl2Apex</members>
-        <members>PartnerSObjectWsdl2ApexTest</members>
         <members>PartnerWsdl2ApexMockWithError</members>
         <members>PermissionAnalyzerObjectServer</members>
         <members>PermissionAnalyzerObjectServerTest</members>
@@ -35,6 +33,9 @@
         <members>UserAccessManagerTest</members>
         <members>TabPermissionAnalyzerServerTest</members>
         <members>ProfileManagerTest</members>
+        <members>WebServiceMockImpl</members>
+        <members>ManageCloneUser</members>
+        <members>ManageCloneUserTest</members>
         <name>ApexClass</name>
     </types>
     <version>62.0</version>

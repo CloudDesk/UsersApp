@@ -6,6 +6,8 @@ public class ProfileManagerTest {
     @TestSetup
     static void setupTestData() {
 		PermissionAnalyzerObjectServerTest.testsetupMethod();
+        PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
+        insert testPermissionSet;
     }
 	//This test Method Used to Check the getProfileName Method in ProfileManager Class
     @IsTest
@@ -48,15 +50,25 @@ public class ProfileManagerTest {
     //This test Method Used to Check the updateProfile Method in ProfileManager Class
     @IsTest
     static void testEditProfileProperties_Success() {
-        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1];
+        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1]; 
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
- 
         Test.startTest();
-        Map<String, String> result = ProfileManager.updateProfile(testProfile.Name, 'Updated_Profile', 'Updated Description'); 
+        String result = ProfileManager.updateProfile(testProfile.Name,'Updated Description'); 
         Test.stopTest();
-        
-        System.assertEquals('Updated Description', result.get('description'), 'Expected updated profile description');
+        System.assertEquals('Updated Description', result, 'Expected updated profile description');
+    }
+    //This test Method Used to Check the cloneProfile Method in ProfileManager Class
+    @IsTest
+    static void testCloneProfile_Success() {
+        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1]; 
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+        MetadataService metaDataService = new MetadataService();
+        Test.startTest();
+        PermissionSet result = ProfileManager.cloneProfile(testProfile.Name,'New Profile Test','Updated Description'); 
+        Test.stopTest();
+        PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
+        System.assertEquals('Test_Sample_PermSet', retrievedPermSet.Name, 'Expected cloned profile name to match');
     }
     //This test Method Used to Check the deleteProfile Method in ProfileManager Class
     @IsTest
