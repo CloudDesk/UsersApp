@@ -73,6 +73,21 @@ public with sharing class ManageCloneUser {
     public static void assignPermissionsAndGroups(Id userId,List<Id> permissionSetIds,List<Id> publicGroupIds,List<Id> queueIds) 
     {
         try {
+        	assignPermissionSets(userId,permissionSetIds);            
+        	assignPublicGroups(userId,publicGroupIds);
+            assignQueues(userId,queueIds);
+            
+            System.debug('Successfully processed Permission Sets, Public Groups, and Queues for UserId: ' + userId);
+        } catch (Exception ex) {
+            System.debug('Error in assignExistingPermissionsAndGroups: ' + ex.getMessage());
+            throw new AuraHandledException('An error occurred while assigning permissions and groups: ' + ex.getMessage());
+        }
+    }
+    
+    //This method is for assigning permission sets
+    @AuraEnabled
+    public static void assignPermissionSets(Id userId,List<Id> permissionSetIds) 
+    {
         if (!permissionSetIds.isEmpty()) {
             List<PermissionSetAssignment> existingAssignments = [
                 SELECT Id, PermissionSetId 
@@ -104,8 +119,11 @@ public with sharing class ManageCloneUser {
                 insert assignmentsToAdd;
             }
         }
-        
-        // Handle Public Groups
+    }
+    //This method is for assigning public groups
+    @AuraEnabled
+    public static void assignPublicGroups(Id userId,List<Id> publicGroupIds)
+    {
         if (!publicGroupIds.isEmpty()) {
             List<GroupMember> existingPublicGroups = [
                 SELECT Id, GroupId 
@@ -137,8 +155,11 @@ public with sharing class ManageCloneUser {
                 insert groupsToAdd;
             }
         }
-        
-        // Handle Queues
+    }
+    //This method is for assigning queues
+    @AuraEnabled
+    public static void assignQueues(Id userId,List<Id> queueIds)
+    {
         if (!queueIds.isEmpty()) {
             List<GroupMember> existingQueues = [
                 SELECT Id, GroupId 
@@ -169,11 +190,6 @@ public with sharing class ManageCloneUser {
             if (!queuesToAdd.isEmpty()) {
                 insert queuesToAdd;
             }
-        }
-            System.debug('Successfully processed Permission Sets, Public Groups, and Queues for UserId: ' + userId);
-        } catch (Exception ex) {
-            System.debug('Error in assignExistingPermissionsAndGroups: ' + ex.getMessage());
-            throw new AuraHandledException('An error occurred while assigning permissions and groups: ' + ex.getMessage());
         }
     }
     //This method is used to fetch list of users.
