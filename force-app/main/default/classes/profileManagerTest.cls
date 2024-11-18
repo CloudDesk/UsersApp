@@ -65,7 +65,7 @@ public class ProfileManagerTest {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
-        PermissionSet result = ProfileManager.cloneProfile(testProfile.Name,'New Profile Test','Updated Description'); 
+        ProfileManager.cloneProfile(testProfile.Name,'New Profile Test','Modified Description'); 
         Test.stopTest();
         PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];
         System.assertEquals('Test_Sample_PermSet', retrievedPermSet.Name, 'Expected cloned profile name to match');
