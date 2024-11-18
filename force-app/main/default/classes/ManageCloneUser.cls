@@ -1,5 +1,5 @@
 //This class is used to create,clone,activating,deactivating,assigning permission sets,permission set groups,public groups,queues for user.
-public class ManageCloneUser {
+public with sharing class ManageCloneUser {
     //This method is used to get users based on available licenses left.
     @AuraEnabled(cacheable=true)
     public static List<User> getUsers() {
