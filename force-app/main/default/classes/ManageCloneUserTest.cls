@@ -75,7 +75,7 @@ public class ManageCloneUserTest {
         User testUser2 = [select id from user where Username = 'SampleUser345@example.com'];
         Test.startTest();
         Map<String, List<SObject>> result = ManageCloneUser.getUserAssignedGroups(testUser2.Id);
-        Map<String, List<SObject>> resultwithNullUser = ManageCloneUser.getUserAssignedGroups(null);
+        ManageCloneUser.getUserAssignedGroups(null);
         System.assertNotEquals(1, result.size(),'users have same size');
         Test.stopTest();
     }
@@ -147,7 +147,7 @@ public class ManageCloneUserTest {
     static void testUserActivationActivate_ExceptionHandling() {
         Test.startTest();
         try{
-        User updatedUser = ManageCloneUser.userActivation(null, true);
+        ManageCloneUser.userActivation(null, true);
         System.assert(true, Error_Thrown_Message);
         } catch (AuraHandledException e){
           System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);    
