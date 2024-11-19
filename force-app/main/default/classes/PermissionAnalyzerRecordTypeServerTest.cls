@@ -18,6 +18,7 @@ public class PermissionAnalyzerRecordTypeServerTest {
         wrapper.label = permSet.Label;
         wrapper.Visible = true;
         wrapper.RecordType = 'test';
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Test.startTest();
         List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> result=PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibilityForPermSet(
@@ -54,7 +55,8 @@ public class PermissionAnalyzerRecordTypeServerTest {
     static void testGetAndUpdateRecordTypeVisibilityForProfile() {
         String profileName = PROFILE_NAME;
         String objectName = 'Account';
-        String recordTypeName = 'Account.Healthplan'; 
+        String recordTypeName = 'Account.Healthplan';
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Test.startTest();
         Map<String, Object> getResult = PermissionAnalyzerRecordTypeServer.getRecordTypeVisibilityForProfile(new List<String> {profileName},objectName);
@@ -84,6 +86,7 @@ public class PermissionAnalyzerRecordTypeServerTest {
         String profileName = PROFILE_NAME;
         String objectName = 'Account';  
         PermissionSet testPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Test.startTest();
         PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityResutlWrapper result =PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
@@ -118,6 +121,7 @@ public class PermissionAnalyzerRecordTypeServerTest {
     static void testGetRecordTypeVisibilityForPermSet() {
         PermissionSet permSet = [SELECT Id, Label, Name FROM PermissionSet LIMIT 1];
         String objectName = 'Account';
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Test.startTest();
         Map<String, Object> result = PermissionAnalyzerRecordTypeServer.getRecordTypeVisibilityForPermSet(new List<String> {permSet.Name},objectName);

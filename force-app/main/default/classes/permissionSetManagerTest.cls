@@ -19,6 +19,7 @@ public class PermissionSetManagerTest {
         PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
         insert testPermissionSet;
         User u = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Map < String, Object > permSetToCreate = new Map < String, Object > {'Name' => 'Test_Test_Permission_Set','Label' => 'Test Test Permission Set Label',
             										'Description' => 'Test Permission Set Description','License' => null,'hasActivationRequired' => false};
@@ -296,7 +297,8 @@ public class PermissionSetManagerTest {
     //This test method is used to check the logics for getPermissionSetTabSetting method in PermissionSetManager class.
     @IsTest
     static void testGetPermissionSetTabSetting() {
-    	PermissionSet permissionSet = [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1]; 
+    	PermissionSet permissionSet = [SELECT Id,Name FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         

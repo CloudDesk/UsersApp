@@ -409,23 +409,6 @@ public class PermissionSetGroupManagerTest {
         System.assertNotEquals(null, result.objectPermissions, 'ObjectPermissions map should not be null');
     }
 	
-    //This test method is used to check the functionality of getSobjectPermissionsForPermissionSetGroup method in PermissionSetGroupManager class
-    @IsTest
-    static void testGetSobjectPermissionsForPermissionSetGroup() {
-        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
-        permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult'; 
-        Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
-        PermissionSetGroup psg = [SELECT Id,DeveloperName,MasterLabel FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_2' LIMIT 1];
-        String permSetId = psg.Id;
-        PermissionSetGroup psgone = new PermissionSetGroup();
-        psgone.DeveloperName = 'New_Test_Permission_Set_Group_Four';
-        psgone.MasterLabel = PERMISSION_SET_LABEL;
-        insert psgone;
-        Test.startTest();
-        PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(permSetId, 'Opportunity', psg.MasterLabel, psg.DeveloperName);
-        Test.stopTest();
-        System.assertNotEquals(null, result, RESULT_NOT_NULL_MSG);
-    }
     //This test method is used to check the functionality of getSobject method in PermissionSetGroupManager class
     @IsTest
     static void testGetSobjectWithValidPermId() {

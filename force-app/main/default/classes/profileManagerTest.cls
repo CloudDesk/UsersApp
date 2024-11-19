@@ -50,7 +50,8 @@ public class ProfileManagerTest {
     //This test Method Used to Check the updateProfile Method in ProfileManager Class
     @IsTest
     static void testEditProfileProperties_Success() {
-        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1]; 
+        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1];
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
@@ -62,6 +63,7 @@ public class ProfileManagerTest {
     @IsTest
     static void testCloneProfile_Success() {
         Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1]; 
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
@@ -73,6 +75,7 @@ public class ProfileManagerTest {
     //This test Method Used to Check the deleteProfile Method in ProfileManager Class
     @IsTest
     static void testDeleteProfile() {
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
  
@@ -87,6 +90,7 @@ public class ProfileManagerTest {
     static void updateSystemPermissionsProf_Test() {
         
         Map<String, Boolean> systemPermissions = new Map<String, Boolean>{'MockPermission1' => true,'MockPermission2' => true};
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         
@@ -132,6 +136,7 @@ public class ProfileManagerTest {
     static void testGetProfileTabSetting() {
         
         List<String> testProfiles = new List<String>{'Admin'};
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
 		System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         
@@ -149,6 +154,7 @@ public class ProfileManagerTest {
     static void getTabPermissions_test()
     {
         List<String> profileNames = new List<String>{'TestProfile1', 'TestProfile2'};
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
@@ -164,6 +170,7 @@ public class ProfileManagerTest {
     static void getTabPermissions_testFail()
     {
         List<String> profileNames = new List<String>{'InvalidProfile'};
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();

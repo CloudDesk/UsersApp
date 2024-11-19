@@ -73,6 +73,7 @@ public class UserPermissionAnalyzerServerTest {
         Id permSetId = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id;
         Id mutePermSetId = [SELECT Id FROM MutingPermissionSet WHERE DeveloperName = 'New_Test_MutePermSet_1'].Id;
         Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Map < String, Boolean > resultProf = UserPermissionAnalyzerServer.updateUserPermissionsforProfOrPermSetOrMuteGroups(
             [SELECT Id FROM PermissionSet WHERE ProfileId =: profileId].Id,'HCH Sales User',userPermMap);

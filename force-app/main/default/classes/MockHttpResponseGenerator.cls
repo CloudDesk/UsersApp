@@ -48,6 +48,12 @@ Public Class MockHttpResponseGenerator implements HttpCalloutMock {
                     'records' => new List<Object>()
                 });
             }
+            when 'Login' {
+                return JSON.serialize(new Map<String, Object>{
+                    'access_token' => 'REMOVE_SESSION',
+                    'instance_url' => System.Url.getOrgDomainUrl().toExternalForm()
+                });
+            }
             when else {
                 return '';
             }

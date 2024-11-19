@@ -9,6 +9,7 @@ private class TabPermissionAnalyzerServerTest {
         Test.startTest();
         List<String> profileNames = new List<String> { 'ProfileA' };
         String typeProfile = 'Profile';
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         List < Map < String, Object >> tabVisibility  = TabPermissionAnalyzerServer.getProfileOrPermSetTabVisibility(profileNames, typeProfile);
         Test.stopTest();
@@ -21,6 +22,7 @@ private class TabPermissionAnalyzerServerTest {
         Test.startTest();
         List<String> profileNames = new List<String> { 'PermissionSetA' };
         String typeProfile = 'PermissionSet';
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         List < Map < String, Object >> tabVisibility  = TabPermissionAnalyzerServer.getProfileOrPermSetTabVisibility(profileNames, typeProfile);
         Test.stopTest();
@@ -33,6 +35,7 @@ private class TabPermissionAnalyzerServerTest {
     static void tabVisibilityRetrieverForProfile_Test()
     {
         List<String> profileNames = new List<String> { 'HCH Sales User' };
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
@@ -47,6 +50,7 @@ private class TabPermissionAnalyzerServerTest {
     static void tabVisibilityRetrieverForPermissionSet_Test()
     {
         List<String> perSetNames = new List<String> { 'New Test Permission Set 1' };
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
@@ -64,6 +68,7 @@ private class TabPermissionAnalyzerServerTest {
         List<Map<String, Object>> tabToUpdate = new List<Map<String, Object>>();
         Map<String, Object> tab1 = new Map<String, Object>{'Label' => 'Account','Name' => 'standard-Account','Visibility' => 'DefaultOn'};
         tabToUpdate.add(tab1);
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
@@ -74,6 +79,7 @@ private class TabPermissionAnalyzerServerTest {
     //This test method is used to check the logics for updatePermissionSetTabVisibilities method in TabPermissionAnalyzerServer class.
     @IsTest
     static void updatePermissionSetTabVisibilities_Test() {
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();

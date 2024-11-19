@@ -18,13 +18,10 @@ public class UserAccessManagerTest {
     @IsTest
     static void testSuccessfulLogin() {
         Test.startTest();
-        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
-        permissionPartnerSoapSforceComMock.indicatorVar =  'LoginResult';
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         UserAccessManager manager = new UserAccessManager();
         Test.stopTest();
-        System.assertNotEquals(null, manager.partnerConnection, 'Partner connection should not be null after successful login.');
-        System.assertNotEquals(null, manager.partnerConnection.SessionHeader, 'SessionHeader should not be null.');
-        System.assertNotEquals(null, manager.partnerConnection.SessionHeader.sessionId, 'Session ID should be present in SessionHeader.');
+        System.assertEquals('REMOVE_SESSION', manager.partnerConnection.SessionHeader.sessionId, 'Session ID should be present in SessionHeader.');
     }
     //This test method is used to check Failed login.
     @IsTest
