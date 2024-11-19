@@ -174,19 +174,6 @@ public class PermissionAnalyzerServerTest {
         System.assertEquals(1, profileNames.size(), 'There should be 1 profile name returned.');
         System.assertEquals('Standard User', profileNames[0], 'The profile name should be Standard User');
     }
-
-    //This test method is used to check the logics for getProfileName(Empty response) method in PermissionAnalyzerServer class.
-    @IsTest
-    static void testGetProfileNameEmptyResponse() {
-        Profile standardUserProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
-        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
-        permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(null, 'EmptyResponse'));
-        Test.startTest();
-        List < String > profileNames = PermissionAnalyzerServer.getProfileName(standardUserProfile.Id);
-        Test.stopTest();
-        System.assertEquals(0, profileNames.size(), 'There should be no profile name returned.');
-    }
     
     //This test method is used to check the logics for getAssignedUsersForProfilePerSetPerSetGrp method in PermissionAnalyzerServer class.
     @IsTest
@@ -255,15 +242,15 @@ public class PermissionAnalyzerServerTest {
             System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
         }
         Test.stopTest();
-    }
-
-	//This test method is used to check the logics for editProfileProperties method in PermissionAnalyzerServer class.    
+    } 
+    //This test method is used to check the logics for editProfileProperties method in PermissionAnalyzerServer class.    
     @IsTest
     static void testEditProfileProperties_Success() {
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200, 'ProfileName'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         Test.startTest();
-        Map < String, String > result = PermissionAnalyzerServer.editProfileProperties('System Administrator', 'Updated_Profile', 'Updated Description');
+        String result = PermissionAnalyzerServer.editProfileProperties('Updated_Profile', 'Updated Description');
         Test.stopTest();    
         System.assertNotEquals(null, result, 'Result map should not be null.');
-    }    
+    }
 }

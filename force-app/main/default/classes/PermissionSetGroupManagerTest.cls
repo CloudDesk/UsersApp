@@ -496,5 +496,18 @@ public class PermissionSetGroupManagerTest {
         PermissionSetGroupManager.insertPermissionSet(invalidPermissionSetIds, invalidPermissionSetGroupId);
         Test.stopTest();
     }
+    
+    @IsTest
+    static void testGetSobjectPermissionsForPermissionSetGroup() {
+        // Retrieve test data
+        PermissionSetGroup psg = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1];
+        String objName = 'Account';
+        
+        Test.startTest();
+        PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(psg.Id, objName);
+        Test.stopTest();
+        System.assert(result.fieldPermissions.size() > 0, 'Field Permissions should not be empty');
+        System.assert(result.recordTypeDetails.size() > 0, 'Record Type details should not be empty');
+    }
 
 }
