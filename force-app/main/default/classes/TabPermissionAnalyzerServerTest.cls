@@ -1,6 +1,7 @@
 //This test class is used to check functionality of TabPermissionAnalyzerServer class.
 @IsTest
 private class TabPermissionAnalyzerServerTest {
+    private static final List<String> profileNames = new List<String> { 'HCH Sales User' };
     private static final String Tab_Visibilty_Not_Null_Message = 'Tab visibility map should not be null.';
     private static final String Tab_Visibilty_Not_Empty_Message = 'Tab visibility list should not be empty.';
     private static final String Script_Thrown_Message = 'Script-thrown exception';
@@ -36,7 +37,6 @@ private class TabPermissionAnalyzerServerTest {
     @IsTest
     static void tabVisibilityRetrieverForProfile_Test()
     {
-        List<String> profileNames = new List<String> { 'HCH Sales User' };
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
@@ -65,10 +65,10 @@ private class TabPermissionAnalyzerServerTest {
     @IsTest
     static void tabVisibilityRetrieverForPermissionSet_Test_exceptionHandling()
     {
-        List<String> perSetNames = new List<String> { 'New Test Permission Set 1' };
+        List<String> perSetNames = new List<String> { 'New Test Permission Set 2' };
         Test.startTest();
         try{
-        Map < String, String > tabVisibility = TabPermissionAnalyzerServer.tabVisibilityRetrieverForPermissionSet(perSetNames);
+        TabPermissionAnalyzerServer.tabVisibilityRetrieverForPermissionSet(perSetNames);
         System.assert(true, Error_Thrown_Message);
         } catch(Exception e){
           System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);  
@@ -80,7 +80,6 @@ private class TabPermissionAnalyzerServerTest {
      @IsTest
     static void updateProfileTabVisibilities_Test()
     {
-        List<String> profileNames = new List<String> { 'HCH Sales User' };
         List<Map<String, Object>> tabToUpdate = new List<Map<String, Object>>();
         Map<String, Object> tab1 = new Map<String, Object>{'Label' => 'Account','Name' => 'standard-Account','Visibility' => 'DefaultOn'};
         tabToUpdate.add(tab1);
@@ -95,7 +94,6 @@ private class TabPermissionAnalyzerServerTest {
      @IsTest
     static void updateProfileTabVisibilities_Test_exceptionHandling()
     {
-        List<String> profileNames = new List<String> { 'HCH Sales User' };
         List<Map<String, Object>> tabToUpdate = new List<Map<String, Object>>();
         Map<String, Object> tab1 = new Map<String, Object>{'Label' => 'Account','Name' => 'standard-Account','Visibility' => 'DefaultOn'};
         tabToUpdate.add(tab1);
@@ -116,7 +114,7 @@ private class TabPermissionAnalyzerServerTest {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
-        List<TabPermissionAnalyzerServer.TabSettingsWrapper> result = TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', 'New Test Permission Set 1');
+        List<TabPermissionAnalyzerServer.TabSettingsWrapper> result = TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', 'New Test Permission Set 3');
         handlingErrorsAndExceptionsTest();
         Test.stopTest();
         System.assertNotEquals(null, result, 'The result should not be null.');
@@ -130,7 +128,7 @@ private class TabPermissionAnalyzerServerTest {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
-        List<TabPermissionAnalyzerServer.TabSettingsWrapper> result = TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', 'InvalidPermissionSet');
+        List<TabPermissionAnalyzerServer.TabSettingsWrapper> result = TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', invalidPermissionSetName);
         handlingErrorsAndExceptionsTest();
         Test.stopTest();
         System.assertNotEquals(null, result, 'The result should not be null.');
