@@ -91,7 +91,8 @@ public class ManagePermissionSetCreateServerTest {
         eligibleFieldWrapper.hasEditAccess = true;
         eligibleFieldWrapper.mutedPermissionsRead = false;
         eligibleFieldWrapper.mutedPermissionsEdit = false;
-        System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
         createPermissionSetTest(objectPermMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper},'Obj','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
@@ -100,7 +101,8 @@ public class ManagePermissionSetCreateServerTest {
     //This test method is used to check the functionality of createPermissionSetTest method with User in ManagePermissionSetCreateServer class
     @IsTest
     static void createNewPermissionSet_TestWithUser(){
-        System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
         createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'User','',new Map<String, Boolean>{'ApiEnabled'=>true,'EditTask'=>true},new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
@@ -109,7 +111,8 @@ public class ManagePermissionSetCreateServerTest {
     //This test method is used to check the functionality of createPermissionSetTest method with Tab in ManagePermissionSetCreateServer class
     @IsTest
     static void createNewPermissionSet_TestWithTab(){
-        System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService(); 
         
         Test.StartTest();
@@ -124,7 +127,8 @@ public class ManagePermissionSetCreateServerTest {
         wrapper.Visible = false;
         wrapper.developerName = 'Healthplan';
         wrapper.Default_x = false;
-        System.Test.setMock(WebServiceMock.class, new KanithaWebServiceMock());
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         
         Test.StartTest();
@@ -176,6 +180,7 @@ public class ManagePermissionSetCreateServerTest {
      //This test method is used to check the functionality of createPermissionSetWithTabsAndUsers(Success) method with Record Type in ManagePermissionSetCreateServer class
      @IsTest
     static void testCreatePermissionSetWithoutTabSettings() {
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         String tabSettingsJson = '[]';

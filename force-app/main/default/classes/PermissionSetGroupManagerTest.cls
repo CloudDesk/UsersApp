@@ -502,6 +502,9 @@ public class PermissionSetGroupManagerTest {
         // Retrieve test data
         PermissionSetGroup psg = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1];
         String objName = 'Account';
+        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
+        permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
+        Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
         
         Test.startTest();
         PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(psg.Id, objName);
