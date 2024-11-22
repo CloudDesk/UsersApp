@@ -48,13 +48,21 @@ public with Sharing class ProfileManager {
         try {
             UserAccessManager instance = new UserAccessManager();
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
-                profileName}).getRecords();
+                profileName
+                    }).getRecords();
             if (profiles.isEmpty() || profiles[0].fullName == null) {
                 throw new AuraHandledException('Profile not found');
             }
             MetadataService.Profile updatedProfile = new MetadataService.Profile();
             updatedProfile.fullName = newProfileName;
             updatedProfile.description = newDescription;
+            updatedProfile.userLicense = profiles[0].userLicense;
+            updatedProfile.fieldPermissions  = profiles[0].fieldPermissions;
+            updatedProfile.objectPermissions = profiles[0].objectPermissions;
+            updatedProfile.recordTypeVisibilities = profiles[0].recordTypeVisibilities;
+            updatedProfile.applicationVisibilities  = profiles[0].applicationVisibilities;
+            updatedProfile.classAccesses = profiles[0].classAccesses;
+            updatedProfile.pageAccesses  = profiles[0].pageAccesses;
             MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List < MetadataService.Profile > {
                 updatedProfile });
             if (!results[0].success) {

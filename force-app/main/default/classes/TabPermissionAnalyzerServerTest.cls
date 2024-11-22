@@ -6,6 +6,12 @@ private class TabPermissionAnalyzerServerTest {
     private static final String Tab_Visibilty_Not_Empty_Message = 'Tab visibility list should not be empty.';
     private static final String Script_Thrown_Message = 'Script-thrown exception';
     private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
+    //This method holds the test data
+    @testsetup
+    public static void testsetupMethod() {
+        User_Access_Credentials__c credentials = new User_Access_Credentials__c(Name='Standard',Client_Id__c='testClientId',Client_Secret__c='testClientSecret');
+        insert credentials;
+    }
     //This test method is used to check the logics for getProfileOrPermSetTabVisibility method for Permission Set in TabPermissionAnalyzerServer class.
     @IsTest
     static void testGetProfileOrPermSetTabVisibilityForProfile() {

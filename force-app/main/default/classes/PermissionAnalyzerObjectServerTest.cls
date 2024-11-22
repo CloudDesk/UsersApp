@@ -39,7 +39,8 @@ public class PermissionAnalyzerObjectServerTest {
             }
             permSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permSetId, AssigneeId = userList[0].Id));
         }
-        insert permSetAssignments;      
+        insert permSetAssignments; 
+        System.enqueueJob(new SetupObjectJob());
     }
     
     // Creating Object, Field and group Permissions;
@@ -267,4 +268,15 @@ public class PermissionAnalyzerObjectServerTest {
             System.assert(result.size() > 0, 'Should return dependencies');
         }
     }   
+    //This Method is used to insert the custom setting
+    public class SetupObjectJob implements Queueable {
+        public void execute(QueueableContext context) {
+            User_Access_Credentials__c credentials = new User_Access_Credentials__c(
+                Name='Standard', 
+                Client_Id__c='testClientId', 
+                Client_Secret__c='testClientSecret'
+            );
+            insert credentials;
+        }
+    }
 }

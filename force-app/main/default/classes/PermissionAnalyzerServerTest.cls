@@ -48,6 +48,7 @@ public class PermissionAnalyzerServerTest {
         };
         insert permSetGroupsToInsert;
         insert new PermissionSetGroupComponent(PermissionSetGroupId = permSetGroupsToInsert[0].Id, PermissionSetId = permSetsToInsert[0].Id);
+        System.enqueueJob(new SetupObjectJob());
     }
 
     //This test method is used to check the logics for getUser method in PermissionAnalyzerServer class.
@@ -252,5 +253,16 @@ public class PermissionAnalyzerServerTest {
         String result = PermissionAnalyzerServer.editProfileProperties('Updated_Profile', 'Updated Description');
         Test.stopTest();    
         System.assertNotEquals(null, result, 'Result map should not be null.');
+    }
+    //This Method is used to insert the custom setting
+    public class SetupObjectJob implements Queueable {
+        public void execute(QueueableContext context) {
+            User_Access_Credentials__c credentials = new User_Access_Credentials__c(
+                Name='Standard', 
+                Client_Id__c='testClientId', 
+                Client_Secret__c='testClientSecret'
+            );
+            insert credentials;
+        }
     }
 }

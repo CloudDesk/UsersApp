@@ -17,6 +17,8 @@ public class UserAccessManagerTest {
     //This test method is used to check successful login.    
     @IsTest
     static void testSuccessfulLogin() {
+        User_Access_Credentials__c testCredential = new User_Access_Credentials__c(Name = 'Standard',Client_Id__c = 'testClientId',Client_Secret__c = 'testClientSecret');
+        insert testCredential;
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         UserAccessManager manager = new UserAccessManager();
@@ -26,6 +28,8 @@ public class UserAccessManagerTest {
     //This test method is used to check Failed login.
     @IsTest
     static void testFailedLogin() {
+        User_Access_Credentials__c testCredential = new User_Access_Credentials__c(Name = 'Standard',Client_Id__c = 'testClientId',Client_Secret__c = 'testClientSecret');
+        insert testCredential;
         Test.startTest();
         Test.setMock(WebServiceMock.class, new PartnerWsdl2ApexMockWithError());
         try {

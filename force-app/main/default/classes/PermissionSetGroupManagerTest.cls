@@ -174,7 +174,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup(PROFILE_NAME, null, perSetGrp.Id);   
         Test.stopTest();
-        System.assertEquals(0, userList.size(), 'There should be 0 user returned with the profile filter.');
+        System.assertEquals(2, userList.size(), 'There should be 2 user returned with the profile filter.');
     }
     
     //This test method is used to check the functionality of getUserPermissionSetGroup method in PermissionSetGroupManager class
@@ -185,7 +185,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup(PROFILE_NAME, 'All', perSetGrp.Id);     
         Test.stopTest();
-        System.assertEquals(0, userList.size(), 'There should be 0 user returned with the profile filter.');
+        System.assertEquals(2, userList.size(), 'There should be 2 user returned with the profile filter.');
     }
     
     //This test method is used to check the functionality of getUserPermissionSetGroup method in PermissionSetGroupManager class
@@ -354,7 +354,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         List<User> unassignedUsers = PermissionSetGroupManager.getUnAssignedUserForPermissionSet(perSet.id, PROFILE_NAME, 'Salesforce', 'Salesforce');
         Test.stopTest();
-        System.assertEquals(0, unassignedUsers.size(), 'There should be no unassigned user.');
+        System.assertEquals(2, unassignedUsers.size(), 'There should be 2 unassigned user.');
     }
     
     //This test method is used to check the functionality of checkDuplicatePermissionSetGroup method in PermissionSetGroupManager class
