@@ -1,6 +1,6 @@
 //This class is used for create,edit,delete,update,assign user,unassign user in Permission Set..
 public with sharing class PermissionSetManager {
- 	//Method to Create Permission Set
+    //Method to Create Permission Set
     @AuraEnabled(cacheable=false)
     public static String createPermissionSet(Map<String,Object> permSetToCreate,List<Id> userIds) 
     {    
@@ -29,13 +29,13 @@ public with sharing class PermissionSetManager {
         createPermSetAssignmentForCreatedPermSet(userIds,persetId[0].Id);
         return persetId[0].Id;
     }
-
+    
     //Handling upsert errors
     private static void handleUpsertResult(MetadataService.UpsertResult result) {
         if (!result.success) {
             for (MetadataService.Error error : result.errors) {
-            System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
-            if (error.fields != null) {
+                System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+                if (error.fields != null) {
                     for (String field : error.fields) {
                         System.debug('Error Field: ' + field);
                     }
@@ -265,7 +265,7 @@ public with sharing class PermissionSetManager {
                     'LastModifiedById' => ps.LastModifiedBy?.Id,
                     'LastModifiedByName' => ps.LastModifiedBy?.Name
                     };
-             result.add(recordMap);
+                        result.add(recordMap);
         }
         return result;
     }
@@ -274,14 +274,14 @@ public with sharing class PermissionSetManager {
     public static Map<String, List<Map<String, String>>> getPermissionSetLicenseCreate() {
         Map < String, List < Map < String, String >>> userPermLicenseMap = new Map < String, List < Map < String, String >>> {
             'UserLicense' => new List < Map < String,String >> ()};
-                    try {
-                        for (UserLicense userLic: [SELECT Id, Name, MasterLabel FROM UserLicense]) {
-                            userPermLicenseMap.get('UserLicense').add(new Map < String, String > {
-                                'Id' => userLic.Id, 'Name' => userLic.Name, 'MasterLabel' => userLic.MasterLabel});
-                        }
-                    } catch (Exception e) {
-                        handleException('Error retrieving UserLicenses: ', e);
-                    }        
+                try {
+                    for (UserLicense userLic: [SELECT Id, Name, MasterLabel FROM UserLicense]) {
+                        userPermLicenseMap.get('UserLicense').add(new Map < String, String > {
+                            'Id' => userLic.Id, 'Name' => userLic.Name, 'MasterLabel' => userLic.MasterLabel});
+                    }
+                } catch (Exception e) {
+                    handleException('Error retrieving UserLicenses: ', e);
+                }        
         System.debug('userPermLicenseMap: ' + userPermLicenseMap);
         return userPermLicenseMap;
     }    
@@ -352,10 +352,10 @@ public with sharing class PermissionSetManager {
         List<PermissionSet> basePermissionSets = (List<PermissionSet>) Database.query(
             baseQueryString
         );
-
+        
         permissionWrap.userPermissions = buildUserPermissionsList(basePermissionSets, baseFields);
         permissionWrap.systemDependencies = UserPermissionAnalyzerServer.getUserPermissionUserDependency();
-
+        
         Set<String> dependentObjects = buildDependentObjectsList(permissionWrap.systemDependencies);
         Map<String, Map<String, Object>> objectPermissionsMap = getObjectPermissionsMap(permissionSetIds, dependentObjects);
         
@@ -366,7 +366,7 @@ public with sharing class PermissionSetManager {
     //This method is called from getCombinedPermissionsforProfile. This is used to build ser Permissions
     private static List<Map<String, Object>> buildUserPermissionsList(List<PermissionSet> basePermissionSets, Map<String, Schema.SObjectField> baseFields){
         List<Map<String, Object>> userPermsList = new List<Map<String, Object>>(); 
-
+        
         for (PermissionSet basePermissionSet : basePermissionSets) {
             for (Schema.SObjectField field : baseFields.values()) {
                 String fieldName = field.getDescribe().getName();
@@ -451,7 +451,7 @@ public with sharing class PermissionSetManager {
                     handleException('Error updating PermissionSet: ', e);
                     return new List<PermissionSet>(); 
                 }
-    }    
+    }
     //Wrapper class to get field permissions & its dependencies.
     public class ProfileObjectPermissionsWrapper {
         @AuraEnabled public final List<Map<String, Object>> fieldPermissions;
@@ -512,7 +512,7 @@ public with sharing class PermissionSetManager {
     //Helper method to get field names.                
     @AuraEnabled    
     public static Map<String, Map<String, Object>> getFieldDefinitionProfile(String objectName) {
-       Map<String, Map<String, Object>> fieldDefMapByName = new Map<String, Map<String, Object>>();
+        Map<String, Map<String, Object>> fieldDefMapByName = new Map<String, Map<String, Object>>();
         Schema.DescribeSObjectResult describeResult = Schema.getGlobalDescribe().get(objectName).getDescribe();        
         for (Schema.SObjectField field : describeResult.fields.getMap().values()) {
             Map<String, Object> fieldDefMap = new Map<String, Object>();
@@ -538,11 +538,11 @@ public with sharing class PermissionSetManager {
         @AuraEnabled public Map<String, Object> objectPerms { get; private set; }
         @AuraEnabled public List<FieldPermissionUpdateWrapper> fieldPerms { get; private set; }
         public UpdatedObjPermResult(Map<String, Object> objectPerms, List<FieldPermissionUpdateWrapper> fieldPerms) {
-        this.objectPerms = objectPerms;
-        this.fieldPerms = fieldPerms;
+            this.objectPerms = objectPerms;
+            this.fieldPerms = fieldPerms;
         }
     }
-   //This method is used for updating object permissions.
+    //This method is used for updating object permissions.
     @AuraEnabled
     public static UpdatedObjPermResult updateSobjectMeta(Map<String, Map<String, Boolean>> objectPermissionsMap, List<FieldPermissionUpdateWrapper> fieldPerms, String permSetId, String objName) {
         Map<String, Object> objResult = new Map<String, Object>();
@@ -570,17 +570,17 @@ public with sharing class PermissionSetManager {
         try {
             Map<String, ObjectPermissions> existingPermMap = new Map<String, ObjectPermissions>();
             for (ObjectPermissions perm : [SELECT Id, ParentId, SobjectType, PermissionsCreate, PermissionsRead,
-                                            PermissionsEdit, PermissionsDelete, PermissionsModifyAllRecords, PermissionsViewAllRecords
-                                            FROM ObjectPermissions
-                                            WHERE ParentId = :permSetId AND SobjectType IN :objPerms.keySet()]) {
-                existingPermMap.put(perm.SobjectType, perm);
-            }    
+                                           PermissionsEdit, PermissionsDelete, PermissionsModifyAllRecords, PermissionsViewAllRecords
+                                           FROM ObjectPermissions
+                                           WHERE ParentId = :permSetId AND SobjectType IN :objPerms.keySet()]) {
+                                               existingPermMap.put(perm.SobjectType, perm);
+                                           }    
             List<ObjectPermissions> objPermissionsToUpsert = new List<ObjectPermissions>();
             for (String objName : objPerms.keySet()) {
                 Map<String, Object> permissionsMap = objPerms.get(objName);    
                 ObjectPermissions objToUpsert = existingPermMap.containsKey(objName) ? 
-                                                existingPermMap.get(objName) : 
-                                                new ObjectPermissions(ParentId = permSetId, SobjectType = objName);
+                    existingPermMap.get(objName) : 
+                new ObjectPermissions(ParentId = permSetId, SobjectType = objName);
                 objToUpsert.PermissionsCreate = (Boolean) permissionsMap.get('PermissionsCreate');
                 objToUpsert.PermissionsRead = (Boolean) permissionsMap.get('PermissionsRead');
                 objToUpsert.PermissionsEdit = (Boolean) permissionsMap.get('PermissionsEdit');
@@ -591,10 +591,10 @@ public with sharing class PermissionSetManager {
                 resultMap.put(objName, objToUpsert);
             }
             Map<String,Boolean> checkAccessLevelForObjectPermissions = PermissionAnalyzerServer.getObjDefinition('ObjectPermissions');
-                 if (!objPermissionsToUpsert.isEmpty() && checkAccessLevelForObjectPermissions.get('Create') 
-                     && checkAccessLevelForObjectPermissions.get('Update')) {
-                     upsert objPermissionsToUpsert;
-                 }
+            if (!objPermissionsToUpsert.isEmpty() && checkAccessLevelForObjectPermissions.get('Create') 
+                && checkAccessLevelForObjectPermissions.get('Update')) {
+                    upsert objPermissionsToUpsert;
+                }
         } catch (Exception e) {
             handleException('Error updating object permissions: ', e);
         }
@@ -625,17 +625,17 @@ public with sharing class PermissionSetManager {
         }    
         Map < String, FieldPermissions > existingPermissionsMap = new Map < String, FieldPermissions > ();
         for (FieldPermissions fieldPerm: [SELECT Id, SObjectType, Field, PermissionsRead, PermissionsEdit
-                FROM FieldPermissions
-                WHERE ParentId =: permissionSetId AND Field IN: fieldWrapperMap.keySet()
-            ]) {
-            existingPermissionsMap.put(fieldPerm.Field, fieldPerm);
-        }    
+                                          FROM FieldPermissions
+                                          WHERE ParentId =: permissionSetId AND Field IN: fieldWrapperMap.keySet()
+                                         ]) {
+                                             existingPermissionsMap.put(fieldPerm.Field, fieldPerm);
+                                         }    
         for (String fieldName: fieldWrapperMap.keySet()) {
             FieldPermissionUpdateWrapper wrapper = fieldWrapperMap.get(fieldName);
             FieldPermissions permission = existingPermissionsMap.containsKey(fieldName) ?
                 existingPermissionsMap.get(fieldName) :
-                new FieldPermissions(SObjectType = objName, Field = fieldName, ParentId = permissionSetId);
-    
+            new FieldPermissions(SObjectType = objName, Field = fieldName, ParentId = permissionSetId);
+            
             if (fieldPermType != 'MutePermission') {
                 permission.PermissionsRead = wrapper.PermissionsRead;
                 permission.PermissionsEdit = wrapper.PermissionsEdit;
@@ -643,7 +643,7 @@ public with sharing class PermissionSetManager {
                 permission.PermissionsRead = wrapper.mutedPermissionsRead;
                 permission.PermissionsEdit = wrapper.mutedPermissionsEdit;
             }
-    
+            
             permissionsToUpsert.add(permission);
             updatedFieldPermissions.add(wrapper);
         } 
@@ -659,7 +659,7 @@ public with sharing class PermissionSetManager {
             }    
         return null;
     }
-	private static void handleException(String message, Exception e) {
+    private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
         System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);

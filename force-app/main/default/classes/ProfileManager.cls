@@ -50,6 +50,7 @@ public with Sharing class ProfileManager {
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
                 profileName
                     }).getRecords();
+            System.debug('Profile to Clone :: '+profiles[0].fullName);
             if (profiles.isEmpty() || profiles[0].fullName == null) {
                 throw new AuraHandledException('Profile not found');
             }
@@ -59,7 +60,8 @@ public with Sharing class ProfileManager {
             updatedProfile.userLicense = profiles[0].userLicense;
             updatedProfile.fieldPermissions  = profiles[0].fieldPermissions;
             updatedProfile.objectPermissions = profiles[0].objectPermissions;
-            updatedProfile.recordTypeVisibilities = profiles[0].recordTypeVisibilities;
+            updatedProfile.recordTypeVisibilities = profiles[0].recordTypeVisibilities; 
+            updatedProfile.userPermissions = profiles[0].userPermissions;
             updatedProfile.applicationVisibilities  = profiles[0].applicationVisibilities;
             updatedProfile.classAccesses = profiles[0].classAccesses;
             updatedProfile.pageAccesses  = profiles[0].pageAccesses;
@@ -69,6 +71,7 @@ public with Sharing class ProfileManager {
                 System.debug('Error Message'+results[0].errors[0].message);
                 throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
             }else{
+                System.debug('New Profile :: ' + results[0].fullName);
                 clonedProfile = [Select Id,ProfileId, Profile.Name, IsCustom, Profile.Description, Profile.UserType, Profile.UserLicense.Name from PermissionSet where Profile.Name =: results[0].fullName];
             } 
         } catch (Exception e) {
