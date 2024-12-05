@@ -322,7 +322,7 @@ public with sharing class PermissionAnalyzerObjectServer {
     }
     //This Method is Used to Update Object ANd Field Permissions For Profile and PermissionSets And PermissionSetGroup
     @AuraEnabled
-    public static UpdatedObjAndFieldResult updateObjAndFieldInitiation(Map<String, Map<String, Boolean>> objectPermissionsMap, List<FieldPermissionUpdateWrapper> fieldPerms, String permSetId, String objName, String muteOrFilePermissionsType) {   
+    public static UpdatedObjAndFieldResult updateObjAndFieldInitiation(Map<String, Map<String, Boolean>> objectPermissionsMap, List<FieldPermissionUpdateWrapper> fieldPerms, String permSetId, String objName, String muteOrFilePermissionsType) {
         Map<String, Object> objPermissionResult = new Map<String, Object>();
         List<FieldPermissionUpdateWrapper> fieldPermissionResult = new List<FieldPermissionUpdateWrapper>();
         try {

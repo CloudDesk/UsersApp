@@ -36,6 +36,12 @@
         <members>WebServiceMockImpl</members>
         <members>ManageCloneUser</members>
         <members>ManageCloneUserTest</members>
+        <members>ConnectedAppCreation</members>
+        <members>ConnectedAppCreationTest</members>
+        <members>CreateConnectedAppQueueable</members>
+        <members>CreateConnectedAppQueueableTest</members>
+        <members>UserAccessBatch</members>
+        <members>UserAccessBatchTest</members>
         <name>ApexClass</name>
     </types>
     <version>62.0</version>

@@ -33,7 +33,7 @@ public with Sharing class ProfileManager {
         } catch (Exception e) {
             System.debug('Exception: ' + e.getMessage());
         }      
-        System.debug('profile Names: ' + profileNames);
+        System.debug('profileNames: ' + profileNames);
         return profileNames;
     }
     // This method is used to update profile properties

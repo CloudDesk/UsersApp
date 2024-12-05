@@ -183,14 +183,20 @@ public with sharing class ManageCloneUser {
     }
     
     public class PermissionSetWrapper {
+        @AuraEnabled public List<PermissionSet> profiles { get; set; }
         @AuraEnabled public List<PermissionSet> permissionSets { get; set; }
         @AuraEnabled public List<PermissionSet> permissionSetGroups { get; set; }
         @AuraEnabled public List<Group> publicGroupQueue { get; set; }
+        @AuraEnabled public List<PermissionSet> assignedProfile { get; set; }
+        @AuraEnabled public List<PermissionSet> assignedPermissionSet { get; set; }
         
         public PermissionSetWrapper() {
+            profiles = new List<PermissionSet>();
             permissionSets = new List<PermissionSet>();
             permissionSetGroups = new List<PermissionSet>();
             publicGroupQueue = new List<Group>();
+            assignedProfile = new List<PermissionSet>();
+            assignedPermissionSet = new List<PermissionSet>();
         }
     }
     //This method is used to retrieve userlicense based permission sets,permission set groups,public groups,queues.
@@ -228,7 +234,7 @@ public with sharing class ManageCloneUser {
         System.debug('Result >>>' + wrapper);
         return wrapper;
     }
-    
+    //This method used to retrieve the assigned permission sets,permission set groups,public groups,queues of the user.
     @AuraEnabled(cacheable=true)
     public static PermissionSetWrapper getAssignedAssignment(Id userId) {
         User user = [SELECT Profile.UserLicenseId FROM User WHERE Id = :userId LIMIT 1];
@@ -250,6 +256,34 @@ public with sharing class ManageCloneUser {
         
         System.debug('Assigned Result >>>' + wrapper);
         return wrapper;
+    }
+    //This method retrieves the profiles and permission sets associated with a connected app.
+    @AuraEnabled(cacheable=true)
+    public static PermissionSetWrapper getConnectedAssignment(String connectedAppId) {
+        PermissionSetWrapper wrapper = new PermissionSetWrapper();
+        wrapper.profiles = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile from PermissionSet where Id NOT IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId =: connectedAppId)  AND Type = 'Profile'];
+        wrapper.permissionSets = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile from PermissionSet where Id NOT IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId =: connectedAppId)  AND Type = 'Regular'];
+        
+        wrapper.assignedProfile = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Profile'];
+        wrapper.assignedPermissionSet = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Regular'];
+        
+        System.debug('Wrapper Result >>>' + wrapper);
+        return wrapper;
+    }
+    //This method retrieves the ID of the connected app
+    @AuraEnabled
+    public static String getConnectedAppId() {
+        try {
+            List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = 'User Access Connected App' LIMIT 1];
+            if (!connectedApps.isEmpty()) {
+                return connectedApps[0].Id;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.debug('Error occurred: ' + e.getMessage());
+            return null;
+        }
     }
     
 }

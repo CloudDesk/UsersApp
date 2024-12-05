@@ -43,7 +43,7 @@ public with sharing class UserAccessManager {
     //Querying Client Id and Client Secret
     public static CredentialsWrapper getUserAccessCredential(){        
         String prefixName = getUserAccessCredentialNamespace();
-        String query = 'SELECT ' + prefixName + 'Client_Id__c, ' + prefixName + 'Client_Secret__c FROM ' + prefixName + 'user_access_credentials__c';
+        String query = 'SELECT ' + prefixName + 'Client_Id__c, ' + prefixName + 'Client_Secret__c FROM ' + prefixName + 'User_Access_Credentials';
         List<SObject> userAccessCredential = Database.query(query);
         if(userAccessCredential.size() > 0){
             String clientId = (String)userAccessCredential[0].get(prefixName+'Client_Id__c');
@@ -96,7 +96,7 @@ public with sharing class UserAccessManager {
             String instanceUrl = (String) responseMap.get('instance_url');
             
             loginResult.sessionId = accessToken;
-            loginResult.serverUrl = instanceUrl + '/services/Soap/u/62.0'; // Adjust version as needed
+            loginResult.serverUrl = instanceUrl + '/services/Soap/u/62.0';
         }
         return loginResult;
     }

@@ -184,6 +184,26 @@ public class ManageCloneUserTest {
         Test.stopTest();
         System.assert(result.size() > 2, 'Result should contain at least two users');
     }
+    //This test method is used to check the functionality of getConnectedAssignment method in ManageCloneUser class.
+    @isTest
+    static void testGetConnectedAssignment() {
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
+        Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+        ConnectedApplication existingApp = [SELECT Id FROM ConnectedApplication LIMIT 1];
+        Test.startTest();
+        ManageCloneUser.PermissionSetWrapper result = ManageCloneUser.getConnectedAssignment(existingApp.Id);
+        Test.stopTest();
+        system.debug('result>>'+result);
+        System.assertNotEquals(null, result.permissionSets.size(), 'The ConnectedAppId should not be null');
+    }
+    //This test method is used to check the functionality of getConnectedAppId method in ManageCloneUser class.
+    @isTest
+    static void testGetConnectedAppId() {
+        Test.startTest();
+        String connectedAppId = ManageCloneUser.getConnectedAppId();
+        Test.stopTest();
+        System.assertNotEquals(null, connectedAppId, 'The ConnectedAppId should not be null');
+    }
 
     
 }

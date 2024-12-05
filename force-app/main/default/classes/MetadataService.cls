@@ -6044,6 +6044,8 @@ public class MetadataService {
         public String plugin;
         public MetadataService.ConnectedAppSamlConfig samlConfig;
         public String startUrl;
+        public MetadataService.PermissionSet[] permissionSet;
+        private String[] permissionSet_type_info = new String[]{'permissionSet',SOAP_M_URI,null,'0','-1','false'};
         private String[] attributes_type_info = new String[]{'attributes',SOAP_M_URI,null,'0','-1','false'};
         private String[] canvasConfig_type_info = new String[]{'canvasConfig',SOAP_M_URI,null,'0','1','false'};
         private String[] contactEmail_type_info = new String[]{'contactEmail',SOAP_M_URI,null,'1','1','false'};
@@ -11737,16 +11739,22 @@ public class MetadataService {
         public String certificate;
         public String consumerKey;
         public String consumerSecret;
+        public Boolean isClientCredentialEnabled;
+        public Boolean isAdminApproved;
+        public String oauthClientCredentialUser;
         public String[] scopes;
         public String singleLogoutUrl;
         private String[] callbackUrl_type_info = new String[]{'callbackUrl',SOAP_M_URI,null,'1','1','false'};
         private String[] certificate_type_info = new String[]{'certificate',SOAP_M_URI,null,'0','1','false'};
         private String[] consumerKey_type_info = new String[]{'consumerKey',SOAP_M_URI,null,'0','1','false'};
         private String[] consumerSecret_type_info = new String[]{'consumerSecret',SOAP_M_URI,null,'0','1','false'};
+        private String[] isClientCredentialEnabled_type_info = new String[]{'isClientCredentialEnabled',SOAP_M_URI,null,'1','1','false'};
+        private String[] isAdminApproved_type_info = new String[]{'isAdminApproved',SOAP_M_URI,null,'1','1','false'};
+        private String[] oauthClientCredentialUser_type_info = new String[]{'oauthClientCredentialUser',SOAP_M_URI,null,'1','1','false'};
         private String[] scopes_type_info = new String[]{'scopes',SOAP_M_URI,null,'0','-1','false'};
         private String[] singleLogoutUrl_type_info = new String[]{'singleLogoutUrl',SOAP_M_URI,null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] field_order_type_info = new String[]{'callbackUrl','certificate','consumerKey','consumerSecret','scopes','singleLogoutUrl'};
+        private String[] field_order_type_info = new String[]{'callbackUrl','certificate','consumerKey','consumerSecret','isClientCredentialEnabled','isAdminApproved','oauthClientCredentialUser','scopes','singleLogoutUrl'};
     }
     public class ObjectSearchSetting {
         public Boolean enhancedLookupEnabled;
@@ -13234,7 +13242,7 @@ public class MetadataService {
         private String[] field_order_type_info = new String[]{'active','adjustmentsSettings','displayedCategoryApiNames','forecastRangeSettings','forecastedCategoryApiNames','forecastingDateType','hasProductFamily','isAmount','isAvailable','isQuantity','managerAdjustableCategoryApiNames','masterLabel','name','opportunityListFieldsLabelMappings','opportunityListFieldsSelectedSettings','opportunityListFieldsUnselectedSettings','opportunitySplitName','ownerAdjustableCategoryApiNames','quotasSettings','territory2ModelName'};
     }
     public class MetadataPort {
-        public String endpoint_x = URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/m/42.0';
+        public String endpoint_x;
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -13252,6 +13260,14 @@ public class MetadataService {
         private String CallOptions_hns = 'CallOptions=http://soap.sforce.com/2006/04/metadata';
         private String AllOrNoneHeader_hns = 'AllOrNoneHeader=http://soap.sforce.com/2006/04/metadata';
         private String[] ns_map_type_info = new String[]{SOAP_M_URI, 'MetadataService'};
+        public MetadataPort(String apiVersion) {
+            endpoint_x = URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/m/' + apiVersion;
+            system.debug('endpoint_x'+endpoint_x);
+        }
+        public MetadataPort() {
+            endpoint_x = URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/m/42.0';
+            system.debug('endpoint_x'+endpoint_x);
+        }
         public MetadataService.DeleteResult[] deleteMetadata(String type_x,String[] fullNames) {
             MetadataService.DeleteMetadata_element request_x = new MetadataService.DeleteMetadata_element();
             request_x.type_x = type_x;

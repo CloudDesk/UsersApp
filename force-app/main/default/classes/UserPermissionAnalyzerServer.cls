@@ -255,7 +255,6 @@ public with sharing class UserPermissionAnalyzerServer {
         }
         return result;
     }
-    
     private static void handleUpsertError(MetadataService.UpsertResult upsertResult) {
         for (MetadataService.Error error: upsertResult.errors) {
             System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);

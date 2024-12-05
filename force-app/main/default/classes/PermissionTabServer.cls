@@ -85,7 +85,7 @@ public with sharing class PermissionTabServer {
             for (PermissionSetAssignment perSetAssign : [ SELECT id, AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId IN :permissionSetIdSet]) {
                 assigneeIdSet.add(perSetAssign.AssigneeId);
             }
-            for (User u : [SELECT id,Name, Username, Alias,Profile.Name, IsActive, LastLoginDate, Title, Department, Profile.UserLicense.Name FROM user WHERE id IN :assigneeIdSet AND IsActive = true ORDER BY IsActive DESC Limit 50000]) { 
+            for (User u : [SELECT id,Name, Username, Alias,Profile.Name, IsActive, LastLoginDate, Title, UserRole.Name, Profile.UserLicense.Name FROM user WHERE id IN :assigneeIdSet AND IsActive = true ORDER BY IsActive DESC Limit 50000]) { 
                 userMap.put(u.id, u);
             }
         }catch(exception e){
