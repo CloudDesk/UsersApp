@@ -5,7 +5,8 @@ public class CreateConnectedAppQueueableTest {
     @isTest
     static void testCreateConnectedAppQueueableSuccess() {
         Test.startTest();
-        CreateConnectedAppQueueable queueable = new CreateConnectedAppQueueable('mockSessionId', 'testuser@domain.com', 'testuser@domain.com');
+        String currentUserEmail = 'testuser@domain.com';
+        CreateConnectedAppQueueable queueable = new CreateConnectedAppQueueable('mockSessionId', currentUserEmail, currentUserEmail);
         System.enqueueJob(queueable);
         
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
@@ -13,7 +14,7 @@ public class CreateConnectedAppQueueableTest {
         
         List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = 'User Access Connected App'];
         System.assertEquals(1, connectedApps.size(), 'Connected App should be created successfully.');
-        System.assertEquals('testuser@domain.com', queueable.currentUserUsername, 'Same Value Should be retrun');
+        System.assertEquals(currentUserEmail, queueable.currentUserUsername, 'Same Value Should be retrun');
         
         Test.stopTest();
     }

@@ -12,7 +12,7 @@ global with sharing class UserAccessBatch implements Database.Batchable<SObject>
         try {
             System.enqueueJob(new CreateConnectedAppQueueable(UserInfo.getSessionId(), UserInfo.getUserName(), UserInfo.getUserEmail()));
         } catch (Exception e) {
-            
+            System.debug('Exception Occured '+ e.getMessage());
         }
     }
     

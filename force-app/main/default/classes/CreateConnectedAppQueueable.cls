@@ -54,9 +54,9 @@ public with sharing class CreateConnectedAppQueueable implements Queueable, Data
                         insert customSettingRecord;
                         system.debug('Full Name'+save_result.fullName);
                         List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = : connectedApp.label LIMIT 1];
-                        SObject publishedEvent = createAndPublishPlatformEvent('Success','Connected App and custom setting created successfully.',connectedApps[0].Id);
+                        createAndPublishPlatformEvent('Success','Connected App and custom setting created successfully.',connectedApps[0].Id);
                     }else {
-                        SObject publishedEvent = createAndPublishPlatformEvent('Error','Metadata creation failed: ' + save_Result.errors[0].message,null);
+                        createAndPublishPlatformEvent('Error','Metadata creation failed: ' + save_Result.errors[0].message,null);
                         ConnectedAppEvent__e event = new ConnectedAppEvent__e();
                         event.Status__c = 'Error';
                         event.Message__c = 'Metadata creation failed: ' + save_Result.errors[0].message;
@@ -66,7 +66,7 @@ public with sharing class CreateConnectedAppQueueable implements Queueable, Data
                 }
             } catch (Exception e) {
                 System.debug('Error creating ConnectedApp: ' + e.getMessage());
-                SObject publishedEvent = createAndPublishPlatformEvent('Error','Error creating Connected App: ' + e.getMessage(),null);
+                createAndPublishPlatformEvent('Error','Error creating Connected App: ' + e.getMessage(),null);
             }
     }
     // Getting Platform Event package name if applicable

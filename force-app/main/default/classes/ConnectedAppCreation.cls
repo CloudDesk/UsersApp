@@ -8,11 +8,11 @@ public with sharing class ConnectedAppCreation {
         try {
             if(connectedApps.isEmpty()){
                 UserAccessBatch batchJob = new UserAccessBatch();
-                Id batchProcessId = Database.executeBatch(batchJob, 200);
+                Database.executeBatch(batchJob, 200);
                 return 'Connected App creation is in progress. Please wait... ';
             }
             else{
-                SObject publishedEvent = CreateConnectedAppQueueable.createAndPublishPlatformEvent('Error','App already exist',null);
+                CreateConnectedAppQueueable.createAndPublishPlatformEvent('Error','App already exist',null);
                 return 'Error: App Exist';
             }
         } catch (Exception e) {
