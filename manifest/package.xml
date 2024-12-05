@@ -42,6 +42,8 @@
         <members>CreateConnectedAppQueueableTest</members>
         <members>UserAccessBatch</members>
         <members>UserAccessBatchTest</members>
+        <members>UserPermissionDependencyMock</members>
+        <members>MetadataWebServiceMock</members>
         <name>ApexClass</name>
     </types>
     <version>62.0</version>
