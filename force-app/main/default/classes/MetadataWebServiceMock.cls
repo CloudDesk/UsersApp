@@ -1,12 +1,11 @@
-//This class is used for metadata mock.
-public with sharing class MetadataWebServiceMock implements WebServiceMock{
+public class MetadataWebServiceMock implements WebServiceMock{
     public void doInvoke(
         Object stub, Object request, Map<String, Object> response,
         String endpoint, String soapAction, String requestName,
         String responseNS, String responseName, String responseType) 
     {
         MetadataService metaDataService = new MetadataService();
-        //Used to Read Records
+        
         if(request instanceof MetadataService.IReadResult){
             
             response.put('response_x', new MetadataService.readProfileResponse_element());
@@ -41,25 +40,6 @@ public with sharing class MetadataWebServiceMock implements WebServiceMock{
                 
                 response.put('response_x', profileResp);                    
             }
-            else if (readMeta.type_x == 'ConnectedApp') {
-                MetadataService.readConnectedAppResponse_element connectedAppResp = new MetadataService.readConnectedAppResponse_element();
-                connectedAppResp.result = new MetadataService.ReadConnectedAppResult();
-                
-                MetadataService.ConnectedApp connectedApp = new MetadataService.ConnectedApp();
-                connectedApp.fullName = 'Test_Connected_App';
-                connectedApp.label = 'Test Connected App';
-                connectedApp.contactEmail = 'test@app.com';
-                connectedApp.oauthConfig = new MetadataService.ConnectedAppOauthConfig();
-                connectedApp.oauthConfig.callbackUrl = 'https://test.callback.com';
-                connectedApp.oauthConfig.scopes = new List<String>{ 'Api', 'Web', 'Full' };
-                connectedApp.oauthConfig.consumerKey = '1234567890abcdef';
-                connectedApp.oauthConfig.consumerSecret = 'abcdef1234567890';
-                
-                connectedAppResp.result.records = new List<MetadataService.ConnectedApp>();
-                connectedAppResp.result.records.add(connectedApp);
-                
-                response.put('response_x', connectedAppResp);
-            }
             else if(readMeta.type_x == 'PermissionSet'){
                 MetadataService.readPermissionSetResponse_element permSetResp = new MetadataService.readPermissionSetResponse_element();
                 permSetResp.result = new MetadataService.ReadPermissionSetResult();
@@ -83,6 +63,8 @@ public with sharing class MetadataWebServiceMock implements WebServiceMock{
                 
                 permissionSetMetaRecord.tabSettings.add(tabSettingVisibility);
                 
+                
+                
                 permSetResp.result.records = new List<MetadataService.PermissionSet>();
                 permSetResp.result.records.add(permissionSetMetaRecord);
                 
@@ -90,7 +72,6 @@ public with sharing class MetadataWebServiceMock implements WebServiceMock{
             }
             
         }
-        //Method used to update records
         else if(request instanceof MetadataService.updateMetadata_element){
             
             MetadataService.updateMetadataResponse_element updateResponse = new MetadataService.updateMetadataResponse_element();                
@@ -102,21 +83,20 @@ public with sharing class MetadataWebServiceMock implements WebServiceMock{
                 updateResult.errors = new List<MetadataService.Error>();
                 
                 updateResponse.result = new List<MetadataService.SaveResult>{ updateResult };
-            } else {
-                 updateResult.success = false;
-                 updateResult.fullName = null;
+                    } else {
+                        updateResult.success = false;
+                        updateResult.fullName = null;
                         
-                 MetadataService.Error error = new MetadataService.Error();
-                 error.message = 'An error occurred while updating the metadata.';
-                 error.statusCode = 'INVALID_FIELD';
-                 updateResult.errors = new List<MetadataService.Error>{ error };
+                        MetadataService.Error error = new MetadataService.Error();
+                        error.message = 'An error occurred while updating the metadata.';
+                        error.statusCode = 'INVALID_FIELD';
+                        updateResult.errors = new List<MetadataService.Error>{ error };
                             
-                 updateResponse.result = new List<MetadataService.SaveResult>{ updateResult };
-            }
+                            updateResponse.result = new List<MetadataService.SaveResult>{ updateResult };
+                                }
             
             response.put('response_x', updateResponse);
         }
-        //Method used to delete records
         else if(request instanceof  MetadataService.deleteMetadata_element){
             MetadataService.deleteMetadataResponse_element deleteResponse = new MetadataService.deleteMetadataResponse_element();
             
@@ -128,9 +108,9 @@ public with sharing class MetadataWebServiceMock implements WebServiceMock{
             
             deleteResponse.result = new List<MetadataService.DeleteResult>{ deleteResult };
                 
-            response.put('response_x', deleteResponse);
+                // Populate the response map with the deleteResponse object
+                response.put('response_x', deleteResponse);
         }
-        //Method used to upsert records
         else if(request instanceof  MetadataService.upsertMetadata_element){
             MetadataService.upsertMetadataResponse_element upsertResult = new MetadataService.upsertMetadataResponse_element();     
             
@@ -139,21 +119,8 @@ public with sharing class MetadataWebServiceMock implements WebServiceMock{
             upsResult.success = true;
             upsResult.fullName = 'Test_Sample_PermSet';
             upsertResult.result = new List<MetadataService.UpsertResult>{upsResult};
-            response.put('response_x', upsertResult);
+                response.put('response_x', upsertResult);
             system.debug('upsertResult >>>'+upsertResult);
-        }
-        //Method used to create records
-        else if(request instanceof MetadataService.createMetadata_element){
-            MetadataService.createMetadataResponse_element createResponse = new MetadataService.createMetadataResponse_element();
-            
-            MetadataService.SaveResult createResult = new MetadataService.SaveResult();
-            createResult.success = true;
-            createResult.fullName = 'Test_Sample_PermSet';
-            createResponse.result = new List<MetadataService.SaveResult>{ createResult };
-                
-            response.put('response_x', createResponse);
-            system.debug('createResponse >>>'+createResponse);
-            
         }
         else if(request instanceof permissionPartnerSoapSforceCom.login_element){
             permissionPartnerSoapSforceCom.loginResponse_element loginResp = new permissionPartnerSoapSforceCom.loginResponse_element();
@@ -162,19 +129,6 @@ public with sharing class MetadataWebServiceMock implements WebServiceMock{
             loginResp.result.serverUrl = 'https://healthcarehighways--genesys1.sandbox.lightning.force.com/';
             response.put('response_x', loginResp);   
             system.debug('loginResult >>>'+loginResp);
-        }
-        else if (request instanceof MetadataService.createMetadata_element) {
-            MetadataService.createMetadata_element createRequest = (MetadataService.createMetadata_element) request;
-            if (createRequest.metadata[0] instanceof MetadataService.ConnectedApp) {
-                MetadataService.createMetadataResponse_element createResponse = new MetadataService.createMetadataResponse_element();
-                MetadataService.SaveResult createResult = new MetadataService.SaveResult();
-                createResult.success = true;
-                createResult.fullName = 'Test_Connected_App';
-                createResponse.result = new List<MetadataService.SaveResult>{ createResult };
-                response.put('response_x', createResponse);
-                
-                System.debug('Connected App created successfully: ' + createResult.fullName);
-            }
         }
         return;
     } 

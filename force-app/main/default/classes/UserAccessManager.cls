@@ -43,7 +43,7 @@ public with sharing class UserAccessManager {
     //Querying Client Id and Client Secret
     public static CredentialsWrapper getUserAccessCredential(){        
         String prefixName = getUserAccessCredentialNamespace();
-        String query = 'SELECT ' + prefixName + 'Client_Id__c, ' + prefixName + 'Client_Secret__c FROM ' + prefixName + 'User_Access_Credentials';
+        String query = 'SELECT ' + prefixName + 'Client_Id__c, ' + prefixName + 'Client_Secret__c FROM ' + prefixName + 'User_Access_Credentials__c';
         List<SObject> userAccessCredential = Database.query(query);
         if(userAccessCredential.size() > 0){
             String clientId = (String)userAccessCredential[0].get(prefixName+'Client_Id__c');
@@ -53,6 +53,7 @@ public with sharing class UserAccessManager {
         return null;
     }
     // Getting custom setting's package name if applicable
+    @AuraEnabled
     public static String getUserAccessCredentialNamespace(){
         String prefixName = '';
         for (String key : Schema.getGlobalDescribe().keySet()) {
