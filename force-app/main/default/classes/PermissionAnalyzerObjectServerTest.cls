@@ -155,7 +155,7 @@ public class PermissionAnalyzerObjectServerTest {
         Test.StartTest();
         Map<String,Object> result = PermissionAnalyzerObjectServer.getSelectePermissionsetObjResult([SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id, new List<String>{'Opportunity'});
         Test.StopTest();
-        System.assertNotEquals(null, result, 'Result should not be null');
+        System.assertNotEquals(null, result, Result_Not_Null_Message);
     }
     //This Method is used to cover getSelectePermissionSetFieldResult.
     @IsTest
@@ -172,7 +172,7 @@ public class PermissionAnalyzerObjectServerTest {
         Test.StartTest();
         List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> result = PermissionAnalyzerObjectServer.getSelectePermissionSetFieldResult([SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper}, new List<String>{OPPORTUNITY_Amount_FIELD});
         Test.StopTest();
-        System.assertNotEquals(null, result, 'Result should not be null');
+        System.assertNotEquals(null, result, Result_Not_Null_Message);
     }
     //This test method is used to check the functionality of updateObjPermissions method in PermissionAnalyzerObjectServer class
     @IsTest

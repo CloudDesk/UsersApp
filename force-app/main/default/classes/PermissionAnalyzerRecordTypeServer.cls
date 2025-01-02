@@ -184,8 +184,6 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
                 successMessages.add('Record type visibilities updated successfully for: ' + upsertResult.fullName);
             }
         }
-        for (String successMsg: successMessages) {
-        }
         if (!errorMessages.isEmpty()) {
             throw new AuraHandledException(String.join(errorMessages, '\n'));
         }

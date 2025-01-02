@@ -26,7 +26,6 @@ public with sharing class PermissionAnalyzerObjectServer {
     //This Method Used to retrieve  valid Sobjects for Obj Permissions, fetch Object Permissons Dependencies
     @AuraEnabled
     public static GetObjectWrapper getObjectRelatedDetails(String sObjectNameList) {
-        List<Map<string, Object>> fieldLabelMap = PermissionTabServer.getFieldDefinition(sObjectNameList);
         return new GetObjectWrapper(checkSobjectFoundInPicklist(sObjectNameList),checkObjectPermissionDependencies(sObjectNameList));
     }
     //This Method Used to retrieve fieldDefinition, Valid field for field Permissions
