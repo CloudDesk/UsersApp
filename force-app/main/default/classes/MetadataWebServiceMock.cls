@@ -90,7 +90,25 @@ public class MetadataWebServiceMock implements WebServiceMock{
                 
                 response.put('response_x', profileResp);
             }
-
+			else if (readMeta.type_x == 'ConnectedApp') {
+                MetadataService.readConnectedAppResponse_element connectedAppResp = new MetadataService.readConnectedAppResponse_element();
+                connectedAppResp.result = new MetadataService.ReadConnectedAppResult();
+                
+                MetadataService.ConnectedApp connectedApp = new MetadataService.ConnectedApp();
+                connectedApp.fullName = 'Test_Connected_App';
+                connectedApp.label = 'Test Connected App';
+                connectedApp.contactEmail = 'test@app.com';
+                connectedApp.oauthConfig = new MetadataService.ConnectedAppOauthConfig();
+                connectedApp.oauthConfig.callbackUrl = 'https://test.callback.com';
+                connectedApp.oauthConfig.scopes = new List<String>{ 'Api', 'Web', 'Full' };
+                connectedApp.oauthConfig.consumerKey = '1234567890abcdef';
+                connectedApp.oauthConfig.consumerSecret = 'abcdef1234567890';
+                
+                connectedAppResp.result.records = new List<MetadataService.ConnectedApp>();
+                connectedAppResp.result.records.add(connectedApp);
+                
+                response.put('response_x', connectedAppResp);
+            }
             else if(readMeta.type_x == 'PermissionSet'){
                 MetadataService.readPermissionSetResponse_element permSetResp = new MetadataService.readPermissionSetResponse_element();
                 permSetResp.result = new MetadataService.ReadPermissionSetResult();
@@ -159,8 +177,20 @@ public class MetadataWebServiceMock implements WebServiceMock{
             loginResp.result = new permissionPartnerSoapSforceCom.LoginResult();
             loginResp.result.sessionId = 'TESTSESSION';
             loginResp.result.serverUrl = 'https://healthcarehighways--genesys1.sandbox.lightning.force.com/';
-            response.put('response_x', loginResp);   
-            system.debug('loginResult >>>'+loginResp);
+            response.put('response_x', loginResp);
+        }
+        else if (request instanceof MetadataService.createMetadata_element) {
+            MetadataService.createMetadata_element createRequest = (MetadataService.createMetadata_element) request;
+            if (createRequest.metadata[0] instanceof MetadataService.ConnectedApp) {
+                MetadataService.createMetadataResponse_element createResponse = new MetadataService.createMetadataResponse_element();
+                MetadataService.SaveResult createResult = new MetadataService.SaveResult();
+                createResult.success = true;
+                createResult.fullName = 'Test_Connected_App';
+                createResponse.result = new List<MetadataService.SaveResult>{ createResult };
+                response.put('response_x', createResponse);
+                
+                System.debug('Connected App created successfully: ' + createResult.fullName);
+            }
         }
         return;
     } 
