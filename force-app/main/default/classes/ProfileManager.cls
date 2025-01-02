@@ -32,8 +32,7 @@ public with Sharing class ProfileManager {
             }
         } catch (Exception e) {
             System.debug('Exception: ' + e.getMessage());
-        }      
-        System.debug('profileNames: ' + profileNames);
+        }
         return profileNames;
     }
     // This method is used to update profile properties
@@ -49,7 +48,6 @@ public with Sharing class ProfileManager {
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
                 profileName
                     }).getRecords();
-            System.debug('Profile to Clone :: '+profiles[0].fullName);
             if (profiles.isEmpty() || profiles[0].fullName == null) {
                 throw new AuraHandledException('Profile not found');
             }
@@ -67,10 +65,8 @@ public with Sharing class ProfileManager {
             MetadataService.UpsertResult[] results = instance.service.upsertMetadata(new List < MetadataService.Profile > {
                 updatedProfile });
             if (!results[0].success) {
-                System.debug('Error Message'+results[0].errors[0].message);
                 handleException('Error updating profile: ' + ': ' + results[0].errors[0].message,  null);
             }else{
-                System.debug('New Profile :: ' + results[0].fullName);
                 clonedProfile = [Select Id,ProfileId, Profile.Name, IsCustom, Profile.Description, Profile.UserType, Profile.UserLicense.Name from PermissionSet where Profile.Name =: results[0].fullName];
             } 
         return clonedProfile.isEmpty() ? null : clonedProfile[0];
@@ -83,7 +79,6 @@ public with Sharing class ProfileManager {
         for (MetadataService.DeleteResult deleteResult : deleteResults) {
             if (!deleteResult.success) {
                 for (MetadataService.Error error : deleteResult.errors) {
-                    System.debug(ERROR_MESSAGE + error.message);
                     throw new AuraHandledException('An error occurred while deleting Profile: ' + error.message);
                 }
             }
@@ -125,7 +120,6 @@ public with Sharing class ProfileManager {
                 tabSettingMapList.add(tabSettingMap);
             }
         }
-        System.debug('tabSettingMap' + tabSettingMapList);
         return tabSettingMapList;
     }	
     // Method to retrieve tab visibility settings for specified profiles and return them as a map of tab names and visibility settings
@@ -147,7 +141,6 @@ public with Sharing class ProfileManager {
         } catch (Exception e) {
             handleException('Error processing tab permissions: ', e);
         }        
-        System.debug('Tab settings: ' + tabSettingObj);
         return tabSettingObj;
     }    
     //This method retrieves Object details for each profile.
@@ -162,7 +155,6 @@ public with Sharing class ProfileManager {
     //This Methos retrieves Permissions details for each Profile.
     @AuraEnabled
     public static List<Map<String, Object>> getFieldPermissionsForProfile(String permSetId, String objName){
-        System.debug('permSetId'+permSetId);
         Map < String, Boolean > fieldAccess = ProfileManager.checkFieldType(objName);      
         Map < String, Map < String, Object >> fieldDefMapByName = ProfileManager.getFieldDefinitionProfile(objName); 
         Map < String, FieldPermissions > fieldPermissionsMap = new Map < String, FieldPermissions > ();
@@ -368,7 +360,6 @@ public with Sharing class ProfileManager {
     }    
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
-        System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
     }
 	//This is a method to check duplicate label before creating Profile.
@@ -382,7 +373,6 @@ public with Sharing class ProfileManager {
         UserAccessManager instance = new UserAccessManager();
         List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
             profileName}).getRecords();
-        System.debug('Profile to Clone :: '+profiles[0].fullName);
         if (profiles.isEmpty() || profiles[0].fullName == null) {
             throw new AuraHandledException('Profile not found');
         }
@@ -489,7 +479,6 @@ public with Sharing class ProfileManager {
         persetToInsert.add(permissionSet);
         MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(persetToInsert);
         if (!results[0].success) {
-            System.debug('Error Message : '+results[0].errors[0].message);
             throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
         }else{
             System.debug('New PermissionSet :: ' + results[0].fullName);

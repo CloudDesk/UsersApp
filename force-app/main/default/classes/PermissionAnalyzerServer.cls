@@ -88,7 +88,6 @@ public with sharing class PermissionAnalyzerServer {
         for (FieldPermissions fieldPerm : [SELECT SObjectType, Field, PermissionsRead, PermissionsEdit FROM FieldPermissions
                                            WHERE ParentId IN :permissionSetIds ORDER BY SObjectType ASC LIMIT 50000])
         {
-            System.debug('inside field permissions for loop');
             ObjAndFieldPermissionsWrapper wrapper = objAndFieldPermissionsWrapperMap.get(fieldPerm.SObjectType);
             if (wrapper == null) {
                 Map < String, Object > fieldPermissionsMap = new Map < String, Object > {
@@ -145,7 +144,6 @@ public with sharing class PermissionAnalyzerServer {
         HttpResponse res = new HttpResponse();
         try {
             res = newReq.send(req);
-            System.debug('check result' + res);
             if (res.getStatusCode() == 200) {
                 Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
                 List<Object> records = (List<Object>) results.get('records');

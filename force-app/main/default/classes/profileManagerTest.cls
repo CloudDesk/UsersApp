@@ -160,8 +160,6 @@ public class ProfileManagerTest {
         Test.startTest();
         Map<String, String> result = ProfileManager.getTabPermissions(profileNames);
         Test.stopTest();
-        System.debug(result);
-        
         System.assertNotEquals(null, result, Error_Null_Result_Message);
         System.assert(result.containsKey('standard-Account'), 'Expected key standard-Account to be present in the result');
     }
@@ -188,7 +186,6 @@ public class ProfileManagerTest {
         Test.startTest();
         ProfileManager.ProfileObjectDetails result = ProfileManager.getProfileObjectDetails(testPermSet.id);
         Test.stopTest();
-        System.debug(result);
         System.assertNotEquals(null, result, Error_Null_Result_Message);  
     }
     //This test Method Used to Check the extractDependentObjects Method in ProfileManager Class 

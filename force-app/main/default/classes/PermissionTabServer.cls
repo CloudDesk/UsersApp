@@ -25,7 +25,6 @@ public with sharing class PermissionTabServer {
                 }
             }
         }
-        System.debug('systemAndUserResult : ' + systemAndUserResult);
         return systemAndUserResult;
     }
     //Uses to fetch EntityDefinition to get ObjNames
@@ -229,7 +228,6 @@ public with sharing class PermissionTabServer {
     }
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
-        System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
     }
 }

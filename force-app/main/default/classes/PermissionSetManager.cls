@@ -38,7 +38,6 @@ public with sharing class PermissionSetManager {
                     }
             }
             handleException(errorMessage , null);
-           // throw new AuraHandledException('Error inserting Permission Set: ' + result.errors[0].message);
         } else {
             System.debug('Permission Set Inserted successfully for: ' + result.fullName);
         }
@@ -55,7 +54,6 @@ public with sharing class PermissionSetManager {
         }
         try {
             insert permSetAssignments;
-            System.debug('Permission set assignments successfully created.');
         } catch (DmlException e) {
             handleException('Error occurred while assigning permission set: ', e);
         }
@@ -73,7 +71,6 @@ public with sharing class PermissionSetManager {
         }
         try {
             insert perSetAsi;
-            System.debug('Permission Set assigned successfully to all users');
         } catch (DmlException e) {
             handleException('Error assigning Permission Set: ', e);
         }
@@ -85,7 +82,6 @@ public with sharing class PermissionSetManager {
         List<PermissionSetAssignment> persetAssignForDlt = [SELECT id FROM PermissionSetAssignment WHERE AssigneeId IN :userId AND PermissionSetId = :perSetId Limit 50000];
         try {
             delete persetAssignForDlt;
-            System.debug('Permission Set Deleted successfully for the users');
         } catch (DmlException e) {
             handleException('Error Deleting Permission Set: ', e);
         }
@@ -116,7 +112,6 @@ public with sharing class PermissionSetManager {
             delete new PermissionSet(Id = permissionSetId);
             return 'Permission set and its assignments deleted successfully.';
         } catch (QueryException qe) {
-            System.debug('Permission set not found: ' + qe.getMessage());
             return 'Permission set not found.';
         } catch (DmlException de) {
             handleException('Error occurred while deleting permission set or its assignments: ', de);
@@ -156,13 +151,10 @@ public with sharing class PermissionSetManager {
             }
             try {
                 insert persetasi;
-                System.debug('Permission Set assigned successfully to all users');
             } catch (DmlException e) {
-                System.debug('Error assigning Permission Set: ' + e.getMessage());
                 throw new AuraHandledException(e.getMessage());
             }
         } catch (DmlException e) {
-            System.debug('Error Cloning Permission Set Group: ' + e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }    
@@ -180,7 +172,6 @@ public with sharing class PermissionSetManager {
             }
             insert newPerSet;
         } catch (DmlException e) {
-            System.debug('Error Cloning Permission Set Group: ' + e.getMessage());
             throw new AuraHandledException(e.getMessage());
         }
     }    
@@ -278,8 +269,7 @@ public with sharing class PermissionSetManager {
                     }
                 } catch (Exception e) {
                     handleException('Error retrieving UserLicenses: ', e);
-                }        
-        System.debug('userPermLicenseMap: ' + userPermLicenseMap);
+                }
         return userPermLicenseMap;
     }    
     //This is a method to retrieve profiles list.
@@ -329,7 +319,6 @@ public with sharing class PermissionSetManager {
         } catch (Exception e) {
             handleException('Error retrieving tab settings: ', e);
         }
-        System.debug('Tab settings: ' + tabSettingObj);
         return tabSettingObj;
     }
     //This method is used to get user permissions/system permissions for permission set.
@@ -653,7 +642,6 @@ public with sharing class PermissionSetManager {
     }
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
-        System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
     }    
 }
