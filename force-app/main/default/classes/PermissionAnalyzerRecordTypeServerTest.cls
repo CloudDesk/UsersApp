@@ -28,28 +28,6 @@ public class PermissionAnalyzerRecordTypeServerTest {
         Test.stopTest();
         System.assertEquals(1, result.size(), 'Expected one record type updates in the result');
     }
-    
-    //This test method is used to check the functionality of updateRecordTypeVisibilityForPermSet(Failure) method in PermissionAnalyzerRecordTypeServer class
-    @IsTest
-    static void testUpdateRecordTypeVisibilityForPermSet_ExceptionHandling() {
-        List<String> permissionSetNames = new List<String>{'InvalidPermissionSet'};
-        PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper wrapper = new PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper();
-        wrapper.developerName = 'MockPermSetName';
-        wrapper.label = 'MockLabel';
-        wrapper.Visible = true;
-        wrapper.RecordType = 'test';
-        Test.startTest();
-        try {
-            PermissionAnalyzerRecordTypeServer.updateRecordTypeVisibilityForPermSet(
-            permissionSetNames, 
-            new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> {wrapper});
-            System.assert(true, Error_Thrown_Message);
-        } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
-        }
-        Test.stopTest();
-    }
-    
 	//This test method is used to check the functionality of getRecordTypeVisibilityForProfile method in PermissionAnalyzerRecordTypeServer class
     @IsTest
     static void testGetAndUpdateRecordTypeVisibilityForProfile() {

@@ -209,7 +209,6 @@ public with sharing class PermissionAnalyzerServer {
     //This method is used to edit the properties of Profile
     @AuraEnabled
     public static String editProfileProperties(String profileName,String newDescription) {
-        try {
             UserAccessManager instance = new UserAccessManager();
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
                 profileName
@@ -224,14 +223,9 @@ public with sharing class PermissionAnalyzerServer {
                 updatedProfile
                     });
             if (!results[0].success) {
-                throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
+                handleException('Error updating profile: ' + ': ' + results[0].errors[0].message, null);
             }            
             return newDescription;
-            
-        } catch (Exception e) {
-            handleException('Error processing profile update: ', e);
-        }
-        return null;
     }  
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();

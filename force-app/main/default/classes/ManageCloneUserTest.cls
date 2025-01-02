@@ -193,7 +193,6 @@ public class ManageCloneUserTest {
         Test.startTest();
         ManageCloneUser.PermissionSetWrapper result = ManageCloneUser.getConnectedAssignment(existingApp.Id);
         Test.stopTest();
-        system.debug('result>>'+result);
         System.assertNotEquals(null, result.permissionSets.size(), 'The ConnectedAppId should not be null');
     }
     //This test method is used to check the functionality of getConnectedAppId method in ManageCloneUser class.

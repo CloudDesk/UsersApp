@@ -4410,6 +4410,7 @@ public class MetadataService {
         public Boolean hasActivationRequired;
         public String label;
         public String license;
+        public String userLicense;
         public MetadataService.PermissionSetObjectPermissions[] objectPermissions;
         public MetadataService.PermissionSetApexPageAccess[] pageAccesses;
         public MetadataService.PermissionSetRecordTypeVisibility[] recordTypeVisibilities;
@@ -4424,6 +4425,7 @@ public class MetadataService {
         private String[] hasActivationRequired_type_info = new String[]{'hasActivationRequired',SOAP_M_URI,null,'0','1','false'};
         private String[] label_type_info = new String[]{'label',SOAP_M_URI,null,'1','1','false'};
         private String[] license_type_info = new String[]{'license',SOAP_M_URI,null,'0','1','false'};
+        private String[] userLicense_type_info = new String[]{'userLicense',SOAP_M_URI,null,'0','1','false'};
         private String[] objectPermissions_type_info = new String[]{'objectPermissions',SOAP_M_URI,null,'0','-1','false'};
         private String[] pageAccesses_type_info = new String[]{'pageAccesses',SOAP_M_URI,null,'0','-1','false'};
         private String[] recordTypeVisibilities_type_info = new String[]{'recordTypeVisibilities',SOAP_M_URI,null,'0','-1','false'};

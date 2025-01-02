@@ -8,7 +8,6 @@ public with sharing class ManageCloneUser {
             Integer remainingLicenses = ul.TotalLicenses - ul.UsedLicenses;
             availableLicenseLimits.put(ul.MasterLabel, remainingLicenses);
         }
-        System.debug('Available license limits >> ' + availableLicenseLimits);
         List<String> validLicenseNames = new List<String>();
         for (String licenseName : availableLicenseLimits.keySet()) {
             if (availableLicenseLimits.get(licenseName) > 0) {
@@ -50,8 +49,6 @@ public with sharing class ManageCloneUser {
             SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)
                              ];
         result.put('queues', queues);
-        
-        System.debug('Final Result >>>'+result);
         return result;
     }
     //This method is for assigning permission sets,permissionset group,public group,queue for user.
@@ -62,7 +59,6 @@ public with sharing class ManageCloneUser {
             assignPermissionSets(userId,permissionSetIds);            
             assignPublicGroups(userId,publicGroupIds);
             assignQueues(userId,queueIds);
-            System.debug('Successfully processed Permission Sets, Public Groups, and Queues for UserId: ' + userId);
         } catch (Exception ex) {
             System.debug('Error in assignExistingPermissionsAndGroups: ' + ex.getMessage());
             throw new AuraHandledException('An error occurred while assigning permissions and groups: ' + ex.getMessage());
@@ -230,8 +226,6 @@ public with sharing class ManageCloneUser {
         }
         
         wrapper.publicGroupQueue = [SELECT Id, Name, DeveloperName, Type FROM Group WHERE Type IN ('Regular', 'Queue')AND Id NOT IN :assignedGroupIds];
-        
-        System.debug('Result >>>' + wrapper);
         return wrapper;
     }
     //This method used to retrieve the assigned permission sets,permission set groups,public groups,queues of the user.
@@ -253,8 +247,6 @@ public with sharing class ManageCloneUser {
         
         wrapper.publicGroupQueue = [SELECT Id, Name, DeveloperName, Type FROM Group WHERE Type IN ('Regular', 'Queue')
                                     AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)];
-        
-        System.debug('Assigned Result >>>' + wrapper);
         return wrapper;
     }
     //This method retrieves the profiles and permission sets associated with a connected app.
@@ -266,8 +258,6 @@ public with sharing class ManageCloneUser {
         
         wrapper.assignedProfile = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Profile'];
         wrapper.assignedPermissionSet = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Regular'];
-        
-        System.debug('Wrapper Result >>>' + wrapper);
         return wrapper;
     }
     //This method retrieves the ID of the connected app

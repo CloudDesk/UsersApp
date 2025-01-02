@@ -10,8 +10,7 @@ public class MetadataWebServiceMock implements WebServiceMock{
             
             response.put('response_x', new MetadataService.readProfileResponse_element());
         }
-        else if(request instanceof MetadataService.readMetadata_element){
-            
+        else if(request instanceof MetadataService.readMetadata_element){            
             MetadataService.readMetadata_element readMeta = (MetadataService.readMetadata_element) request;
             if(readMeta.type_x == 'Profile'){
                 MetadataService.readProfileResponse_element profileResp = new MetadataService.readProfileResponse_element();
@@ -69,31 +68,12 @@ public class MetadataWebServiceMock implements WebServiceMock{
                 permSetResp.result.records.add(permissionSetMetaRecord);
                 
                 response.put('response_x', permSetResp);  
-            }
-            
+            }            
         }
         else if(request instanceof MetadataService.updateMetadata_element){
             
-            MetadataService.updateMetadataResponse_element updateResponse = new MetadataService.updateMetadataResponse_element();                
-            MetadataService.SaveResult updateResult = new MetadataService.SaveResult();
-            Boolean isUpdateSuccessful = true; 
-            if (isUpdateSuccessful) {
-                updateResult.success = true;
-                updateResult.fullName = 'Test_Sample';
-                updateResult.errors = new List<MetadataService.Error>();
-                
-                updateResponse.result = new List<MetadataService.SaveResult>{ updateResult };
-                    } else {
-                        updateResult.success = false;
-                        updateResult.fullName = null;
-                        
-                        MetadataService.Error error = new MetadataService.Error();
-                        error.message = 'An error occurred while updating the metadata.';
-                        error.statusCode = 'INVALID_FIELD';
-                        updateResult.errors = new List<MetadataService.Error>{ error };
-                            
-                            updateResponse.result = new List<MetadataService.SaveResult>{ updateResult };
-                                }
+            MetadataService.updateMetadataResponse_element updateResponse = updateMetadataResponseHelper();                
+            
             
             response.put('response_x', updateResponse);
         }
@@ -132,5 +112,31 @@ public class MetadataWebServiceMock implements WebServiceMock{
         }
         return;
     } 
+    
+    public static MetadataService.updateMetadataResponse_element updateMetadataResponseHelper(){
+        MetadataService.updateMetadataResponse_element updateResponse = new MetadataService.updateMetadataResponse_element();           
+        MetadataService.SaveResult updateResult = new MetadataService.SaveResult();
+            Boolean isUpdateSuccessful = true; 
+            if (isUpdateSuccessful) {
+                updateResult.success = true;
+                updateResult.fullName = 'Test_Sample';
+                updateResult.errors = new List<MetadataService.Error>();
+                
+                updateResponse.result = new List<MetadataService.SaveResult>{ updateResult };
+                    } 
+            else {
+                updateResult.success = false;
+                updateResult.fullName = null;
+                
+                MetadataService.Error error = new MetadataService.Error();
+                error.message = 'An error occurred while updating the metadata.';
+                error.statusCode = 'INVALID_FIELD';
+                updateResult.errors = new List<MetadataService.Error>{ error };
+                    
+                    updateResponse.result = new List<MetadataService.SaveResult>{ updateResult };
+              }
+        return updateResponse;
+        
+    }
     
 }

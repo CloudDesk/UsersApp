@@ -57,17 +57,13 @@ public with sharing class ConnectedAppCreation {
                 setupEntityAccessList.add(psAccess);
             }
         }
-        System.debug('setupEntityAccessList size >> ' + setupEntityAccessList.size() + ' << setupEntityAccessList >> ' + setupEntityAccessList);
-        System.debug('recordsToDelete size >> ' + recordsToDelete.size() + ' << recordsToDelete >> ' + recordsToDelete);
         try {
             if (!setupEntityAccessList.isEmpty()) {
                 insert setupEntityAccessList;
-                System.debug('Successfully assigned permission sets to the connected app.');
             }
             
             if (!recordsToDelete.isEmpty()) {
                 delete recordsToDelete;
-                System.debug('Successfully removed previously assigned permission sets from the connected app.');
             }
         } catch (Exception e) {
             System.debug('Error processing permission sets: ' + e.getMessage());
