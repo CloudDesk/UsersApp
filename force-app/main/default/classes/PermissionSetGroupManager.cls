@@ -8,39 +8,68 @@ public with sharing class PermissionSetGroupManager {
         Map<String, List<PermissionSetGroupComponent>> permSetCompMap = new Map<String, List<PermissionSetGroupComponent>>();
         List<permissionSetGroupWrapper> permissionSetGroupWithLicense = new List<permissionSetGroupWrapper>(); 
         for (PermissionSetGroupComponent permSetComp : [SELECT Id, PermissionSetId, PermissionSet.License.Name, PermissionSetGroupId FROM PermissionSetGroupComponent where PermissionSet.License.Name != NULL limit 5000]) {
-          if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
-            permSetCompMap.put(permSetComp.PermissionSetGroupId, new List<PermissionSetGroupComponent>());
-          }
-          permSetCompMap.get(permSetComp.PermissionSetGroupId).add(permSetComp);
+            if (!permSetCompMap.containsKey(permSetComp.PermissionSetGroupId)) {
+                permSetCompMap.put(permSetComp.PermissionSetGroupId, new List<PermissionSetGroupComponent>());
+            }
+            permSetCompMap.get(permSetComp.PermissionSetGroupId).add(permSetComp);
         }
-        for (PermissionSetGroup permSetGrp : [SELECT Id, DeveloperName, MasterLabel, Description, Status, NamespacePrefix, CreatedById, CreatedBy.Name, CreatedDate, LastModifiedById, LastModifiedBy.Name, LastModifiedDate FROM PermissionSetGroup ORDER BY MasterLabel ASC limit 5000]) {
-            Set<String> licenseList = new Set<String>();          
-            if (permSetCompMap.containsKey(permSetGrp.Id)) {
-                for (PermissionSetGroupComponent permSetGrpComp : permSetCompMap.get(permSetGrp.Id)) {
-                  licenseList.add(permSetGrpComp.PermissionSet.License.Name);
+        for (PermissionSet permSet : [
+            SELECT Id,
+            PermissionSetGroup.Id,
+            PermissionSetGroup.DeveloperName,
+            PermissionSetGroup.MasterLabel,
+            PermissionSetGroup.Description,
+            PermissionSetGroup.Status,
+            PermissionSetGroup.NamespacePrefix,
+            PermissionSetGroup.CreatedById,
+            PermissionSetGroup.CreatedBy.Name,
+            PermissionSetGroup.CreatedDate,
+            PermissionSetGroup.LastModifiedById,
+            PermissionSetGroup.LastModifiedBy.Name,
+            PermissionSetGroup.LastModifiedDate,
+            License.Name
+            FROM PermissionSet
+            WHERE Type = 'Group'
+            ORDER BY PermissionSetGroup.MasterLabel ASC
+            LIMIT 5000
+        ]) {
+            // Initialize license list
+            Set<String> licenseList = new Set<String>();
+            
+            // Check if the permission set group ID exists in the map
+            if (permSetCompMap.containsKey(permSet.PermissionSetGroup.Id)) {
+                for (PermissionSetGroupComponent permSetGrpComp : permSetCompMap.get(permSet.PermissionSetGroup.Id)) {
+                    if (permSetGrpComp.PermissionSet.License != null) {
+                        licenseList.add(permSetGrpComp.PermissionSet.License.Name);
+                    }
                 }
             }
+            
+            // Populate wrapper
             permissionSetGroupWrapper permSetGrpWrapper = new permissionSetGroupWrapper();
-            permSetGrpWrapper.perSetGrpId = permSetGrp.Id;
-            permSetGrpWrapper.DeveloperName = permSetGrp.DeveloperName;
-            permSetGrpWrapper.MasterLabel = permSetGrp.MasterLabel;
-            permSetGrpWrapper.Description = permSetGrp.Description;
-            permSetGrpWrapper.Status = permSetGrp.Status;
-            permSetGrpWrapper.NamespacePrefix = permSetGrp.NamespacePrefix;
-            permSetGrpWrapper.CreatedById = permSetGrp.CreatedById;
-            permSetGrpWrapper.CreatedByName = permSetGrp.CreatedBy.Name;
-            permSetGrpWrapper.CreatedDate = permSetGrp.CreatedDate;
-            permSetGrpWrapper.LastModifiedById = permSetGrp.LastModifiedById;
-            permSetGrpWrapper.LastModifiedByName = permSetGrp.LastModifiedBy.Name;
-            permSetGrpWrapper.LastModifiedDate = permSetGrp.LastModifiedDate;
+            permSetGrpWrapper.perSetId = permSet.Id;
+            permSetGrpWrapper.perSetGrpId = permSet.PermissionSetGroup.Id;
+            permSetGrpWrapper.DeveloperName = permSet.PermissionSetGroup.DeveloperName;
+            permSetGrpWrapper.MasterLabel = permSet.PermissionSetGroup.MasterLabel;
+            permSetGrpWrapper.Description = permSet.PermissionSetGroup.Description;
+            permSetGrpWrapper.Status = permSet.PermissionSetGroup.Status;
+            permSetGrpWrapper.NamespacePrefix = permSet.PermissionSetGroup.NamespacePrefix;
+            permSetGrpWrapper.CreatedById = permSet.PermissionSetGroup.CreatedById;
+            permSetGrpWrapper.CreatedByName = permSet.PermissionSetGroup.CreatedBy.Name;
+            permSetGrpWrapper.CreatedDate = permSet.PermissionSetGroup.CreatedDate;
+            permSetGrpWrapper.LastModifiedById = permSet.PermissionSetGroup.LastModifiedById;
+            permSetGrpWrapper.LastModifiedByName = permSet.PermissionSetGroup.LastModifiedBy.Name;
+            permSetGrpWrapper.LastModifiedDate = permSet.PermissionSetGroup.LastModifiedDate;
             permSetGrpWrapper.sameLicense = licenseList.size() <= 1;
+            
+            // Add to result list
             permissionSetGroupWithLicense.add(permSetGrpWrapper);
         }
-        System.debug('permissionSetGroupWithLicense' + permissionSetGroupWithLicense);
         return permissionSetGroupWithLicense;
     }  
     //wrapper class to fetch permission set group details.
     public class PermissionSetGroupWrapper{
+        @AuraEnabled public String perSetId { get; set; }
         @AuraEnabled public String perSetGrpId { get; set;}
         @AuraEnabled public String DeveloperName { get; set;}
         @AuraEnabled public String MasterLabel { get; set;}
@@ -176,7 +205,6 @@ public with sharing class PermissionSetGroupManager {
             recordsToDelete.add(permissionSetGroupToDelete);          
             if (!recordsToDelete.isEmpty()) {
                 delete recordsToDelete;
-                System.debug('Permission Set Group and related records deleted successfully.');
             } else {
                 System.debug('No records found for the Permission Set Group.');
             }
@@ -203,7 +231,6 @@ public with sharing class PermissionSetGroupManager {
         }
         query += ' ORDER BY Name ASC limit 5000';
         List<User> userList = Database.query(query);
-        System.debug('userList >>> ' + userList);
         return userList;
     }
     //This method is used to assign users to Permission Set Groups, retrieve users assigned to groups, and list users who are eligible to be assigned to a group.
@@ -218,7 +245,6 @@ public with sharing class PermissionSetGroupManager {
         }
         try {
             insert persetasi;
-            System.debug('Permission Set Group assigned successfully to all users');
         } catch (DmlException e) {
             handleException('Error in fetching Permission Set Group: ', e);
         }
@@ -240,7 +266,6 @@ public with sharing class PermissionSetGroupManager {
         List<PermissionSetAssignment> persetAssignForDlt = [SELECT id FROM PermissionSetAssignment WHERE AssigneeId IN :userId AND PermissionSetGroupId = :delPerGrpId];
         try {
             delete persetAssignForDlt;
-            System.debug('Permission Set Group Deleted successfully for the users');
         } catch (DmlException e) {
             handleException('Error in deleting Permission Set Group: ', e);
         }
@@ -283,7 +308,6 @@ public with sharing class PermissionSetGroupManager {
         }
         try {
             insert persetasi;
-            System.debug('Permission Set Group assigned successfully to Permission Set');
         } catch (DmlException e) {
             handleException('Error in creating Permission Set Group: ', e);
         }
@@ -294,7 +318,6 @@ public with sharing class PermissionSetGroupManager {
         List<PermissionSetGroupComponent> persetAssignForDlt = [SELECT id FROM PermissionSetGroupComponent WHERE PermissionSetId IN :permissionSetId AND PermissionSetGroupId = :delPerSetId];
         try {
             delete persetAssignForDlt;
-            System.debug('Permission Set Group Deleted successfully for the PermissionSet');
         } catch (DmlException e) {
             handleException('Error deleting Permission Set Group components', e);
         }
@@ -376,7 +399,6 @@ public with sharing class PermissionSetGroupManager {
         }
         query += ' ORDER BY Name ASC limit 5000';
         List<User> userList = Database.query(query);
-        System.debug('userList >>>' + userList);
         return userList;
     }  
     //This method is used to check duplicate label & api name while creating new permission set group.
@@ -456,7 +478,6 @@ public with sharing class PermissionSetGroupManager {
         } else {
             System.debug('Error: ' + res.getBody());
         }
-        System.debug('fieldPermissionsMap' + fieldPermissionsMap);
         return fieldPermissionsMap;
     }
     
@@ -633,7 +654,6 @@ public with sharing class PermissionSetGroupManager {
                   objMap.put(obj.SobjectType, obj);
               }
           }
-          System.debug(objMap);
           return objMap;
      }
     //Helper method to get muted object permissions.
@@ -676,7 +696,6 @@ public with sharing class PermissionSetGroupManager {
                   objMap.put(obj.SobjectType, obj);
               }
           }
-          System.debug(objMap);
           return objMap;
       }
     // Mute System Permissions for Permission Set Group.
@@ -1030,7 +1049,6 @@ public with sharing class PermissionSetGroupManager {
     //Helper method to capture Exception logs.
     private static void handleException(String message, Exception e) {
           String fullMessage = e == null ? message : message + ': ' + e.getMessage();
-          System.debug(LoggingLevel.ERROR, fullMessage);
           throw new AuraHandledException(fullMessage);
       }
     

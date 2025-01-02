@@ -12,7 +12,7 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
         }
     }
     //This Method used to Dynamically called the RecordType Visibility for profil and PermissionSet    
-    @AuraEnabled(cacheable = true)
+    @AuraEnabled
     public static GetRecTypeVisibilityResutlWrapper getRecTypeVisibilityForProfileAndPermSet(
         String objName,
         String permissionSetId,
@@ -20,7 +20,6 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
         List < String > profileOrPermSetName
     ) {
         Map < String, Object > recordTypeVisibility = new Map < String, Object > ();
-        
         if (String.isNotBlank(permissionSetId)) {
             try {
                 recordTypeVisibility = profileOrPermissionSetType == 'Profile' ?
@@ -30,12 +29,11 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
                 handleException('An error occurred while fetching recordType visibility: ', e);
             }
         }
-        List < RecordType > recordTypes = [
+        return new GetRecTypeVisibilityResutlWrapper([
             SELECT Id, Name, DeveloperName, NamespacePrefix
             FROM RecordType
             WHERE SobjectType =: objName limit 50000
-        ];
-        return new GetRecTypeVisibilityResutlWrapper(recordTypes, recordTypeVisibility);
+        ], recordTypeVisibility);
     }
     //This Method is used to Fetch RecordType Visibility for Profile
     @AuraEnabled
@@ -49,8 +47,7 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
             }
         } catch (Exception e) {
             handleException('An error occurred while fetching RecordType Permissions through Profile: ', e);
-        }
-        System.debug('profileRecTypeMap: ' + profileRecTypeMap);
+        }        
         return profileRecTypeMap;
     }
     //This is helper Method for getRecordTypeVisibilityForProfile
@@ -123,17 +120,13 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
         if (profileOrPermSetNames == null || profileOrPermSetNames.isEmpty()) {
             return recordTypeVisibility;
         }
-        try {
-            UserAccessManager instance = new UserAccessManager();  
-            String metadataType = (profileOrPermissionSetType == 'Profile') ? 'Profile' : 'PermissionSet';            
-            List<MetadataService.Metadata> metadata = instance.service.readMetadata(metadataType, profileOrPermSetNames).getRecords();            
-            if (profileOrPermissionSetType == 'Profile') {
-                updateRecordTypeVisibilityForProfile((List<MetadataService.Profile>)metadata, recordTypeVisibility);
-            } else {
-                updateRecordTypeVisibilityForPermSet(profileOrPermSetNames, recordTypeVisibility);
-            }
-        } catch (Exception e) {
-            handleException('An error occurred while updating RecordType Permissions: ', e);
+        UserAccessManager instance = new UserAccessManager();  
+        String metadataType = (profileOrPermissionSetType == 'Profile') ? 'Profile' : 'PermissionSet';            
+        List<MetadataService.Metadata> metadata = instance.service.readMetadata(metadataType, profileOrPermSetNames).getRecords();        
+        if (profileOrPermissionSetType == 'Profile') {
+            updateRecordTypeVisibilityForProfile((List<MetadataService.Profile>)metadata, recordTypeVisibility);
+        } else {
+            updateRecordTypeVisibilityForPermSet(profileOrPermSetNames, recordTypeVisibility);
         }
         return recordTypeVisibility;
     }
@@ -186,13 +179,12 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
                         errorMessage += ' Fields: ' + String.join(error.fields, ', ');
                     }
                 }
-                errorMessages.add(errorMessage);
+                handleException(errorMessage , null);
             } else {
                 successMessages.add('Record type visibilities updated successfully for: ' + upsertResult.fullName);
             }
         }
         for (String successMsg: successMessages) {
-            System.debug(successMsg);
         }
         if (!errorMessages.isEmpty()) {
             throw new AuraHandledException(String.join(errorMessages, '\n'));
@@ -202,32 +194,26 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
     //This Method is used to Update Record Type Visibility for PermissionSet
     @AuraEnabled
     public static List < RecordTypeUpdateWrapper > updateRecordTypeVisibilityForPermSet(List < String > permissionSetNames, List < RecordTypeUpdateWrapper > recordTypeUpdates) {        
-        try {
-            UserAccessManager instance = new UserAccessManager();
-            Map < String, RecordTypeUpdateWrapper > updateMap = new Map < String, RecordTypeUpdateWrapper > ();
-            for (RecordTypeUpdateWrapper rtUpdate: recordTypeUpdates) {
-                updateMap.put(rtUpdate.RecordType, rtUpdate);
-            }
-            MetadataService.Metadata[] metadataArray = instance.service.readMetadata('PermissionSet', permissionSetNames).getRecords();
-            List < MetadataService.PermissionSet > permissionSetsToUpdate = new List < MetadataService.PermissionSet > ();
-            for (MetadataService.Metadata metadata: metadataArray) {
-                MetadataService.PermissionSet permissionSet = (MetadataService.PermissionSet) metadata;
-                if (permissionSet != null) {
-                    if (permissionSet.recordTypeVisibilities == null) {
-                        permissionSet.recordTypeVisibilities = new List < MetadataService.PermissionSetRecordTypeVisibility > ();
-                    }
-                    permissionSet = updateRecordTypeVisibilityForPermSetHelper(permissionSet, updateMap);
-                    permissionSetsToUpdate.add(permissionSet);
-                } else {
-                    System.debug('Permission set not found in metadata retrieval.');
+        UserAccessManager instance = new UserAccessManager();
+        Map < String, RecordTypeUpdateWrapper > updateMap = new Map < String, RecordTypeUpdateWrapper > ();
+        for (RecordTypeUpdateWrapper rtUpdate: recordTypeUpdates) {
+            updateMap.put(rtUpdate.RecordType, rtUpdate);
+        }
+        MetadataService.Metadata[] metadataArray = instance.service.readMetadata('PermissionSet', permissionSetNames).getRecords();
+        List < MetadataService.PermissionSet > permissionSetsToUpdate = new List < MetadataService.PermissionSet > ();
+        for (MetadataService.Metadata metadata: metadataArray) {
+            MetadataService.PermissionSet permissionSet = (MetadataService.PermissionSet) metadata;
+            if (permissionSet != null) {
+                if (permissionSet.recordTypeVisibilities == null) {
+                    permissionSet.recordTypeVisibilities = new List < MetadataService.PermissionSetRecordTypeVisibility > ();
                 }
+                permissionSet = updateRecordTypeVisibilityForPermSetHelper(permissionSet, updateMap);
+                permissionSetsToUpdate.add(permissionSet);
             }
-            if (!permissionSetsToUpdate.isEmpty()) {
-                MetadataService.SaveResult[] saveResults = instance.service.updateMetadata(permissionSetsToUpdate);
-                handleSaveResults(saveResults);
-            }
-        } catch (Exception e) {
-            handleException('Error updating permission sets:', e);
+        }
+        if (!permissionSetsToUpdate.isEmpty()) {
+            MetadataService.SaveResult[] saveResults = instance.service.updateMetadata(permissionSetsToUpdate);
+            handleSaveResults(saveResults);
         }
         return recordTypeUpdates;
     }
@@ -254,8 +240,8 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
     }
     //This is helper Method to handle the exceptions for recordtype visibilities
     private static void handleException(String message, Exception e) {
-        System.debug(message + ': ' + e.getMessage());
-        throw new AuraHandledException(message + ': ' + e.getMessage());
+        String fullMessage = e == null ? message : message + ': ' + e.getMessage();
+        throw new AuraHandledException(fullMessage);
     }
     //This is the helper Method to handle save result for recordtype visibilities
     private static void handleSaveResults(MetadataService.SaveResult[] saveResults) {
@@ -268,7 +254,7 @@ public with sharing class PermissionAnalyzerRecordTypeServer {
             }
         }
         if (!errors.isEmpty()) {
-            throw new AuraHandledException(String.join(errors, '\n'));
+            handleException(String.join(errors, '\n'), null);
         }
     }
 }
