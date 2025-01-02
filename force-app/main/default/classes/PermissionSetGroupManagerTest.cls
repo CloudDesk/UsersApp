@@ -499,7 +499,6 @@ public class PermissionSetGroupManagerTest {
     
     @IsTest
     static void testGetSobjectPermissionsForPermissionSetGroup() {
-        // Retrieve test data
         PermissionSetGroup psg = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1];
         String objName = 'Account';
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());

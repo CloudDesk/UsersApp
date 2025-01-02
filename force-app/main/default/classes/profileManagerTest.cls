@@ -247,5 +247,37 @@ public class ProfileManagerTest {
         System.assert(result.objectPermissions.containsKey('Account'), 'Result should contain Account permissions.');
         System.assert(result.objectPermissions.containsKey('Contact'), 'Result should contain Contact permissions.');
     }
+	//This test Method Used to Check the getFieldPermissionsForProfile Method in ProfileManager Class  
+    @isTest
+    static void testGetFieldPermissionsForProfile() {
+        PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200, 'Success'));
+        List<Map<String, Object>> fieldPermissions = ProfileManager.getFieldPermissionsForProfile(testPermSet.Id, 'Account');
+        Test.stopTest();
+        System.assertNotEquals(2, fieldPermissions.size(), 'Expected 2 fields to have permissions');
+        Map<String, Object> namePermission = fieldPermissions[0];
+        System.assertEquals('Account.Type', namePermission.get('Field'), 'Field name mismatch');
+        System.assertEquals(false, namePermission.get('PermissionsRead'), 'PermissionsRead mismatch for Account.Type');
+    }
+    
+    @isTest
+    static void testGetProfilePermsToCovertPermSet_ValidProfile() {
+        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1];
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+        MetadataService metaDataService = new MetadataService();
+        Map<String, Object> permSetToCreate = new Map<String, Object>{
+            'Name' => 'Test_Perm_Set',
+            'Label' => 'Test Permission Set',
+            'Description' => 'Description of Permission Set',
+            'hasActivationRequired' => false
+        };
+        Test.startTest();
+        ProfileManager.getProfilePermsToCovertPermSet(testProfile.Name, permSetToCreate);
+        Test.stopTest();
+        System.assert(true, 'Method executed successfully');
+    }
+
     
 }

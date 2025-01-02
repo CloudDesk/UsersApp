@@ -45,7 +45,6 @@ public with Sharing class ProfileManager {
     @AuraEnabled
     public static PermissionSet cloneProfile(String profileName,String newProfileName, String newDescription){
         List<PermissionSet> clonedProfile = new List<PermissionSet>();
-        try {
             UserAccessManager instance = new UserAccessManager();
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
                 profileName
@@ -69,16 +68,11 @@ public with Sharing class ProfileManager {
                 updatedProfile });
             if (!results[0].success) {
                 System.debug('Error Message'+results[0].errors[0].message);
-                throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
+                handleException('Error updating profile: ' + ': ' + results[0].errors[0].message,  null);
             }else{
                 System.debug('New Profile :: ' + results[0].fullName);
                 clonedProfile = [Select Id,ProfileId, Profile.Name, IsCustom, Profile.Description, Profile.UserType, Profile.UserLicense.Name from PermissionSet where Profile.Name =: results[0].fullName];
             } 
-        } catch (Exception e) {
-            System.debug('Error'+e);
-            handleException('Error processing profile update: ',  e);
-            throw new AuraHandledException('Error updating profile: ' + e.getMessage());
-        }
         return clonedProfile.isEmpty() ? null : clonedProfile[0];
     }
     //This method is used for delete functionality in profile
@@ -156,10 +150,19 @@ public with Sharing class ProfileManager {
         System.debug('Tab settings: ' + tabSettingObj);
         return tabSettingObj;
     }    
-    //This method retrieves Field Permission for each profile.
+    //This method retrieves Object details for each profile.
     @AuraEnabled
     public static ProfileObjectPermissionsWrapper getSobjectPermissionsForProfile(String permSetId, String objName) {
         List < Object > dependObjects = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies(objName);
+        return new ProfileObjectPermissionsWrapper(
+            ProfileManager.checkSObjType(objName),
+            dependObjects
+        );
+    }  
+    //This Methos retrieves Permissions details for each Profile.
+    @AuraEnabled
+    public static List<Map<String, Object>> getFieldPermissionsForProfile(String permSetId, String objName){
+        System.debug('permSetId'+permSetId);
         Map < String, Boolean > fieldAccess = ProfileManager.checkFieldType(objName);      
         Map < String, Map < String, Object >> fieldDefMapByName = ProfileManager.getFieldDefinitionProfile(objName); 
         Map < String, FieldPermissions > fieldPermissionsMap = new Map < String, FieldPermissions > ();
@@ -168,9 +171,9 @@ public with Sharing class ProfileManager {
                                           WHERE ParentId =: permSetId AND SObjectType =: objName
                                          ]) {
                                              fieldPermissionsMap.put(fieldPerm.Field, fieldPerm);
-                                         }        
-        List < Map < String, Object >> fieldPermissionsMapList = new List < Map < String, Object >> ();
-        for (String fieldKey: fieldDefMapByName.keySet()) {
+                                         }       
+       List < Map < String, Object >> fieldPermissionsMapList = new List < Map < String, Object >> ();
+       for (String fieldKey: fieldDefMapByName.keySet()) {
             Map < String, Object > fieldDefMap = fieldDefMapByName.get(fieldKey);
             if ((Boolean) fieldDefMap.get('isPermissionable') && fieldAccess.get(fieldKey) == true) {
                 Map < String, Object > fieldPermissionMap = new Map < String, Object > {
@@ -188,20 +191,16 @@ public with Sharing class ProfileManager {
                 }
                 fieldPermissionsMapList.add(fieldPermissionMap);
             }
-        }        
-        return new ProfileObjectPermissionsWrapper(
-            fieldPermissionsMapList,
-            ProfileManager.checkSObjType(objName),
-            dependObjects
-        );
-    }    
+        }   
+        return fieldPermissionsMapList;
+    }
     //Wrapper class to fetch object & field permissions.
     public class ProfileObjectPermissionsWrapper {
-        @AuraEnabled public final List<Map<String, Object>> fieldPermissions;
+        //@AuraEnabled public final List<Map<String, Object>> fieldPermissions;
         @AuraEnabled public final Boolean hasObjAccess;
         @AuraEnabled public final List<Object> dependentObj;
-        public ProfileObjectPermissionsWrapper(List<Map<String, Object>> fieldPermissions, Boolean hasObjAccess, List<Object> dependentObj) {
-            this.fieldPermissions = fieldPermissions;
+        public ProfileObjectPermissionsWrapper(Boolean hasObjAccess, List<Object> dependentObj) {
+            //this.fieldPermissions = fieldPermissions;
             this.hasObjAccess = hasObjAccess;
             this.dependentObj = dependentObj;
         }
@@ -376,5 +375,125 @@ public with Sharing class ProfileManager {
     @AuraEnabled(cacheable=true)
     public static Boolean checkDuplicateProfile(String label) {
         return [SELECT COUNT() FROM Profile WHERE Name = :label] > 0;
-    }    
+    }  
+   	//This Is a method to create the permissionsset with profile
+    @AuraEnabled
+    public static void getProfilePermsToCovertPermSet(String profileName,Map<String,Object> permSetToCreate){
+        UserAccessManager instance = new UserAccessManager();
+        List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
+            profileName}).getRecords();
+        System.debug('Profile to Clone :: '+profiles[0].fullName);
+        if (profiles.isEmpty() || profiles[0].fullName == null) {
+            throw new AuraHandledException('Profile not found');
+        }
+        List<MetadataService.PermissionSet> persetToInsert = new List<MetadataService.PermissionSet>();
+        MetadataService.PermissionSet permissionSet = new MetadataService.PermissionSet();
+        permissionSet.fullName = ((String) permSetToCreate.get('Name')).replaceAll(' ', '_');
+        permissionSet.label = (String) permSetToCreate.get('Label');
+        permissionSet.description = (String) permSetToCreate.get('Description');
+        permissionSet.license = profiles[0].userLicense;
+        permissionSet.hasActivationRequired = (Boolean) permSetToCreate.get('hasActivationRequired');
+        if (profiles[0].objectPermissions != null) {
+            List<MetadataService.PermissionSetObjectPermissions> psObjectPermissions = new List<MetadataService.PermissionSetObjectPermissions>();
+            for (MetadataService.ProfileObjectPermissions profileObjPerm : profiles[0].objectPermissions) {
+                MetadataService.PermissionSetObjectPermissions psObjPerm = new MetadataService.PermissionSetObjectPermissions();
+                psObjPerm.object_x = profileObjPerm.object_x;
+                psObjPerm.allowCreate = profileObjPerm.allowCreate;
+                psObjPerm.allowDelete = profileObjPerm.allowDelete;
+                psObjPerm.allowEdit = profileObjPerm.allowEdit;
+                psObjPerm.allowRead = profileObjPerm.allowRead;
+                psObjPerm.modifyAllRecords = profileObjPerm.modifyAllRecords;
+                psObjPerm.viewAllRecords = profileObjPerm.viewAllRecords;
+                psObjectPermissions.add(psObjPerm);
+            }
+            permissionSet.objectPermissions = psObjectPermissions;
+        }
+        if (profiles[0].applicationVisibilities != null) {
+            List<MetadataService.PermissionSetApplicationVisibility> psAppVisibilities = new List<MetadataService.PermissionSetApplicationVisibility>();
+            for (MetadataService.ProfileApplicationVisibility profileAppVis : profiles[0].applicationVisibilities) {
+                MetadataService.PermissionSetApplicationVisibility psAppVis = new MetadataService.PermissionSetApplicationVisibility();
+                psAppVis.application = profileAppVis.application;
+                psAppVis.visible = profileAppVis.visible;
+                psAppVisibilities.add(psAppVis);
+            }
+            permissionSet.applicationVisibilities = psAppVisibilities;
+        }
+        if (profiles[0].classAccesses != null) {
+            List<MetadataService.PermissionSetApexClassAccess> psClassAccesses = new List<MetadataService.PermissionSetApexClassAccess>();
+            for (MetadataService.ProfileApexClassAccess profileClassAccess : profiles[0].classAccesses) {
+                MetadataService.PermissionSetApexClassAccess psClassAccess = new MetadataService.PermissionSetApexClassAccess();
+                psClassAccess.apexClass = profileClassAccess.apexClass;
+                psClassAccess.enabled = profileClassAccess.enabled;
+                psClassAccesses.add(psClassAccess);
+            }
+            permissionSet.classAccesses = psClassAccesses;
+        }
+        if (profiles[0].pageAccesses != null) {
+            List<MetadataService.PermissionSetApexPageAccess> psPageAccesses = new List<MetadataService.PermissionSetApexPageAccess>();
+            for (MetadataService.ProfileApexPageAccess profilePageAccess : profiles[0].pageAccesses) {
+                MetadataService.PermissionSetApexPageAccess psPageAccess = new MetadataService.PermissionSetApexPageAccess();
+                psPageAccess.apexPage = profilePageAccess.apexPage;
+                psPageAccess.enabled = profilePageAccess.enabled;
+                psPageAccesses.add(psPageAccess);
+            }
+            permissionSet.pageAccesses = psPageAccesses;
+        }
+        if (profiles[0].fieldPermissions  != null){
+            List<MetadataService.PermissionSetFieldPermissions> psFieldPermissions = new List<MetadataService.PermissionSetFieldPermissions>();
+            for (MetadataService.ProfileFieldLevelSecurity profileFieldPerm : profiles[0].fieldPermissions) {
+                MetadataService.PermissionSetFieldPermissions psFieldPerm = new MetadataService.PermissionSetFieldPermissions();
+                psFieldPerm.field = profileFieldPerm.field;
+                psFieldPerm.readable = profileFieldPerm.readable;
+                psFieldPerm.editable = profileFieldPerm.editable;
+                psFieldPermissions.add(psFieldPerm);
+            }
+            permissionSet.fieldPermissions = psFieldPermissions;
+        }
+        if (profiles[0].userPermissions != null) {
+            List<MetadataService.PermissionSetUserPermission> psUserPermissions = new List<MetadataService.PermissionSetUserPermission>();
+            for (MetadataService.ProfileUserPermission profileUserPerm : profiles[0].userPermissions) {
+                MetadataService.PermissionSetUserPermission psUserPerm = new MetadataService.PermissionSetUserPermission();
+                psUserPerm.name = profileUserPerm.name;
+                psUserPerm.enabled = profileUserPerm.enabled;
+                psUserPermissions.add(psUserPerm);
+            }
+            permissionSet.userPermissions = psUserPermissions;
+        }
+        if (profiles[0].recordTypeVisibilities != null) {
+            List<MetadataService.PermissionSetRecordTypeVisibility> psRecordTypeVisibilities = new List<MetadataService.PermissionSetRecordTypeVisibility>();
+            for (MetadataService.ProfileRecordTypeVisibility profileRTV : profiles[0].recordTypeVisibilities) {
+                MetadataService.PermissionSetRecordTypeVisibility psRTV = new MetadataService.PermissionSetRecordTypeVisibility();
+                psRTV.recordType = profileRTV.recordType;
+                psRTV.visible = profileRTV.visible;
+                psRecordTypeVisibilities.add(psRTV);
+            }
+            permissionSet.recordTypeVisibilities = psRecordTypeVisibilities;
+        }
+        if (profiles[0].tabVisibilities != null) {
+            List<MetadataService.PermissionSetTabSetting> psTabSettings = new List<MetadataService.PermissionSetTabSetting>();
+            for (MetadataService.ProfileTabVisibility profileTabVisibility : profiles[0].tabVisibilities) {
+                if(profileTabVisibility.visibility == 'DefaultOn' || profileTabVisibility.visibility == 'DefaultOff'){
+                    MetadataService.PermissionSetTabSetting psTabSetting = new MetadataService.PermissionSetTabSetting();
+                    psTabSetting.tab = profileTabVisibility.tab;
+                    if(profileTabVisibility.visibility == 'DefaultOn'){
+                        psTabSetting.visibility = 'Visible'; 
+                    }
+                    if(profileTabVisibility.visibility == 'DefaultOff'){
+                        psTabSetting.visibility = 'Available'; 
+                    }
+                    psTabSettings.add(psTabSetting);
+                }
+            }
+            permissionSet.tabSettings = psTabSettings; 
+        }
+        persetToInsert.add(permissionSet);
+        MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(persetToInsert);
+        if (!results[0].success) {
+            System.debug('Error Message : '+results[0].errors[0].message);
+            throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
+        }else{
+            System.debug('New PermissionSet :: ' + results[0].fullName);
+        } 
+        
+    }
 }

@@ -177,7 +177,7 @@ public with sharing class UserPermissionAnalyzerServer {
         if (String.isBlank(permSetId) || systemPermissions == null || systemPermissions.isEmpty()) {
             handleException('Invalid input parameters', null);
         }
-        try {
+        
             SObject permissionObject = getPermissionObject(permSetId);
             
             if (permissionObject instanceof PermissionSet && ((PermissionSet) permissionObject).Type == 'Profile') {
@@ -185,13 +185,14 @@ public with sharing class UserPermissionAnalyzerServer {
                     profileName
                         }, systemPermissions);
             } else {
-                updatePermissionSetOrMutePermSetGrp(permissionObject, systemPermissions);
-                return systemPermissions;
+                try {
+                    updatePermissionSetOrMutePermSetGrp(permissionObject, systemPermissions);
+                    return systemPermissions;
+                } catch (Exception e) {
+                    handleException('Error updating system permissions: ', e);
+            	}
+                return null;
             }
-        } catch (Exception e) {
-            handleException('Error updating system permissions: ', e);
-        }
-        return null;
     }
     private static SObject getPermissionObject(String permSetId) {
         List < PermissionSet > perms = [SELECT Id, Type FROM PermissionSet WHERE Id =: permSetId LIMIT 1];

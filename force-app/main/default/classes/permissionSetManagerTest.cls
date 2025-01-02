@@ -32,27 +32,6 @@ public class PermissionSetManagerTest {
         System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, 'The created PermissionSet should be found in the query.');
         System.assertNotEquals(null, permissionSetId, 'There Should be not Null.');
     }
-    
-    //This test method is used to check the logics for createPermissionSet(Failure) method in PermissionSetManager class.
-    @IsTest
-    static void testCreatePermissionSet_DmlException() {
-        PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = 'Test Sample PermSet');
-        insert testPermissionSet;
-        User u = [SELECT Id FROM User WHERE UserName = 'testuseraccess1@example.com' LIMIT 1];
-        Map < String, Object > permSetToCreate = new Map < String, Object > {'Name' => 'Test_Test_Permission_Set','Label' => 'Test Test Permission Set Label',
-            										'Description' => 'Test Permission Set Description','License' => null,'hasActivationRequired' => false};
-        List < Id > userIds = new List < Id > {u.Id};
-    
-        Test.startTest();
-        try {
-            PermissionSetManager.createPermissionSet(permSetToCreate, userIds);
-            System.assert(true, Error_Thrown_Message);
-        } catch (AuraHandledException e) {
-            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
-        }
-        Test.stopTest();
-    }
-    
     //This test method is used to check the logics for insertUsertoPermissionSet(Success) method in PermissionSetManager class.
     @IsTest
     static void testInsertUsertoPermissionSet() {

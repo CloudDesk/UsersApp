@@ -15,15 +15,12 @@ public with sharing class PermissionSetManager {
         insertPerset.hasActivationRequired = (Boolean) permSetToCreate.get('hasActivationRequired');
         persetToInsert.add(insertPerset);        
         if (!persetToInsert.isEmpty()) {
-            try {
                 MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(persetToInsert);
                 for (MetadataService.UpsertResult upsertResult : results) {
                     persetapi = upsertResult.fullName;
                     handleUpsertResult(upsertResult);
                 }
-            } catch (Exception e) {
-                handleException('Error inserting Permission Set: ', e);
-            }
+            
         }
         List<PermissionSet> persetId = [SELECT Id, Name FROM PermissionSet WHERE Name = :persetapi LIMIT 1];
         createPermSetAssignmentForCreatedPermSet(userIds,persetId[0].Id);
@@ -33,15 +30,15 @@ public with sharing class PermissionSetManager {
     //Handling upsert errors
     private static void handleUpsertResult(MetadataService.UpsertResult result) {
         if (!result.success) {
+            String errorMessage = 'Error Creating permission set: ' + result.fullName + ' - ';
             for (MetadataService.Error error : result.errors) {
-                System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
-                if (error.fields != null) {
-                    for (String field : error.fields) {
-                        System.debug('Error Field: ' + field);
+                errorMessage += error.message + ' (Status Code: ' + error.statusCode + ')';
+                    if (error.fields != null && !error.fields.isEmpty()) {
+                        errorMessage += ' Fields: ' + String.join(error.fields, ', ');
                     }
-                }
             }
-            throw new AuraHandledException('Error inserting Permission Set: ' + result.errors[0].message);
+            handleException(errorMessage , null);
+           // throw new AuraHandledException('Error inserting Permission Set: ' + result.errors[0].message);
         } else {
             System.debug('Permission Set Inserted successfully for: ' + result.fullName);
         }
@@ -310,7 +307,6 @@ public with sharing class PermissionSetManager {
                 tabSettingMapList.add(tabSettingMap);
             }
         }
-        System.debug('tabSettingMap' + tabSettingMapList);
         return tabSettingMapList;
     }
     //Helper method to get tab permissions for permission set.
@@ -358,8 +354,6 @@ public with sharing class PermissionSetManager {
         
         Set<String> dependentObjects = buildDependentObjectsList(permissionWrap.systemDependencies);
         Map<String, Map<String, Object>> objectPermissionsMap = getObjectPermissionsMap(permissionSetIds, dependentObjects);
-        
-        System.debug('Object Permission Map: ' + objectPermissionsMap);
         permissionWrap.objectPermissions = objectPermissionsMap;
         return permissionWrap;
     }
@@ -494,7 +488,6 @@ public with sharing class PermissionSetManager {
                 fieldPermissionsMapList.add(fieldPermissionMap);
             }
         }
-        System.debug('check field permission map' + fieldPermissionsMapList);
         return new ProfileObjectPermissionsWrapper(fieldPermissionsMapList,PermissionSetManager.checkSObjType(objName),dependObjects);
     }
     //Helper to get the valid fields for updating ObjectPermissions.
@@ -506,7 +499,6 @@ public with sharing class PermissionSetManager {
                 fieldMap.put(p.getValue(), true);
             }
         }
-        System.debug('fieldMap'+fieldMap);
         return fieldMap;
     }
     //Helper method to get field names.                

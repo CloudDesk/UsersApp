@@ -9,7 +9,6 @@ public with sharing class UserAccessManager {
             if(wrapper != null){
                 String client_id = wrapper.clientId;
                 String client_secret = wrapper.clientSecret;
-                
                 initializeConnections(client_id, client_secret);
             }
             else{
@@ -82,15 +81,12 @@ public with sharing class UserAccessManager {
         req.setEndpoint(System.Url.getOrgDomainUrl().toExternalForm() + '/services/oauth2/token'); 
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-        
         String body = 'grant_type=client_credentials' +
             '&client_id='+ client_id +
             '&client_secret=' + client_secret;
         req.setBody(body);
-        
         Http http = new Http();
         HttpResponse res = http.send(req);
-        
         if (res.getStatusCode() == 200) {
             Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             String accessToken = (String) responseMap.get('access_token');

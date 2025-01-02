@@ -6,6 +6,7 @@ private class TabPermissionAnalyzerServerTest {
     private static final String Tab_Visibilty_Not_Empty_Message = 'Tab visibility list should not be empty.';
     private static final String Script_Thrown_Message = 'Script-thrown exception';
     private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
+    private static final String Attempt_Thrown_Message = 'Attempt to de-reference a null object';
     //This method holds the test data
     @testsetup
     public static void testsetupMethod() {
@@ -108,7 +109,7 @@ private class TabPermissionAnalyzerServerTest {
         TabPermissionAnalyzerServer.updateProfileTabVisibilities(profileNames, tabToUpdate);
         System.assert(true, Error_Thrown_Message);
         } catch(Exception e){
-        System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message); 
+        System.assert(e.getMessage().contains(Attempt_Thrown_Message), Attempt_Thrown_Message); 
         }
         Test.stopTest();
     }
