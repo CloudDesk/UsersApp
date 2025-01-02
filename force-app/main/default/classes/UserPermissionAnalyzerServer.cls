@@ -69,7 +69,6 @@ public with sharing class UserPermissionAnalyzerServer {
                 Map < String, Object > results = (Map < String, Object > ) JSON.deserializeUntyped(res.getBody());
                 return (List < Object > ) results.get('records');
             } else {
-                System.debug('Error: ' + res.getStatus());
                 System.debug('Response: ' + res.getBody());
             }
         } catch (Exception e) {
@@ -105,7 +104,6 @@ public with sharing class UserPermissionAnalyzerServer {
         }
         List< PermissionSetGroup> permSetGrp = [SELECT MasterLabel, DeveloperName FROM PermissionSetGroup WHERE Id =: groupId LIMIT 1];
         if (permSetGrp.isEmpty()) {
-            System.debug('PermissionSetGroup not found for Id: ' + groupId);
             return null;
         }
         try {
@@ -121,7 +119,6 @@ public with sharing class UserPermissionAnalyzerServer {
             insert component;
             return mutePerm.Id;
         } catch (DmlException e) {
-            System.debug('Error inserting MutingPermissionSet or PermissionSetGroupComponent: ' + e.getMessage());
             return null;
         }
     }
@@ -220,7 +217,6 @@ public with sharing class UserPermissionAnalyzerServer {
             if (!upsertResult.success) {
                 handleUpsertError(upsertResult);
             } else {
-                System.debug('Profile updated successfully for: ' + upsertResult.fullName);
                 updatedResultForProfile = getProfileResult(profilesToUpdate);
             }
         }
@@ -258,7 +254,6 @@ public with sharing class UserPermissionAnalyzerServer {
     }
     private static void handleUpsertError(MetadataService.UpsertResult upsertResult) {
         for (MetadataService.Error error: upsertResult.errors) {
-            System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
             if (error.fields != null) {
                 for (String field: error.fields) {
                     System.debug('Error Field: ' + field);
@@ -279,7 +274,6 @@ public with sharing class UserPermissionAnalyzerServer {
     }
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
-        System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
     }
 }

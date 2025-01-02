@@ -12,12 +12,14 @@ public class MetadataWebServiceMock implements WebServiceMock{
         }
         else if(request instanceof MetadataService.readMetadata_element){            
             MetadataService.readMetadata_element readMeta = (MetadataService.readMetadata_element) request;
-            if(readMeta.type_x == 'Profile'){
+            if (readMeta.type_x == 'Profile') {
                 MetadataService.readProfileResponse_element profileResp = new MetadataService.readProfileResponse_element();
                 profileResp.result = new MetadataService.ReadProfileResult();
                 
                 MetadataService.Profile prof = new MetadataService.Profile();
                 prof.fullName = 'HCH Sales User';
+                
+                // Record Type Visibilities
                 MetadataService.ProfileRecordTypeVisibility recordTypeVisibility = new MetadataService.ProfileRecordTypeVisibility();
                 recordTypeVisibility.recordType = 'Account.Healthplan';
                 recordTypeVisibility.visible = true;
@@ -25,20 +27,70 @@ public class MetadataWebServiceMock implements WebServiceMock{
                 prof.recordTypeVisibilities = new List<MetadataService.ProfileRecordTypeVisibility>();
                 prof.recordTypeVisibilities.add(recordTypeVisibility);
                 
+                // Tab Visibilities
                 MetadataService.ProfileTabVisibility tabSettingVisibility = new MetadataService.ProfileTabVisibility();
                 tabSettingVisibility.tab = 'standard-Account';
                 tabSettingVisibility.visibility = 'DefaultOn';
                 if (prof.tabVisibilities == null) {
                     prof.tabVisibilities = new List<MetadataService.ProfileTabVisibility>();
                 }
-                
                 prof.tabVisibilities.add(tabSettingVisibility);
                 
+                // Object Permissions
+                MetadataService.ProfileObjectPermissions objectPermission = new MetadataService.ProfileObjectPermissions();
+                objectPermission.object_x = 'Opportunity';
+                objectPermission.allowCreate = true;
+                objectPermission.allowRead = true;
+                objectPermission.allowEdit = true;
+                objectPermission.allowDelete = false;
+                objectPermission.viewAllRecords = false;
+                objectPermission.modifyAllRecords = false;
+                prof.objectPermissions = new List<MetadataService.ProfileObjectPermissions>();
+                prof.objectPermissions.add(objectPermission);
+                
+                // Field Permissions
+                MetadataService.ProfileFieldLevelSecurity fieldPermission = new MetadataService.ProfileFieldLevelSecurity();
+                fieldPermission.field = 'Opportunity.Amount';
+                fieldPermission.readable = true;
+                fieldPermission.editable = true;
+                prof.fieldPermissions = new List<MetadataService.ProfileFieldLevelSecurity>();
+                prof.fieldPermissions.add(fieldPermission);
+                
+                // Application Visibilities
+                MetadataService.ProfileApplicationVisibility appVisibility = new MetadataService.ProfileApplicationVisibility();
+                appVisibility.application = 'standard__ServiceConsole';
+                appVisibility.visible = true;
+                prof.applicationVisibilities = new List<MetadataService.ProfileApplicationVisibility>();
+                prof.applicationVisibilities.add(appVisibility);
+                
+                // Class Accesses
+                MetadataService.ProfileApexClassAccess classAccess = new MetadataService.ProfileApexClassAccess();
+                classAccess.apexClass = 'CustomController';
+                classAccess.enabled = true;
+                prof.classAccesses = new List<MetadataService.ProfileApexClassAccess>();
+                prof.classAccesses.add(classAccess);
+                
+                // Page Accesses
+                MetadataService.ProfileApexPageAccess pageAccess = new MetadataService.ProfileApexPageAccess();
+                pageAccess.apexPage = 'CustomPage';
+                pageAccess.enabled = true;
+                prof.pageAccesses = new List<MetadataService.ProfileApexPageAccess>();
+                prof.pageAccesses.add(pageAccess);
+                
+                // User Permissions
+                MetadataService.ProfileUserPermission userPermission = new MetadataService.ProfileUserPermission();
+                userPermission.name = 'ViewSetup';
+                userPermission.enabled = true;
+                prof.userPermissions = new List<MetadataService.ProfileUserPermission>();
+                prof.userPermissions.add(userPermission);
+                
+                // Add profile to response
                 profileResp.result.records = new List<MetadataService.Profile>();
                 profileResp.result.records.add(prof);
                 
-                response.put('response_x', profileResp);                    
+                response.put('response_x', profileResp);
             }
+
             else if(readMeta.type_x == 'PermissionSet'){
                 MetadataService.readPermissionSetResponse_element permSetResp = new MetadataService.readPermissionSetResponse_element();
                 permSetResp.result = new MetadataService.ReadPermissionSetResult();

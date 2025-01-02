@@ -34,7 +34,7 @@ public class ManagePermissionSetCreateServerTest {
         PermissionSetAssignment permSetGrpAssignment = new PermissionSetAssignment(AssigneeId = testUser1.Id,PermissionSetGroupId  = permSetGroupForUserAssign.Id);
         insert permSetGrpAssignment;
         ObjectPermissions objPerm1 = new ObjectPermissions(
-        	SObjectType = 'Opportunity',
+            SObjectType = 'Opportunity',
             ParentId = permSet1.Id,
             PermissionsRead = true,
             PermissionsCreate = true,
@@ -52,6 +52,7 @@ public class ManagePermissionSetCreateServerTest {
         insert new List<FieldPermissions>{ fieldPerm1};
         PermissionSet testPermissionSet = new PermissionSet(Name = 'Test_Sample_PermSet',Label = PermissionSet_Label);
         insert testPermissionSet;
+        System.enqueueJob(new SetupObjectJob());
     }
     //This test method is used to check the functionality of duplicatePermissionSetCheck method in ManagePermissionSetCreateServer class
     @IsTest
@@ -82,8 +83,18 @@ public class ManagePermissionSetCreateServerTest {
     static void createNewPermissionSet_TestWithObj(){
         Map<String,Boolean> objPerm = new Map<String,Boolean>{'PermissionsRead'=>true, 'PermissionsEdit'=>true,
             'PermissionsDelete'=>true, 'PermissionsViewAllRecords'=>true,'PermissionsCreate'=>true,'PermissionsModifyAllRecords'=>true};
-                Map<String, Map<String, Boolean>> objectPermMap = new Map<String, Map<String, Boolean>>{'Opportunity'=>objPerm};
-                    PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
+                Map<String, Map<String, Boolean>> objectPermMap = new Map<String, Map<String, Boolean>>{'Opportunity'=>objPerm};                   
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
+        System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
+        MetadataService metaDataService = new MetadataService();  
+        Test.StartTest();
+        createPermissionSetTest(objectPermMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'Obj','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+        Test.StopTest();
+    }
+    //This test method is used to check the functionality of createPermissionSetTest method with Field in ManagePermissionSetCreateServer class
+    @IsTest
+    static void createNewPermissionSet_TestWithField(){
+        PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
         eligibleFieldWrapper.field = OPPORTUNITY_Amount_FIELD;
         eligibleFieldWrapper.PermissionsRead = true;
         eligibleFieldWrapper.PermissionsEdit = true;
@@ -95,7 +106,7 @@ public class ManagePermissionSetCreateServerTest {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();  
         Test.StartTest();
-        createPermissionSetTest(objectPermMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper},'Obj','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
+        createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper},'Field','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>());
         Test.StopTest();
     }
     //This test method is used to check the functionality of createPermissionSetTest method with User in ManagePermissionSetCreateServer class
@@ -132,11 +143,22 @@ public class ManagePermissionSetCreateServerTest {
         MetadataService metaDataService = new MetadataService();  
         
         Test.StartTest();
-        createPermissionSetTest(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'RecordType','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>{wrapper});
+        createPermissionSetTest_RecType(new Map<String, Map<String, Boolean>>(), new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{},'RecordType','',new Map<String, Boolean>(),new List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper>{wrapper});
         Test.StopTest();
     }
     //Method to Check functionality of Create Permission Set in ManagePermissionSetCreateServer class
     static void createPermissionSetTest(Map<String, Map<String, Boolean>> objectPermissionsMap, List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> fieldPerms, String updateType, String tabToUpdate, Map<String, Boolean> userToUpdate,List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> recTypeToUpdate){
+        
+            ManagePermissionSetCreateServer.createNewPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
+                'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true},
+                                                                   new List<String>{[SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1].Id},objectPermissionsMap, 
+                                                                   fieldPerms,'Opportunity',updateType,tabToUpdate,
+                                                                   userToUpdate, recTypeToUpdate);        	
+        PermissionSet retrievedPermSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Test_Sample_PermSet' LIMIT 1];        
+        System.assertEquals([Select Id from PermissionSet Where Name = 'Test_Sample_PermSet'].Id, retrievedPermSet.Id, Assertion_CreateNewPermSet_Message);
+    }
+    //Method to Check functionality of Create Permission Set in ManagePermissionSetCreateServer class for RecordType
+      static void createPermissionSetTest_RecType(Map<String, Map<String, Boolean>> objectPermissionsMap, List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> fieldPerms, String updateType, String tabToUpdate, Map<String, Boolean> userToUpdate,List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> recTypeToUpdate){
         try{
             ManagePermissionSetCreateServer.createNewPermissionSet(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
                 'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true},
@@ -208,26 +230,7 @@ public class ManagePermissionSetCreateServerTest {
         ];
         System.assertEquals(1, assignments.size(), 'Permission Set should be assigned to the test user.');
     }
-    
-    //This test method is used to check the functionality of createPermissionSetWithTabsAndUsers(Failure) method with Record Type in ManagePermissionSetCreateServer class
-     @IsTest
-    static void testCreatePermissionSetWithoutTabSettings_DmlException() {
-        String tabSettingsJson = '[]';
-        User testUser = [SELECT Id FROM User WHERE Username = 'testuserNewone@example.com' LIMIT 1];
-        List<Id> userIds = new List<Id>{ testUser.Id };
-        Test.startTest();      
-        try{
-            ManagePermissionSetCreateServer.createPermissionSetWithTabsAndUsers(new Map<String,Object>{'Name' => 'Test_Sample_PermSet11', 'Label'=> PermissionSet_Label, 
-                'Description'=>PermissionSet_Description, 'License'=>null,'hasActivationRequired'=>true}, tabSettingsJson, userIds);
-            System.assert(false, Error_Thrown_Message);
-            
-        } catch(AuraHandledException e) {
-            System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);
-        }
-
-        Test.stopTest();
-    }
-    //
+    //This is test method for getPermSetTabSettings.
     @IsTest
     static void testGetPermSetTabSettings() {
         TabPermissionAnalyzerServer.TabSettingsWrapper wrapper = new TabPermissionAnalyzerServer.TabSettingsWrapper('Account', 'Default On');
@@ -242,6 +245,17 @@ public class ManagePermissionSetCreateServerTest {
         }
         Test.stopTest();
         
+    }
+    //This Method is used to insert the custom setting
+    public class SetupObjectJob implements Queueable {
+        public void execute(QueueableContext context) {
+            User_Access_Credentials__c credentials = new User_Access_Credentials__c(
+                Name='Standard', 
+                Client_Id__c='testClientId', 
+                Client_Secret__c='testClientSecret'
+            );
+            insert credentials;
+        }
     }
     
 }

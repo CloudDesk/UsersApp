@@ -21,7 +21,6 @@ public with sharing class TabPermissionAnalyzerServer {
                 profileTabSettingVisibilityResult.add(tabSettingMap);
             }
         }
-        System.debug('tabSettingMap' + profileTabSettingVisibilityResult);
         return profileTabSettingVisibilityResult;
     }
     //This is helper method to fetch the permissions of TabSetting for Profile Using MetaAPI
@@ -43,13 +42,11 @@ public with sharing class TabPermissionAnalyzerServer {
         } catch (Exception e) {
             handleException('Error retrieving tab visibility: ', e);
         }
-        System.debug('Tab visibility settings: ' + tabVisibilityMap);
         return tabVisibilityMap;
     }
     @TestVisible
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
-        System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
     }
     //This is helper method to fetch the permissions of TabSetting for PermissionSet Using MetaAPI	
@@ -71,7 +68,6 @@ public with sharing class TabPermissionAnalyzerServer {
         } catch (Exception e) {
             handleException('Error retrieving tab visibility: ', e);
         }
-        System.debug('Tab visibility settings: ' + tabVisibilityMap);
         return tabVisibilityMap;
     }
     //This is Methos Used to updated TabVIsibility for Profile Using MetadataAPI
@@ -228,7 +224,6 @@ public with sharing class TabPermissionAnalyzerServer {
     @TestVisible
     private static void handleErrorMessages(List<MetadataService.Error> errors){
         for (MetadataService.Error error: errors) {
-            System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
             if (error.fields != null) {
                 System.debug('Error Fields: ' + String.join(error.fields, ', '));
             }

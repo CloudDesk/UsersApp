@@ -18,7 +18,6 @@ public with sharing class ManagePermissionSetCreateServer {
                 'Name' => userWithLicense.Profile.UserLicense.Name,'MasterLabel' => userWithLicense.Profile.UserLicense.MasterLabel};
                     userLicenseMap.put('UserLicense', new List<Map<String,String>> {recordMap});
         }
-        System.debug('userLicenseMap: ' + userLicenseMap);
         return userLicenseMap;
     }
     //This Method is used to fetch the Users based on UserLicense/PermissioSetLicense
@@ -48,12 +47,15 @@ public with sharing class ManagePermissionSetCreateServer {
                                                        Map<String, Map<String, Boolean>> objectPermissionsMap,
                                                        List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> fieldPerms,String objName, String updateType, String tabToUpdate, Map<String, Boolean> userToUpdate,List<PermissionAnalyzerRecordTypeServer.RecordTypeUpdateWrapper> recTypeToUpdate){
                                                            String permSetId;  
-                                                           if(updateType == 'Obj' || updateType == 'User'){
+                                                           if(updateType == 'Obj' || updateType == 'User' || updateType == 'Field'){
                                                                permSetId = PermissionSetManager.createPermissionSet(newPermSet,userIds);                
                                                            }
                                                            if(updateType == 'Obj' && permSetId != null && permSetId != ''){
-                                                               PermissionAnalyzerObjectServer.updateObjAndFieldInitiation(objectPermissionsMap,fieldPerms,permSetId,objName,'');
+                                                               PermissionAnalyzerObjectServer.updateObjPermissions(objectPermissionsMap,permSetId);
                                                            } 
+                                                           if(updateType == 'Field' && permSetId != null && permSetId != ''){
+                                                               PermissionAnalyzerObjectServer.updateFieldPermissions(fieldPerms,permSetId,objName,'');
+                                                           }
                                                            if(updateType == 'User' && permSetId != null && permSetId != ''){
                                                                UserPermissionAnalyzerServer.updateUserPermissionsforProfOrPermSetOrMuteGroups(permSetId,'',userToUpdate);
                                                            } 
@@ -81,21 +83,14 @@ public with sharing class ManagePermissionSetCreateServer {
         insertPerset.hasActivationRequired = (Boolean) permSetToCreate.get('hasActivationRequired');
         persetToInsert.add(insertPerset);
         if (!persetToInsert.isEmpty()) {
-            try {
                 MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(persetToInsert);
                 for (MetadataService.UpsertResult upsertResult : results) {
                     persetapi = upsertResult.fullName;
                     handleUpsertResult(upsertResult);
                 }
-            } catch (Exception e) {
-                System.debug('Error Inserting Permission Set: ' + e.getMessage());
-                throw new AuraHandledException('Error inserting Permission Set catch: ' + e.getMessage());
-            }
         }
         List<Map<String, String>> rawList = (List<Map<String, String>>) JSON.deserialize(tabSettingsJson, List<Map<String, String>>.class);
         List<TabPermissionAnalyzerServer.TabSettingsWrapper> tabSettings = getTabSettings(rawList);
-        System.debug('tabSettings: ' + tabSettings);
-
         List<MetadataService.PermissionSet> permissionSets = (List<MetadataService.PermissionSet>) instance.service.readMetadata(
             'PermissionSet', new List<String>{ persetapi }).getRecords();    
         MetadataService.PermissionSet permissionSet;
@@ -121,9 +116,7 @@ public with sharing class ManagePermissionSetCreateServer {
         }
         try {
             insert permSetAssignments;
-            System.debug('Permission set assignments successfully created.');
         } catch (DmlException e) {
-            System.debug('Error occurred while assigning permission set: ' + e.getMessage());
             throw new AuraHandledException('Error occurred while assigning permission set: ' + e.getMessage());
         }
         return persetId.Id;
@@ -213,8 +206,7 @@ public with sharing class ManagePermissionSetCreateServer {
     private static void handleUpsertResult(MetadataService.UpsertResult result) {
         if (!result.success) {
             for (MetadataService.Error error : result.errors) {
-                System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
-                throw new AuraHandledException('Error inserting Permission Set createPermissionSetWithTabsAndUsers: ' + error.message);
+                handleException('Error inserting Permission Set createPermissionSetWithTabsAndUsers: ' + error.message, null);            
             }
         } else {
             System.debug('Permission Set Inserted successfully for: ' + result.fullName);                    
@@ -238,14 +230,13 @@ public with sharing class ManagePermissionSetCreateServer {
     private static void handleUpsertResults(MetadataService.UpsertResult[] results) {
         for (MetadataService.UpsertResult result: results) {
             if (!result.success) {
-                throw new AuraHandledException('Error inserting Permission Set handleUpsertResults: ' + result.errors[0].message);
+                handleException('Error inserting Permission Set handleUpsertResults: ' + result.errors[0].message, null);
             }
         }
     }    
     @TestVisible
     private static void handleException(String message, Exception e) {
         String errorMessage = e == null ? message : message + ': ' + e.getMessage();
-        System.debug('ERROR : '+ errorMessage);
         throw new AuraHandledException(errorMessage);
     }
     //This Method is the helper method to deal create PermissionSet with RecordType
@@ -254,29 +245,18 @@ public with sharing class ManagePermissionSetCreateServer {
                                                                        UserAccessManager instance = new UserAccessManager();
                                                                        String permSetApi = ((String) newPermSet.get('Name')).replaceAll(' ', '_');
                                                                        MetadataService.PermissionSet insertPermSet = createPermissionSet(newPermSet);
-                                                                       try {
                                                                            MetadataService.UpsertResult[] results = (MetadataService.UpsertResult[]) instance.service.upsertMetadata(new List<MetadataService.PermissionSet> {
-                                                                               insertPermSet
-                                                                                   });
+                                                                               insertPermSet});
                                                                            handleUpsertResults(results);
-                                                                       } catch (Exception e) {
-                                                                           handleException('Error inserting Permission Set', e);
-                                                                       }
                                                                        MetadataService.PermissionSet permissionSet = getPermissionSet(instance, permSetApi);
                                                                        updateRecordTypeVisibilities(permissionSet, recTypeToUpdate);
-                                                                       try {
                                                                            MetadataService.SaveResult[] saveResults = instance.service.updateMetadata(new List < MetadataService.Metadata > {permissionSet});
-                                                                           handleSaveResults(saveResults);
-                                                                       } catch (Exception e) {
-                                                                           handleException('Error updating Permission Set record type visibility', e);
-                                                                       }
+                                                                           handleSaveResults(saveResults);                                                                       
                                                                        List<PermissionSet> permSetId = [SELECT Id FROM PermissionSet WHERE Name = :permSetApi LIMIT 1];
                                                                        if (!permSetId.isEmpty()) {
-                                                                           // Proceed only if a PermissionSet was found
                                                                            assignUsersToPermissionSet(permSetId[0].Id, userIds);
-                                                                           return permSetId[0].Id; // Return the Id of the found PermissionSet
+                                                                           return permSetId[0].Id;
                                                                        } else {
-                                                                           System.debug('No Permission Set found with the name: ' + permSetApi);
                                                                            throw new AuraHandledException('Permission Set not found: ' + permSetApi);
                                                                        }
     }    
@@ -331,7 +311,7 @@ public with sharing class ManagePermissionSetCreateServer {
     private static void handleSaveResults(MetadataService.SaveResult[] results) {
         for (MetadataService.SaveResult result: results) {
             if (!result.success) {
-                throw new AuraHandledException('Error updating Permission Set: ' + result.errors[0].message);
+                handleException('Error updating Permission Set: ' + result.errors[0].message, null);
             }
         }
     }
