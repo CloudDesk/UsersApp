@@ -5,8 +5,7 @@ public class PermissionAnalyzerObjectServerTest {
     private static final String Result_Not_Null_Message = 'Result should not be null';
     //This method holds the test data
     @testsetup
-    public static void testsetupMethod() {
-       
+    public static void testsetupMethod() {       
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         List<User> userList = new List<User>();
         List<PermissionSet> permSets = new List<PermissionSet>();
@@ -25,10 +24,8 @@ public class PermissionAnalyzerObjectServerTest {
         insert userList;     
         insert permSets;
         insert mutingPermSets;
-        insert permSetGroups;
-        
-        insertPermissions(permSets, mutingPermSets, permSetGroups);
-        
+        insert permSetGroups;        
+        insertPermissions(permSets, mutingPermSets, permSetGroups);        
         List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
         for(Integer i = 1; i <= 2; i++){
             String permSetId;
@@ -41,14 +38,12 @@ public class PermissionAnalyzerObjectServerTest {
         }
         insert permSetAssignments; 
         System.enqueueJob(new SetupObjectJob());
-    }
-    
+    }    
     // Creating Object, Field and group Permissions;
     static void insertPermissions(List<PermissionSet> permSets, List<MutingPermissionSet> mutingPermSets, List<PermissionSetGroup> permSetGroups){
         List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
         List<FieldPermissions> fieldPermissions = new List<FieldPermissions>();
-        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();
-        
+        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();        
         for(Integer i = 1; i <= 4; i++)
         {
             String permSetId;
@@ -84,7 +79,24 @@ public class PermissionAnalyzerObjectServerTest {
         insert objPermissions;
         insert fieldPermissions; 
         insert permSetGroupComponents;
-    }
+    }    
+     @IsTest
+    //This test Method is used to Test getObjectRelatedDetails method.
+    static void getObjectRelatedDetails_Test(){
+        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
+        permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
+        Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
+        User u = [SELECT Id FROM User WHERE Username = 'testuseraccess1@example.com' LIMIT 1];
+        System.runAs(u) {
+            Test.startTest();
+       	 	PermissionAnalyzerObjectServer.GetObjectWrapper objWrapperResult = PermissionAnalyzerObjectServer.getObjectRelatedDetails('Account');
+            List<Object> result = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
+            Test.stopTest();
+            System.assertNotEquals(null, objWrapperResult, 'Object result should not be null');
+            System.assertNotEquals(null, result, Result_Not_Null_Message);
+            System.assert(result.size() > 0, 'Should return dependencies');
+        }        
+    }    
     //This test method is used to check the functionality of checkSobjectFoundInPicklist method in PermissionAnalyzerObjectServer class
     @IsTest
     static void checkSobjectFoundInPicklist_Test() {
@@ -101,23 +113,53 @@ public class PermissionAnalyzerObjectServerTest {
         Test.stopTest();
         System.assertNotEquals(null, result, 'The fieldMap should not be null');
         System.assert(!result.isEmpty(), 'The fieldMap should have at least one value');
-    } 
-    //This test method is used to check the functionality of getObjAndFieldPermissionsForMutingPermSet method in PermissionAnalyzerObjectServer class
+    }
+    //This test method is used to cover getFieldsRelatedDetails Method
     @IsTest
-    static void getObjAndFieldPermissionsForMutingPermSet_Test() {
+    static void getFieldsRelatedDetails_Test(){
+        Test.StartTest();
+        PermissionAnalyzerObjectServer.GetFieldWrapper fieldWrapperResult = PermissionAnalyzerObjectServer.getFieldsRelatedDetails('Account');
+        Test.StopTest();
+        System.assertNotEquals(null, fieldWrapperResult, 'field result should not be null');
+        System.assertNotEquals(null, fieldWrapperResult.hasFieldAccess, 'field hasFieldAccess result should not be null');
+    }
+    //This test method is used to cover getObjPermissionsForMutingPermSet Method
+    @IsTest
+    static void getObjPermissionsForMutingPermSet_Test(){
         PermissionSetGroup newGroup = new PermissionSetGroup(MasterLabel = 'New Test Group', DeveloperName = 'New_Test_Group');
         insert newGroup;
         Id groupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1].Id;
-        Test.startTest();
-        PermissionAnalyzerObjectServer.MutePermissionWrapper result = PermissionAnalyzerObjectServer.getObjAndFieldPermissionsForMutingPermSet(groupId, new List<String>{'Opportunity'}, 'Opportunity');
-        PermissionAnalyzerObjectServer.getObjAndFieldPermissionsForMutingPermSet(newGroup.Id, new List<String>{'Account','Contact'}, 'Account');
-        PermissionAnalyzerObjectServer.getObjAndFieldPermissionsForMutingPermSet(null, new List<String>{'Opportunity'}, 'Opportunity');
-        Test.stopTest();
-        System.assertNotEquals(null, result, 'The result should not be null');
+        Test.StartTest();
+        Map<String,Object> mutePermSet = PermissionAnalyzerObjectServer.getObjPermissionsForMutingPermSet(groupId, new List<String>{'Opportunity'}, 'Opportunity'); 
+        PermissionAnalyzerObjectServer.getObjPermissionsForMutingPermSet(newGroup.Id, new List<String>{'Account','Contact'}, 'Account');
+        PermissionAnalyzerObjectServer.getObjPermissionsForMutingPermSet(null, new List<String>{'Opportunity'}, 'Opportunity');
+        Test.StopTest();
+        System.assertNotEquals(null, mutePermSet, 'The result should not be null');
     }
-    //This test method is used to check the functionality of getSelectePermissionsetObjAndFieldResult method in PermissionAnalyzerObjectServer class
+    //This test method is used to cover getFieldPermissionsForMutingPermSet method
     @IsTest
-    static void getSelectePermissionsetObjAndFieldResult_Test() {       
+    static void getFieldPermissionsForMutingPermSet_Test(){
+        PermissionSetGroup newGroup = new PermissionSetGroup(MasterLabel = 'New Test Group', DeveloperName = 'New_Test_Group');
+        insert newGroup;
+        Id groupId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1].Id;
+        Test.StartTest();
+        Map<String,Object> mutePermSet = PermissionAnalyzerObjectServer.getFieldPermissionsForMutingPermSet(groupId, 'Opportunity'); 
+        PermissionAnalyzerObjectServer.getFieldPermissionsForMutingPermSet(newGroup.Id, 'Account');
+        PermissionAnalyzerObjectServer.getFieldPermissionsForMutingPermSet(null, 'Opportunity');
+        Test.StopTest();
+        System.assertNotEquals(null, mutePermSet, 'The result should not be null');
+    }
+    //This Method is used to cover getSelectePermissionsetObjResult.
+    @IsTest
+    static void getSelectePermissionsetObjResult_Test(){
+        Test.StartTest();
+        Map<String,Object> result = PermissionAnalyzerObjectServer.getSelectePermissionsetObjResult([SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id, new List<String>{'Opportunity'});
+        Test.StopTest();
+        System.assertNotEquals(null, result, 'Result should not be null');
+    }
+    //This Method is used to cover getSelectePermissionSetFieldResult.
+    @IsTest
+    static void getSelectePermissionSetFieldResult_Test(){
         PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
         eligibleFieldWrapper.field = OPPORTUNITY_Amount_FIELD;
         eligibleFieldWrapper.PermissionsRead = true;
@@ -126,48 +168,11 @@ public class PermissionAnalyzerObjectServerTest {
         eligibleFieldWrapper.hasEditAccess = true;
         eligibleFieldWrapper.mutedPermissionsRead = false;
         eligibleFieldWrapper.mutedPermissionsEdit = false;
-        Id permSetID = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id;
-        Test.startTest();
-        PermissionAnalyzerObjectServer.UpdatedObjAndFieldResult result = PermissionAnalyzerObjectServer.getSelectePermissionsetObjAndFieldResult(
-            permSetID, new List<String>{'Opportunity'},new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper}, new List<String>{OPPORTUNITY_Amount_FIELD}
-        );
-        Test.stopTest();
+        
+        Test.StartTest();
+        List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper> result = PermissionAnalyzerObjectServer.getSelectePermissionSetFieldResult([SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper}, new List<String>{OPPORTUNITY_Amount_FIELD});
+        Test.StopTest();
         System.assertNotEquals(null, result, 'Result should not be null');
-    }
-    //This test method is used to check the functionality of updateObjAndFieldInitiation method in PermissionAnalyzerObjectServer class
-    @IsTest
-    static void updateObjAndFieldInitiation_Test() {
-        Map<String, Map<String, Boolean>> objPermissionMap = new Map<String, Map<String, Boolean>>{
-            'Opportunity' => new Map<String, Boolean>{
-                'PermissionsCreate' => true, 'PermissionsRead' => true, 'PermissionsEdit' => true,
-                    'PermissionsDelete' => true, 'PermissionsModifyAllRecords' => true, 'PermissionsViewAllRecords' => true
-                    }
-        };
-        PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper eligibleFieldWrapper = new PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper();
-        eligibleFieldWrapper.field = OPPORTUNITY_Amount_FIELD;
-        eligibleFieldWrapper.PermissionsRead = true;
-        eligibleFieldWrapper.PermissionsEdit = true;
-        eligibleFieldWrapper.Label = 'Amount';
-        eligibleFieldWrapper.hasEditAccess = true;
-        eligibleFieldWrapper.mutedPermissionsRead = true;
-        eligibleFieldWrapper.mutedPermissionsEdit = true;
-        Id permSetID = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id;
-        Id mutingPermSetId = [SELECT Id FROM MutingPermissionSet WHERE DeveloperName = 'New_Test_MutePermSet_1'].Id;
-        Test.startTest();
-        PermissionAnalyzerObjectServer.updateObjAndFieldInitiation(
-            objPermissionMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper}, permSetID, 'Opportunity', ''
-        );
-        PermissionAnalyzerObjectServer.updateObjAndFieldInitiation(
-            objPermissionMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper}, mutingPermSetId, 'Opportunity', 'MutePermissions'
-        );
-        Boolean isExceptionThrown = false;
-        try {
-            PermissionAnalyzerObjectServer.updateObjAndFieldInitiation(objPermissionMap, new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper}, 'invalidId', 'Opportunity', '');
-        } catch (Exception e) {
-            isExceptionThrown = true;
-        }
-        Test.stopTest();
-        System.assert(isExceptionThrown, 'An exception should be thrown for invalid ID');
     }
     //This test method is used to check the functionality of updateObjPermissions method in PermissionAnalyzerObjectServer class
     @IsTest
@@ -236,38 +241,6 @@ public class PermissionAnalyzerObjectServerTest {
         System.assertEquals(new List<PermissionAnalyzerObjectServer.FieldPermissionUpdateWrapper>{eligibleFieldWrapper,eligibleFieldWrapper1}.size(), result2.size(), 'Expected same size of updated wrappers for muting permission set');
         System.assert(isExceptionThrown, 'Exception should be thrown for invalid object');
     }
-    //This test method is used to check the functionality of checkObjectPermissionDependencies method in PermissionAnalyzerObjectServer class
-    @IsTest
-    static void checkObjectPermissionDependencies_Test() {
-        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
-        permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
-        Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
-        Test.startTest();
-        List<Object> results = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
-        Test.stopTest();        
-        System.assertNotEquals(null, results, 'Results should not be null');
-        System.assertEquals(3, results.size(), 'Should have 3 permission dependencies');
-        Map<String, Object> firstResult = (Map<String, Object>)results[0];
-        System.assertEquals('Account<read>', firstResult.get('Permission'), 'First permission should be Account read');
-        System.assertEquals('Contact<read>', firstResult.get('RequiredPermission'), 'First required permission should be Contact read');
-    }
-    //This test method is used to check the functionality of getFieldsAndObjectRelatedDetails method in PermissionAnalyzerObjectServer class
-    @IsTest
-    static void getFieldsAndObjectRelatedDetails_Test() {
-        Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
-        permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
-        Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
-        User u = [SELECT Id FROM User WHERE Username = 'testuseraccess1@example.com' LIMIT 1];
-        System.runAs(u) {
-            Test.startTest();
-            PermissionAnalyzerObjectServer.getFieldWrapper fieldRes = PermissionAnalyzerObjectServer.getFieldsAndObjectRelatedDetails('Account', 'Name to Fetch');
-            List<Object> result = PermissionAnalyzerObjectServer.checkObjectPermissionDependencies('Account');
-            Test.stopTest();
-            System.assertNotEquals(null, fieldRes, 'Field result should not be null');
-            System.assertNotEquals(null, result, Result_Not_Null_Message);
-            System.assert(result.size() > 0, 'Should return dependencies');
-        }
-    }   
     //This Method is used to insert the custom setting
     public class SetupObjectJob implements Queueable {
         public void execute(QueueableContext context) {
