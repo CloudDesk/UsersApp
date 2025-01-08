@@ -28,11 +28,11 @@ public class PermissionDependencyMock implements HttpCalloutMock {
             'AND Permission IN (\'Contact<read>\')';
             
         String contactResponse = Null_Response;
-		String planHistoryQuery = PermDependency_Query+
+        String planHistoryQuery = PermDependency_Query+
             'AND RequiredPermission IN (\'Plan_History__c<read>\')';
         String planHistoryResponse = Null_Response;
 
-		    
+            
         queryToResponseMap.put(normalizeQuery(accountQuery), accountResponse);
         queryToResponseMap.put(normalizeQuery(contactParentQuery), contactResponse);
         queryToResponseMap.put(normalizeQuery(planHistoryQuery), planHistoryResponse);

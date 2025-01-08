@@ -12,7 +12,9 @@ public with sharing class CreateConnectedAppQueueable implements Queueable, Data
     
     public void execute(QueueableContext context) {
         Date todayDate = Date.today();
-        String formattedDate = Datetime.newInstance(todayDate.year(), todayDate.month(), todayDate.day()).format('yyyy_MM_dd', 'GMT');
+        Datetime currentDateTime = Datetime.newInstance(todayDate.year(), todayDate.month(), todayDate.day(), 
+                                                        System.now().hour(), System.now().minute(), System.now().second());
+        String formattedDate = currentDateTime.format('yyyy_MM_dd_HH_mm_ss', 'GMT');
         MetadataService.MetadataPort metaDataPort = new MetadataService.MetadataPort('60.0');
         metaDataPort.SessionHeader = new MetadataService.SessionHeader_element();
         metaDataPort.SessionHeader.sessionId = sessionId;

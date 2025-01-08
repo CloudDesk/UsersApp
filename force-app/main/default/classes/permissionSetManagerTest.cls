@@ -32,6 +32,7 @@ public class PermissionSetManagerTest {
         System.assertEquals(testPermissionSet.Id, retrievedPermSet.Id, 'The created PermissionSet should be found in the query.');
         System.assertNotEquals(null, permissionSetId, 'There Should be not Null.');
     }
+    
     //This test method is used to check the logics for insertUsertoPermissionSet(Success) method in PermissionSetManager class.
     @IsTest
     static void testInsertUsertoPermissionSet() {
@@ -307,6 +308,7 @@ public class PermissionSetManagerTest {
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
         permissionPartnerSoapSforceComMock.indicatorVar = 'LoginResult';
         Test.setMock(HttpCalloutMock.class, new PermissionDependencyMock());
+        Test.setMock(HttpCalloutMock.class, new UserPermissionDependencyMock());
         PermissionSet testPermSet = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1' LIMIT 1];
         List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
         objPermissions.add(new ObjectPermissions(SObjectType = 'Account', ParentId = testPermSet.Id,
