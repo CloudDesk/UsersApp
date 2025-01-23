@@ -46,5 +46,24 @@
         <members>MetadataWebServiceMock</members>
         <name>ApexClass</name>
     </types>
+    <types>
+        <members>permissionAnalyzer</members>
+        <members>permissionAnalyzerObject</members>
+        <members>permissionAnalyzerRecordType</members>
+        <members>tabPermissionAnalyzer</members>
+        <members>userPermissionAnalyzer</members>
+        <members>managePermissionComponent</members>
+        <members>managePermissionSetGroupComponent</members>
+        <members>managePermissionSetComponent</members>
+        <members>managePermissionSetCreate</members>
+        <members>manageProfileComponent</members>
+        <members>manageRecordType</members>
+        <members>manageCloneUsers</members>
+        <members>manageUserAssignment</members>
+        <members>manageUsers</members>
+        <members>setupComponent</members>
+        <members>userAccessPagination</members>
+        <name>LightningComponentBundle</name>
+    </types>
     <version>62.0</version>
 </Package>

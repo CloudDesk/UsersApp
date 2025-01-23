@@ -1,0 +1,50 @@
+.custom-tab-label {
+  background-color: #f3f3f3;
+}
+
+.custom-tabset-label .slds-active .slds-tabs_scoped__link,
+.slds-active .slds-tabs--scoped__link,
+.slds-is-active .slds-tabs_scoped__link,
+.slds-is-active .slds-tabs--scoped__link {
+  background-color: #00A1E0;
+}
+
+.refresh-container {
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.refresh-container:hover {
+  background-color: #eaeaea;
+}
+
+.refresh-container:hover::after {
+  content: "Refresh";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px;
+  padding: 2px 8px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.refresh-container:hover::after {
+  opacity: 1;
+  visibility: visible;
+}

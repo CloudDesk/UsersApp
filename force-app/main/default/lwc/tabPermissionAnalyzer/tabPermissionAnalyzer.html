@@ -1,0 +1,171 @@
+<template>
+  <template if:true={isTab}>
+    <div style="margin-right:auto; position:sticky; top:0px; z-index:10; margin-bottom:5px; display:flex; justify-content:space-between;">
+      <lightning-input label="Search Tab Setting" value={searchTabKey} onchange={handleSearchKeyChange} placeholder="Search Tabs" style="max-width: 25vw;" variant="label-hidden" type="search"></lightning-input>
+      <template if:true={hasEditAccess}>
+        <div style="display:flex; gap:10px">
+          <lightning-button label="Cancel" name="Tab Cancel" variant="neutral" onclick={handleCancel}></lightning-button>
+          <lightning-button label="Update" name="Tab Update" disabled={isUpdateEnabled} variant="brand" onclick={handleUpdate}></lightning-button>
+        </div>
+      </template>
+    </div>
+    <div style="max-height: 300px; overflow-y:auto;">
+      <template if:true={hasTab}>
+        <template if:true={isProfile}>
+          <div class="grid-container" style="margin-right:auto; position:sticky; top:0px; z-index:10;">
+            <div class="grid-item no-gap">Object Name</div>
+            <div class="grid-item no-gap">Tab Name</div>
+            <div class="grid-item no-gap">Visibility</div>
+          </div>
+          <div style="background:white;">
+            <template for:each={filteredTabList} for:item="tab">
+              <div class="grid-container" key={tab.Name}>
+                <div class="grid-item">{tab.Label}</div>
+                <div class="grid-item">{tab.Name}</div>
+                <template if:false={enableEdit}>
+                  <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;">
+                    <div>{tab.Visibility}</div>
+                    <template if:false={isEditMode}>
+                      <div style="display:flex;justify-content:end;margin-right:5px;">
+                        <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleTabEdit} variant="bare" size="small"></lightning-button-icon>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:true={enableEdit}>
+                  <lightning-combobox label="Tab" variant="label-hidden" data-name={tab.Name} value={tab.Visibility} placeholder="Select Tab Visibility" options={tabOption} onchange={handleTabChange}></lightning-combobox>
+                </template>
+              </div>
+            </template>
+          </div>
+        </template>
+        <!-- Permission Set Tab Settings -->
+        <template if:true={isPermissionSet}>
+          <div class="grid-container" style="margin-right:auto; position:sticky; top:0px; z-index:10;">
+            <div class="grid-item no-gap">Tab Name</div>
+            <div class="grid-item no-gap">Available</div>
+            <div class="grid-item no-gap">Visible</div>
+          </div>
+          <div style="background:white;">
+            <template for:each={filteredTabList} for:item="tabper">
+              <div class="grid-container" key={tabper.name}>
+                <div class="grid-item">{tabper.Label}</div>
+                <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;">
+                  <lightning-input style="display:flex; justify-content:end" type="checkbox" checked={tabper.availability} data-fieldapi={tabper.name} data-field="Available" onchange={handleTabChange} disabled={enableEdit}></lightning-input>
+                  <template if:false={isEditMode}>
+                    <div style="display:flex;justify-content:end;margin-right:5px;">
+                      <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleTabEdit} variant="bare" size="small"></lightning-button-icon>
+                    </div>
+                  </template>
+                </div>
+                <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;">
+                  <lightning-input style="display:flex; justify-content:end" type="checkbox" checked={tabper.visibility} data-fieldapi={tabper.name} data-field="Visible" onchange={handleTabChange} disabled={enableEdit}></lightning-input>
+                  <template if:false={isEditMode}>
+                    <div style="display:flex;justify-content:end;margin-right:5px;">
+                      <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleTabEdit} variant="bare" size="small"></lightning-button-icon>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </template>
+          </div>
+        </template>
+      </template>
+    </div>
+    <template if:false={hasTab}>
+      <span style="display:flex; justify-content:center;">
+        <h2 style="font-size: 20px;">No Search Tab Setting Found</h2>
+      </span>
+    </template>
+    <template if:false={isTab}>
+      <div class="slds-box custom-box-style" style="display:flex; justify-content:center; margin-top:55px;">
+        <span style="display:flex; justify-content:center;">
+          <h2 style="font-size: 20px;">No Tab Settings Found</h2>
+        </span>
+      </div>
+    </template>
+  </template>
+  <!-- User Table -->
+  <template if:true={isUsersTable}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+      <div class="slds-modal__container">
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-17">
+          <lightning-datatable key-field="Id" data={userValue} columns={userColumn} class="slds-p-around_xx-small remove-underline custom-datatable" hide-checkbox-column="true"></lightning-datatable>
+        </div>
+        <div class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral" aria-label="Cancel and close" name='user cancel' onclick={handleCancel}>Cancel</button>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+  </template>
+  <template if:true={isConfirm}>
+    <section role="dialog" style="z-index: 999999;" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+      <div class="slds-modal__container">
+        <template if:true={isProfile}>
+          <button style="background: white;margin-right: 10px;" class="slds-button slds-button_icon slds-modal__close" name="ConfirmCancel" onclick={handleCancel}>
+            <lightning-icon icon-name="utility:close" alternative-text="close" size="small" aria-label="Cancel" name="ConfirmCancel" onclick={handleCancel}></lightning-icon>
+            <span class="slds-assistive-text">Cancel and close</span>
+          </button>
+        </template>
+        <div class="slds-modal__header">
+          <h1 id="modal-heading-22" class="slds-modal__title slds-hyphenate" tabindex="-1"> Permissionset Level - Update </h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-28">
+          <span style="display:flex; flex-direction: column; align-items: center;">
+            <span> This will affect {userValueLength} Users of the {type} <b>{selecteduserLabel}</b>. <a onclick={handleOpenUserModal} style="margin-left: 10px; text-decoration: underline;">View Users</a>
+            </span>
+            <br>
+            <span>Are you sure you want to change it?</span>
+          </span>
+        </div>
+        <template if:true={isProfile}>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" disabled={isCreatePermissionSet} name="CreatePermissionSet" onclick={handleCreateNewPermissionSet}>Create PermissionSet</button>
+            <button class="slds-button slds-button_neutral" disabled={isCreatePermissionSet} name="ExistingPermissionSet" onclick={handleExistingPermissionSet}>Modify Existing PermissionSet</button>
+            <button class="slds-button slds-button_brand" onclick={handleConfirm}>Confirm</button>
+          </div>
+        </template>
+        <template if:true={isPermissionSet}>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" name="ConfirmCancel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleConfirm}>Confirm</button>
+          </div>
+        </template>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" style="z-index: 9999;" role="presentation"></div>
+  </template>
+  <template if:true={isExistingPermissionSet}>
+    <section style="z-index:9999999;" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-03" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <div class="slds-modal__header" style="display:flex;justify-content:space-between;">
+          <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate" tabindex="-1">Existing PermissionSets</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+          <template for:each={permSetList} for:item="permSet">
+            <div key={permSet.Id}>
+              <div style="display:flex; justify-content:space-between;">
+                <span>{permSet.Label}</span>
+                <lightning-button data-id={permSet.Id} variant="label-hidden" label='Add' placeholder="Add" onclick={handleUpdateExistingPermissionSet}></lightning-button>
+              </div>
+              <hr class="slds-m-vertical_medium" />
+            </div>
+          </template>
+        </div>
+        <div class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral" aria-label="Cancel" name="Existing PermissionSet cancel" onclick={handleCancel}> Cancel </button>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" style="z-index:999999;" role="presentation"></div>
+  </template>
+  <template if:true={isNewPermSet}>
+    <c-manage-permission-set-create update-type='Tab' update-tab-list={profToPermSet} selected-user-id={userId} onclosecreatepermset={closeCreateModal} onnewcreatedpermset={handleCustomEvent}></c-manage-permission-set-create>
+  </template>
+  <template if:true={showSpinner}>
+    <div class="exampleHolder">
+      <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" style="z-index: 99999999;"></lightning-spinner>
+    </div>
+  </template>
+</template>

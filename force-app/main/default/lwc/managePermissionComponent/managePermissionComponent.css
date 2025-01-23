@@ -1,0 +1,71 @@
+:host {
+    --sds-c-datatable-header-background-color: #9dcdf6; 
+    --sds-c-datatable-header-font-color: #ffffff; 
+}
+
+.custom-datatable th {
+    background-color: var(--sds-c-datatable-header-background-color);
+    color: var(--sds-c-datatable-header-font-color);
+}
+
+.combobox-custom-width{
+    --lwc-sizeXSmall: 44rem !important;
+    
+}
+.combobox-custom-width_permission{
+    --lwc-sizeXSmall: 25rem !important;
+    
+}
+
+/* .combobox-container .slds-dropdown {
+     width: 1000px !important;
+} */
+
+/* .slds-dropdown_fluid {
+     min-width: unset !important;
+     max-width: unset !important;
+     width: unset !important;
+} */
+
+/* .slds-dropdown {
+    min-width: unset !important;
+     max-width: unset !important;
+} */
+
+/* .slds-dropdown_fluid, .slds-dropdown--fluid {
+      min-width: 200px;
+     max-width: 500px;
+     width: 100px;
+     background-color: red;
+} */
+
+
+/* .slds-listbox_options ,.slds-dropdown_fluid, .slds-dropdown--fluid {
+      min-width: unset !important;
+     max-width: unset !important;
+     width: unset !important; 
+     background-color:yellow;
+
+}
+
+.slds-listbox,.slds-dropdown {
+    min-width: unset !important;
+    max-width: unset !important;
+} */
+
+/* .slds-dropdown_fluid,
+.slds-dropdown--fluid {
+    --lwc-sizeXSmall: unset !important;
+    min-width: unset !important;
+    max-width: unset !important;
+    width: unset !important;
+    background-color: or ;
+}
+
+.slds-listbox.slds-dropdown {
+    --lwc-sizeXSmall: unset !important;
+    min-width: unset !important;
+    max-width: unset !important;
+    width: unset !important;
+    background-color: yellow;
+} */

@@ -1,0 +1,848 @@
+<template>
+  <lightning-card>
+    <div class="" style="padding: 5px;">
+      <div class="slds-col slds-size_4-of-4 slds-p-right_medium" style="padding-left:10px;display:flex;justify-content:space-between;" >
+        <lightning-combobox style="width:23vw;" label="Manage" value={manageValue} options={manageOptions} onchange={handleManageChange}></lightning-combobox>
+          <div style="display:flex; align-items:end;">
+            <c-manage-clone-users></c-manage-clone-users>
+          </div>
+      </div>
+      <!-- PROFILE -->
+      <template if:true={isProfile}>
+        <div class="slds-size_1-of-4 slds-p-right_medium" style="padding-left: 10px;">
+          <lightning-combobox value={profileValue} class="combobox-custom-width" options={profileOptionsVal} onchange={handleProfileChange} placeholder="-- Select a Profile --" ></lightning-combobox>
+        </div>
+        <template if:true={isSelectedProfile}>
+          <c-manage-profile-component profile-value={selectedProfile} onprofilecloneevent={handleProfileCloneCustomEvent}></c-manage-profile-component>
+        </template>       
+      </template>
+      <!-- PERMISSION SET DROPDOWN-->
+      <template if:true={isPerSet}>
+        <c-manage-permission-set-component show-spinner={showSpinner} onspinnerchange={handleSpinnerChange}></c-manage-permission-set-component>
+      </template>
+      <!-- PERMISSION SET GROUP DROPDOWN   -->
+      <template if:true={isPerSetGrp}>
+        <div>
+          <div style="display: flex; align-items: end;">
+            <div class="slds-size_1-of-4 slds-p-right_medium" style="margin-left:5px">
+              <lightning-input label="Permission Set Group Name" type="search" value={searchPerSetGrpName}
+                onchange={handlePerSetGrp} oncommit={handleUserClear} placeholder="Search Permission Set Group" class="user-label"
+                style="padding-left:5px;"></lightning-input>
+            </div>
+            <div class=" slds-size_3-of-4 slds-p-right_medium slds-text-align_right">
+              <lightning-button variant="neutral" label="Create Permission set Group" title="Create Permission set Group"
+                onclick={handleClick}></lightning-button>
+            </div>
+          </div>
+          <template if:true={showPerSetGrpTable}>
+            <div style="width: auto;">
+              <lightning-datatable key-field="Id" data={updatedOtherRecords} columns={perSetGrpcolumns} hide-checkbox-column="true" sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting} class="slds-p-around_xx-small remove-underline custom-datatable" onrowaction={handleRowAction}></lightning-datatable>
+            </div>
+            <c-user-access-pagination hide-button-labels="true" record-size="20" records={filteredData} onpaginationevent={updateHandler}></c-user-access-pagination>
+          </template>
+          <template if:false={showPerSetGrpTable}>
+            <span style="display:flex;justify-content:center;">
+              <h2 style="font-size: 20px;">No Permission Set Group Found</h2>
+            </span>
+          </template>
+        </div>
+      </template>
+      <!-- User DROPDOWN   -->
+      <template if:true={isUser}>
+      <c-manage-users spinner-value={showSpinner} onspinnerchange={handleSpinnerChange}></c-manage-users>
+    </template>
+    </div>
+    
+    <!-- PERMISSION SET GROUP ACTION MODALS   -->
+    <!--1.PERMISSION SET GROUP ASSIGN MODAL-->
+    <template if:true={isModalAssign}>
+      <template if:true={ShowSpinner}>
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="medium"></lightning-spinner>
+      </template>
+      <template if:false={showSpinner}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open slds-modal_large">
+          <div class="slds-modal__container">
+            <div class="slds-modal__header">
+              <h1 class="slds-modal__title slds-hyphenate" tabindex="-1"> Select users for Assignment to Permission Set Groups </h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <lightning-layout multiple-rows="true" vertical-align="center">
+                <!-- Users and Selected Count Section -->
+                <lightning-layout-item size="3" padding="horizontal-small">
+                  <span>
+                    <b>Users</b>
+                  </span>
+                  <br>
+                  <span>{selectedRowLength} items selected</span>
+                </lightning-layout-item>
+                <!-- Search Users Section -->
+                <lightning-layout-item size="3" padding="horizontal-small">
+                  <lightning-input placeholder="Search Users.." type="search" value={searchUserVal} onchange={handlePerSetGrpUser} oncommit={handleAssignUserClear} class="user-label" style="padding-left:5px;"></lightning-input>
+                </lightning-layout-item>
+                <!-- Filter by Profile Section -->
+                <lightning-layout-item size="3" padding="horizontal-small">
+                  <lightning-combobox label="Filter by profile" placeholder="Filter by profile" value={profileVal} options={profileData} onchange={handleProfile}></lightning-combobox>
+                </lightning-layout-item>
+                <!-- Filter by License Section -->
+                <lightning-layout-item size="3" padding="horizontal-small">
+                  <lightning-combobox label="Filter by license" placeholder="Filter by license" value={ProfLicenseVal} options={userLicense} onchange={handleUserLicense}></lightning-combobox>
+                </lightning-layout-item>
+              </lightning-layout>
+              <!-- Users Table or No Users Message -->
+              <template if:true={showAssignTable}>
+                <div style="width: auto;">
+                  <lightning-datatable key-field="Id" data={filteredUserData} columns={userColumns} data-id="datatableone" onrowselection={handleRowSelection} sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting} class="slds-p-around_xx-small remove-underline custom-datatable"></lightning-datatable>
+                  <lightning-icon icon-name={iconName} variant={variant} size="small"></lightning-icon>
+                </div>
+              </template>
+              <template if:false={showAssignTable}>
+                <span style="display:flex; justify-content:center;">
+                  <h2 style="font-size: 20px;">There are no available users</h2>
+                </span>
+              </template>
+            </div>
+            <div class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral" aria-label="AssignCancel" name = "AssignCancel" onclick={handleCancel}>Cancel</button>
+              <button class="slds-button slds-button_brand" onclick={handleAssign} disabled={isAssignDisabled}>Assign</button>
+            </div>
+          </div>
+        </section>
+      </template>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--2.PERMISSION SET GROUP UNASSIGN MODAL-->
+    <template if:true={isModalUnAssign}>
+      <template if:true={ShowSpinner}>
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="medium"></lightning-spinner>
+      </template>
+      <template if:false={showSpinner}>
+        <section role="dialog" tabindex="-1" aria-modal="true"  class="slds-modal slds-fade-in-open slds-modal_large">
+          <div class="slds-modal__container">
+            <div class="slds-modal__header">
+              <h1 class="slds-modal__title slds-hyphenate" tabindex="-1"> Select Users to Unassign from Permission Set Groups</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+              <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" class="slds-m-left_xx-small" title="Delete" onclick={handleDeletePerSetGrp} disabled={isAssignDisabled}></lightning-button-icon>
+              <template if:true={showUnAssignTable}>
+                <div style="width: auto;">
+                  <lightning-datatable key-field="Id" data={userPerSetGrp} columns={userPerColumns} data-id="datatabletwo" class="slds-p-around_xx-small remove-underline custom-datatable" sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting} onrowselection={handleRowSelection}></lightning-datatable>
+                </div>
+              </template>
+              <template if:false={showUnAssignTable}>
+                <span style="display:flex;justify-content:center;">
+                  <h2 style="font-size: 20px;">There are No Assigned users</h2>
+                </span>
+              </template>
+            </div>
+            <div class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral" aria-label="UnassignCancel" name = "UnassignCancel" onclick={handleCancel}>Cancel</button>
+            </div>
+          </div>
+        </section>
+      </template>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--3.PERMISSION SET GROUP VIEW MODAL-->
+    <template if:true={isModalViewPerSetGrp}>
+      <template if:true={ShowSpinner}>
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="medium"></lightning-spinner>
+      </template>
+      <template if:false={showSpinner}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+          <div class="slds-modal__container">
+            <div class="slds-modal__header">
+              <h1 class="slds-modal__title slds-hyphenate" tabindex="-1"> Permission Set Group Details </h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+              <lightning-card>
+                <div class="slds-page-header slds-page-header_record-home">
+                  <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                      <div class="slds-media">
+                        <div class="slds-media__figure">
+                          <span class="slds-icon_container slds-icon-standard-settings">
+                            <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                              <use xlink:href="/_slds/icons/standard-sprite/svg/symbols.svg#settings"></use>
+                            </svg>
+                          </span>
+                        </div>
+                        <div class="slds-media__body">
+                          <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                              <h1>
+                                <span>Permission set Groups</span>
+                                <span class="slds-page-header__title slds-truncate" title="Acme - 1,200 Widgets">{userLabel}</span>
+                              </h1>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="slds-page-header__control">
+                          <ul class="slds-button-group-list">
+                            <li>
+                              <button class="slds-button slds-button_neutral" onclick={handleClick}>Edit Property</button>
+                            </li>
+                            <li>
+                              <button class="slds-button slds-button_neutral" onclick={handleClick}>Delete</button>
+                            </li>
+                            <li>
+                              <button class="slds-button slds-button_neutral" onclick={handleClick}>Clone</button>
+                            </li>
+                            <li>
+                              <button style="float: right" class="slds-button slds-button_neutral" aria-label="combinedpermission" onclick={handleCombinedPermissionSetGrp}>Combined Permissions</button>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="slds-box">
+                  <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                      <p>
+                        <strong>Description</strong>
+                      </p>
+                      <p>{userDescription}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                      <p>
+                        <strong>API Name</strong>
+                      </p>
+                      <p>{userApiName}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                      <p>
+                        <strong>Namespace Prefix</strong>
+                      </p>
+                      <p>{userNameSpacePrefix}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                      <p>
+                        <strong>Created By</strong>
+                      </p>
+                      <p>{userCreatedBy}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                      <p>
+                        <strong>Modified By</strong>
+                      </p>
+                      <p>{userModifiedBy}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                      <p>
+                        <strong>Status</strong>
+                      </p>
+                      <p>
+                        <lightning-icon icon-name={statusIcon} alternative-text="Status" variant={statusVariant} title={statusVariant} size="x-small"></lightning-icon>
+                        <span style="margin-left: 5px">{userStatus}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </lightning-card>
+              <lightning-tabset active-tab-value={activeTab}>
+                <lightning-tab label={permissionSets} value="PermissionSets" onactive={handleviewpertab}>
+                  <div style="display:flex;Justify-content:end;gap:5px">
+                    <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" class="slds-m-left_xx-small" title="Delete" onclick={handleDeletePermissionSet} disabled={isAssignDisabled}></lightning-button-icon>
+                    <button class="slds-button slds-button_neutral" aria-label="Assign Permission Set" onclick={handleAssignPermissionSet}>Assign Permission Set</button>
+                  </div>
+                  <template if:true={showPerSetTable}>
+                    <div style="max-height: 300px; overflow-y: auto;width:auto;">
+                      <lightning-datatable key-field="Id" data={assignedPerSet} columns={perSetColumns} data-id="datatablefour" class="slds-p-around_xx-small remove-underline custom-datatable" sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting} onrowselection={handleRowSelection}></lightning-datatable>
+                    </div>
+                  </template>
+                  <template if:false={showPerSetTable}>
+                    <span style="display:flex;justify-content:center;">
+                      <h2 style="font-size: 20px;">No Permission set Found</h2>
+                    </span>
+                  </template>
+                </lightning-tab>
+                <lightning-tab label={assignedUsers} value="AssignedUsers" onactive={handleviewassigntab}>
+                  <div style="display:flex;Justify-content:end;gap:5px">
+                    <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" class="slds-m-left_xx-small" title="Delete" onclick={handleDeletePerSetGrp} disabled={isAssignDisabled}></lightning-button-icon>
+                    <button class="slds-button slds-button_neutral" aria-label="Assign" disabled={isUserDisabled} onclick={handleAssignUser}>Assign users</button>
+                  </div>
+                  <template if:true={showAssignUsersTable}>
+                    <div style="max-height: 300px; overflow-y: auto;width:auto;">
+                      <lightning-datatable key-field="Id" data={userPerSetGrp} columns={userPerColumns} data-id="datatabletwo" sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting} class="slds-p-around_xx-small remove-underline custom-datatable" onrowselection={handleRowSelection}></lightning-datatable>
+                    </div>
+                  </template>
+                  <template if:false={showAssignUsersTable}>
+                    <span style="display:flex;justify-content:center;">
+                      <h2 style="font-size: 20px;">No Users Assigned</h2>
+                    </span>
+                  </template>
+                </lightning-tab>
+              </lightning-tabset>
+            </div>
+            <div class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral" aria-label="ViewAssignPersetCancel" name = "ViewAssignPersetCancel" onclick={handleCancel}>Cancel</button>
+            </div>
+          </div>
+        </section>
+      </template>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--PERMISSION SET GROUP ---COMBINED PERMISSION-->
+    <template if:true={isCombinedPermissionForPerSetGrp}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+        <div class="slds-modal__container" style="width: 98%;">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-06" class="slds-modal__title slds-hyphenate" tabindex="-1"> Combined Permissions for {userLabel} </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-29">
+            <!-- TAB SET -->
+            <lightning-tabset active-tab-value={tabValue}>
+              <!-- USER PERMISSION -->
+              <lightning-tab label="User Permissions" value="User permissions" onactive={handleTabValue}>
+                <template if:true={showUserPerGrpTable}>
+                  <div style="margin-right:auto; top:0px; z-index:10; margin-bottom:5px; display:flex; justify-content:space-between;">
+                    <lightning-input label="Search User Permission" value={searchUserPermKey} onchange={handleSearchKeyChange} placeholder="Search User Permission" style="max-width: 25vw;" variant="label-hidden" type="search"></lightning-input>
+                    <template if:true={editInPsg}>
+                      <div class="fixed-buttons" style="float: right">
+                        <button class="slds-button slds-button_neutral" aria-label="Mutepermission" onclick={handleMutePermissionSetGrp} disabled={isEditable}> Mute Permissions </button>
+                      </div>
+                    </template>
+                    <template if:false={editInPsg}>
+                      <div class="fixed-buttons" style="float: right">
+                        <button class="slds-button slds-button_neutral" aria-label="Cancel" name="cancelEdit" variant="neutral" onclick={handleCancelPSG}> Cancel </button>
+                        <button class="slds-button slds-button_brand" aria-label="Update" name="updateEdit" variant="brand" onclick={handleUpdateSystempsg} disabled={isUpdateEnabled}> Update </button>
+                      </div>
+                    </template>
+                  </div>
+                  <div style="max-height: 300px; overflow-y:auto;">
+                    <template if:true={hasUser}>
+                      <div class="grid-container" style="margin-right:auto; position:sticky; top:0px; z-index:10;">
+                        <div class="grid-item no-gap">Permission Name</div>
+                        <div class="grid-item no-gap">Enabled</div>
+                        <div class="grid-item no-gap">Muted</div>
+                      </div>
+                      <template for:each={filteredSystemPer} for:item="systemPermission">
+                        <div class="grid-container-sys" key={systemPermission.Name}>
+                          <div class="grid-item">{systemPermission.Label}</div>
+                          <lightning-input class="grid-item" type="checkbox" checked={systemPermission.Value} data-fieldapi={systemPermission.Name} data-field="Enabled" data-fieldname={systemPermission.Label} onchange={handlesystemPermissionChangepsg} disabled></lightning-input>
+                          <lightning-input class="grid-item" type="checkbox" checked={systemPermission.MutedValue} data-id={systemPermission.MutedId} data-fieldapi={systemPermission.Name} data-field="Muted" data-fieldname={systemPermission.Label} onchange={handlesystemPermissionChangepsg} disabled={disabledUserEdit}></lightning-input>
+                        </div>
+                      </template>
+                    </template>
+                    <template if:false={hasUser}>
+                      <span style="display:flex;justify-content:center;">
+                        <h2 style="font-size: 20px;">No Search User Permissions Found</h2>
+                      </span>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={showUserPerGrpTable}>
+                  <div class="slds-box custom-box-style" style="display:flex; justify-content:center; margin-top:55px;">
+                    <span style="display:flex; justify-content:center;">
+                      <h2 style="font-size: 20px;">No User Permission Found</h2>
+                    </span>
+                  </div>
+                </template>
+              </lightning-tab>
+              <!-- OBJECT PERMISSION -->
+              <lightning-tab label="Object Permissions" value="Object Permissions" onactive={handleTabValue}>
+                <div style="margin-right:auto;margin-bottom:5px; display:flex;justify-content:space-between;">
+                  <lightning-input label="Search Objects" value={searchKey} onchange={handleSearchKeyChange} placeholder="Search Object" style="max-width: 25vw;" variant="label-hidden" type="search"></lightning-input>
+                </div>
+                <template if:true={hasObject}>
+                  <template for:each={filteredStdObjPer} for:item="obj">
+                    <div key={obj.value}>
+                      <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                          <div class="slds-media__figure">
+                            <lightning-icon icon-name={obj.icon} data-name={obj.value} onclick={toggleAccordion} class={obj.cursorClass} size="x-small"></lightning-icon>
+                          </div>
+                          <div class="slds-media__body">
+                            <h2>
+                              <button style={obj.buttonStyle} aria-expanded={obj.isOpen} class={obj.cursorClass} data-name={obj.value} onclick={toggleAccordion}>
+                                <span title={obj.label}>{obj.label}</span>
+                              </button>
+                            </h2>
+                          </div>
+                        </header>
+                      </div>
+                      <div if:true={obj.isOpen} class="slds-card__body">
+                        <div style="display:flex; justify-content: center; align-items: center;">
+                        <lightning-layout style="width: 100%; gap: 5px;">
+                          <lightning-layout-item class="slds-box" size="6_of_12">
+                        <template if:false={isShowObjectSpinner}>
+                        <template if:false={editInPsg}>
+                          <div style="display:flex;gap:6px;justify-content:center;padding-right:110px">
+                            <lightning-button label="Cancel" name="cancelEdit" variant="neutral" onclick={handleCancelPSG}></lightning-button>
+                            <lightning-button label="Update" name="updateEdit" variant="brand" onclick={handleUpdateSystempsg} disabled={isUpdateEnabled}></lightning-button>
+                          </div>
+                        </template>
+                                <div style="margin-right:auto;margin-top: 42px; margin-bottom:10px;"></div>
+                                <div class="grid-container" style="margin-right:auto; top:0px; z-index:10;">
+                                  <div class="grid-item no-gap">Object Permissions</div>
+                                  <div class="grid-item no-gap">Enabled</div>
+                                  <div class="grid-item no-gap">Muted</div>
+                                </div>
+                                <div class="grid-container">
+                                  <span class="grid-item">Create</span>
+                                  <lightning-input class="grid-item" type="checkbox" name="create" checked={objPermissions.PermissionsCreate} disabled></lightning-input>
+                                  <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;user-select:none;">
+                                    <lightning-input style="display:flex; justify-content:end" type="checkbox" name="create" checked={muteObjPermissions.PermissionsCreate} onchange={handlePermissionChange} disabled={disabledObjEdit}></lightning-input>
+                                    <template if:true={editInPsg}>
+                                      <div style="display:flex;justify-content:end;margin-right:5px;">
+                                        <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleMutePermissionSetGrp} variant="bare" size="small"></lightning-button-icon>
+                                      </div>
+                                    </template>
+                                  </div>
+                                </div>
+                                <div class="grid-container">
+                                  <span class="grid-item">Read</span>
+                                  <lightning-input class="grid-item" type="checkbox" name="read" checked={objPermissions.PermissionsRead} disabled></lightning-input>
+                                  <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;user-select:none;">
+                                    <lightning-input style="display:flex; justify-content:end" type="checkbox" name="read" checked={muteObjPermissions.PermissionsRead} onchange={handlePermissionChange} disabled={disabledObjEdit}></lightning-input>
+                                    <template if:true={editInPsg}>
+                                      <div style="display:flex;justify-content:end;margin-right:5px;">
+                                        <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleMutePermissionSetGrp} variant="bare" size="small"></lightning-button-icon>
+                                      </div>
+                                    </template>
+                                  </div>
+                                </div>
+                                <div class="grid-container">
+                                  <span class="grid-item">Edit</span>
+                                  <lightning-input class="grid-item" type="checkbox" name="edit" checked={objPermissions.PermissionsEdit} disabled></lightning-input>
+                                  <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;user-select:none;">
+                                    <lightning-input style="display:flex; justify-content:end" type="checkbox" name="edit" checked={muteObjPermissions.PermissionsEdit} onchange={handlePermissionChange} disabled={disabledObjEdit}></lightning-input>
+                                    <template if:true={editInPsg}>
+                                      <div style="display:flex;justify-content:end;margin-right:5px;">
+                                        <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleMutePermissionSetGrp} variant="bare" size="small"></lightning-button-icon>
+                                      </div>
+                                    </template>
+                                  </div>
+                                </div>
+                                <div class="grid-container">
+                                  <span class="grid-item">Delete</span>
+                                  <lightning-input class="grid-item" type="checkbox" name="delete" checked={objPermissions.PermissionsDelete} disabled></lightning-input>
+                                  <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;user-select:none;">
+                                    <lightning-input style="display:flex; justify-content:end" type="checkbox" name="delete" checked={muteObjPermissions.PermissionsDelete} onchange={handlePermissionChange} disabled={disabledObjEdit}></lightning-input>
+                                    <template if:true={editInPsg}>
+                                      <div style="display:flex;justify-content:end;margin-right:5px;">
+                                        <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleMutePermissionSetGrp} variant="bare" size="small"></lightning-button-icon>
+                                      </div>
+                                    </template>
+                                  </div>
+                                </div>
+                                <div class="grid-container">
+                                  <span class="grid-item">View All</span>
+                                  <lightning-input class="grid-item" type="checkbox" name="viewAllRecords" checked={objPermissions.PermissionsViewAllRecords} disabled></lightning-input>
+                                  <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;user-select:none;">
+                                    <lightning-input style="display:flex; justify-content:end" type="checkbox" name="viewAllRecords" checked={muteObjPermissions.PermissionsViewAllRecords} onchange={handlePermissionChange} disabled={disabledObjEdit}></lightning-input>
+                                    <template if:true={editInPsg}>
+                                      <div style="display:flex;justify-content:end;margin-right:5px;">
+                                        <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleMutePermissionSetGrp} variant="bare" size="small"></lightning-button-icon>
+                                      </div>
+                                    </template>
+                                  </div>
+                                </div>
+                                <div class="grid-container">
+                                  <span class="grid-item">Modify All</span>
+                                  <lightning-input class="grid-item" type="checkbox" name="modifyAllRecords" checked={objPermissions.PermissionsModifyAllRecords} disabled></lightning-input>
+                                  <div class="grid-item" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column;user-select:none;">
+                                    <lightning-input style="display:flex; justify-content:end" type="checkbox" name="modifyAllRecords" checked={muteObjPermissions.PermissionsModifyAllRecords} onchange={handlePermissionChange} disabled={disabledObjEdit}></lightning-input>
+                                    <template if:true={editInPsg}>
+                                      <div style="display:flex;justify-content:end;margin-right:5px;">
+                                        <lightning-button-icon icon-name="utility:edit" alternative-text="Edit" onclick={handleMutePermissionSetGrp} variant="bare" size="small"></lightning-button-icon>
+                                      </div>
+                                    </template>
+                                  </div>
+                                </div>
+                              </template> 
+                              <template if:true={isShowObjectSpinner}>
+                                    <div class="slds-align_absolute-center"
+                                      style="height: 100%; background-color: #f3f3f3;z-index:10;display:flex;position:relative;">
+                                      <div class="">
+                                        <div class="slds-col">
+                                          <div class="slds-is-relative">
+                                            <div role="status" class="slds-spinner slds-spinner_medium">
+                                              <span style="z-index: -999;" class="slds-assistive-text">Loading</span>
+                                              <div class="slds-spinner__dot-a"></div>
+                                              <div class="slds-spinner__dot-b"></div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div style="margin-top: 35px; font-weight: 600;" class="slds-col slds-p-left_small">
+                                          <span>Waiting to fetch Object Data</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </template>
+                            </lightning-layout-item>
+<lightning-layout-item class="slds-box" padding="around-small" style="max-height:60vh;margin-left:5px;" size="6_of_12">
+                            <c-manage-field-permission enable-grp-mute-permissions="true" perm-set-grp-id={clickedRowValue} has-edit-access={hasEditAccess} perm-set-id={clickedPerSetRowValue}
+                                object-name={dataSetObject} total-user={assignedUserLength} prof-name={userLabelforPerSet} permission-type="Permission Set Group"
+                                perm-name={originalUserApiNameforPerSet}></c-manage-field-permission>
+</lightning-layout-item>
+                          </lightning-layout>
+                        </div>
+                        </div>
+                      <div class="slds-m-bottom_small slds-border_bottom"></div>
+                      </div>
+                  </template>
+                </template>
+                <template if:false={hasObject}>
+                  <span style="display:flex;justify-content:center;">
+                    <h2 style="font-size: 20px;">No Search Object Found</h2>
+                  </span>
+                </template>
+              </lightning-tab>
+            </lightning-tabset>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="CombinedCancel" name = "CombinedCancel" onclick={handleCancel}> Cancel </button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--     CREATE FUNCTION FOR PERMISSION SET GROUP       -->
+    <!-- First Modal -->
+    <template if:true={isCreateClicked}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-09" class="slds-modal__title slds-hyphenate" tabindex="-1">Create a Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-11">
+            <span style="display: flex;justify-content: center;">
+              <p>Let's Make a New Group</p>
+            </span>
+            <span style="display: flex;justify-content: center;">
+              <p>Permission Set Groups are great for managing and organizing permission sets for groups of users. <a href="#">Learn More</a>
+              </p>
+            </span>
+            <div class="slds-grid slds-wrap slds-gutters">
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="Label" required value={createLabelValue} onchange={handleInputCreate} data-id="label"></lightning-input>
+              </div>
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="API Name" required value={createApiNameValue} onchange={handleInputCreate} data-id="apiName"></lightning-input>
+              </div>
+            </div>
+            <lightning-textarea label="Description" value={createDescriptionValue} onchange={handleInputCreate} data-id="description"></lightning-textarea>
+            <div style="float:right" class="slds-p-around_medium">
+              <lightning-input type="checkbox" label="Session Activation Required " checked={isSessionChecked} onchange={handleSessionChange}></lightning-input>
+            </div>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={closeModal}>Cancel</button>
+            <button class="slds-button slds-button_brand" disabled={isNextDisabled} onclick={handleNext}>Next</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!-- Second Modal -->
+    <template if:true={isCreatedNext}>
+      <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <!-- Modal/Popup Header -->
+          <header class="slds-modal__header">
+            <h2 class="slds-text-heading_medium">Create a Permission Set Group</h2>
+            <span>Add Permission Sets to {createLabelValue}</span>
+          </header>
+          <!-- Modal/Popup Body -->
+          <div class="slds-modal__content slds-p-around_medium">
+            <lightning-input type="Search" label="Search permission sets" value={searchTerm} onchange={handleSearchChange}></lightning-input>
+            <div class="slds-grid slds-m-top_medium">
+              <div class="slds-col">
+                <lightning-layout>
+                  <lightning-layout-item>
+                    <div class="slds-text-title">Available Permission Sets({permissionSetLength}) </div>
+                    <div class="slds-box slds-box_small slds-m-top_small slds-scrollable_y" style="height:300px;width:300px;cursor: pointer;">
+                      <template if:true={hasPerSet}>
+                        <template for:each={filteredAvailablePermissionSets} for:item="set">
+                          <div key={set.Id} class="slds-m-bottom_small slds-grid" onclick={handleAddClickValue} data-id={set.Id}>
+                            <div class="slds-col slds-size_1-of-1 user-highlight" style="padding-left: 10px;">
+                              <h2>
+                                <span>{set.Label}</span>
+                              </h2>
+                              <div class="slds-text-body_small"> {set.nameSpacePrefix}.{set.license}</div>
+                            </div>
+                          </div>
+                        </template>
+                      </template>
+                      <template if:false={hasPerSet}>
+                        <span style="display:flex;justify-content:start;">
+                          <h2 style="font-size: 15px;">No Permissions sets Found</h2>
+                        </span>
+                      </template>
+                    </div>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </div>
+              <div class="slds-col  slds-align-middle slds-p-horizontal_medium">
+                <lightning-button icon-name="utility:right" size="large" variant="neutral" onclick={handleAddPermissionSet}></lightning-button>
+                <div class="slds-m-vertical_small"></div>
+                <lightning-button icon-name="utility:left" size="large" variant="neutral" onclick={handleRemovePermissionSet}></lightning-button>
+              </div>
+              <div class="slds-col">
+                <lightning-layout>
+                  <lightning-layout-item>
+                    <div class="slds-text-title">Selected Permission Sets({selectedPerSetLength}) </div>
+                    <div class="slds-box slds-m-top_small slds-scrollable_y" style="height:300px;width:300px;cursor: pointer;">
+                      <template for:each={selectedPermissionSets} for:item="set">
+                        <div key={set.Id} class="slds-m-bottom_small slds-grid" onclick={handleRemoveClickValue} data-id={set.Id}>
+                          <div class="slds-col slds-size_1-of-1 user-highlight" style="padding-left: 10px;">
+                            <h2>
+                              <span>{set.Label}</span>
+                            </h2>
+                            <div class="slds-text-body_small"> {set.nameSpacePrefix}.{set.license}</div>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </div>
+            </div>
+          </div>
+          <!-- Modal/Popup Footer -->
+          <footer class="slds-modal__footer">
+            <lightning-button style="float:left;" label="Back" onclick={handleBack}></lightning-button>
+            <span style="gap:5px">
+              <lightning-button label="Next" variant="brand" onclick={handleclickNext}></lightning-button>
+            </span>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- Third Modal -->
+    <template if:true={isCreateSave}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-12" class="slds-modal__title slds-hyphenate" tabindex="-1">Create a Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-15">
+            <div class="slds-notify slds-notify_alert slds-theme_info">
+              <span class="slds-assistive-text">Info</span>
+              <lightning-icon icon-name="utility:warning" size="small" alternative-text="Info"></lightning-icon>
+              <span class="slds-m-left_x-small">After you save your changes, the permissions associated with this group are updated and the Permission Set Group status reflects the current state. When the process is completed, the status changes to Updated. Then you can assign users to the group. To see the latest status, refresh your browser.</span>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters">
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="Label" value={createLabelValue} disabled></lightning-input>
+              </div>
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="API Name" value={createApiNameValue} disabled></lightning-input>
+              </div>
+            </div>
+            <lightning-textarea label="Description" value={createDescriptionValue} disabled></lightning-textarea>
+            <div class="container">
+              <div class="grid-header">Assigned Permission Sets</div>
+              <template if:true={isPermissionSet}>
+                <template for:each={selectedPermissionSets} for:item="set">
+                  <div class="grid-container" key={set.Id}>
+                    <div class="grid-item">{set.Label}</div>
+                  </div>
+                </template>
+              </template>
+              <template if:false={isPermissionSet}>
+                <p>No permission sets Assigned</p>
+              </template>
+            </div>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={handleNextCloseModal}>Back</button>
+            <button class="slds-button slds-button_brand slds-m-left_medium" onclick={handleFinish}>Finish</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--PERMISSION SET GROUP--- EDIT MODAL-->
+    <template if:true={isEditClicked}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-33" class="slds-modal__title slds-hyphenate" tabindex="-1">Edit Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-34">
+            <div class="slds-grid slds-wrap slds-gutters">
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="Label" required value={userLabel} onchange={handleInputChange} data-id="label"></lightning-input>
+              </div>
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="API Name" required value={userApiName} onchange={handleInputChange} data-id="apiName"></lightning-input>
+              </div>
+            </div>
+            <lightning-textarea label="Description" value={userDescription} onchange={handleInputChange} data-id="description"></lightning-textarea>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="EditCancel" name = "EditCancel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleSave}>Save</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--PERMISSION SET GROUP--- CLONE MODAL-->
+    <template if:true={isCloneClicked}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-08" class="slds-modal__title slds-hyphenate" tabindex="-1">Clone Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-10">
+            <div class="slds-notify slds-notify_alert slds-theme_info">
+              <span class="slds-assistive-text">Info</span>
+              <lightning-icon icon-name="utility:info" size="small" alternative-text="Info"></lightning-icon>
+              <span class="slds-m-left_x-small">The cloned permission set group includes all permission sets in this original group.</span>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters">
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="Label" required value={userLabelClone} onchange={handleCloneInputChange} data-id="label"></lightning-input>
+              </div>
+              <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <lightning-input label="API Name" required value={userApiNameClone} onchange={handleCloneInputChange} data-id="apiName"></lightning-input>
+              </div>
+            </div>
+            <lightning-textarea label="Description" value={userDescriptionClone} onchange={handleCloneInputChange} data-id="description"></lightning-textarea>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="CloneCancel" name = "CloneCanel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleClone}>Clone</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <!--PERMISSION SET GROUP--- DELETE MODAL-->
+    <template if:true={isDeleteClicked}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-10" class="slds-modal__title slds-hyphenate" tabindex="-1">Delete Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-12">
+            <span style="display:flex;justify-content:center">To delete a permission set group, no users can be assigned to it. Confirm that you want to unassign {perSetLength} permission set and {assignedUserLength} user(s) then delete this permission set group.</span>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="DeleteCancel" name= "DeleteCancel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleDelete}>Delete</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <template if:true={isModalAssignConfirmMessage}>
+      <section role="dialog" style="z-index: 999999;" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-05" class="slds-modal__title slds-hyphenate" tabindex="-1">Confirmation for Assigning users(s) to Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+            <p>
+              <span style="display:flex;justify-content:center">Confirm User for Permission Set Group Assignments?</span>
+            </p>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="AssignConfirmCancel" name = "AssignConfirmCancel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleConfirmAssign}>Confirm</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" style="z-index: 9999;" role="presentation"></div>
+    </template>
+    <template if:true={isModalUnAssignConfirmMessage}>
+      <section role="dialog" tabindex="-1" style="z-index:999999;" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate" tabindex="-1">Confirmation for Unassigning users(s) to Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-06">
+            <p>
+              <span style="display:flex;justify-content:center">Confirm User for Permision Set Group Assignments?</span>
+            </p>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="UnassignConfirmCancel" name = "UnassignConfirmCancel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleConfirmUnAssign}>Confirm</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" style="z-index:9999;" role="presentation"></div>
+    </template>
+    <template if:true={isAssignPerSet}>
+      <template if:true={ShowSpinner}>
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="medium"></lightning-spinner>
+      </template>
+      <template if:false={showSpinner}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+          <div class="slds-modal__container">
+            <div class="slds-modal__header">
+              <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate" tabindex="-1">Assign Permission Sets to Permission Set Group </h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-6">
+              <lightning-input placeholder="Search permission sets.." type="search" value={searchPerSetVal} onchange={handlePerSetGrpPerSet} oncommit={handlePerSetClear} class="user-label" style="padding-left:5px;"></lightning-input>
+              <template if:true={showPerSetAssignTable}>
+                <div style="width: auto;">
+                  <lightning-datatable key-field="Id" data={perSet} columns={perSetColumns} data-id="datatablethree" sorted-by={sortBy} sorted-direction={sortDirection} onsort={doSorting} class="slds-p-around_xx-small remove-underline custom-datatable" onrowselection={handleRowSelection}></lightning-datatable>
+                </div>
+              </template>
+              <template if:false={showPerSetAssignTable}>
+                <span style="display:flex;justify-content:center;">
+                  <h2 style="font-size: 20px;">No Permission sets Found</h2>
+                </span>
+              </template>
+            </div>
+            <div class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral" aria-label="AssignPersetCancel" name="AssignPersetCancel" onclick={handleCancel}>Cancel</button>
+              <button class="slds-button slds-button_brand" onclick={handleAssignforPerSet} disabled={isAssignDisabled}>Assign</button>
+            </div>
+          </div>
+        </section>
+      </template>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <template if:true={isModalAssignForPerSetConfirmMessage}>
+      <section role="dialog" tabindex="-1" style="z-index:999999;" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-04" class="slds-modal__title slds-hyphenate" tabindex="-1">Confirmation for Assigning Permission Set to Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-7">
+            <p>
+              <span style="display:flex;justify-content:center">Are you sure you want to assign permission set to this permission set group?</span>
+            </p>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="AssignConfirmPersetCancel" name="AssignConfirmPersetCancel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleConfirmAssignforPerSet}>Confirm</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" style="z-index:9999;" role="presentation"></div>
+    </template>
+    <template if:true={isModalUnAssignForPerSetConfirmMessage}>
+      <section role="dialog" tabindex="-1" style="z-index:999999;" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-07" class="slds-modal__title slds-hyphenate" tabindex="-1">Confirmation for Unassigning Permission Set to Permission Set Group </h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-8">
+            <p>
+              <span style="display:flex;justify-content:center">Are you sure you want to unassign permission set from this permission set group?</span>
+            </p>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="UnassignConfirmPersetCancel" name= "UnassignConfirmPersetCancel" onclick={handleCancel}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleConfirmUnAssignforPerSet}>Confirm</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" style="z-index:9999;" role="presentation"></div>
+    </template>
+  </lightning-card>
+  <template if:true={showSpinner}>
+    <div class="exampleHolder">
+      <lightning-spinner class="slds-is-fixed" style="z-index: 9999;" alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+  </template>
+</template>

@@ -1,0 +1,167 @@
+<template>
+  <div class="welcome-container">
+    <div class="welcome-section">
+      <h3>
+        <b>Welcome to Permisphere</b>
+      </h3>
+    </div>
+    <div class="resources-section">
+      <p>Create a connected app by clicking the button below.</p>
+      <div style="display:flex;gap:5px">
+        <p>
+          <lightning-button label="Create Connected App" onclick={handleButtonClick} disabled={recordsExist}></lightning-button>
+        </p>
+        <p>
+          <lightning-button label="Edit Policies" onclick={handleEditClick} disabled={isEdit}></lightning-button>
+        </p>
+      </div>
+    </div>
+    <div class="resources-section">
+      <h2>Resources</h2>
+      <ul>
+        <li>
+          <a href="#" target="_blank">Installation Guide</a>
+        </li>
+        <li>
+          <a href="#" target="_blank">User Guide</a>
+        </li>
+      </ul>
+    </div>
+    <div class="help-section">
+      <h2>Getting Help</h2>
+      <p>For assistance with Permishere, please visit the <a href="#" target="_blank">help link</a>. </p>
+    </div>
+  </div>
+  <template if:true={showSpinner}>
+    <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="medium"></lightning-spinner>
+  </template>
+  <template if:true={showModal}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_medium">
+      <div class="slds-modal__container">
+        <div class="slds-modal__header">
+          <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1"> Manage Assignments </h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-17">
+          <div class="slds-grid slds-gutters" style="flex-direction: column;">
+            <div class="">
+              <span style="padding-left: 16px; font-size: 18px; font-weight: bold;">Profile</span>
+              <div class="slds-modal__content slds-p-around_medium">
+                <lightning-input style="width:max-content;" type="Search" label="Search Profile" value={searchTermProfile} onchange={handleSearchAvailableProfile}></lightning-input>
+                <div class="slds-grid slds-m-top_medium">
+                  <div class="slds-col">
+                    <lightning-layout>
+                      <lightning-layout-item>
+                        <div class="slds-text-title">Available Profile({availableProfileLength})</div>
+                        <div class="slds-box slds-box_small slds-m-top_small slds-scrollable_y" style="height:300px;width:300px;cursor: pointer;">
+                          <template if:true={hasAvailProfile}>
+                            <template for:each={filteredAvailableProfile} for:item="set">
+                              <div key={set.id} class="slds-m-bottom_small slds-grid available-profile" onclick={handleSelectProfileToAdd} data-id={set.id}>
+                                <div class="slds-col slds-size_1-of-1 user-highlight" style="padding-left: 10px;">
+                                  <span>{set.name}</span>
+                                </div>
+                              </div>
+                            </template>
+                          </template>
+                          <template if:false={hasAvailProfile}>
+                            <span style="display:flex;justify-content:start;">
+                              <h2 style="font-size:15px">No Profile Found</h2>
+                            </span>
+                          </template>
+                        </div>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                  </div>
+                  <div class="slds-col  slds-align-middle slds-p-horizontal_medium">
+                    <lightning-button icon-name="utility:right" size="large" variant="netural" onclick={handleToAddSelectedProfileButton}></lightning-button>
+                    <div class="slds-m-vertical_small"></div>
+                    <lightning-button icon-name="utility:left" size="large" variant="netural" onclick={handleToRemoveSelectedProfileButton}></lightning-button>
+                  </div>
+                  <div class="slds-col">
+                    <lightning-layout>
+                      <lightning-layout-item>
+                        <div class="slds-text-title">Selected Profile({selectedProfileLength})</div>
+                        <div class="slds-box slds-m-top_small slds-scrollable_y" style="height:300px;width:300px;cursor: pointer;">
+                          <template for:each={selectedProfiles} for:item="set">
+                            <div key={set.id} class="slds-m-bottom_small slds-grid selected-profile" onclick={handleSelectProfileToRemove} data-id={set.id}>
+                              <div class="slds-col slds-size_1-of-1 user-highlight" style="padding-left: 10px;">
+                                <span>{set.name}</span>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <span style="padding-left: 16px; font-size: 18px; font-weight: bold;">Permission Set</span>
+              <div class="slds-modal__content slds-p-around_medium">
+                <lightning-input style="width:max-content;" type="Search" label="Search Permission set" value={searchtermforperset} onchange={handleSearchAvailablePerSet}></lightning-input>
+                <div class="slds-grid slds-m-top_medium">
+                  <div class="slds-col">
+                    <lightning-layout>
+                      <lightning-layout-item>
+                        <div class="slds-text-title">Available Permission Set({availablePermissionSetsLength})</div>
+                        <div class="slds-box slds-box_small slds-m-top_small slds-scrollable_y" style="height:300px;width:300px;cursor: pointer;">
+                          <template if:true={hasAvailPermissionSet}>
+                            <template for:each={filteredAvailablePerSet} for:item="set">
+                              <div key={set.Id} class="slds-m-bottom_small slds-grid" onclick={handleSelectPermissionSetToAdd} data-id={set.Id}>
+                                <div class="slds-col slds-size_1-of-1 user-highlight" style="padding-left: 10px;">
+                                  <span>{set.Name}</span>
+                                </div>
+                              </div>
+                            </template>
+                          </template>
+                          <template if:false={hasAvailPermissionSet}>
+                            <span style="display:flex;justify-content:start;">
+                              <h2 style="font-size:15px">No Permission Set Found</h2>
+                            </span>
+                          </template>
+                        </div>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                  </div>
+                  <div class="slds-col  slds-align-middle slds-p-horizontal_medium">
+                    <lightning-button icon-name="utility:right" size="large" variant="netural" onclick={handleToAddSelectedPermissionSetButton}></lightning-button>
+                    <div class="slds-m-vertical_small"></div>
+                    <lightning-button icon-name="utility:left" size="large" variant="netural" onclick={handleToRemoveSelectedPermissionSetButton}></lightning-button>
+                  </div>
+                  <div class="slds-col">
+                    <lightning-layout>
+                      <lightning-layout-item>
+                        <div class="slds-text-title">Selected Permission Set({selectedPermissionSetsLength})</div>
+                        <div class="slds-box slds-m-top_small slds-scrollable_y" style="height:300px;width:300px;cursor: pointer;">
+                          <template for:each={selectedPermissionSets} for:item="set">
+                            <div key={set.Id} class="slds-m-bottom_small slds-grid" onclick={handleSelectPermissionSetToRemove} data-id={set.Id}>
+                              <div class="slds-col slds-size_1-of-1 user-highlight" style="padding-left: 10px;">
+                                <span>{set.Name}</span>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+                      </lightning-layout-item>
+                    </lightning-layout>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-modal__footer">
+          <div class="slds-text-align_center">
+            <button class="slds-button slds-button_brand" aria-label="Create user" onclick={handleSave} disabled={isSave}>Save</button>
+            <button class="slds-button slds-button_neutral slds-m-left_x-large" aria-label="Clone user" onclick={closeModal}>Cancel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+  </template>
+  <template if:true={showSpinner}>
+    <div class="exampleHolder">
+      <lightning-spinner class="slds-is-fixed" style="z-index: 9999;" alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+  </template>
+</template>

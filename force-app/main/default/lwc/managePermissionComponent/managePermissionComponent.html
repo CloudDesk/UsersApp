@@ -1,0 +1,137 @@
+<template>
+    <div class="slds-grid slds-wrap ">
+				<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+					<!-- <div class="combobox-container"> -->
+					<lightning-combobox name="PermissionType"   label="Permission Type" value={permissionTypeValue}
+						options={permissionTypeOptions} onchange={handlePermissionTypeChange} ></lightning-combobox>
+					<!-- </div> -->
+				</div>
+				<template if:true={isUser}>
+					<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+				
+						<lightning-combobox class="combobox-custom-width" name="Permission"  label="Permission" value={userPermissionValue}
+							placeholder="-- Select a Permission --" options={userPermissionOptions}
+							onchange={handleUserPermissionChange}  ></lightning-combobox>
+					
+					</div>
+				</template>
+				<template if:true={isObject}>
+					<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+						<lightning-combobox name="Object" class="combobox-custom-width" label="Object" value={userObjectValue}
+							placeholder="-- Select a Object --" options={userObjectOptions}
+							onchange={handleObjectChange}></lightning-combobox>
+					</div>
+					<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+						<lightning-combobox name="ObjectPermission" label="Permission" value={objectPermissionValue}
+							options={objectPermissionOptions} placeholder="-- Select a Permission --"
+							disabled={isObjectSelected} onchange={handleObjectPermissionChange}>
+						</lightning-combobox>
+					</div>
+
+				</template>
+				<template if:true={isField}>
+					<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+						<lightning-combobox name="Object1" class="combobox-custom-width"  label="Object" placeholder="-- Select an Object --"
+							value={objectValue} options={userObjectOptions} onchange={handleFieldObjectChange}>
+						</lightning-combobox>
+					</div>
+					<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+						<lightning-combobox name="field" class="combobox-custom-width_permission" label="Field" placeholder="-- Select a Field--"
+							disabled={isFieldObjectSelected} value={fieldValue} options={fieldOptions}
+							onchange={handleFieldChange}>
+						</lightning-combobox>
+					</div>
+					<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+						<lightning-combobox name="FieldPermission" label="Permission" disabled={isFieldSelected}
+							placeholder="-- Select a Permission --" value={fieldPermissionValue}
+							options={fieldPermissionOptions} onchange={handleFieldPermissionChange}>
+						</lightning-combobox>
+					</div>
+
+
+				</template>
+				<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+					<lightning-combobox
+						label="Profile"
+						value={profileValue}
+						class="combobox-custom-width_permission"
+						disabled={isPermissionEnabledPermission}
+						options={profileOptions}
+						onchange={handleProfileChange} ></lightning-combobox>
+				</div>
+				<div class="slds-col slds-size_1-of-7 slds-p-right_medium">
+					<lightning-combobox
+						label="Permission Set"
+						class="combobox-custom-width_permission"
+						value={permissionSetValue}
+						disabled={isPermissionEnabledPermission}
+						options={permissionSetOption}
+						onchange={handlePermissionSetChange} ></lightning-combobox>
+				</div>
+				<div class="slds-col slds-size_1-of-7">
+					<lightning-combobox
+						label="Permission Set Group"
+						class="combobox-custom-width_permission"
+						value={permissionSetGroupValue}
+						disabled={isPermissionEnabledPermission}
+						options={permissionSetGroupOption}
+						onchange={handlePermissionSetGroupChange} ></lightning-combobox>
+				</div>
+				
+			</div>
+			<template if:true={showTable}>
+				<lightning-card class="slds-p-around_medium">
+					<template if:true={isUserAll}>
+						<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission</h2></span>
+					</template>
+					<template if:true={isObjectAll}>
+						<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;"> Users with {selectedPermissionLabel} permission on the Object - {selectedObject}</h2></span>
+					</template>
+					<template if:true={isFieldAll}>
+						<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission on the {selectedField} ({selectedObject} Object )</h2></span>
+					</template>
+					<template if:true={isUserProfile}>
+                         <span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission through profile: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isObjectProfile}>
+					<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;"> Users with {selectedPermissionLabel} permission on the Object - {selectedObject} through profile: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isFieldProfile}>
+						<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission on the {selectedField} ({selectedObject} Object ) through Profile: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isUserpermSet}>
+                         <span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission through permission Set: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isObjectPermSet}>
+					<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;"> Users with {selectedPermissionLabel} permission on the Object - {selectedObject} through Permission Set: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isfieldPermSet}>
+						<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission on the {selectedField} ({selectedObject} Object ) through Profile Permission Set: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isUserpermSetGrp}>
+                         <span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission through permission Set Group: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isObjectPermSetGrp}>
+					<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;"> Users with {selectedPermissionLabel} permission on the Object - {selectedObject} through Permission Set Group: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<template if:true={isfieldPermSetGrp}>
+						<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;">Users with {selectedPermissionLabel} permission on the {selectedField} ({selectedObject} Object ) through Profile Permission Set Group: {selectedPermissionTypeLabel}</h2></span>
+					</template>
+					<lightning-datatable key-field="Id" data={updatedOtherRecords} columns={datacolumns}
+						onrowaction={handleRowAction} hide-checkbox-column="true" sorted-by={sortBy}
+						sorted-direction={sortDirection} class="slds-p-around_xx-small remove-underline custom-datatable">
+					</lightning-datatable>
+					<c-user-access-pagination hide-button-labels="true" record-size="20" records={enabledUserPermission} onpaginationevent={updateHandler}></c-user-access-pagination>
+				</lightning-card>
+			</template>
+			<template if:true={noUserWithPermission}>
+				<span style="display:flex;padding-left:15px;"><h2 style="font-size: 20px;padding-top: 24px">No Users found with the specific criteria.</h2>
+				</span>
+			</template>
+
+			<template if:true={showSpinner}>
+		<div class="exampleHolder">
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+	</template>
+</template>

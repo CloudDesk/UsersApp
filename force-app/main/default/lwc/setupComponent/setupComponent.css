@@ -1,0 +1,72 @@
+.welcome-container {
+    padding: 20px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.resources-section,
+.help-section,
+.community-section {
+    text-align: left;
+    max-width: 600px;
+}
+
+.welcome-section {
+    text-align: left;
+    max-width: 1000px;
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+h2 {
+    font-size: 1.3rem;
+    margin: 10px 0;
+}
+
+a {
+    color: #0070d2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.selected-user {
+    background-color: #f8f8f8;
+    border: 2px solid #505050;
+}
+
+.selected-user:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.slds-theme_success {
+    background-color: #b6e9c3;
+    color: #228b22;
+}
+
+.slds-theme_error {
+    background-color: #f4c7c3;
+    color: #b22222;
+}
+
+.user-highlight:hover {
+    background-color: #e0e0e0;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
