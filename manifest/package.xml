@@ -46,7 +46,7 @@
         <members>MetadataWebServiceMock</members>
         <name>ApexClass</name>
     </types>
-    <types>
+    <!--<types>
         <members>permissionAnalyzer</members>
         <members>permissionAnalyzerObject</members>
         <members>permissionAnalyzerRecordType</members>
@@ -64,6 +64,6 @@
         <members>setupComponent</members>
         <members>userAccessPagination</members>
         <name>LightningComponentBundle</name>
-    </types>
+    </types>!-->
     <version>62.0</version>
 </Package>
