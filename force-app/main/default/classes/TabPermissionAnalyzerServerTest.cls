@@ -5,10 +5,12 @@ private class TabPermissionAnalyzerServerTest {
     private static final String Tab_Visibilty_Not_Empty_Message = 'Tab visibility list should not be empty.';
     private static final String Script_Thrown_Message = 'Script-thrown exception';
     private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
+    private static final String profileName = 'Standard User';
+    private static final String permissionSetName = 'New Test Permission Set 1';
     //This method holds the test data
     @testsetup
     public static void testsetupMethod() {
-        User_Access_Credentials__c credentials = new User_Access_Credentials__c(Client_Id__c='testClientId',Client_Secret__c='testClientSecret');
+        User_Access_Credentials__c credentials = new User_Access_Credentials__c(Client_Id__c='testClientId',Client_Secret__c='testClientSecret',Name='Standard');
             insert credentials;
     }
     //This test method is used to check the logics for getProfileOrPermSetTabVisibility method for Permission Set in TabPermissionAnalyzerServer class.
@@ -42,7 +44,7 @@ private class TabPermissionAnalyzerServerTest {
     @IsTest
     static void tabVisibilityRetrieverForProfile_Test()
     {
-        List<String> profileNames = new List<String> { 'HCH Sales User' };
+        List<String> profileNames = new List<String> { profileName };
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
@@ -57,7 +59,7 @@ private class TabPermissionAnalyzerServerTest {
     @IsTest
     static void tabVisibilityRetrieverForPermissionSet_Test()
     {
-        List<String> perSetNames = new List<String> { 'New Test Permission Set 1' };
+        List<String> perSetNames = new List<String> { permissionSetName };
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
@@ -71,11 +73,12 @@ private class TabPermissionAnalyzerServerTest {
     @IsTest
     static void tabVisibilityRetrieverForPermissionSet_Test_exceptionHandling()
     {
-        List<String> perSetNames = new List<String> { 'New Test Permission Set 1' };
+        List<String> perSetNames = new List<String> { permissionSetName };
         Test.startTest();
         try{
         Map < String, String > tabVisibility = TabPermissionAnalyzerServer.tabVisibilityRetrieverForPermissionSet(perSetNames);
         System.assert(true, Error_Thrown_Message);
+        System.assert(!tabVisibility.isEmpty(), 'The tabVisibility map should not be empty');
         } catch(Exception e){
           System.assert(e.getMessage().contains(Script_Thrown_Message), Script_Thrown_Message);  
         }
@@ -86,7 +89,7 @@ private class TabPermissionAnalyzerServerTest {
      @IsTest
     static void updateProfileTabVisibilities_Test()
     {
-        List<String> profileNames = new List<String> { 'HCH Sales User' };
+        List<String> profileNames = new List<String> { profileName };
         List<Map<String, Object>> tabToUpdate = new List<Map<String, Object>>();
         Map<String, Object> tab1 = new Map<String, Object>{'Label' => 'Account','Name' => 'standard-Account','Visibility' => 'DefaultOn'};
         tabToUpdate.add(tab1);
@@ -101,7 +104,7 @@ private class TabPermissionAnalyzerServerTest {
      @IsTest
     static void updateProfileTabVisibilities_Test_exceptionHandling()
     {
-        List<String> profileNames = new List<String> { 'HCH Sales User' };
+        List<String> profileNames = new List<String> { profileName };
         List<Map<String, Object>> tabToUpdate = new List<Map<String, Object>>();
         Map<String, Object> tab1 = new Map<String, Object>{'Label' => 'Account','Name' => 'standard-Account','Visibility' => 'DefaultOn'};
         tabToUpdate.add(tab1);
@@ -122,7 +125,7 @@ private class TabPermissionAnalyzerServerTest {
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
         Test.startTest();
-        List<TabPermissionAnalyzerServer.TabSettingsWrapper> result = TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', 'New Test Permission Set 1');
+        List<TabPermissionAnalyzerServer.TabSettingsWrapper> result = TabPermissionAnalyzerServer.updatePermissionSetTabVisibilities( '[{"standard-Account":"visible"}]', permissionSetName);
         handlingErrorsAndExceptionsTest();
         Test.stopTest();
         System.assertNotEquals(null, result, 'The result should not be null.');
@@ -131,7 +134,6 @@ private class TabPermissionAnalyzerServerTest {
     //This test method is used to check the logics for updatePermissionSetTabVisibilities(Failure) method in TabPermissionAnalyzerServer class.
     @IsTest
     static void updatePermissionSetTabVisibilities_Test_elseCondition() {
-        String invalidPermissionSetName = 'InvalidPermissionSet';
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();

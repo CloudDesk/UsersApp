@@ -271,7 +271,7 @@ public class PermissionSetManagerTest {
         Boolean isDuplicate = PermissionSetManager.checkDuplicatePermissionSet('Test Permission Set', 'Test_Permission_Set');
         Test.stopTest();
         
-        System.assertEquals(false, isDuplicate, 'The method should return true for an existing permission set.');
+        System.assertEquals(true, isDuplicate, 'The method should return true for an existing permission set.');
     }
     
     //This test method is used to check the logics for getPermissionSetTabSetting method in PermissionSetManager class.

@@ -59,6 +59,7 @@ public class PermissionAnalyzerServerTest {
         List < User > resultsNoSearch = PermissionAnalyzerServer.getUser(null);
         Test.stopTest();
         System.assertEquals(0, resultsNoSearch.size(), 'There should be no users returned when search term is null');
+        System.assertEquals(0, resultsNoSearch.size(), 'There should be no users returned');
     }
 
     //This test method is used to check the logics for getUserRelatedPermissionSets method in PermissionAnalyzerServer class.
@@ -84,6 +85,8 @@ public class PermissionAnalyzerServerTest {
         Test.stopTest();
         System.assertNotEquals(0, nativeResults.size(), 'Native entity definitions should be returned.');
         System.assertNotEquals(null, nativeResults[0].QualifiedApiName, 'EntityDefinition should have a QualifiedApiName.');
+        System.assertNotEquals(0, managedResults.size(), 'ManagedPackage entity definitions should be returned.');
+        System.assertNotEquals(null, managedResults[0].QualifiedApiName, 'EntityDefinition should have a QualifiedApiName.');
     }
     
     //This test method is used to check the logics for getCombinedObjAndFieldPermsForUser method in PermissionAnalyzerServer class.

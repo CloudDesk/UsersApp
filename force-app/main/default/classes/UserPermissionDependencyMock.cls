@@ -1,5 +1,6 @@
 //This class is used for User Dependency mock.
 public with sharing class UserPermissionDependencyMock implements HttpCalloutMock {
+    public Static final String ATTRIBUTE_TYPE = '"attributes": {"type": "PermissionDependency",';
     public HTTPResponse respond(HTTPRequest req) {
         HttpResponse res = new HttpResponse();
         res.setStatusCode(200);        
@@ -11,8 +12,7 @@ public with sharing class UserPermissionDependencyMock implements HttpCalloutMoc
             + '"entityTypeName": "PermissionDependency",'
             + '"records": ['
             + '{'
-            + '"attributes": {'
-            + '"type": "PermissionDependency",'
+            + ATTRIBUTE_TYPE
             + '"url": "/services/data/v58.0/tooling/sobjects/PermissionDependency/2Pd000000000000CAA"'
             + '},'
             + '"Id": "2Pd000000000000CAA",'
@@ -20,8 +20,7 @@ public with sharing class UserPermissionDependencyMock implements HttpCalloutMoc
             + '"RequiredPermission": "EditTask"'
             + '},'
             + '{'
-            + '"attributes": {'
-            + '"type": "PermissionDependency",'
+            + ATTRIBUTE_TYPE
             + '"url": "/services/data/v58.0/tooling/sobjects/PermissionDependency/2Pd000000000001CAA"'
             + '},'
             + '"Id": "2Pd000000000001CAA",'
@@ -29,8 +28,7 @@ public with sharing class UserPermissionDependencyMock implements HttpCalloutMoc
             + '"RequiredPermission": "EmailSingle"'
             + '},'
             + '{'
-            + '"attributes": {'
-            + '"type": "PermissionDependency",'
+            + ATTRIBUTE_TYPE
             + '"url": "/services/data/v58.0/tooling/sobjects/PermissionDependency/2Pd000000000002CAA"'
             + '},'
             + '"Id": "2Pd000000000002CAA",'
@@ -38,8 +36,7 @@ public with sharing class UserPermissionDependencyMock implements HttpCalloutMoc
             + '"RequiredPermission": "RunReports"'
             + '},'
             + '{'
-            + '"attributes": {'
-            + '"type": "PermissionDependency",'
+            + ATTRIBUTE_TYPE
             + '"url": "/services/data/v58.0/tooling/sobjects/PermissionDependency/2Pd000000000007CAA"'
             + '},'
             + '"Id": "2Pd000000000007CAA",'
@@ -47,8 +44,7 @@ public with sharing class UserPermissionDependencyMock implements HttpCalloutMoc
             + '"RequiredPermission": "ResetPasswords"'
             + '},'
             + '{'
-            + '"attributes": {'
-            + '"type": "PermissionDependency",'
+            + ATTRIBUTE_TYPE
             + '"url": "/services/data/v58.0/tooling/sobjects/PermissionDependency/2Pd000000000008CAA"'
             + '},'
             + '"Id": "2Pd000000000008CAA",'
