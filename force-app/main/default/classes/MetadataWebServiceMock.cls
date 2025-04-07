@@ -22,6 +22,10 @@ public class MetadataWebServiceMock implements WebServiceMock {
     }
 
     private void handleReadResult(Object request, Map<String, Object> response) {
+        // Use the request parameter by checking its type or logging it
+        if (request instanceof MetadataService.IReadResult) {
+            System.debug('Handling IReadResult request: ' + request);
+        }
         response.put('response_x', new MetadataService.readProfileResponse_element());
     }
 
