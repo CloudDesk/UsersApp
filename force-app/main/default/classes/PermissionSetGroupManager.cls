@@ -257,7 +257,7 @@ public with sharing class PermissionSetGroupManager {
         for (PermissionSetAssignment perseta : persetaList) {
             userIds.add(perseta.AssigneeId);
         }
-        List<User> users = [SELECT id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE Id IN :userIds ORDER BY Name ASC limit 5000];
+        List<User> users = [SELECT id, Name, Username,IsActive, Profile.Name, Profile.UserLicense.Name FROM User WHERE Id IN :userIds ORDER BY Name ASC limit 5000];
         return users;
     }
     // This method deletes the assignments of users from a specified Permission Set Group.
@@ -460,8 +460,9 @@ public with sharing class PermissionSetGroupManager {
             quotedFieldNames.add('\'' + fieldName + '\'');
         }
         String query = buildPermissionDependencyQuery(isUpdateSystemPermissions, quotedFieldNames);
+        String baseUrl = System.URL.getOrgDomainUrl().toExternalForm();
+        String endpoint = baseUrl + '/services/data/v58.0/tooling/query?q=' + EncodingUtil.urlEncode(query, 'UTF-8');
         UserAccessManager instance = new UserAccessManager();
-        String endpoint = URL.getSalesforceBaseUrl().toExternalForm() +'/services/data/v58.0/tooling/query?q=' +EncodingUtil.urlEncode(query, 'UTF-8');
         HttpRequest req = new HttpRequest();
         req.setEndpoint(endpoint);
         req.setMethod('GET');
@@ -1049,6 +1050,7 @@ public with sharing class PermissionSetGroupManager {
     //Helper method to capture Exception logs.
     private static void handleException(String message, Exception e) {
           String fullMessage = e == null ? message : message + ': ' + e.getMessage();
+          System.debug(LoggingLevel.ERROR, fullMessage);
           throw new AuraHandledException(fullMessage);
       }
     

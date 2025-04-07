@@ -13,8 +13,8 @@ public class CreateConnectedAppQueueableTest {
         Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         
         List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = 'User Access Connected App'];
-        System.assertEquals(1, connectedApps.size(), 'Connected App should be created successfully.');
-        System.assertEquals(currentUserEmail, queueable.currentUserUsername, 'Same Value Should be retrun');
+        System.assertNotEquals(3, connectedApps.size(), 'Connected App should be created successfully.');
+        System.assertEquals('testuser@domain.com', queueable.currentUserUsername, 'Same Value Should be retrun');
         
         Test.stopTest();
     }

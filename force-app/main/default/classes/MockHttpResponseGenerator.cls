@@ -6,7 +6,7 @@ Public Class MockHttpResponseGenerator implements HttpCalloutMock {
             this.statusCode = statusCode;
             this.mockType = mockType;
         }
-    	Public HTTPResponse respond(HTTPRequest req) {
+        Public HTTPResponse respond(HTTPRequest req) {
         HttpResponse res = new HttpResponse();
         res.setHeader('Content-Type', 'application/json');
         res.setStatusCode(statusCode);

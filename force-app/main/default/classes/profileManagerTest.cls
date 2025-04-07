@@ -50,7 +50,7 @@ public class ProfileManagerTest {
     //This test Method Used to Check the updateProfile Method in ProfileManager Class
     @IsTest
     static void testEditProfileProperties_Success() {
-        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1];
+        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
@@ -62,7 +62,7 @@ public class ProfileManagerTest {
     //This test Method Used to Check the cloneProfile Method in ProfileManager Class
     @IsTest
     static void testCloneProfile_Success() {
-        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1]; 
+        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'Standard User' LIMIT 1]; 
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();
@@ -260,7 +260,7 @@ public class ProfileManagerTest {
     
     @isTest
     static void testGetProfilePermsToCovertPermSet_ValidProfile() {
-        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'HCH Sales User' LIMIT 1];
+        Profile testProfile = [SELECT Id,Name FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200,'Login'));
         System.Test.setMock(WebServiceMock.class, new MetadataWebServiceMock());
         MetadataService metaDataService = new MetadataService();

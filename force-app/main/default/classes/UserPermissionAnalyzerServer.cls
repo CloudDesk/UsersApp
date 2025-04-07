@@ -1,6 +1,7 @@
 //This CLass is used to Maintain User Permissions for Users
 //Used in UserPermissionAnalyzer - LWC
 public with sharing class UserPermissionAnalyzerServer {
+    public static string ErrorMessage;
     public class FormattedUserPermissions {
         @AuraEnabled public String fieldName { get;  set; }
         @AuraEnabled public String fieldLabel { get; set; }
@@ -145,7 +146,6 @@ public with sharing class UserPermissionAnalyzerServer {
             return userPermEnabledPermSets;
         }
         String query = 'SELECT Id, Type, Name, Profile.Name FROM PermissionSet WHERE Id IN :permSetIds AND ' + permissionType + ' = true';
-        
         for (PermissionSet permSet: Database.query(query)) {
             String key;
             String value;
@@ -174,7 +174,7 @@ public with sharing class UserPermissionAnalyzerServer {
         if (String.isBlank(permSetId) || systemPermissions == null || systemPermissions.isEmpty()) {
             handleException('Invalid input parameters', null);
         }
-        
+        try {
             SObject permissionObject = getPermissionObject(permSetId);
             
             if (permissionObject instanceof PermissionSet && ((PermissionSet) permissionObject).Type == 'Profile') {
@@ -182,14 +182,13 @@ public with sharing class UserPermissionAnalyzerServer {
                     profileName
                         }, systemPermissions);
             } else {
-                try {
-                    updatePermissionSetOrMutePermSetGrp(permissionObject, systemPermissions);
-                    return systemPermissions;
-                } catch (Exception e) {
-                    handleException('Error updating system permissions: ', e);
-            	}
-                return null;
+                updatePermissionSetOrMutePermSetGrp(permissionObject, systemPermissions);
+                return systemPermissions;
             }
+        } catch (Exception e) {
+            handleException('Error updating system permissions: '+ErrorMessage, e);
+        }
+        return null;
     }
     private static SObject getPermissionObject(String permSetId) {
         List < PermissionSet > perms = [SELECT Id, Type FROM PermissionSet WHERE Id =: permSetId LIMIT 1];
@@ -217,6 +216,7 @@ public with sharing class UserPermissionAnalyzerServer {
             if (!upsertResult.success) {
                 handleUpsertError(upsertResult);
             } else {
+                System.debug('Profile updated successfully for: ' + upsertResult.fullName);
                 updatedResultForProfile = getProfileResult(profilesToUpdate);
             }
         }
@@ -252,15 +252,18 @@ public with sharing class UserPermissionAnalyzerServer {
         }
         return result;
     }
+    
     private static void handleUpsertError(MetadataService.UpsertResult upsertResult) {
         for (MetadataService.Error error: upsertResult.errors) {
+            System.debug('Error: ' + error.message + ' Status Code: ' + error.statusCode);
+            ErrorMessage = error.message;
             if (error.fields != null) {
                 for (String field: error.fields) {
                     System.debug('Error Field: ' + field);
                 }
             }
         }
-        handleException('Error updating profile: ' + upsertResult.errors[0].message, null);
+        handleException('Error updating profile: ' + ErrorMessage, null);
     }
     //This Method used to Update UserPermissions for PermissionSet and Also used to update MutingPermissionSet for  Group  
     private static void updatePermissionSetOrMutePermSetGrp(SObject permOrMutingPermSet, Map < String, Boolean > systemPermissions) {
@@ -274,6 +277,7 @@ public with sharing class UserPermissionAnalyzerServer {
     }
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
+        System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
     }
 }

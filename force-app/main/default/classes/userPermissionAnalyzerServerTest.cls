@@ -49,7 +49,7 @@ public class UserPermissionAnalyzerServerTest {
         String permSetGrpId = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1'LIMIT 1].Id;
         String permissionNames = 'PermissionsEmailMass,PermissionsEmailSingle,PermissionsEditTask';
          UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(permSetGrpId, permissionNames, userPermMapList);
-		 UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(testGroup.Id, permissionNames, userPermMapList);
+         UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(testGroup.Id, permissionNames, userPermMapList);
          UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp(null, permissionNames, userPermMapList);         
          UserPermissionAnalyzerServer.getMutedUserPermissionOfPermSetGrp('DummyId', 'PermissionsEmailMass,PermissionsEmailSingle,EditTask', userPermMapList);
          System.assert(true, 'Exception should have been thrown');
@@ -69,7 +69,7 @@ public class UserPermissionAnalyzerServerTest {
     static void updateUserPermissionsforProfOrPermSetOrMuteGroups_Test() {
         Map < String, Boolean > userPermMap = new Map < String, Boolean > {'EmailMass' => false,'ListEmailSend' => false};
         Map < String, Boolean > userPermMapMute = new Map < String, Boolean > {'EmailMass' => true,'ListEmailSend' => true};
-        Id profileId = [SELECT Id FROM Profile WHERE Name = 'HCH Sales User'].Id;
+        Id profileId = [SELECT Id FROM Profile WHERE Name = 'Standard User'].Id;
         Id permSetId = [SELECT Id FROM PermissionSet WHERE Name = 'New_Test_Permission_Set_1'].Id;
         Id mutePermSetId = [SELECT Id FROM MutingPermissionSet WHERE DeveloperName = 'New_Test_MutePermSet_1'].Id;
         Test.startTest();

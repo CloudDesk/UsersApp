@@ -5,7 +5,8 @@ public class PermissionAnalyzerObjectServerTest {
     private static final String Result_Not_Null_Message = 'Result should not be null';
     //This method holds the test data
     @testsetup
-    public static void testsetupMethod() {       
+    public static void testsetupMethod() {
+       
         Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
         List<User> userList = new List<User>();
         List<PermissionSet> permSets = new List<PermissionSet>();
@@ -24,8 +25,10 @@ public class PermissionAnalyzerObjectServerTest {
         insert userList;     
         insert permSets;
         insert mutingPermSets;
-        insert permSetGroups;        
-        insertPermissions(permSets, mutingPermSets, permSetGroups);        
+        insert permSetGroups;
+        
+        insertPermissions(permSets, mutingPermSets, permSetGroups);
+        
         List<PermissionSetAssignment> permSetAssignments = new List<PermissionSetAssignment>();
         for(Integer i = 1; i <= 2; i++){
             String permSetId;
@@ -36,14 +39,16 @@ public class PermissionAnalyzerObjectServerTest {
             }
             permSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permSetId, AssigneeId = userList[0].Id));
         }
-        insert permSetAssignments; 
+        insert permSetAssignments;  
         System.enqueueJob(new SetupObjectJob());
-    }    
+    }
+    
     // Creating Object, Field and group Permissions;
     static void insertPermissions(List<PermissionSet> permSets, List<MutingPermissionSet> mutingPermSets, List<PermissionSetGroup> permSetGroups){
         List<ObjectPermissions> objPermissions = new List<ObjectPermissions>();
         List<FieldPermissions> fieldPermissions = new List<FieldPermissions>();
-        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();        
+        List<PermissionSetGroupComponent> permSetGroupComponents = new List<PermissionSetGroupComponent>();
+        
         for(Integer i = 1; i <= 4; i++)
         {
             String permSetId;
@@ -97,7 +102,7 @@ public class PermissionAnalyzerObjectServerTest {
             System.assert(result.size() > 0, 'Should return dependencies');
         }        
     }    
-    //This test method is used to check the functionality of checkSobjectFoundInPicklist method in PermissionAnalyzerObjectServer class
+   //This test method is used to check the functionality of checkSobjectFoundInPicklist method in PermissionAnalyzerObjectServer class
     @IsTest
     static void checkSobjectFoundInPicklist_Test() {
         Test.startTest();

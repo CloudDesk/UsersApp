@@ -21,7 +21,7 @@ public with sharing class PermissionAnalyzerServer {
         Set < Id > permissionSetIds = new Set < Id > ();
         for (PermissionSetAssignment psa: [SELECT PermissionSetId,Assignee.UserName FROM PermissionSetAssignment WHERE AssigneeId =: userId]) {
             permissionSetIds.add(psa.PermissionSetId);
-        }    		
+        }           
         return [
             SELECT Id, Name, NamespacePrefix, IsCustom, Description, PermissionSetGroupId,
             PermissionSetGroup.Description, ProfileId, Type, Profile.Name, Profile.UserType,
@@ -88,6 +88,7 @@ public with sharing class PermissionAnalyzerServer {
         for (FieldPermissions fieldPerm : [SELECT SObjectType, Field, PermissionsRead, PermissionsEdit FROM FieldPermissions
                                            WHERE ParentId IN :permissionSetIds ORDER BY SObjectType ASC LIMIT 50000])
         {
+            System.debug('inside field permissions for loop');
             ObjAndFieldPermissionsWrapper wrapper = objAndFieldPermissionsWrapperMap.get(fieldPerm.SObjectType);
             if (wrapper == null) {
                 Map < String, Object > fieldPermissionsMap = new Map < String, Object > {
@@ -144,6 +145,7 @@ public with sharing class PermissionAnalyzerServer {
         HttpResponse res = new HttpResponse();
         try {
             res = newReq.send(req);
+            System.debug('check result' + res);
             if (res.getStatusCode() == 200) {
                 Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
                 List<Object> records = (List<Object>) results.get('records');
@@ -207,6 +209,7 @@ public with sharing class PermissionAnalyzerServer {
     //This method is used to edit the properties of Profile
     @AuraEnabled
     public static String editProfileProperties(String profileName,String newDescription) {
+        try {
             UserAccessManager instance = new UserAccessManager();
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', new List < String > {
                 profileName
@@ -221,9 +224,14 @@ public with sharing class PermissionAnalyzerServer {
                 updatedProfile
                     });
             if (!results[0].success) {
-                handleException('Error updating profile: ' + ': ' + results[0].errors[0].message, null);
+                throw new AuraHandledException('Error updating profile: ' + ': ' + results[0].errors[0].message);
             }            
             return newDescription;
+            
+        } catch (Exception e) {
+            handleException('Error processing profile update: ', e);
+        }
+        return null;
     }  
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
@@ -248,5 +256,17 @@ public with sharing class PermissionAnalyzerServer {
         permissionsMap.put('Accessible', describeResult.isAccessible()); // Checks if the object is readable
         System.debug('permissionsMap'+permissionsMap);
         return permissionsMap;        
-    }    
+    } 
+    @AuraEnabled(cacheable=true)
+    public static List<RecentlyViewed> getRecentlyViewedRecords() {
+        try {
+            return [SELECT Id, Name, Type, LastViewedDate ,IsActive 
+                    FROM RecentlyViewed 
+                    WHERE Type IN ('User', 'Profile') 
+                    ORDER BY LastViewedDate DESC 
+                    LIMIT 10];
+        } catch (Exception e) {
+            throw new AuraHandledException('Error fetching recently viewed records: ' + e.getMessage());
+        }
+    }
 }

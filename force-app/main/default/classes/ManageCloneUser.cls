@@ -60,7 +60,6 @@ public with sharing class ManageCloneUser {
             assignPublicGroups(userId,publicGroupIds);
             assignQueues(userId,queueIds);
         } catch (Exception ex) {
-            System.debug('Error in assignExistingPermissionsAndGroups: ' + ex.getMessage());
             throw new AuraHandledException('An error occurred while assigning permissions and groups: ' + ex.getMessage());
         }
     }
@@ -173,7 +172,6 @@ public with sharing class ManageCloneUser {
             update userRecord;
             return userRecord;
         } catch (Exception ex) {
-            System.debug('Error user activation update ' + ex.getMessage());
             throw new AuraHandledException('An error occurred while updating the user activation: ' + ex.getMessage());
         }
     }
@@ -214,10 +212,10 @@ public with sharing class ManageCloneUser {
         }
         
         wrapper.permissionSets = [SELECT Id, Name,Label, LicenseId, License.Name FROM PermissionSet WHERE LicenseId = :userLicenseId 
-                                  AND Type = 'Regular' AND Id NOT IN :assignedPermissionSetIds];
+                                  AND Type = 'Regular' AND Id NOT IN :assignedPermissionSetIds ORDER BY Name ASC];
         
         wrapper.permissionSetGroups = [SELECT Id, Name, LicenseId, License.Name FROM PermissionSet WHERE  Type = 'Group'
-                                       AND Id NOT IN :assignedPermissionSetIds];
+                                       AND Id NOT IN :assignedPermissionSetIds ORDER BY Name ASC];
         
         Set<Id> assignedGroupIds = new Set<Id>();
         for (GroupMember gm : [SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId]) 
@@ -225,7 +223,7 @@ public with sharing class ManageCloneUser {
             assignedGroupIds.add(gm.GroupId);
         }
         
-        wrapper.publicGroupQueue = [SELECT Id, Name, DeveloperName, Type FROM Group WHERE Type IN ('Regular', 'Queue')AND Id NOT IN :assignedGroupIds];
+        wrapper.publicGroupQueue = [SELECT Id, Name, DeveloperName, Type FROM Group WHERE Type IN ('Regular', 'Queue')AND Id NOT IN :assignedGroupIds ORDER BY Name ASC];
         return wrapper;
     }
     //This method used to retrieve the assigned permission sets,permission set groups,public groups,queues of the user.
@@ -240,24 +238,24 @@ public with sharing class ManageCloneUser {
         PermissionSetWrapper wrapper = new PermissionSetWrapper();
         
         wrapper.permissionSets = [SELECT Id, Name, LicenseId, License.Name FROM PermissionSet WHERE LicenseId = :userLicenseId 
-                                  AND Type = 'Regular' AND Id IN (SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId)];
+                                  AND Type = 'Regular' AND Id IN (SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId) ORDER BY Name ASC];
         
         wrapper.permissionSetGroups = [SELECT Id, Name, LicenseId, License.Name FROM PermissionSet 
-                                       WHERE Type = 'Group' AND Id IN (SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId)];
+                                       WHERE Type = 'Group' AND Id IN (SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId) ORDER BY Name ASC];
         
         wrapper.publicGroupQueue = [SELECT Id, Name, DeveloperName, Type FROM Group WHERE Type IN ('Regular', 'Queue')
-                                    AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)];
+                                    AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId) ORDER BY Name ASC];
         return wrapper;
     }
     //This method retrieves the profiles and permission sets associated with a connected app.
     @AuraEnabled(cacheable=true)
     public static PermissionSetWrapper getConnectedAssignment(String connectedAppId) {
         PermissionSetWrapper wrapper = new PermissionSetWrapper();
-        wrapper.profiles = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile from PermissionSet where Id NOT IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId =: connectedAppId)  AND Type = 'Profile'];
-        wrapper.permissionSets = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile from PermissionSet where Id NOT IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId =: connectedAppId)  AND Type = 'Regular'];
+        wrapper.profiles = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile from PermissionSet where Id NOT IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId =: connectedAppId)  AND Type = 'Profile' ORDER BY Profile.Name];
+        wrapper.permissionSets = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile from PermissionSet where Id NOT IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId =: connectedAppId)  AND Type = 'Regular' ORDER BY Name];
         
-        wrapper.assignedProfile = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Profile'];
-        wrapper.assignedPermissionSet = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Regular'];
+        wrapper.assignedProfile = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Profile' ORDER BY Profile.Name];
+        wrapper.assignedPermissionSet = [SELECT Id,Name, ProfileId, Profile.Name, IsOwnedByProfile FROM PermissionSet WHERE Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityId = :connectedAppId) AND Type = 'Regular' ORDER BY Name];
         return wrapper;
     }
     //This method retrieves the ID of the connected app
@@ -275,5 +273,4 @@ public with sharing class ManageCloneUser {
             return null;
         }
     }
-    
 }

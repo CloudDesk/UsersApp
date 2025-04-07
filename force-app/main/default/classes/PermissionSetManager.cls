@@ -220,11 +220,11 @@ public with sharing class PermissionSetManager {
                     }
                 }
                 if(assigneeId.size()>0){
-                    userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND ProfileId != NULL AND Id IN :assigneeId];
+                    userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND ProfileId != NULL AND Id IN :assigneeId ORDER BY Name ASC];
                 }
             }            
         } else {
-            userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND ProfileId != NULL];
+            userList = [SELECT Id, Name, Username, Profile.Name, Profile.UserLicense.Name FROM User WHERE IsActive = TRUE AND ProfileId != NULL ORDER BY Name ASC];
         }
         return userList;
     }  

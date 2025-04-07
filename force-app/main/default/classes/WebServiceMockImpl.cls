@@ -1,18 +1,18 @@
 // This class acts as a Mock class for MetadataServiceTest
 public class WebServiceMockImpl implements WebServiceMock 
-	{
-		public void doInvoke(
-			Object stub, Object request, Map<String, Object> response,
-			String endpoint, String soapAction, String requestName,
-			String responseNS, String responseName, String responseType) 
-		{
+    {
+        public void doInvoke(
+            Object stub, Object request, Map<String, Object> response,
+            String endpoint, String soapAction, String requestName,
+            String responseNS, String responseName, String responseType) 
+        {
             if(request instanceof MetadataService.Retrieve_element){
                 MetadataService.RetrieveResponse_element retrieveRespone = new MetadataService.RetrieveResponse_element();
                 MetadataService.AsyncResult asynResult = new MetadataService.AsyncResult();
                 asynResult.done = true;
                 asynResult.message = 'Success';
-				retrieveRespone.result = asynResult;
-				response.put('response_x', retrieveRespone);
+                retrieveRespone.result = asynResult;
+                response.put('response_x', retrieveRespone);
             }
             else if(request instanceof MetadataService.CheckDeployStatus_element){
                 MetadataService.CheckDeployStatusResponse_element checkDeployStatusResult = new MetadataService.CheckDeployStatusResponse_element();
@@ -21,7 +21,7 @@ public class WebServiceMockImpl implements WebServiceMock
                 deployResult.checkOnly = true;
                 checkDeployStatusResult.result = deployResult;
                 response.put('response_x', checkDeployStatusResult);
-            }				
+            }               
             else if(request instanceof MetadataService.listMetadata_element){
                 MetadataService.ListMetadataResponse_element response_x = new MetadataService.ListMetadataResponse_element();
                 List<MetadataService.FileProperties> fileProperties = new List<MetadataService.FileProperties>();
@@ -29,10 +29,10 @@ public class WebServiceMockImpl implements WebServiceMock
                 fileProp.fileName = 'Test File Name';
                 fileProperties.add(fileProp);
                 response_x.result = fileProperties;
-				response.put('response_x',response_x);
+                response.put('response_x',response_x);
             }
-			else if(request instanceof MetadataService.checkRetrieveStatus_element)
-				response.put('response_x', new MetadataService.checkRetrieveStatusResponse_element());
+            else if(request instanceof MetadataService.checkRetrieveStatus_element)
+                response.put('response_x', new MetadataService.checkRetrieveStatusResponse_element());
             else if(request instanceof MetadataService.describeMetadata_element){
                 MetadataService.DescribeMetadataResponse_element describeMetadataResult = new MetadataService.DescribeMetadataResponse_element();
                 MetadataService.DescribeMetadataResult describeMetadataRes = new MetadataService.DescribeMetadataResult();
@@ -40,8 +40,8 @@ public class WebServiceMockImpl implements WebServiceMock
                 describeMetadataResult.result = describeMetadataRes;
                 response.put('response_x',describeMetadataResult);
             }
-			else if(request instanceof MetadataService.deploy_element)
-				response.put('response_x', new MetadataService.deployResponse_element());
+            else if(request instanceof MetadataService.deploy_element)
+                response.put('response_x', new MetadataService.deployResponse_element());
             else if(request instanceof MetadataService.updateMetadata_element)
                 response.put('response_x', new MetadataService.updateMetadataResponse_element());
             else if(request instanceof MetadataService.renameMetadata_element)
@@ -73,6 +73,6 @@ public class WebServiceMockImpl implements WebServiceMock
                 response.put('response_x', new MetadataService.DeployRecentValidationResponse_element());
             else if(request instanceof MetadataService.describeValueType_element)
                 response.put('response_x', new MetadataService.describeValueTypeResponse_element());
-			return;
-		}
-	}
+            return;
+        }
+    }
