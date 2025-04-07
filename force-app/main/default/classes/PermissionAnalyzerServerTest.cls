@@ -59,7 +59,7 @@ public class PermissionAnalyzerServerTest {
         List < User > resultsNoSearch = PermissionAnalyzerServer.getUser(null);
         Test.stopTest();
         System.assertEquals(0, resultsNoSearch.size(), 'There should be no users returned when search term is null');
-        System.assertEquals(0, resultsNoSearch.size(), 'There should be no users returned');
+        System.assertEquals(2, resultsWithSearch.size(), 'There should be two users returned');
     }
 
     //This test method is used to check the logics for getUserRelatedPermissionSets method in PermissionAnalyzerServer class.
