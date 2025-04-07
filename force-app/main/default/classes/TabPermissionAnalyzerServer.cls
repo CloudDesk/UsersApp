@@ -47,9 +47,10 @@ public with sharing class TabPermissionAnalyzerServer {
     @TestVisible
     private static void handleException(String message, Exception e) {
         String fullMessage = e == null ? message : message + ': ' + e.getMessage();
+        System.debug(LoggingLevel.ERROR, fullMessage);
         throw new AuraHandledException(fullMessage);
     }
-    //This is helper method to fetch the permissions of TabSetting for PermissionSet Using MetaAPI	
+    //This is helper method to fetch the permissions of TabSetting for PermissionSet Using MetaAPI  
     @AuraEnabled
     public static Map < String, String > tabVisibilityRetrieverForPermissionSet(List < String > permissionSetNames) {
         UserAccessManager instance = new UserAccessManager();
@@ -79,22 +80,22 @@ public with sharing class TabPermissionAnalyzerServer {
             this.visibility = visibility;
         }
     }
-    //Method to update Tab of Permission Set
     @AuraEnabled
     Public Static List<TabSettingsWrapper> updatePermissionSetTabVisibilities(String tabSettingsJson, String persetname) {
         List<Map<String, String>> tabSettingRawList = (List<Map<String, String>>) JSON.deserialize(tabSettingsJson, List<Map<String, String>>.class);
         List<TabSettingsWrapper> tabVisibilityWrapper = new List<TabSettingsWrapper>();    
+        // Convert the raw list into TabSettingsWrapper list
         for (Map<String, String> item : tabSettingRawList) {
             for (String tabName : item.keySet()) {   
+                // Create the wrapper object
                 tabVisibilityWrapper.add(new TabSettingsWrapper(tabName, item.get(tabName)));
             }
-        }
+        }    
         return helperUpdateClassForPermissionset(tabVisibilityWrapper, persetname);
     }
-    //Helper Method to update Tab of Permission Set
     @AuraEnabled
-	Public Static List<TabSettingsWrapper> helperUpdateClassForPermissionset(List<TabSettingsWrapper> tabSettingsResult,String persetname) {
-   		 UserAccessManager instance = new UserAccessManager();
+    Public Static List<TabSettingsWrapper> helperUpdateClassForPermissionset(List<TabSettingsWrapper> tabSettingsResult,String persetname) {
+         UserAccessManager instance = new UserAccessManager();
         List<MetadataService.PermissionSet> permissionSets = (List<MetadataService.PermissionSet>) instance.service.readMetadata('PermissionSet',new List<String>{ persetname }).getRecords();    
         MetadataService.PermissionSet permissionSet;
         if (permissionSets.size() > 0) {
@@ -115,7 +116,8 @@ public with sharing class TabPermissionAnalyzerServer {
                     permissionSet.tabSettings.add(newTabSetting);
                 }
             }
-        }   
+        }    
+        // Update the PermissionSet metadata
         MetadataService.SaveResult[] results = instance.service.updateMetadata(new List<MetadataService.Metadata>{ permissionSet });
         handleSaveResult(results);
         return tabSettingsResult;
@@ -136,7 +138,8 @@ public with sharing class TabPermissionAnalyzerServer {
                         tabFound = true;
                         break;
                     }
-                }
+                }    
+                // Add new tab setting if not found
                 if (!tabFound) {
                     MetadataService.PermissionSetTabSetting newTabSetting = new MetadataService.PermissionSetTabSetting();
                     newTabSetting.tab = tabName;
@@ -172,6 +175,7 @@ public with sharing class TabPermissionAnalyzerServer {
     public static void updateProfileTabVisibilities(List < String > profileNames, List < Map < String, Object >> tabToUpdate) {
         UserAccessManager instance = new UserAccessManager();
         List < MetadataService.Profile > profilesToUpdate = new List < MetadataService.Profile > ();
+        try {
             List < MetadataService.Profile > profiles = (List < MetadataService.Profile > ) instance.service.readMetadata('Profile', profileNames).getRecords();
             if (profiles != null && !profiles.isEmpty()) {
                 for (MetadataService.Profile prof: profiles) {
@@ -192,6 +196,9 @@ public with sharing class TabPermissionAnalyzerServer {
                     handleUpsertResults(results);
                 }
             }
+        } catch (Exception e) {
+            handleException('Error updating profiles: ', e);
+        }
     }
     // Collecting tab visibilities from input Tabs
     private static List<MetadataService.ProfileTabVisibility> consolidatingTabVisibilitiesToUpdate(List< Map<String, Object> > tabsToUpdate, Map < String, MetadataService.ProfileTabVisibility > existingVisibilities){

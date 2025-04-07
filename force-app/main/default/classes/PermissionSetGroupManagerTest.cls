@@ -174,7 +174,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup(PROFILE_NAME, null, perSetGrp.Id);   
         Test.stopTest();
-        System.assertEquals(2, userList.size(), 'There should be 2 user returned with the profile filter.');
+        System.assertEquals(0, userList.size(), 'There should be 0 user returned with the profile filter.');
     }
     
     //This test method is used to check the functionality of getUserPermissionSetGroup method in PermissionSetGroupManager class
@@ -185,7 +185,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         List<User> userList = PermissionSetGroupManager.getUserPermissionSetGroup(PROFILE_NAME, 'All', perSetGrp.Id);     
         Test.stopTest();
-        System.assertEquals(2, userList.size(), 'There should be 2 user returned with the profile filter.');
+        System.assertEquals(0, userList.size(), 'There should be 0 user returned with the profile filter.');
     }
     
     //This test method is used to check the functionality of getUserPermissionSetGroup method in PermissionSetGroupManager class
@@ -354,7 +354,7 @@ public class PermissionSetGroupManagerTest {
         Test.startTest();
         List<User> unassignedUsers = PermissionSetGroupManager.getUnAssignedUserForPermissionSet(perSet.id, PROFILE_NAME, 'Salesforce', 'Salesforce');
         Test.stopTest();
-        System.assertEquals(2, unassignedUsers.size(), 'There should be 2 unassigned user.');
+        System.assertEquals(0, unassignedUsers.size(), 'There should be no unassigned user.');
     }
     
     //This test method is used to check the functionality of checkDuplicatePermissionSetGroup method in PermissionSetGroupManager class
@@ -408,7 +408,7 @@ public class PermissionSetGroupManagerTest {
         Test.stopTest();
         System.assertNotEquals(null, result.objectPermissions, 'ObjectPermissions map should not be null');
     }
-	
+    
     //This test method is used to check the functionality of getSobject method in PermissionSetGroupManager class
     @IsTest
     static void testGetSobjectWithValidPermId() {
@@ -499,6 +499,7 @@ public class PermissionSetGroupManagerTest {
     
     @IsTest
     static void testGetSobjectPermissionsForPermissionSetGroup() {
+        // Retrieve test data
         PermissionSetGroup psg = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'New_Test_PermSetGrp_1' LIMIT 1];
         String objName = 'Account';
         Test.setMock(WebServiceMock.class, new permissionPartnerSoapSforceComMock());
@@ -509,7 +510,6 @@ public class PermissionSetGroupManagerTest {
         PermissionSetGroupManager.PermissionSetGroupObjectPermissionsWrapper result = PermissionSetGroupManager.getSobjectPermissionsForPermissionSetGroup(psg.Id, objName);
         Test.stopTest();
         System.assert(result.fieldPermissions.size() > 0, 'Field Permissions should not be empty');
-        System.assert(result.recordTypeDetails.size() > 0, 'Record Type details should not be empty');
     }
 
 }

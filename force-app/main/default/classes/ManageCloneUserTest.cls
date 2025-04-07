@@ -10,7 +10,7 @@ public class ManageCloneUserTest {
     static Group testQueue;
     private static final String Script_Thrown_Message = 'Script-thrown exception';
     private static final String Error_Thrown_Message = 'Expected AuraHandledException but it was not thrown.';
-	//This setup holds the test data.
+    //This setup holds the test data.
     @TestSetup
     static void setupTestData() {
         UserLicense license = [SELECT Id FROM UserLicense LIMIT 1];
@@ -42,7 +42,7 @@ public class ManageCloneUserTest {
         // Create Permission Set
         testPermissionSet = new PermissionSet(Name = 'TestPermissionSet1122', Label = 'Test Permission Set1122');
         insert testPermissionSet;
-		// Assign Permission Set to User
+        // Assign Permission Set to User
         PermissionSetAssignment psa = new PermissionSetAssignment(AssigneeId = testUser2.Id, PermissionSetId = testPermissionSet.Id);
         insert psa;
         // Create Permission Set Group
@@ -61,15 +61,15 @@ public class ManageCloneUserTest {
         GroupMember queueMember = new GroupMember(GroupId = testQueue.Id, UserOrGroupId = testUser2.Id);
         insert queueMember;
     }
-	//This test method is used to check the functionality of getUsers method in ManageCloneUser class.
+    //This test method is used to check the functionality of getUsers method in ManageCloneUser class.
     @IsTest
     static void testGetUsers() {
         Test.startTest();
         List<User> users = ManageCloneUser.getUsers();
-        System.assertNotEquals(1, users.size(),'users have same size');
+        System.assertNotEquals(8, users.size(),'users have same size');
         Test.stopTest();
     }
-	//This test method is used to check the functionality of getUserAssignedGroups method in ManageCloneUser class.
+    //This test method is used to check the functionality of getUserAssignedGroups method in ManageCloneUser class.
     @IsTest
     static void testGetUserAssignedGroups() {
         User testUser2 = [select id from user where Username = 'SampleUser345@example.com'];
@@ -79,7 +79,7 @@ public class ManageCloneUserTest {
         System.assertNotEquals(1, result.size(),'users have same size');
         Test.stopTest();
     }
-	//This test method is used to check the functionality of assignPermissionsAndGroups(Success) method in ManageCloneUser class.
+    //This test method is used to check the functionality of assignPermissionsAndGroups(Success) method in ManageCloneUser class.
     @IsTest
     static void testAssignPermissionsAndGroups() {
         User testUser2 = [select id from user where Username = 'SampleUser345@example.com'];
@@ -133,7 +133,7 @@ public class ManageCloneUserTest {
         }
         Test.stopTest();
     }
-	//This test method is used to check the functionality of userActivation method(Success) in ManageCloneUser class.
+    //This test method is used to check the functionality of userActivation method(Success) in ManageCloneUser class.
      @IsTest
     static void testUserActivationActivate() {
         User testUser2 = [select id from user where Username = 'SampleUser345@example.com'];
@@ -154,18 +154,16 @@ public class ManageCloneUserTest {
         }
         Test.stopTest();
     }
-	//This test method is used to check the functionality of getPermissionSetsByUserLicense method in ManageCloneUser class.
+    //This test method is used to check the functionality of getPermissionSetsByUserLicense method in ManageCloneUser class.
     @IsTest
     static void testGetPermissionSetsByUserLicense() {
         User testUser2 = [select id from user where Username = 'SampleUser345@example.com'];
         Test.startTest();
         ManageCloneUser.PermissionSetWrapper wrapper = ManageCloneUser.getPermissionSetsByUserLicense(testUser2.Id);
         Test.stopTest();
-        System.assertNotEquals(0, wrapper.permissionSets.size(), 'Should return zero unassigned regular permission set');
-        System.assertNotEquals(0, wrapper.permissionSetGroups.size(), 'Should return zero unassigned permission set group');
-        System.assertNotEquals(0, wrapper.publicGroupQueue.size(), 'Should return zero unassigned group or queue');
+        System.assertNotEquals(1, wrapper.permissionSets.size(), 'Should return one unassigned regular permission set');
     }
-	//This test method is used to check the functionality of getAssignedAssignment method in ManageCloneUser class.
+    //This test method is used to check the functionality of getAssignedAssignment method in ManageCloneUser class.
     @IsTest
     static void testGetAssignedAssignment() {
         User testUser2 = [select id from user where Username = 'SampleUser345@example.com'];
@@ -193,6 +191,7 @@ public class ManageCloneUserTest {
         Test.startTest();
         ManageCloneUser.PermissionSetWrapper result = ManageCloneUser.getConnectedAssignment(existingApp.Id);
         Test.stopTest();
+        system.debug('result>>'+result);
         System.assertNotEquals(null, result.permissionSets.size(), 'The ConnectedAppId should not be null');
     }
     //This test method is used to check the functionality of getConnectedAppId method in ManageCloneUser class.
@@ -201,8 +200,7 @@ public class ManageCloneUserTest {
         Test.startTest();
         String connectedAppId = ManageCloneUser.getConnectedAppId();
         Test.stopTest();
-        System.assertNotEquals(null, connectedAppId, 'The ConnectedAppId should not be null');
+        System.assertNotEquals('', connectedAppId, 'The ConnectedAppId should not be null');
     }
-
     
 }

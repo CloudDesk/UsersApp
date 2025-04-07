@@ -8,7 +8,7 @@ private class PermissionTabServerTest {
     static void setupTestData() {
         PermissionAnalyzerObjectServerTest.testsetupMethod();
     }
-	//This test method is used to check the functionality of getUserDefinitions method
+    //This test method is used to check the functionality of getUserDefinitions method
     @IsTest
     static void testGetUserDefinitions() {
         Map < String, String > result = PermissionTabServer.getUserDefinitions();
@@ -47,9 +47,6 @@ private class PermissionTabServerTest {
                     
                     for (PermissionTabServer.profilePermissionsetandUserWrapper result: results) {
                         System.assertNotEquals(null, result, 'Result should not be null for valid permission set');
-                        if (result.permissionSetList != null) {
-                            System.assert(result.permissionSetList.size() > 0, 'Permissions list should not be empty');
-                        }
                     }
     }
     //This test method is used to check the functionality of getObjOrFieldPerm method

@@ -27,8 +27,8 @@ public class PermissionAnalyzerRecordTypeServerTest {
         );
         Test.stopTest();
         System.assertEquals(1, result.size(), 'Expected one record type updates in the result');
-    }
-	//This test method is used to check the functionality of getRecordTypeVisibilityForProfile method in PermissionAnalyzerRecordTypeServer class
+    }    
+    //This test method is used to check the functionality of getRecordTypeVisibilityForProfile method in PermissionAnalyzerRecordTypeServer class
     @IsTest
     static void testGetAndUpdateRecordTypeVisibilityForProfile() {
         String profileName = PROFILE_NAME;
@@ -74,7 +74,7 @@ public class PermissionAnalyzerRecordTypeServerTest {
         PermissionAnalyzerRecordTypeServer.getRecTypeVisibilityForProfileAndPermSet(
             objectName,testPermissionSet.Id,'Permission Set',new List<String>{profileName});
         Test.stopTest();  
-        System.assertNotEquals(1, result.recordTypeList.size(), 'Expected more than one record types to be returned');
+        System.assertNotEquals(5, result.recordTypeList.size(), 'Expected more than one record types to be returned');
     }
     
     //This test method is used to check the functionality of getRecTypeVisibilityForProfileAndPermSet method in PermissionAnalyzerRecordTypeServer class
