@@ -232,6 +232,7 @@ public class MetadataWebServiceMock implements WebServiceMock {
     }
 
     private void handleLogin(Object request, Map<String, Object> response) {
+        System.debug('Handling object request: ' + request);
         permissionPartnerSoapSforceCom.loginResponse_element loginResp = new permissionPartnerSoapSforceCom.loginResponse_element();
         loginResp.result = new permissionPartnerSoapSforceCom.LoginResult();
         loginResp.result.sessionId = 'TESTSESSION';
