@@ -43,11 +43,28 @@ public with sharing class CreateConnectedAppQueueable implements Queueable, Data
                     if(save_result.errors == null){
                         String prefixName = UserAccessManager.getUserAccessCredentialNamespace();
                         String customSettingName = prefixName + 'User_Access_Credentials__c';
-                        SObject customSettingRecord = Schema.getGlobalDescribe().get(customSettingName).newSObject();
-                        customSettingRecord.put('Name', 'Standard');
-                        customSettingRecord.put(prefixName + 'Client_Id__c', 'UserApp_DefaultConsumerKey_' + formattedDate);
-                        customSettingRecord.put(prefixName + 'Client_Secret__c', 'UserApp_DefaultConsumerSecret_' + formattedDate);
-                        insert customSettingRecord;
+                        SObjectType settingType = Schema.getGlobalDescribe().get(customSettingName);
+                        if (settingType != null) {
+                            List<SObject> existingRecords = Database.query(
+                                'SELECT Id, Name, ' + prefixName + 'Client_Id__c, ' + prefixName + 'Client_Secret__c ' +
+                                'FROM ' + customSettingName + ' WHERE Name = \'Standard\''
+                            ); 
+                            SObject customSettingRecord;
+                            if (!existingRecords.isEmpty()) {
+                                customSettingRecord = existingRecords[0];
+                            } else {
+                                customSettingRecord = settingType.newSObject();
+                                customSettingRecord.put('Name', 'Standard');
+                            }
+                            customSettingRecord.put(prefixName + 'Client_Id__c', 'UserApp_DefaultConsumerKey_' + formattedDate);
+                            customSettingRecord.put(prefixName + 'Client_Secret__c', 'UserApp_DefaultConsumerSecret_' + formattedDate);
+                            if (customSettingRecord.get('Id') == null) {
+                                insert customSettingRecord;
+                            } else {
+                                update customSettingRecord;
+                            }
+                        }
+                        
                         List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = : connectedApp.label LIMIT 1];
                         createAndPublishPlatformEvent('Success','Connected App and custom setting created successfully.',connectedApps[0].Id);
                     }else {

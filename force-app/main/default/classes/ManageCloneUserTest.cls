@@ -203,4 +203,11 @@ public class ManageCloneUserTest {
         System.assertNotEquals('', connectedAppId, 'The ConnectedAppId should not be null');
     }
     
+    @isTest
+    static void testFetchLicenseProfileMap() {
+        Test.startTest();
+        Map<String, List<Profile>> result = ManageCloneUser.fetchLicenseProfileMap();
+        Test.stopTest();
+        System.assertNotEquals(null, result, 'The returned map should not be null');    
+    }  
 }

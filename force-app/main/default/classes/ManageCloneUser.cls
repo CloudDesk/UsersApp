@@ -273,4 +273,34 @@ public with sharing class ManageCloneUser {
             return null;
         }
     }
+    @AuraEnabled(cacheable=true)
+    public static Map<String, List<Profile>> fetchLicenseProfileMap() {
+        // Step 1: Get licenses with available slots
+        Map<String, Integer> availableLicenseLimits = new Map<String, Integer>();
+        for (UserLicense ul : [SELECT Name, MasterLabel, TotalLicenses, UsedLicenses FROM UserLicense]) {
+            Integer remainingLicenses = ul.TotalLicenses - ul.UsedLicenses;
+            if (remainingLicenses > 0) {
+                availableLicenseLimits.put(ul.Name, remainingLicenses);
+            }
+        }
+        
+        // Step 2: Fetch Profiles only if their license is in the available list
+        Map<String, List<Profile>> licenseProfileMap = new Map<String, List<Profile>>();
+        
+        for (Profile prof : [
+            SELECT Id, Name, UserLicense.Name 
+            FROM Profile 
+            WHERE UserLicense.Name IN :availableLicenseLimits.keySet()
+        ]) {
+            String licenseName = prof.UserLicense.Name;
+            if (!licenseProfileMap.containsKey(licenseName)) {
+                licenseProfileMap.put(licenseName, new List<Profile>());
+            }
+            licenseProfileMap.get(licenseName).add(prof);
+        }
+        
+        return licenseProfileMap;
+    }
+
+
 }
