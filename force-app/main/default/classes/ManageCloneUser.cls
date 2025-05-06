@@ -262,7 +262,7 @@ public with sharing class ManageCloneUser {
     @AuraEnabled
     public static String getConnectedAppId() {
         try {
-            List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = 'User Access Connected App' LIMIT 1];
+            List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = 'PermisphereConnectedApp' LIMIT 1];
             if (!connectedApps.isEmpty()) {
                 return connectedApps[0].Id;
             } else {

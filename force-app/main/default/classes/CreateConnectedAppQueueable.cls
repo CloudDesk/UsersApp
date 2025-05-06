@@ -11,76 +11,89 @@ public with sharing class CreateConnectedAppQueueable implements Queueable, Data
     }
     
     public void execute(QueueableContext context) {
-        Date todayDate = Date.today();
-        Datetime currentDateTime = Datetime.newInstance(todayDate.year(), todayDate.month(), todayDate.day(), 
-                                                        System.now().hour(), System.now().minute(), System.now().second());
+        DateTime currentDateTime = System.now();
         String formattedDate = currentDateTime.format('yyyy_MM_dd_HH_mm_ss', 'GMT');
-        MetadataService.MetadataPort metaDataPort = new MetadataService.MetadataPort('60.0');
-        metaDataPort.SessionHeader = new MetadataService.SessionHeader_element();
-        metaDataPort.SessionHeader.sessionId = sessionId;
         
+        MetadataService.ConnectedApp connectedApp = createConnectedApp(formattedDate);
+        List<MetadataService.Metadata> metadataList = new List<MetadataService.Metadata>{ connectedApp };
+            
+            try {
+                MetadataService.MetadataPort metaDataPort = getMetadataPort();
+                MetadataService.SaveResult[] saveResults = metaDataPort.createMetadata(metadataList);
+                
+                if (!saveResults.isEmpty()) {
+                    handleSaveResult(saveResults[0], formattedDate);
+                }
+            } catch (Exception e) {
+                System.debug('Error creating ConnectedApp: ' + e.getMessage());
+                createAndPublishPlatformEvent('Error', 'Error creating Connected App: ' + e.getMessage(), null);
+            }
+    }
+    
+    private MetadataService.MetadataPort getMetadataPort() {
+        MetadataService.MetadataPort port = new MetadataService.MetadataPort('60.0');
+        port.SessionHeader = new MetadataService.SessionHeader_element();
+        port.SessionHeader.sessionId = sessionId;
+        return port;
+    }
+    
+    private MetadataService.ConnectedApp createConnectedApp(String formattedDate) {
         MetadataService.ConnectedApp connectedApp = new MetadataService.ConnectedApp();
-        connectedApp.fullName = 'UserAccessConnectedApp';
-        connectedApp.label = 'User Access Connected App';
+        connectedApp.fullName = 'PermisphereConnectedApp';
+        connectedApp.label = 'PermisphereConnectedApp';
         connectedApp.contactEmail = currentUserEmail;
         
         MetadataService.ConnectedAppOauthConfig oAuthConfig = new MetadataService.ConnectedAppOauthConfig();
         oAuthConfig.callbackUrl = System.Url.getOrgDomainUrl().toExternalForm() + '/';
-        oAuthConfig.scopes = new List<String>{'Api'};
-        oAuthConfig.isClientCredentialEnabled = true;
+        oAuthConfig.scopes = new List<String>{ 'Api' };
+            oAuthConfig.isClientCredentialEnabled = true;
         oAuthConfig.isAdminApproved = true;
         oAuthConfig.oauthClientCredentialUser = currentUserUsername;
-        oAuthConfig.consumerKey = 'UserApp_DefaultConsumerKey_' + formattedDate;
-        oAuthConfig.consumerSecret = 'UserApp_DefaultConsumerSecret_' + formattedDate;
+        oAuthConfig.consumerKey = 'Permisphere_DefaultConsumerKey_' + formattedDate;
+        oAuthConfig.consumerSecret = 'Permisphere_DefaultConsumerSecret_' + formattedDate;
         
         connectedApp.oauthConfig = oAuthConfig;
-        
-        List<MetadataService.Metadata> metadataList = new List<MetadataService.Metadata>{ connectedApp };
-            try {
-                MetadataService.SaveResult[] saveResults = metaDataPort.createMetadata(metadataList);
-                if(saveResults.size() > 0){
-                    MetadataService.SaveResult save_result = saveResults[0];
-                    if(save_result.errors == null){
-                        String prefixName = UserAccessManager.getUserAccessCredentialNamespace();
-                        String customSettingName = prefixName + 'User_Access_Credentials__c';
-                        SObjectType settingType = Schema.getGlobalDescribe().get(customSettingName);
-                        if (settingType != null) {
-                            List<SObject> existingRecords = Database.query(
-                                'SELECT Id, Name, ' + prefixName + 'Client_Id__c, ' + prefixName + 'Client_Secret__c ' +
-                                'FROM ' + customSettingName + ' WHERE Name = \'Standard\''
-                            ); 
-                            SObject customSettingRecord;
-                            if (!existingRecords.isEmpty()) {
-                                customSettingRecord = existingRecords[0];
-                            } else {
-                                customSettingRecord = settingType.newSObject();
-                                customSettingRecord.put('Name', 'Standard');
-                            }
-                            customSettingRecord.put(prefixName + 'Client_Id__c', 'UserApp_DefaultConsumerKey_' + formattedDate);
-                            customSettingRecord.put(prefixName + 'Client_Secret__c', 'UserApp_DefaultConsumerSecret_' + formattedDate);
-                            if (customSettingRecord.get('Id') == null) {
-                                insert customSettingRecord;
-                            } else {
-                                update customSettingRecord;
-                            }
-                        }
-                        
-                        List<ConnectedApplication> connectedApps = [SELECT Id, Name FROM ConnectedApplication WHERE Name = : connectedApp.label LIMIT 1];
-                        createAndPublishPlatformEvent('Success','Connected App and custom setting created successfully.',connectedApps[0].Id);
-                    }else {
-                        createAndPublishPlatformEvent('Error','Metadata creation failed: ' + save_Result.errors[0].message,null);
-                        ConnectedAppEvent__e event = new ConnectedAppEvent__e();
-                        event.Status__c = 'Error';
-                        event.Message__c = 'Metadata creation failed: ' + save_Result.errors[0].message;
-                        EventBus.publish(event);
-                    }
-                    
-                }
-            } catch (Exception e) {
-                System.debug('Error creating ConnectedApp: ' + e.getMessage());
-                createAndPublishPlatformEvent('Error','Error creating Connected App: ' + e.getMessage(),null);
-            }
+        return connectedApp;
     }
+    
+    private void handleSaveResult(MetadataService.SaveResult saveResult, String formattedDate) {
+        if (saveResult.errors == null) {
+            updateCustomSetting(formattedDate);
+            List<ConnectedApplication> connectedApps = [
+                SELECT Id, Name FROM ConnectedApplication WHERE Name = 'PermisphereConnectedApp' LIMIT 1
+            ];
+            createAndPublishPlatformEvent('Success', 'Connected App and custom setting created successfully.', connectedApps[0].Id);
+        } else {
+            String errorMsg = 'Metadata creation failed: ' + saveResult.errors[0].message;
+            createAndPublishPlatformEvent('Error', errorMsg, null);
+            EventBus.publish(new ConnectedAppEvent__e(Status__c = 'Error', Message__c = errorMsg));
+        }
+    }
+    
+    private void updateCustomSetting(String formattedDate) {
+        String prefixName = UserAccessManager.getUserAccessCredentialNamespace();
+        String customSettingName = prefixName + 'User_Access_Credentials__c';
+        SObjectType settingType = Schema.getGlobalDescribe().get(customSettingName);
+        
+        if (settingType != null) {
+            List<SObject> records = Database.query(
+                'SELECT Id, Name, ' + prefixName + 'Client_Id__c, ' + prefixName + 'Client_Secret__c ' +
+                'FROM ' + customSettingName + ' WHERE Name = \'Standard\''
+            );
+            
+            SObject record = records.isEmpty() ? settingType.newSObject() : records[0];
+            record.put('Name', 'Standard');
+            record.put(prefixName + 'Client_Id__c', 'Permisphere_DefaultConsumerKey_' + formattedDate);
+            record.put(prefixName + 'Client_Secret__c', 'Permisphere_DefaultConsumerSecret_' + formattedDate);
+            
+            if (record.get('Id') == null) {
+                insert record;
+            } else {
+                update record;
+            }
+        }
+    }
+
     // Getting Platform Event package name if applicable
     public static String getPlatformEventNamespace(){
         String prefixName = '';
